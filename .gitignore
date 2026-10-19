@@ -1,0 +1,48 @@
+# ---------------------------------------------------------------
+# Kept out of the repository on purpose. See README.md, "What is not in this repository".
+# If the repository is PRIVATE and you want any of these versioned, delete the matching lines.
+# ---------------------------------------------------------------
+
+# Third-party papers (copyright: publisher PDFs may not be redistributed)
+research/literature/**/*.pdf
+
+# Raw database exports (Scopus, IEEE Xplore, ACM, SpringerLink, SIAM licence terms restrict sharing)
+research/slr-search-exports/*
+!research/slr-search-exports/README.md
+
+# Microsoft Trebuchet MS font files (not licensed for redistribution)
+documentation/milestone/fonts/
+
+# Tectonic binary (50 MB; download it instead)
+tools/*.exe
+
+# Confidential stakeholder material (NDA with the Directorate; names; interview transcripts)
+documentation/stakeholder/
+research/elicitation/private/
+
+# LaTeX intermediates (Tectonic normally does not write these)
+*.aux
+*.log
+*.out
+*.toc
+*.bbl
+*.blg
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+
+# Python and experiment outputs (for the code to come)
+__pycache__/
+*.pyc
+.venv/
+venv/
+.ipynb_checkpoints/
+results/raw/
+*.zip
+
+# Office lock files and OS clutter
+~$*
+.~lock.*
+Thumbs.db
+desktop.ini
+.DS_Store

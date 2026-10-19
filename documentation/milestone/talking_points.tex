@@ -1,0 +1,316 @@
+% Speaker notes for the mid-semester research project milestone.
+% Not for handing in: these are the presenter's own notes.
+% Compile with:  tools\tectonic.exe milestone\talking_points.tex   (or xelatex / lualatex)
+
+\documentclass[10pt,a4paper]{article}
+
+\usepackage{fontspec}
+\setmainfont{trebuc.ttf}[
+  Path           = fonts/,
+  BoldFont       = trebucbd.ttf,
+  ItalicFont     = trebucit.ttf,
+  BoldItalicFont = trebucbi.ttf,
+  Ligatures      = TeX]
+\usepackage[a4paper,left=1.7cm,right=1.7cm,top=1.5cm,bottom=1.6cm]{geometry}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{fancyhdr}
+
+\definecolor{accent}{HTML}{2E6DA4}
+\definecolor{soft}{HTML}{EEF3F8}
+\definecolor{warn}{HTML}{C77700}
+\definecolor{warnsoft}{HTML}{FFF1D6}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\linespread{1.06}
+\setlist[itemize]{leftmargin=1.2em, itemsep=1.5pt, topsep=2pt, parsep=0pt}
+\setlist[enumerate]{leftmargin=1.5em, itemsep=1.5pt, topsep=2pt, parsep=0pt}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[L]{\footnotesize\color{gray}Speaker notes: Rule-Constrained RL for Ambiguity-Aware IT Incident Triage}
+\fancyfoot[R]{\footnotesize\color{gray}\thepage}
+
+\newcommand{\sect}[1]{\par\vspace{9pt}{\bfseries\color{accent}\fontsize{13}{15}\selectfont #1}\par\vspace{-3pt}{\color{accent}\hrule height 0.8pt}\vspace{5pt}}
+\newcommand{\sub}[1]{\par\vspace{4pt}{\bfseries\fontsize{10.6}{13}\selectfont #1}\par}
+\newcommand{\say}[1]{\par\colorbox{soft}{\parbox{\dimexpr\linewidth-2\fboxsep}{#1}}\par}
+\newcommand{\caution}[1]{\par\colorbox{warnsoft}{\parbox{\dimexpr\linewidth-2\fboxsep}{\textbf{\color{warn}Careful.} #1}}\par}
+\newcommand{\qa}[2]{\par\vspace{3pt}\textbf{Q: #1}\par\vspace{-1pt}#2\par}
+\newcommand{\tm}[1]{\textbf{\color{accent}[#1]}}
+
+\begin{document}
+
+{\bfseries\fontsize{16}{19}\selectfont Talking Points: Mid-Semester Research Milestone}\par
+\vspace{2pt}
+{\fontsize{10.5}{13}\selectfont Opol Charis \;|\; S24B23/003 \;|\; Rule-Constrained Reinforcement Learning for Ambiguity-Aware IT Incident Triage}\par
+\vspace{3pt}{\color{accent}\hrule height 1pt}
+
+\sect{1. The five minutes at a glance}
+
+You have about five minutes: two to three to talk, about two for questions. The panelist is checking four things: the research direction, the technical approach, what is done, and whether a prototype and poster are realistic in six weeks.
+
+\begin{tabularx}{\linewidth}{@{}p{2.1cm}p{4.1cm}L@{}}
+\toprule
+\textbf{Time} & \textbf{Part of the page} & \textbf{The one thing to land} \\
+\midrule
+0:00--0:30 & Problem and objective & Staff must act before they know the cause; current AI cannot ask for more evidence or say it is unsure. \\
+0:30--1:05 & What exists and the gap & Three ideas exist, but only two at a time. Nobody has put all three choices in one agent for IT incidents. \\
+1:05--1:55 & Pipeline diagram & Point at the two orange boxes. The simulator and the agent with its rule checker are the new work. \\
+1:55--2:20 & Progress to date & Review, three chapters and the full design are done. No code yet, and you say so first. \\
+2:20--2:45 & Next six weeks & One activity per week, ending in a working prototype and a fair comparison. \\
+2:45--5:00 & Questions & Short, honest answers. Section 5 has them ready. \\
+\bottomrule
+\end{tabularx}
+
+\textbf{Delivery.} Hand over the page, then talk to the panelist, not to the page. Use your finger on the diagram when you reach it. If you are stopped early, say the 30-second version in Section 3.
+
+\sect{2. The script (about two and a half minutes)}
+
+Read this aloud twice tonight with a timer. Do not memorise it word for word; memorise the order.
+
+\tm{Problem, 30 s}
+\say{``When an IT incident is reported, for example the student portal is slow, the technician has to act before knowing the cause. It could be the database, the network or a full disk, and the first evidence is often incomplete or contradictory. The technician has three choices: check further, try a likely fix, or pass it to someone more senior. Today's AI tools for this give one answer per ticket. They cannot ask for more evidence, and they cannot say `I am not sure.' My objective is to build and test an AI agent that learns when to check further, when to recommend a fix that the rules allow, and when to hand over to a human.''}
+
+\tm{What exists and the gap, 35 s}
+\say{``Three lines of research matter here. First, AI triage tools classify the ticket from the report alone, but a two-year study at Microsoft found that symptoms often do not reveal the cause, so tickets bounce between teams. Second, a technique called shielding stops a learning agent from breaking rules, but it has been tested mainly on robots and games. Third, learning to defer lets a model pass hard cases to a person, but without the option to gather more evidence first. In the 46 sources I reviewed, these ideas only appear two at a time. Nobody has put all three choices in one agent for IT incidents, checked it against rules, and tested it as the evidence gets worse. That is my gap.''}
+
+\tm{Pipeline, 50 s: point at each box}
+\say{``Here is the pipeline. The input is how incidents are really handled, which I am collecting from our own Directorate of University ICT Services: causes, symptoms, checks and operating rules. From that I build an incident simulator, which is new. It has 25 causes, 20 checks and 10 rules. Each simulated incident has a hidden cause, and I can make the evidence missing, wrong or confusing on purpose. On the right is the proposed agent. At each step it picks one of three things: run a check, recommend a fix, or hand over. Every choice goes through a separate rule checker. If the choice is allowed, it goes ahead. If it is blocked, the agent gets one more try. If it is blocked again, the incident goes to a technician. On the left are six simpler strategies that I compare against, on the same incidents. At the bottom are the four things I measure: correct and wrong fixes, the cost of checking, whether the right incidents are handed over, and rule breaks.''}
+
+\tm{Progress, 25 s}
+\say{``So far, the literature review is done, Chapters One to Three are written, which is a 40-page draft I have here, and the full design is specified. The Directorate has agreed to support the study. I want to be clear about what is not done: there is no code yet, and no experiments, so I am claiming no results today.''}
+
+\tm{Next six weeks, 25 s}
+\say{``In week one I collect the scenarios and build the simulator. Week two, the rule checker and the comparison strategies. Week three, I train the agent. Weeks four and five are the experiments, including making the evidence worse. Week six is the prototype and poster. The prototype is the simulator and the trained agent, with a simple screen that replays an incident step by step next to the comparison results.''}
+
+\sect{3. The 30-second version}
+
+\say{``IT technicians often have to act on an incident before they know the cause. Current AI tools give one answer and cannot ask for more evidence or admit they are unsure. I am building an AI agent that chooses between checking further, recommending a fix, and handing over to a human, with a separate rule checker that blocks actions the organisation does not allow. I test it in a simulator built with our ICT Directorate, against six simpler strategies, and I measure accuracy, cost, hand-overs and rule breaks as the evidence gets worse. The review and design are done; the build starts this week.''}
+
+\sect{4. Going deeper, section by section}
+
+\sub{4.1 The problem}
+\begin{itemize}
+  \item \textbf{Triage} means the early decision about what happens to an incident next. It happens before the cause is known.
+  \item \textbf{Ambiguity} means the evidence fits more than one cause. It has three sources, and each is a dial in the simulator: evidence that is \emph{missing}, evidence that is \emph{wrong}, and evidence that \emph{looks the same for several causes}.
+  \item Every choice has a cost. Checking takes time. A wrong fix can make things worse. Handing over uses a senior person's time.
+  \item The portal example is an illustration you made up to explain the idea. Do not present it as a real Directorate incident.
+\end{itemize}
+
+\sub{4.2 The three references}
+\begin{tabularx}{\linewidth}{@{}p{3.3cm}LL@{}}
+\toprule
+\textbf{Source} & \textbf{What they did and found} & \textbf{Limit that matters to you} \\
+\midrule
+{[1]} Chen et al., 2020 (ESEC/FSE) & Studied two years of incident management at Microsoft. Symptoms are often not enough to find the responsible team, because different problems look alike, so incidents are reassigned several times. & Their AI component predicts a team from the ticket text. It does not decide to look for more evidence or to hand over. \\
+\addlinespace
+{[2]} Alshiekh et al., 2018 (AAAI) & Introduced the ``shield'': a separate component that watches each action of a learning agent and overrides it only when it would break a stated rule. & Tested on grid-world robots, a self-driving scenario, an Atari game and a water tank. Not on IT operations, and it needs a formal model of the environment. \\
+\addlinespace
+{[3]} Madras et al., 2018 (NeurIPS) & Introduced ``learning to defer'': a model learns when to pass a case to a human, taking that person's ability into account. & A one-step choice between deciding and deferring. There is no option to gather more evidence first. \\
+\bottomrule
+\end{tabularx}
+
+\textbf{Two more to keep in your pocket} (not on the page, but good if asked):
+\begin{itemize}
+  \item \textbf{Janisch et al., 2019 (AAAI):} an agent learns which pieces of costly information to acquire before it classifies. This is the ``check further'' idea. It has no hand-over option.
+  \item \textbf{Alauthman et al., 2026:} a learning agent with a safety shield for incident response in industrial control systems. This is the closest work to yours. Their agent picks responses; it does not choose whether to investigate or hand over.
+\end{itemize}
+\caution{You have read Alauthman et al. only at abstract level. If you mention it, say ``from their abstract''. Read the full paper before the final defence.}
+
+\sub{4.3 The gap, in full}
+The one-page summary gives the short version. Chapter Two states it in five parts:
+\begin{enumerate}
+  \item \textbf{No test bed.} There is no simulator for IT service incidents where ambiguity can be set on purpose. Existing ones model cyberattacks and microservice faults.
+  \item \textbf{No three-way decision.} Some studies offer ``check further or decide''. Others offer ``decide or hand over''. None trains one agent on all three.
+  \item \textbf{Rules and the decision.} Nobody reports how a rule checker behaves when the agent can also investigate or hand over.
+  \item \textbf{No joint measurement.} Accuracy, checking cost, hand-overs and rule compliance have each been measured, but never together for one agent.
+  \item \textbf{No robustness picture.} Nobody shows how the mix of the three choices shifts as evidence gets worse.
+\end{enumerate}
+
+\sub{4.4 Why this is research and not just an implementation}
+The guideline says applying an existing model to existing data is not enough. Your answer has three parts:
+\begin{itemize}
+  \item \textbf{You build the test bed.} There is no existing dataset or environment for this decision, so the simulator is itself a contribution.
+  \item \textbf{You investigate a question, not a product.} Can one agent learn to treat ``check further'' and ``hand over'' as different responses to doubt, or does it collapse into one of them?
+  \item \textbf{You compare fairly.} Six strategies, the same incidents, four measures, several levels of ambiguity. One of the six, the confidence-threshold strategy, is deliberately strong, and you do not assume your agent will beat it.
+\end{itemize}
+
+\sub{4.5 The pipeline, box by box}
+\textbf{Input.} Knowledge from the Directorate of University ICT Services: what causes incidents, how they are first reported, what technicians check, and what rules govern their actions. No personal data.
+
+\textbf{Incident simulator (new).}
+\begin{itemize}
+  \item 25 causes across four categories: database failures, network degradation, authentication failures, storage exhaustion.
+  \item 20 diagnostic checks, each with a cost. 10 operating rules.
+  \item Each incident has one hidden cause. Each check has a probability of coming back positive for each cause. Those probabilities are the heart of the simulator.
+  \item The agent has \textbf{46 possible actions}: 20 checks, 25 fixes (one per cause) and 1 hand-over.
+  \item Three dials for ambiguity: the chance a check is unavailable, the chance a result is wrong, and how alike the causes in a category look.
+\end{itemize}
+
+\textbf{Proposed agent (new).}
+\begin{itemize}
+  \item A reinforcement learning agent: it learns by trial and error from rewards, with no labelled examples.
+  \item The algorithm is \textbf{DQN} (deep Q-network). It suits a small set of distinct actions. PPO is a second algorithm you will try only if time allows.
+  \item Rewards: a correct fix is rewarded, a wrong fix is penalised heavily, each check costs a little, and a hand-over costs a moderate amount. So: correct fix is better than hand-over, which is better than a wrong fix.
+\end{itemize}
+
+\textbf{Rule checker (new).}
+\begin{itemize}
+  \item A separate component. The rules are written down as plain conditions that a person can read, not learned.
+  \item \textbf{Allowed} \(\rightarrow\) the action goes ahead. \textbf{Blocked} \(\rightarrow\) the agent is told and tries once more. \textbf{Blocked again} \(\rightarrow\) the incident is handed to a technician.
+  \item Handing over is always allowed, so there is always a legal move.
+  \item Example rule, for illustration only: ``do not recommend restarting a production database without approval''. The real ten rules come from the Directorate.
+\end{itemize}
+
+\textbf{Six comparison strategies.}
+
+\begin{tabularx}{\linewidth}{@{}p{4.3cm}LL@{}}
+\toprule
+\textbf{Strategy} & \textbf{What it does} & \textbf{What it stands for} \\
+\midrule
+Guess from first symptoms & Picks the most likely cause straight away & Today's one-answer-per-ticket tools \\
+Fixed checklist & Runs a set list of checks, then picks & Runbook practice \\
+Always hand over & Hands every incident to a human & The ``safe'' extreme \\
+Act when confident enough & Keeps checking until one cause is likely enough, otherwise hands over & A strong hand-built strategy \\
+Agent with no rule checker & The same agent without the checker & Shows what the checker adds \\
+Agent with penalties only & Rule breaks are punished but not blocked & Tests whether punishment alone is enough \\
+\bottomrule
+\end{tabularx}
+
+\textbf{Four measures.}
+\begin{itemize}
+  \item \textbf{Decision quality:} how many incidents the agent fixes correctly, and how many fixes are wrong.
+  \item \textbf{Cost of checking:} how many checks it runs and what they cost.
+  \item \textbf{Hand-overs:} how many it hands over, and whether those were the right ones to hand over.
+  \item \textbf{Rule compliance:} how often it tries a forbidden action, and how often one actually goes through.
+\end{itemize}
+All four are measured again at each level of ambiguity. Each experiment is repeated with 10 different random seeds, and the results are averaged.
+
+\sub{4.6 Progress: what you can show}
+\begin{itemize}
+  \item \textbf{Literature review.} Five databases searched; 46 sources reviewed; a table comparing the 11 closest studies. Show Chapter Two and the search exports.
+  \item \textbf{Report.} Chapters One to Three, compiled as a 40-page draft. Bring it printed or on your laptop.
+  \item \textbf{Design.} Chapter Three specifies the simulator, the agent, the rule checker, the comparisons, the measures and four experiments.
+  \item \textbf{Partner.} The Directorate has agreed to support the study.
+\end{itemize}
+\caution{Say ``no code yet'' before you are asked. The page says it, and a panelist will respect it more from you than from their own question.}
+
+\sub{4.7 The six weeks, with the risks}
+\begin{tabularx}{\linewidth}{@{}p{1.1cm}LL@{}}
+\toprule
+\textbf{Week} & \textbf{Work} & \textbf{What you have at the end} \\
+\midrule
+1 & Collect causes, checks and rules; build the simulator & A simulator that generates incidents \\
+2 & Rule checker; six comparison strategies; staff review & Simple strategies running; scenarios checked by staff \\
+3 & Train the agent & A trained agent and learning curves \\
+4 & Compare with the six strategies & The main results table \\
+5 & Worse evidence; analysis & Robustness charts \\
+6 & Prototype, poster, results & Demo screen and poster \\
+\bottomrule
+\end{tabularx}
+
+\textbf{If time runs short, cut in this order:} the second algorithm (PPO), then the second way of training, then the number of random seeds from ten to five. The simulator, the DQN agent, the rule checker, the six comparisons and the four measures stay.
+
+\textbf{Biggest risk:} week one depends on the Directorate. If their input is late, start the simulator with your own draft scenarios and replace them when theirs arrive. This fallback is a suggestion, not yet agreed with your supervisor.
+
+\sect{5. Likely questions and short answers}
+
+\qa{What is actually new here? Shielding and reinforcement learning both exist.}{Yes, and I do not claim either is new. A shielded agent has even been proposed for incident response in industrial control systems. What is new is the decision I study: one agent choosing among checking further, recommending and handing over, for IT service incidents, under rules, and measured as evidence gets worse. No study I reviewed does that.}
+
+\qa{Why reinforcement learning? Why not a classifier or plain rules?}{A classifier gives one answer per ticket. It cannot decide to run a check first. Plain rules cannot weigh whether another check is worth its cost for this particular incident. Triage is a sequence of decisions with costs, and that is what reinforcement learning is designed for. Both alternatives are among my six comparisons, so the data will show whether I am right.}
+
+\qa{Why a simulator and not real data?}{Three reasons. Real incident data is confidential and hard to get; even the Microsoft study reported only relative figures. A learning agent needs to try actions and see outcomes, which cannot be done on live systems. And I need to control ambiguity, which only a simulator allows. The cost is that results hold for the simulator, and I say so.}
+
+\qa{How do you know the simulator is realistic?}{Its content comes from the Directorate's practice, and Directorate staff review generated incidents before I fix it. It is still a simplification: one cause per incident, one fix per cause. I state those assumptions.}
+
+\qa{DQN or PPO?}{DQN is the main algorithm. It fits a small set of distinct actions and is what the closest studies use. PPO is a check I will run only if time allows, to see whether the findings depend on the algorithm.}
+
+\qa{What if the agent learns to hand over everything?}{That is why I do not measure accuracy alone. ``Always hand over'' is one of my comparison strategies. It breaks no rules and makes no wrong fix, but it resolves nothing itself. Handing over also has a cost in the reward, so the agent is pushed away from it.}
+
+\qa{How do you decide which incidents \emph{should} be handed over?}{The simulator knows the true cause, so it can label each incident. An incident should be handed over if the rules forbid its fix, or if even with every available check the most likely cause is still the wrong one.}
+
+\qa{What happens when the rule checker blocks an action?}{The agent is told, and it chooses again once. If the second choice is also blocked, the incident goes to a technician. I count those forced hand-overs separately from the ones the agent chose.}
+
+\qa{If the checker blocks everything forbidden, is ``fewer violations'' not guaranteed?}{Yes, so that is not my claim. I measure how often the agent \emph{tries} forbidden actions, whether that falls as it learns, and whether it still fixes as many incidents correctly within the rules as the agent without a checker.}
+
+\qa{What does the Directorate provide? What about confidentiality?}{Their knowledge of incident causes, checks and rules, and a review of my scenarios. No personal data, credentials or system details go into the simulator or the report. We are finalising a confidentiality agreement, and the agent never touches a live system.}
+
+\qa{Is your review a systematic literature review?}{It is a structured thematic review, organised by my five research questions. I searched five databases and screened the results by keyword. I do not call it a completed systematic review, and Chapter Two says so.}
+
+\qa{Why 25 causes, 20 checks and 10 rules?}{Large enough that the task is not trivial: several causes in each category share symptoms. Small enough that people at the Directorate can review every scenario and rule.}
+
+\qa{Why not use a large language model?}{Language models are good at reading tickets, and the literature uses them for that. My question is about the decision that follows: check, fix or hand over, under rules. A small learning agent in a simulator lets me measure that decision exactly and repeat it. A language model could later supply the evidence that my agent reasons over.}
+
+\qa{Can you really finish in six weeks?}{The design is fixed, the tools are standard (Python, Gymnasium, Stable-Baselines3), and the simulator is small. I have a cut list if time is short: the second algorithm goes first. The core stays.}
+
+\qa{What will the prototype look like?}{A program that generates an incident, shows the agent's steps one by one (each check and its result, each proposal, any block, and the final decision) and shows the comparison results next to it.}
+
+\qa{Would this work in a real IT department?}{I do not claim that. This study shows how the method behaves under controlled conditions. In the design the agent only recommends; it never executes anything. A real deployment would need real evaluation with technicians.}
+
+\qa{What is the weakest part of your study?}{The simulated technician always resolves a handed-over incident. Real reviewers get overloaded, so my study understates the cost of heavy hand-over. I report the hand-over rate so that cost stays visible.}
+
+\sect{6. Numbers to have ready}
+
+\begin{tabularx}{\linewidth}{@{}p{4.6cm}L@{}}
+\toprule
+46 & Sources reviewed in Chapter Two; also the number of actions the agent has (a coincidence) \\
+5 & Databases searched: Scopus, IEEE Xplore, ACM Digital Library, SpringerLink, SIAM \\
+11 & Closest studies compared in Table 2.1 \\
+25 / 20 / 10 & Causes / checks / rules in the simulator \\
+4 & Incident categories; also the number of measures and of experiments \\
+20 + 25 + 1 & Check actions + fix actions + hand-over \\
+3 & Choices the agent has; dials for ambiguity; references on the page \\
+6 & Comparison strategies; weeks remaining \\
+10 & Random seeds per experiment \\
+40 pages & Compiled draft of Chapters One to Three \\
+2 years & Length of the Microsoft study in reference [1] \\
+\bottomrule
+\end{tabularx}
+
+\sect{7. Plain words for technical terms}
+
+\begin{tabularx}{\linewidth}{@{}p{4.6cm}L@{}}
+\toprule
+\textbf{If they say} & \textbf{It means} \\
+\midrule
+Reinforcement learning (RL) & Learning by trial and error from rewards, without labelled examples \\
+Agent / policy & The decision-maker / its learned way of choosing actions \\
+DQN & An RL algorithm that learns how good each action is in each situation \\
+Environment & The simulator the agent practises in \\
+Episode & One incident, from report to final decision \\
+Partial observability & The agent cannot see the true cause, only evidence about it \\
+Shield / safety mechanism & Your rule checker \\
+Escalation / deferral & Handing the incident to a human \\
+Baseline & A simpler strategy used for comparison \\
+Ablation & Removing one part to see what it contributed \\
+Robustness & How well performance holds up as conditions get worse \\
+AIOps & Using AI to help run IT operations \\
+\bottomrule
+\end{tabularx}
+
+\sect{8. What not to say}
+
+\begin{itemize}
+  \item \textbf{Do not claim results.} No experiment has run. Say ``I expect'' or ``I will test whether'', never ``the agent achieves''.
+  \item \textbf{Do not say ``no one has done this''.} Say ``none of the studies I reviewed does this''.
+  \item \textbf{Do not say the system is ``safe''.} The checker enforces the ten written rules inside a simulator. That is all it guarantees.
+  \item \textbf{Do not say it is deployed, or will be.} The agent recommends inside a simulation and never touches a live system.
+  \item \textbf{Do not say you have Directorate data.} You have their agreement. Collection starts in week one.
+  \item \textbf{Do not overstate the reading.} Eight of the 46 sources were assessed from their abstracts. If asked about one in detail, say so.
+\end{itemize}
+
+\sect{9. What to bring}
+
+\begin{itemize}
+  \item The printed one-page summary, single-sided A4. Bring a spare.
+  \item The 40-page draft (\texttt{main.pdf}), printed or open on your laptop.
+  \item The search exports folder and the notes files, on your laptop, as evidence of the review.
+  \item These notes.
+\end{itemize}
+
+\end{document}
