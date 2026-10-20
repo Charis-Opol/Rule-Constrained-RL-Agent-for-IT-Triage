@@ -1,7 +1,7 @@
 # Rule-Constrained Reinforcement Learning for Ambiguity-Aware IT Incident Triage
 
 Final-year research project, BSc Computer Science, Uganda Christian University.
-**Author:** Opol Charis · **Supervisor:** [supervisor's name] · **Partner:** Directorate of University ICT Services, Uganda Christian University
+**Author:** Opol Charis · **Supervision:** Department of Computing and Technology · **Partner:** Directorate of University ICT Services, Uganda Christian University
 
 ## About the project
 

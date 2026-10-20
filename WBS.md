@@ -60,9 +60,10 @@
 - **Deliverable:** Signed letter delivered (`documentation/stakeholder/letter/`)
 - **Depends on:** —
 - **Checklist:**
-  - [ ] Fill in Director's name, supervisor's name, date
-  - [ ] Supervisor reviews or co-signs (if required)
-  - [ ] Print, sign and deliver, or email as PDF
+  - [x] Contact details, salutation and supervision filled in
+  - [x] Date filled in (20 Oct 2026)
+  - [x] Signed (digital signature added; department signature block removed)
+  - [ ] Print and deliver, or email as PDF
   - [ ] Record date sent
 
 ### 0.4 Three-page proposal to Mr Simon
