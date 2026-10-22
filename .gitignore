@@ -9,6 +9,8 @@ research/literature/**/*.pdf
 # Raw database exports (Scopus, IEEE Xplore, ACM, SpringerLink, SIAM licence terms restrict sharing)
 research/slr-search-exports/*
 !research/slr-search-exports/README.md
+research/new-slr-exports/*
+!research/new-slr-exports/screening/
 
 # Microsoft Trebuchet MS font files (not licensed for redistribution)
 documentation/milestone/fonts/

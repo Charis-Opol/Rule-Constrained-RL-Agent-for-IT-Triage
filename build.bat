@@ -9,6 +9,10 @@ pushd research\thesis
 "%TT%" main.tex
 popd
 
+pushd research\slr
+"%TT%" slr_review.tex
+popd
+
 pushd documentation\milestone
 "%TT%" midsemester_summary.tex
 "%TT%" talking_points.tex

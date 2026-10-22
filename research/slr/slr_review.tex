@@ -1,0 +1,356 @@
+% Systematic literature review: Introduction and Methodology (draft).
+% Build from this folder with:  ..\..\tools\tectonic.exe slr_review.tex
+% Text in red marked [TO DO] is information the author must supply or confirm.
+% Counts come from ../new-slr-exports/screening/PRISMA_record.md (23 October 2026).
+
+\documentclass[journal]{IEEEtran}
+
+\usepackage{fontspec}
+\setmainfont{texgyretermes}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{cite}
+\usepackage[hyphens]{url}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue]{hyperref}
+
+\newcommand{\todo}[1]{\textcolor{red}{[TO DO: #1]}}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+
+\begin{document}
+
+\title{Reinforcement Learning for Investigating, Acting and Escalating in IT Incident Triage: A Systematic Literature Review}
+
+\author{Charis~Opol\\
+Registration No.\ S24B23/003 $\cdot$ B29654@students.ucu.ac.ug\\
+Department of Computing and Technology, Faculty of Engineering, Design and Technology\\
+Uganda Christian University}
+
+\maketitle
+
+\begin{abstract}
+\todo{Write the abstract after full-text screening and synthesis are complete. It should report the databases, the search date, the number of records identified and screened, the number of studies included, and the main finding for each research question.}
+\end{abstract}
+
+\begin{IEEEkeywords}
+Reinforcement learning, sequential decision-making, POMDP, IT incident management, incident triage, incident response, AIOps, root cause analysis, escalation, safe reinforcement learning, PRISMA.
+\end{IEEEkeywords}
+
+\begin{table}[!t]
+\centering
+\caption{Abbreviations Used in This Review}
+\label{tab:abbrev}
+\footnotesize
+\begin{tabularx}{\columnwidth}{@{}lL@{}}
+\toprule
+Abbreviation & Meaning \\
+\midrule
+AIOps & Artificial Intelligence for IT Operations \\
+DQN & Deep Q-Network \\
+EC / IC & Exclusion criterion / Inclusion criterion \\
+IT & Information Technology \\
+LLM & Large Language Model \\
+MDP & Markov Decision Process \\
+POMDP & Partially Observable Markov Decision Process \\
+PPO & Proximal Policy Optimisation \\
+PRISMA & Preferred Reporting Items for Systematic Reviews and Meta-Analyses \\
+RCA & Root Cause Analysis \\
+RL & Reinforcement Learning \\
+SO / SRQ & Specific Objective / Systematic Review Question \\
+SOC & Security Operations Centre \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% ===========================================================================
+\section{Introduction}
+% ===========================================================================
+
+\IEEEPARstart{O}{rganisations} depend on IT services that are expected to remain available, and incident management is the process that restores those services when they fail. Chen et al.\ describe it as the process of detecting a service problem, creating an incident, determining its cause, restoring the service, and capturing knowledge to prevent a recurrence~\cite{chen2020}. Triage is the stage at which a reported incident is assessed and directed towards resolution. Chen et al.\ define it as engaging the team responsible for investigating the problem~\cite{chen2020}, and Remil et al.\ use the term more broadly for the prioritisation, assignment and classification of incidents~\cite{remil2024}. In both descriptions, triage is a set of decisions made before the cause of the incident is known.
+
+These decisions are difficult because the evidence available when they are made is often incomplete or conflicting. In their study of incident management at Microsoft, Chen et al.\ found that distinct problems can produce similar symptoms, so that the symptoms alone may not identify the responsible team~\cite{chen2020}. Remil et al.\ note that data in real IT environments is commonly noisy and incomplete~\cite{remil2024}. Yet many triage models produce one prediction per incident report and are evaluated with classification or ranking metrics~\cite{remil2024}. A model of this kind returns an answer for every report. It has no way to state that more evidence is needed first, and no way to pass the incident to a person.
+
+Reinforcement learning (RL) offers a different framing. In RL, an agent learns a policy, which is a rule for choosing actions, by acting in an environment and receiving rewards that reflect the consequences of its actions~\cite{sutton2018}. When the agent cannot observe the true state of the environment, the problem can be described as a partially observable Markov decision process (POMDP), in which the agent may choose an action for the information it yields and must weigh the cost of that information against its value~\cite{kaelbling1998}. Under this framing, triage becomes a sequence of decisions: the agent can gather more evidence, recommend an action, or hand the incident to a human expert.
+
+Two further requirements follow when such an agent is meant for IT operations. The first is that its actions must respect operational rules. A reward signal alone does not ensure this, because penalising an undesirable action in the reward does not guarantee that the agent never selects it~\cite{konighofer2025}, and Remil et al.\ state that automatic healing actions need to be executed safely~\cite{remil2024}. The second is that the agent must know when to involve a person. Learning to defer trains a model to decide when a human should take over~\cite{madras2018}, and recent work treats escalation as a decision with costs in both directions, since a reviewer's attention is limited~\cite{turan2026}.
+
+The literature review for the project of which this review is part (Chapter Two of the project report) found that these strands have developed largely apart. Studies of information gathering let an agent choose between looking further and deciding~\cite{janisch2019,kim2025}, studies of deferral let it choose between deciding and handing over~\cite{madras2018,joshi2023}, and the one shielded agent proposed for incident response selects responses and does not choose whether to investigate or escalate~\cite{alauthman2026}. That review was thematic and not systematic. It drew on a core set of collected publications and on a database search run on 13 October 2026, which returned 10,694 records that were filtered by keyword and not screened. Its conclusions about gaps were therefore stated as conclusions about the literature it had read. This review replaces that search with a narrower, documented one and screens its results against fixed criteria, so that the gaps can be stated with more confidence or corrected.
+
+The project plans an RL agent for IT incident triage that chooses among requesting a diagnostic check, recommending a fix that the organisation's operational rules permit, and escalating to a human expert, with every proposal checked by an independent rule-based mechanism. The agent is to be trained and evaluated in simulation. Because this review prepares for that study, it could lean towards the planned design. Three measures limit this. The eligibility criteria were written before screening; the same criteria will be applied to records found in the databases and to those found by citation searching; and the decisions that required interpretation are disclosed in Section~\ref{sec:screening}. These measures do not remove the risk, because the screening was not independently duplicated (Section~\ref{sec:screening}).
+
+The review addresses five questions:
+\begin{itemize}
+\item \textbf{SRQ1:} How have IT incident handling tasks been formulated as MDP, POMDP or RL problems, and how is incomplete or conflicting evidence represented in them?
+\item \textbf{SRQ2:} Which decisions do the agents make (gathering information, recommending or taking an action, escalating to a human), and does any study combine all three?
+\item \textbf{SRQ3:} How are operational constraints enforced, for example by a shield, action masking, constrained optimisation, a reward penalty or human approval, and what happens when an action is blocked?
+\item \textbf{SRQ4:} Which environments, datasets, baselines and evaluation metrics are used?
+\item \textbf{SRQ5:} How is robustness to missing, unreliable or ambiguous evidence evaluated, and what results are reported?
+\end{itemize}
+
+The general objective is to systematically identify and synthesise peer-reviewed studies that apply RL or sequential decision-making to IT incident management, with attention to how they represent uncertain evidence, which decisions the agent makes, how constraints are enforced, and how the agents are evaluated. Table~\ref{tab:objectives} gives the five specific objectives (SO1--SO5), the question each answers, the research question of the project that it informs, and the gap that motivates it.
+
+\begin{table*}[!t]
+\centering
+\caption{Objectives, Research Questions and Gaps Addressed}
+\label{tab:objectives}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}p{3.6cm}p{1.1cm}p{2.3cm}L@{}}
+\toprule
+Specific objective & Review question & Project question informed & Gap addressed \\
+\midrule
+SO1: Identify which incident tasks have been formulated as sequential decision problems, and how they represent uncertain evidence & SRQ1 & RQ1 (representation of ambiguous scenarios) & The environments used in the reviewed studies model cyberattacks and microservice faults, and none lets the ambiguity of IT service incidents be varied~\cite{hammar2025,dunsin2025,wang2023hrlhf}. \\
+SO2: Classify the decisions the agents make & SRQ2 & RQ2 (investigate, recommend, escalate) & Information gathering and deferral have been studied separately; no reviewed study trains one policy to choose among all three options for IT incident triage~\cite{janisch2019,kim2025,madras2018,joshi2023}. \\
+SO3: Analyse how constraints are enforced and what is reported about blocked actions & SRQ3 & RQ3 (rule-based safety mechanism) & Shields have been demonstrated mainly on control tasks, and the reviewed literature does not report how a rule mechanism behaves when the agent can also investigate or escalate~\cite{alshiekh2018,konighofer2025,alauthman2026}. \\
+SO4: Catalogue environments, datasets, baselines and metrics & SRQ4 & RQ4 (comparison with baselines) & Decision quality, investigation cost, escalation and constraint compliance have each been measured, but not together for one agent~\cite{remil2024,levy2026,pacella2026}. \\
+SO5: Synthesise how robustness to increasing ambiguity is tested & SRQ5 & RQ5 (robustness) & Robustness has been tested for decision accuracy and for the validity of shields, but not for the mix of investigating, recommending and escalating~\cite{kim2025,hammar2025,hamel2026}. \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+% ===========================================================================
+\section{Methodology (PRISMA Protocol)}
+% ===========================================================================
+
+This study is a systematic literature review reported according to the PRISMA 2020 guideline~\cite{page2021} and guided by the review procedure for computing proposed by Kitchenham and Charters~\cite{kitchenham2007}. A systematic approach was chosen because it makes the search, selection and extraction of studies transparent and reproducible, and because the earlier search for the project, described in Section~I, returned too many records to screen. The design follows the five objectives and questions in Table~\ref{tab:objectives}. The protocol was not registered. At the time of writing, identification and title and abstract screening are complete; full-text screening, data extraction, quality appraisal and synthesis are described below as planned steps.
+
+\subsection{Information Sources}
+
+Three databases were searched: Scopus, IEEE Xplore and the ACM Digital Library. Scopus was chosen as the primary source for its broad indexing and its structured title, abstract and keyword fields. IEEE Xplore was chosen for its coverage of network and service management and security venues, and the ACM Digital Library for software engineering and systems venues, where much AIOps work appears. The exports used in this review are dated 22 October 2026. \todo{Confirm the date on which each search was run.}
+
+The protocol also listed Web of Science as a primary source if the university had access. No Web of Science export was produced. \todo{State whether Web of Science was available, and if not, say so here.} SpringerLink and SIAM, which were used in the earlier search, were not used. The SpringerLink export of that search contained no abstracts, so its records could not be screened on more than their titles, and SIAM returned only three records. arXiv was not searched directly. Preprints can enter the review only through citation searching, and they must meet the same criteria as other reports (Section~\ref{sec:other}).
+
+\subsection{Search Strategy}
+
+The search was designed to be narrow. The earlier search had combined a block of terms for the learning approach, a block for uncertainty and oversight, and a block for the incident-management setting. Single words such as ``uncertainty'' and ``triage'' match large bodies of unrelated work, including medical triage and traffic incidents, and the oversight block matched the general literature on safe RL and learning to defer. The new string therefore anchors the review on the intersection of two concepts, the RL or sequential decision method and the IT incident setting, and uses exact phrases for the setting.
+
+Keywords were defined from the research questions and organised into three blocks: method terms (block~A), setting terms (block~B) and decision terms (block~C). Synonyms within a block were joined with OR and the blocks were joined with AND. Table~\ref{tab:keywords} lists the keywords and shows where each appears in the string. Table~\ref{tab:string} gives the string in full for Scopus. The string was adapted for IEEE Xplore, with each term restricted to the abstract and title fields, and for the ACM Digital Library, with the search restricted to the title, abstract and author keywords; because the ACM Digital Library has no proximity operator, the clause \texttt{"root cause" W/5 (\ldots)} was replaced with \texttt{"root cause" AND (\ldots)}. \todo{Insert the strings exactly as they were run in IEEE Xplore and the ACM Digital Library, and the number of results each site reported.}
+
+\begin{table}[!t]
+\centering
+\caption{Keywords and Their Use in the Search String}
+\label{tab:keywords}
+\footnotesize
+\begin{tabularx}{\columnwidth}{@{}lLL@{}}
+\toprule
+No. & Keyword & Block in the search string \\
+\midrule
+1 & Reinforcement learning & A (method) \\
+2 & Sequential decision-making & A, as MDP, POMDP and bandit terms \\
+3 & POMDP & A (method) \\
+4 & IT incident management & B (setting) \\
+5 & Incident triage & B (setting) \\
+6 & Incident response & B (setting) \\
+7 & AIOps & B (setting) \\
+8 & Root cause analysis & B, limited to computing systems \\
+9 & Escalation & C; block dropped (see text) \\
+10 & Human-in-the-loop & C; block dropped \\
+11 & Information gathering & C; block dropped \\
+12 & Safe reinforcement learning & C; block dropped \\
+13 & Shielding & C; block dropped \\
+14 & Operational constraints & C; block dropped \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table*}[!t]
+\centering
+\caption{Search String for Scopus as Specified in the Protocol}
+\label{tab:string}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}lL@{}}
+\toprule
+Block & Text \\
+\midrule
+A (method) & TITLE-ABS-KEY( "reinforcement learning" OR "deep Q-network*" OR "Q-learning" OR "policy gradient" OR "actor-critic" OR "proximal policy optimi*" OR "Markov decision process*" OR "partially observable Markov" OR POMDP OR "contextual bandit*" OR "multi-armed bandit*" ) \\
+B (setting) & AND TITLE-ABS-KEY( "incident management" OR "incident response" OR "incident triage" OR "incident handling" OR "incident resolution" OR "incident mitigation" OR AIOps OR "IT operations" OR "IT service management" OR ITSM OR "site reliability" OR "service desk" OR "help desk" OR "trouble ticket*" OR "ticket routing" OR "ticket assignment" OR "alert triage" OR "alert prioriti*" OR "security operations cent*" OR "automated remediation" OR ( "root cause" W/5 ( microservice* OR cloud OR "online service*" OR "IT system*" ) ) ) \\
+C (decision), dropped & AND TITLE-ABS-KEY( triage OR escalat* OR defer* OR "human-in-the-loop" OR "human in the loop" OR "human oversight" OR investigat* OR diagnos* OR "information gathering" OR "information acquisition" OR remediat* OR mitigat* OR constrain* OR shield* OR "safe reinforcement learning" OR "action mask*" OR "partial* observ*" OR uncertain* OR ambigu* ) \\
+Limits & AND PUBYEAR $>$ 2014 AND PUBYEAR $<$ 2027 AND ( LIMIT-TO(DOCTYPE,"ar") OR LIMIT-TO(DOCTYPE,"cp") ) AND LIMIT-TO(LANGUAGE,"English") \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+The string was checked against a benchmark set of seven studies already known to be relevant: Alauthman et al.~\cite{alauthman2026}, Hammar and Li~\cite{hammar2025}, Hammar et al.~\cite{hammar2026belief}, Wang et al.~\cite{wang2023hrlhf}, Ding et al.~\cite{ding2023}, Ren et al.~\cite{ren2025} and Dunsin et al.~\cite{dunsin2025}. Block~C failed this check. The studies of Hammar and Li and of Hammar et al.\ are in the exports and match blocks A and B, but their abstracts use none of the block~C terms, so the full string excluded them. Block~C was therefore dropped, and the string that defines the review is blocks A and B with the limits. Dropping it added 30 records to screening. Six of the seven benchmark studies pass the final string. The seventh, Ren et al.~\cite{ren2025}, is not among the exported records, and it is handled by citation searching. The decision terms of block~C are kept as data items in the extraction form (Table~\ref{tab:extraction}) rather than as search terms.
+
+The exports did not match the string as specified. The Scopus export contains records of excluded document types, such as reviews and books, and 630 of the 1,000 ACM records are whole proceedings volumes, which a search restricted to titles and abstracts would not return. Blocks A and B and the protocol limits were therefore applied again to the title, abstract and keywords of every exported record with a script, and the records removed in this way are reported in Fig.~\ref{fig:prisma} as removed by automation. Records without an abstract were checked by their titles; four were removed by the string, and none of them was in scope.
+
+Two further problems affect the completeness of the identification stage. IEEE Xplore returned only five records, which suggests that the search or the export failed, and the ACM export holds exactly 1,000 records, which is the export limit of that site. \todo{Re-run the IEEE Xplore and ACM Digital Library searches with the field restrictions above, export all results with abstracts, and update the counts in this section, Table~\ref{tab:reconcile} and Fig.~\ref{fig:prisma}.}
+
+\subsection{Eligibility Criteria}
+
+The criteria in Table~\ref{tab:criteria} were written before screening and are linked to the research questions. Studies from security operations and cybersecurity incident response were kept within scope, because most of the RL work on incident handling comes from that setting~\cite{ren2025,dunsin2025,hammar2025,alauthman2026}. Their setting is recorded during extraction so that it can be separated from IT service incidents in the synthesis.
+
+\begin{table*}[!t]
+\centering
+\caption{Eligibility Criteria}
+\label{tab:criteria}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}p{1.3cm}LL@{}}
+\toprule
+Criterion & Inclusion & Exclusion \\
+\midrule
+Method & IC1: A primary study that proposes or evaluates an RL or sequential decision-making method (MDP, POMDP or bandit) & RL named only as one unspecified component of a larger framework, or used only to train a model and not as a decision policy (IC1) \\
+Setting & IC2: Incidents in computing systems: IT services, cloud, microservices, networks, or security incident response in IT and OT networks & EC1: Not a computing incident (for example medical triage, traffic, emergency response, power-grid or physical faults) \\
+Decision & IC3: The agent makes at least one triage-relevant decision: gathering diagnostic information, choosing a remediation or response action, escalating or deferring to a human, or assigning or prioritising the incident & EC2: Resource management only (autoscaling, scheduling, routing, load balancing, caching); EC3: detection or classification only, with no decision after detection; EC4: offensive security (penetration testing, attack generation) \\
+Agent type & --- & EC5: A language-model agent whose policy is not trained with RL and not formulated as an MDP or POMDP \\
+Evidence & IC4: A quantitative evaluation in simulation, on a benchmark or on real data & Framework or design papers with no reported results (IC4) \\
+Publication type & IC5: Peer-reviewed journal or conference paper & EC6: Reviews and surveys, position papers, workshop summaries, theses, book chapters, posters and extended abstracts \\
+Period, language & IC5: Published 2015--2026, in English & Published before 2015 or in another language \\
+Duplication & --- & EC7: A duplicate or an earlier version of an included study; the most complete version is kept \\
+Access & IC5: Full text obtainable & EC8: Full text unobtainable \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\subsection{Record Management and Duplicate Removal}
+
+Records were exported as a CSV file from Scopus and as BibTeX files from IEEE Xplore and the ACM Digital Library, and combined into one list with a script. Duplicates were identified first by DOI and then by normalised title (lower case, with all characters other than letters and digits removed). Seventy-three duplicate records were removed, leaving 4,326. Where a duplicate pair had an abstract in one copy only, the copy with the abstract was kept. The script, the screening decisions and a record of each count are kept with the review files.
+
+\subsection{Screening and Selection}
+\label{sec:screening}
+
+Screening has two stages. In the first stage, the title and abstract of each of the 131 records that passed the automated filters were screened against the criteria. The criteria were applied in the order shown in Table~\ref{tab:criteria}, and the first criterion clearly failed was recorded as the reason for exclusion. Where an abstract did not make clear whether RL was the method under study, the record was kept for full-text screening.
+
+Two interpretive rules were applied at this stage and are stated here so that the decisions can be reproduced. First, under IC1, a record was excluded when its abstract named RL only as one unspecified part of a framework that combines several techniques, or used RL only to fine-tune a model such as a language model or a ticket summariser. Second, under IC3, root cause analysis in which the agent decides which part of a system to examine next, or when to stop examining, was counted as a diagnostic decision of the information-gathering kind. Two records were excluded under EC7 as earlier versions of included studies by the same authors.
+
+Of the 131 records, 84 were excluded and 47 were kept for full-text retrieval. Table~\ref{tab:reasons} gives the reasons for exclusion. The 47 reports were divided into two priority groups to order retrieval: 25 address information gathering, triage, escalation, constraints or partial observability, and 22 use RL only to select response or remediation actions. The priority groups do not affect eligibility. Every screened record, with its source, decision and reason, is listed in the screening file that accompanies this review.
+
+In the second stage, each retrieved report will be read in full and assessed against the same criteria in the same order. Reports that cannot be obtained will be counted as not retrieved.
+
+The title and abstract decisions were made with an AI assistant and were not independently duplicated. \todo{Confirm that you have reviewed the 131 decisions, and record any you changed.} To measure agreement, a second reviewer will independently screen a random sample of 20\% of the records, about 26, and Cohen's kappa will be reported. \todo{Name the second reviewer once agreed, and report kappa.}
+
+\begin{table}[!t]
+\centering
+\caption{Primary Reasons for Exclusion at Title and Abstract Screening}
+\label{tab:reasons}
+\footnotesize
+\begin{tabularx}{\columnwidth}{@{}lLr@{}}
+\toprule
+Code & Reason & Records \\
+\midrule
+EC1 & Not a computing incident & 22 \\
+IC1 & RL not the method under study & 19 \\
+EC6 & Review, position paper or workshop summary & 12 \\
+EC2 & Resource management only & 11 \\
+EC3 & Detection or classification only & 9 \\
+IC4 & No quantitative evaluation & 3 \\
+IC3 & No triage-relevant decision & 2 \\
+EC5 & Language-model agent without an RL policy & 2 \\
+EC7 & Earlier version of an included study & 2 \\
+IC2 & Not incident handling (predictive maintenance) & 1 \\
+EC4 & Offensive security & 1 \\
+\midrule
+ & Total excluded & 84 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[!t]
+\centering
+\caption{PRISMA Reconciliation (Provisional, Before the Re-run of IEEE Xplore and ACM Digital Library)}
+\label{tab:reconcile}
+\footnotesize
+\begin{tabularx}{\columnwidth}{@{}Lrl@{}}
+\toprule
+Stage & $n$ & Derivation \\
+\midrule
+Records identified & 4,399 & 3,394 + 5 + 1,000 \\
+Duplicates removed & 73 & \\
+Removed by automation: document type & 1,462 & \\
+Removed by automation: year & 32 & \\
+Removed by automation: no block~A term & 2,270 & \\
+Removed by automation: no block~B term & 431 & \\
+Records screened & 131 & 4,399 $-$ 73 $-$ 4,195 \\
+Records excluded & 84 & Table~\ref{tab:reasons} \\
+Reports sought for retrieval & 47 & 131 $-$ 84 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{figure}[!t]
+\centering
+\fbox{\parbox{0.92\columnwidth}{\centering\footnotesize
+\textbf{Identification}\\
+Records identified: Scopus 3,394; IEEE Xplore 5; ACM Digital Library 1,000 ($n$ = 4,399)\\
+$\downarrow$ Duplicates removed ($n$ = 73)\\
+$\downarrow$ Removed by automation ($n$ = 4,195): document type 1,462; year 32; string 2,701\\[3pt]
+\textbf{Screening}\\
+Records screened ($n$ = 131) $\rightarrow$ excluded ($n$ = 84)\\
+$\downarrow$\\
+Reports sought for retrieval ($n$ = 47)\\
+$\downarrow$\\
+Reports assessed for eligibility: \todo{after full-text screening}\\[3pt]
+\textbf{Included}\\
+Studies included: \todo{after full-text screening}}}
+\caption{Provisional PRISMA 2020 flow of records. \todo{Replace with the full PRISMA 2020 diagram, including citation searching, once full-text screening is complete.}}
+\label{fig:prisma}
+\end{figure}
+
+\subsection{Reports Identified Through Other Methods}
+\label{sec:other}
+
+Backward and forward citation searching, one level deep, will be carried out from the included studies. The benchmark studies that the database searches did not return will also be assessed through this route. Ren et al.~\cite{ren2025} is not among the exported records. Kim and D\'{a}n~\cite{kim2025} and Hammar et al.~\cite{hammar2026llm} are among them, but their abstracts contain no RL, MDP or POMDP term, so they failed block~A; at full text they will be assessed against IC1 like any other report. Reviews and surveys excluded under EC6 at screening, such as the review of AI in the cybersecurity incident response lifecycle found by the search, will be used as sources for citation searching and not as evidence. All reports found in this way will be assessed against the same criteria as the database reports.
+
+Background citations and included evidence are kept separate in this review. A source cited in the Introduction to describe the problem is not evidence for a research question unless it also passes the eligibility criteria.
+
+\subsection{Data Extraction}
+
+A structured extraction form will be completed for each included study, with fields mapped to the objectives (Table~\ref{tab:extraction}). Where a study does not report a field, the field will be recorded as not reported, and no value will be inferred.
+
+\begin{table}[!t]
+\centering
+\caption{Data Extraction Fields}
+\label{tab:extraction}
+\footnotesize
+\begin{tabularx}{\columnwidth}{@{}lL@{}}
+\toprule
+Category & Fields \\
+\midrule
+Bibliographic & Authors, year, venue, setting (IT service, cloud or microservice, security) \\
+SO1 / SRQ1 & Task; formulation (MDP, POMDP, bandit); state or observation; belief model; how noise, missing data or ambiguity is represented \\
+SO2 / SRQ2 & Action set; whether it includes information gathering, recommending or acting, and escalation or deferral; reward design; algorithm; role of the human \\
+SO3 / SRQ3 & Type of constraint; how it is enforced; what replaces a blocked action; reported violations \\
+SO4 / SRQ4 & Environment, simulator or dataset; baselines; metrics and their definitions \\
+SO5 / SRQ5 & Conditions under which robustness is tested; how results change; limitations stated \\
+Quality & Ratings on the checklist in Table~\ref{tab:quality} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Quality Assessment}
+
+The included studies will be appraised with the eight-item checklist in Table~\ref{tab:quality}. It was written for this review from what an RL study of incident handling should report, and it is not a published or validated instrument. Each item will be rated as met, partly met or not met, and the basis of each rating will be recorded. No study will be excluded on quality grounds. The ratings will be used to qualify the synthesis, so that a result from a study with a weak rating is not given the same weight as one from a study with a strong rating.
+
+\begin{table}[!t]
+\centering
+\caption{Reporting and Validation Checklist for the Included Studies}
+\label{tab:quality}
+\footnotesize
+\begin{tabularx}{\columnwidth}{@{}lp{1.9cm}L@{}}
+\toprule
+Item & Question & Rated as met when (partly met when) \\
+\midrule
+Q1 & Formulation stated & States, actions and reward are defined (only some of them are) \\
+Q2 & Environment described & The simulator, benchmark or dataset is named or described well enough to rebuild (its type is given only) \\
+Q3 & Baselines compared & At least one non-learning or rule-based policy is evaluated in the same environment (only variants of the proposed agent are compared) \\
+Q4 & Metrics defined & Every reported metric is defined (some are) \\
+Q5 & Repeated runs & Results are reported over several random seeds with a measure of variance (several runs without variance) \\
+Q6 & Test conditions & The agent is tested on scenarios or conditions not used in training (on the training scenarios only) \\
+Q7 & Limitations stated & The study states its own limitations (a caveat is made in passing) \\
+Q8 & Reproducible details & Hyperparameters are reported and code or environment is public (one of the two) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Synthesis Method}
+
+The evidence will be synthesised narratively and organised by review question. For each question, the extracted items will be grouped into themes, and each theme will be recorded with the studies that support it. Reported results will be tabulated as published. No meta-analysis is planned, because the studies are expected to use different environments, action sets and metrics; whether that expectation holds will be checked after extraction. Results from security settings and from IT service settings will be reported separately where they differ.
+
+\section*{Declaration of AI Assistance}
+
+An AI assistant (Claude, Anthropic) was used in preparing this review. It helped design the protocol, wrote the script that combined the exports, removed duplicates and applied the search string, made the title and abstract screening decisions, and drafted this text. \todo{State what you reviewed and changed, in line with the department's AI policy.} Every decision and count is recorded in the screening files that accompany this review so that it can be checked against the source records.
+
+\bibliographystyle{IEEEtran}
+\bibliography{../thesis/citations/references,slr_extra}
+
+\end{document}
