@@ -1,86 +1,49 @@
-% Investigate, Recommend or Escalate: A Rule-Constrained Reinforcement Learning Agent for IT Incident Triage under Ambiguous Evidence
+% Investigate, Recommend or Escalate: A Rule-Constrained Reinforcement Learning Agent
+% for IT Incident Triage under Ambiguous Evidence
 %
-% Compile this file, not the chapter files:
-%   pdflatex Opol_Charis_Thesis
-%   bibtex Opol_Charis_Thesis
-%   pdflatex Opol_Charis_Thesis
-%   pdflatex Opol_Charis_Thesis
-% or simply:  latexmk -pdf Opol_Charis_Thesis
+% Laid out on the department template (_U_Proposal_Report_template_2026_CS_DS_Undergraduate.zip),
+% the same layout as the proposal in ../proposal/.
+%
+% Build from this folder:   ..\..\tools\tectonic.exe Opol_Charis_Thesis.tex
 %
 % Layout:
-%   Opol_Charis_Thesis.tex    preamble, title block, chapter order, bibliography
+%   Opol_Charis_Thesis.tex    preamble, title page, chapter order, bibliography
 %   chapters/                 one file per chapter (body text only)
 %   images/                   figures
 %   citations/references.bib  all references, shared by every chapter
 
-\documentclass[12pt,a4paper]{article}
-
+\documentclass[12pt]{report}
+\usepackage{appendix}
 \usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
-\usepackage[margin=1in]{geometry}
-\usepackage{setspace}
-\usepackage{parskip}
 \usepackage{graphicx}
+\usepackage{color}
+\usepackage[table]{xcolor}
+\usepackage{longtable}
+\usepackage[paper=a4paper,bottom=2cm,footskip=0.25cm,top=2cm,headsep=0.25cm,rmargin=2cm,lmargin=2cm]{geometry}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage[parfill]{parskip}
 \usepackage{enumitem}
-\usepackage{cite}
-\usepackage{xcolor}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{booktabs}
-\usepackage{tabularx}
-\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{cite}
 \usepackage[hyphens]{url}
-\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue]{hyperref}
 
-\graphicspath{{images/}}
-
-\onehalfspacing
-\emergencystretch=1.5em
-
-% Print URLs in the reference list in typewriter type, as in the sample chapter.
-\makeatletter
-\def\url@samestyle{}
-\makeatother
-\setlist{itemsep=0.6em}
-
-% ---------------------------------------------------------------------------
-% Chapters
-% ---------------------------------------------------------------------------
-% \chapterheading{ONE}{INTRODUCTION} prints
-%     CHAPTER ONE
-%     1. INTRODUCTION
-% starts a new page (except for the first chapter), and restarts the numbering
-% of sections, figures, tables and equations as 1.1, 1.2, ... for that chapter.
-
-\newcounter{chapnum}
-
-\newcommand{\chapterheading}[2]{%
-  \ifnum\value{chapnum}>0 \clearpage\fi
-  \stepcounter{chapnum}%
-  \setcounter{section}{0}%
-  \setcounter{figure}{0}%
-  \setcounter{table}{0}%
-  \setcounter{equation}{0}%
-  \section*{CHAPTER #1}%
-  \section*{\arabic{chapnum}. #2}%
+\usepackage{hyperref}
+\usepackage{mathtools}
+\hypersetup{
+    colorlinks=false,
+    linktoc=all,
+    linkcolor=blue,
 }
 
-\renewcommand{\thesection}{\arabic{chapnum}.\arabic{section}}
-\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
-\renewcommand{\thefigure}{\arabic{chapnum}.\arabic{figure}}
-\renewcommand{\thetable}{\arabic{chapnum}.\arabic{table}}
-\renewcommand{\theequation}{\arabic{chapnum}.\arabic{equation}}
+\setcounter{secnumdepth}{3}    % Number subsubsections in the chapters
+\setcounter{tocdepth}{3}       % Put subsubsections in the table of contents
 
-% Keep hyperref's internal link names unique when the counters restart.
-\providecommand{\theHsection}{}
-\providecommand{\theHfigure}{}
-\providecommand{\theHtable}{}
-\providecommand{\theHequation}{}
-\renewcommand{\theHsection}{\arabic{chapnum}.\arabic{section}}
-\renewcommand{\theHfigure}{\arabic{chapnum}.\arabic{figure}}
-\renewcommand{\theHtable}{\arabic{chapnum}.\arabic{table}}
-\renewcommand{\theHequation}{\arabic{chapnum}.\arabic{equation}}
+\graphicspath{{images/}}
+\emergencystretch=1.5em
+\setlist{itemsep=0.4em}
 
 % ---------------------------------------------------------------------------
 % Table helpers (Chapters Two and Three)
@@ -90,29 +53,90 @@
 \newcommand{\cellno}{--}
 \newcolumntype{L}{>{\raggedright\arraybackslash}X}
 
-\begin{document}
+%%%% Student data fields %%%%
+\newcommand\theResearchTopic{\textit{Investigate, Recommend or Escalate: A Rule-Constrained Reinforcement Learning Agent for IT Incident Triage under Ambiguous Evidence}}
 
-\begin{center}
-  {\LARGE\bfseries Investigate, Recommend or Escalate:\\[2pt]\Large A Rule-Constrained Reinforcement Learning Agent\\for IT Incident Triage under Ambiguous Evidence\par}
-  \vspace{1.5em}
-  {\large OPOL CHARIS\\
-  S24B23/003\\
-  B29654\par}
-\end{center}
-\vspace{1.5em}
+\newcommand\theStudentName{\textit{OPOL CHARIS}}
+\newcommand\theStudentRegNo{\textit{S24B23/003}}
+\newcommand\theStudentNo{\textit{B29654}}
+\newcommand\theStudentEmail{\textit{charisopol@gmail.com}}
+\newcommand\theStudentPhoneNo{\textit{0765821211}}
+
+\newcommand\theSpecializationTrack{\textit{Artificial Intelligence and Robotics}}
+
+\newcommand\thePrimaryAdvisor{\textit{\textcolor{red}{IAN RAYMOND OSOLO}}}
+
+\newcommand\theProgrameAward{Bachelor of Science in Computer Science}
+\newcommand\theTheDocumentType{report}
+\newcommand\theFinalOutputDocument{Degree}
+
+\newcommand\theFaculty{Faculty of Engineering Design \& Technology}
+\newcommand\theDepartment{Department of Computing \& Technology}
+
+\newcommand\theVersionDate{\textit{\textcolor{red}{[Enter Version Date]}}}
+
+\newcommand\makLogo{\includegraphics[scale=.3]{../proposal/images/logos/UCU-Logo.png}}
+
+
+\pagenumbering{roman}
+\begin{document}
+    %%---- Title page
+    \begin{titlepage}
+        \centering
+        \makLogo  \\
+         \theDepartment \\
+    	\vspace{1cm}
+        \Large{
+            \theResearchTopic \\
+
+            \vspace{.5cm}
+            \textit{By}\\
+            \vspace{.5cm}
+            \theStudentName\\
+
+            Reg No: \theStudentRegNo, Student No: \theStudentNo  \\
+            E-mail: \theStudentEmail, Phone No:  \theStudentPhoneNo\\
+
+            \vspace{1cm}
+
+            A \theTheDocumentType~submitted to the \theFaculty~for the study leading to the \theFinalOutputDocument~in partial fulfilment of the requirements for the award of \textbf{\theProgrameAward}~of Uganda Christian University \\
+
+            \vspace{1cm}
+
+            SPECIALIZATION TRACK: \theSpecializationTrack\\
+              \vspace{1cm}
+            \thePrimaryAdvisor \\
+
+             \vspace{1cm}
+            \theVersionDate \\
+       }
+    \end{titlepage}
+
+\tableofcontents
+\listoffigures
+\listoftables
 
 % ---------------------------------------------------------------------------
 % Chapters: comment a line out to leave a chapter out of the build.
 % ---------------------------------------------------------------------------
+\chapter{Introduction}
+\label{ch:chapter-01}
+\pagenumbering{arabic}
 \input{chapters/chapter1_introduction}
+
+\chapter{Literature Review}
+\label{ch:chapter-02}
 \input{chapters/chapter2_literature_review}
+
+\chapter{Methodology}
+\label{ch:chapter-03}
 \input{chapters/chapter3_methodology}
 
 % ---------------------------------------------------------------------------
 % References: one list for the whole document, numbered in order of citation.
 % ---------------------------------------------------------------------------
-\clearpage
 \bibliographystyle{IEEEtran}
 \bibliography{citations/references}
+\addcontentsline{toc}{chapter}{REFERENCES}
 
 \end{document}
