@@ -1,0 +1,55 @@
+% PRISMA 2020 flow diagram. All counts come from tables/counts.tex.
+\begin{figure*}[!t]
+\centering
+\footnotesize
+\begin{tikzpicture}[
+  node distance=5mm and 9mm,
+  box/.style={draw, rectangle, align=left, text width=6.4cm, inner sep=4pt},
+  side/.style={draw, rectangle, align=left, text width=6.6cm, inner sep=4pt},
+  stage/.style={draw, rectangle, fill=gray!15, minimum height=1.2cm, text width=2.2cm, align=center, font=\footnotesize\bfseries},
+  arr/.style={-{Stealth[length=2mm]}}
+]
+\node[box] (id) {Records identified from databases ($n=\NIdentified$):\\
+\quad Scopus ($n=\NScopus$)\\
+\quad ACM Digital Library ($n=\NACM$)\\
+\quad IEEE Xplore ($n=\NIEEE$)};
+\node[side, right=of id] (rm) {Records removed before screening:\\
+\quad Duplicates ($n=\NDuplicates$)\\
+\quad Removed by automation ($n=\NAuto$):\\
+\qquad document type ($n=\NAutoType$)\\
+\qquad publication year ($n=\NAutoYear$)\\
+\qquad string blocks not matched ($n=\NAutoString$)};
+
+\node[box, below=12mm of id] (scr) {Records screened on title and abstract\\($n=\NScreened$)};
+\node[side, right=of scr] (exta) {Records excluded ($n=\NExclTA$)\\(reasons in Table~\ref{tab:tareasons})};
+
+\node[box, below=10mm of scr] (sought) {Reports sought for retrieval ($n=\NSought$)};
+\node[side, right=of sought] (nr) {Reports not retrieved ($n=\NNotRetrieved$):\\
+\quad closed access or abstract only ($n=\NNotRetClosed$)\\
+\quad no full text and no reason recorded ($n=\NNotRetNoRecord$)};
+
+\node[box, below=16mm of sought] (ass) {Reports assessed for eligibility ($n=\NAssessed$)};
+\node[side, right=of ass] (exft) {Reports excluded ($n=\NExclFT$):\\
+\quad classifier or detector evaluation only ($n=\NFTDetect$)\\
+\quad no measured results ($n=1$)\\
+\quad out of scope, manual judgement ($n=1$)\\
+\quad not in English ($n=1$)};
+
+\node[box, below=14mm of ass] (inc) {Studies included in the review ($n=\NIncluded$)\\Reports of included studies ($n=\NIncluded$)};
+
+\draw[arr] (id) -- (scr);
+\draw[arr] (id) -- (rm);
+\draw[arr] (scr) -- (sought);
+\draw[arr] (scr) -- (exta);
+\draw[arr] (sought) -- (ass);
+\draw[arr] (sought) -- (nr);
+\draw[arr] (ass) -- (inc);
+\draw[arr] (ass) -- (exft);
+
+\node[stage, left=6mm of id, minimum height=2.0cm] {Identification};
+\node[stage, minimum height=4.6cm] at ($(scr.west)!0.5!(ass.west) + (-17.5mm,0)$) {Screening};
+\node[stage, left=6mm of inc] {Included};
+\end{tikzpicture}
+\caption{PRISMA 2020 flow diagram for new systematic reviews which included searches of databases only. Citation searching was not carried out.}
+\label{fig:prisma}
+\end{figure*}

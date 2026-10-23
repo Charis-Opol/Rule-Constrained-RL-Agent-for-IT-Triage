@@ -1,0 +1,83 @@
+% Systematic literature review: Reinforcement learning for investigating, acting and escalating
+% in IT incident triage and response.
+%
+% Build from this folder:   ..\..\tools\tectonic.exe main.tex
+% Before building after a change to the data, regenerate tables and references:
+%                           python -I audit/generate.py
+% See README.md for the project layout.
+
+\documentclass[journal]{IEEEtran}
+
+\usepackage{fontspec}
+\setmainfont{texgyretermes}[Extension=.otf,UprightFont=*-regular,BoldFont=*-bold,ItalicFont=*-italic,BoldItalicFont=*-bolditalic]
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,fit,calc}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usepackage{cite}
+\usepackage[hyphens]{url}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue]{hyperref}
+
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcommand{\todo}[1]{\textcolor{red}{[TO DO: #1]}}
+\newcommand{\orcid}{\href{https://orcid.org/0009-0003-7417-7984}{\raisebox{-0.15em}{\includegraphics[height=0.95em]{figures/orcid.png}}}}
+% Table row files are read with the primitive \input so they can sit inside tabular environments.
+\makeatletter
+\newcommand{\inputrows}[1]{\@@input #1 }
+\makeatother
+
+% Abstract and keyword headings with a colon instead of the class's em dash.
+\renewenvironment{abstract}{\par\noindent\small\bfseries\textit{Abstract:}\ }{\par\vspace{0.6\baselineskip}}
+\renewenvironment{IEEEkeywords}{\par\noindent\small\bfseries\textit{Index Terms:}\ }{\par\vspace{0.6\baselineskip}}
+
+\input{tables/counts}
+
+\begin{document}
+
+\title{Reinforcement Learning for Investigating, Acting and Escalating in IT Incident Triage and Response: A Systematic Literature Review}
+
+\author{Charis~Opol~\orcid\\
+Registration No.\ S24B23/003 $\cdot$ B29654@students.ucu.ac.ug\\
+Department of Computing and Technology, Faculty of Engineering, Design and Technology\\
+Uganda Christian University}
+
+\maketitle
+
+\input{sections/abstract}
+
+\begin{IEEEkeywords}
+Reinforcement learning, sequential decision-making, POMDP, IT incident management, incident triage, incident response, alert triage, AIOps, root cause analysis, escalation, safe reinforcement learning, PRISMA.
+\end{IEEEkeywords}
+
+\input{tables/tab_abbreviations}
+
+\input{sections/introduction}
+\input{sections/methodology}
+\input{sections/results}
+\input{sections/discussion}
+\input{sections/limitations}
+\input{sections/future_work}
+\input{sections/conclusion}
+
+\section*{Declaration of AI Assistance}
+\input{sections/ai_declaration}
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\onecolumn
+\appendices
+\input{appendices/appendix_a_decision_log}
+\input{appendices/appendix_b_characteristics}
+\input{appendices/appendix_c_coverage}
+\input{appendices/appendix_d_quality}
+
+\end{document}

@@ -11,7 +11,7 @@ When an IT incident is reported, its cause is often unclear: evidence is missing
 2. **recommend a fix** that the organisation's operational rules permit, or
 3. **escalate** the incident to a human expert.
 
-An independent rule-based safety mechanism checks every proposal. A blocked proposal goes back to the agent once; if the second proposal is also blocked, the incident is escalated. The agent (a deep Q-network, with PPO as a secondary check) is trained and evaluated **entirely in simulation**, in an environment built from scenarios elicited from the Directorate: 25 causes, 20 diagnostic checks and 10 operational rules, with controllable levels of missing, unreliable and overlapping evidence. It is compared with six baseline policies on decision quality, investigation efficiency, escalation behaviour and constraint compliance.
+An independent rule-based safety mechanism checks every proposal. A blocked proposal goes back to the agent once; if the second proposal is also blocked, the incident is escalated. The agent (a deep Q-network, with PPO as a secondary check) is trained and evaluated **entirely in simulation**, in an environment built from scenarios elicited from the Directorate: about 15 causes, 20 diagnostic checks and 10 operational rules, with controllable levels of missing, unreliable and overlapping evidence. It is compared with six baseline policies on decision quality, investigation efficiency, escalation behaviour and constraint compliance.
 
 **General objective:** to design and evaluate a rule-constrained reinforcement learning agent for ambiguity-aware IT incident triage that learns when to gather additional diagnostic information, recommend permitted actions, or escalate incidents to a human expert.
 

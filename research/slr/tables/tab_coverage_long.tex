@@ -1,0 +1,34 @@
+Ding et al. \cite{ding2023} & Decide which components to exclude from analysis & -- & -- & Action masking: Interpretable pruning action pool derived from engineers & -- \\
+Wang et al. \cite{wang2023hrlhf} & Choose which dependency to ask engineers about & -- & -- & None & -- \\
+Wang et al. \cite{wang2024mrca} & Expand a node or stop expanding the causal graph & -- & -- & Action masking: Expanded nodes masked & -- \\
+Peralta et al. \cite{peralta2025} & -- & Raise, keep or lower priority & -- & None: Fuzzy rule base defines states; no enforcement & Synthetic terminology drift: accuracy 82.9\% to 79.4\% \\
+Aenugu \cite{aenugu2026} & -- & Scale up or down, restart pod, reroute traffic, no-op & -- & None & Four workload levels \\
+Nimmathi \cite{nimmathi2026} & -- & Restart, reroute, rollback, scale, failover & -- & None: Plans checked against predefined safety constraints (not evaluated) & -- \\
+Rojas Rodriguez et al. \cite{rojasrodriguez2026} & Choose which node of the causal graph to visit next & -- & -- & Action masking: Invalid-action masking & Held-out cases on eight datasets \\
+Singh \cite{singh2026} & -- & Scale, throttle, restart, isolate, rollback & Hand-off to a human when the safety check fails (rule-triggered) & Hard filter or shield: Feasible action region plus deterministic execution guard; CMDP cost constraints. Blocked or uncertain cases: Routed to a human & -- \\
+Wu et al. \cite{wu2026} & Move to a neighbouring node or stop and declare the root cause & -- & -- & Action masking: Pruning of low-probability nodes & Dynamic topology (accuracy above 90\%); fault severity levels \\
+Yuan \cite{yuan2026} & -- & Scale, degrade service, shift traffic, rebuild pods, restart sidecars & -- & Reward penalty: Penalty of -2 for destructive actions & -- \\
+Tong et al. \cite{tong2020} & Select the subset of alerts for analysts to investigate within a budget & -- & -- & Expected-cost constraint: Hard investigation budget per period & Adversary adapting to the policy \\
+Alturkistani and El-Affendi \cite{alturkistani2022} & -- & Fix & Escalate to the next tier of SOC operators & None & -- \\
+Bhosale et al. \cite{bhosale2026} & -- & Allow or monitor & Escalate (creates a ServiceNow incident) & Reward penalty: Asymmetric reward penalising under-escalation & -- \\
+Kovtun et al. \cite{kovtun2026} & Defer to gather more context & Shallow triage & Escalate to deep analysis & Expected-cost constraint: Bounds on deep-analysis use and on the attack-miss rate; deep action unavailable when the analysis resource is unavailable & Load near capacity; chronological test split; 15 seeds \\
+Okafor \cite{okafor2026} & Investigate action & Contain action; Dismiss & Containment left to analysts in the deployment design (not learned) & Hard filter or shield: Deterministic severity floor in deployment: medium and high alerts cannot be auto-dismissed (design, not evaluated) & Chronological future test fold; five seeds; two datasets \\
+Sahin and Mert \cite{sahin2026} & Query logs, investigate lateral movement, query threat intelligence & Close as false positive & Escalate to incident response; defer the uncertain band to an analyst & Expected-cost constraint: Statistical error budgets on benign escalation and threat auto-close. Blocked or uncertain cases: Deferred to an analyst & Hardened regime; cross-dataset shift (deferral rose to 79-99\% for the worst classifiers) \\
+Nyberg and Johnson \cite{nyberg2024} & Analyse & Remove, restore & -- & Reward penalty: Restore actions are penalised & Unseen network sizes and an unseen attacker policy \\
+Castro et al. \cite{castro2025} & Analyse and monitor & Remove, restore, deploy decoy, block or allow zone traffic & -- & Reward penalty: Penalties when legitimate users lose service & Five attacker strategies \\
+Contractor et al. \cite{contractor2025} & Analyse (unmasked on detection or a message) & Remove, restore, block & -- & Action masking: Restore unmasked only for persistent threats; analyse only after a detection or message & Detection rate lowered to 50\%; false alerts from benign users; larger networks \\
+Hammar and Li \cite{hammar2025} & Analyse (CAGE-2) & Decoys, malware removal, restore & -- & Reward penalty: Service disruption and compromise costs & Misspecified model of decoy effectiveness \\
+Jaber et al. \cite{jaber2025} & Increase logging & Kill process, block outbound, filter traffic, take down network & -- & Reward penalty: Mission value threshold and risk penalty in the reward & -- \\
+Khozam et al. \cite{khozam2025} & -- & Raise or lower a host's bandwidth, or do nothing & -- & Reward penalty: Reward on benign packet loss and delay & Three attack types and randomised host positions \\
+Varsha et al. \cite{varsha2025} & -- & Deploy defences across ATT\&CK techniques & -- & Expected-cost constraint: Defence budget of 100 units, replenished each round & -- \\
+Hammar et al. \cite{hammar2026belief} & Analyse control (CAGE-2) & Recovery, decoy, removal and restore controls & -- & Reward penalty: Recovery and service disruption carry costs & Non-stationary scenarios on the testbed and CAGE-2 \\
+Koupaei and Demirkol \cite{koupaei2026} & -- & Micro-playbooks (isolate host, revoke credentials, restore, preserve evidence) & Notify a managed security provider (playbook) & Hard filter or shield: Allowable action set restricted by cost and time limits & -- \\
+Noorul Hassan and Sivaraman \cite{noorulhassan2026} & -- & Firewall rules, throttling, isolation, access revocation & -- & Reward penalty: Mitigation cost in the reward & -- \\
+Raj et al. \cite{raj2026} & -- & Mitigation actions (not listed) & -- & None & -- \\
+Hughes et al. \cite{hughes2022} & -- & 26 actions including block, shut down, disable interface, adjust plant valves, no action & -- & Reward penalty: Aggressive, balanced and remediation profiles encoded in the reward & -- \\
+Ravi et al. \cite{ravi2025} & -- & Deception, containment and isolation actions & -- & Hard filter or shield: Rule-based policy shield (legal, SLA and safety rules). Blocked or uncertain cases: Replaced by a safer alternative or a no-op, with a reward penalty & Trained on Sandworm and tested on unseen Wizard Spider and Turla profiles \\
+Saeed \cite{saeed2025} & -- & Block or counter-attack & -- & None & -- \\
+Babar et al. \cite{babar2026} & -- & Select detection and response threshold ranges & -- & Reward penalty: Cost of changing the selected range & -- \\
+Elicha and Lopez \cite{elicha2026} & -- & Void, restrict traffic, restrict credentials, kill processes & -- & Hard filter or shield: Expert rules decide known threats first; action reputation register; void action to ignore false positives & -- \\
+Dunsin et al. \cite{dunsin2025} & Choose the next forensic analysis step & -- & -- & None & -- \\
+Ghanem et al. \cite{ghanem2026} & Choose the next registry or timeline analysis step & -- & -- & Action masking: State-dependent action sets; expert policy graphs & -- \\

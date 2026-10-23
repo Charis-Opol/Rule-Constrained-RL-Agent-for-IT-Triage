@@ -1,0 +1,32 @@
+% Coverage of the review-question elements. Counts come from tables/fig_coverage_coords.tex.
+\input{tables/fig_coverage_coords}
+\begin{figure}[!t]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  xbar,
+  width=0.5\columnwidth,
+  height=6.4cm,
+  scale only axis,
+  xmin=0, xmax=\NIncluded,
+  xlabel={Studies (of \NIncluded)},
+  symbolic y coords/.expand once=\CoverageSymbols,
+  ytick=data,
+  y dir=reverse,
+  yticklabel style={font=\scriptsize, align=right},
+  xticklabel style={font=\scriptsize},
+  xlabel style={font=\scriptsize},
+  bar width=6pt,
+  nodes near coords,
+  nodes near coords style={font=\scriptsize},
+  enlarge y limits=0.05,
+  axis x line*=bottom,
+  axis y line*=left,
+]
+\edef\coverageplot{\noexpand\addplot[fill=gray!60, draw=none] coordinates {\CoverageCoords};}
+\coverageplot
+\end{axis}
+\end{tikzpicture}
+\caption{Number of included studies containing each element of the review questions.}
+\label{fig:coverage}
+\end{figure}

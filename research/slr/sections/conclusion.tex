@@ -1,0 +1,8 @@
+% ===========================================================================
+\section{Conclusion}
+\label{sec:conclusion}
+% ===========================================================================
+
+This review searched three databases for studies that apply RL or sequential decision-making to IT incident handling, screened \NScreened{} records, and included \NIncluded{} studies. Its findings answer the five review questions. Most studies formulate incident handling as a fully observed MDP, and only \NBelief{} keep an explicit belief over the hidden state. Information gathering is a common action, but escalation to a person is rare and often fixed by design, and only one study combines gathering, acting and escalating. Rule enforcement is usually a reward penalty; hard filters appear in \NShield{} studies, and only \NBlocked{} say what happens to a blocked decision. Decision quality is measured almost everywhere, while escalation and compliance are measured in few studies, and robustness is tested for the final decision but not for the mix of decisions.
+
+The parts of an agent that investigates, acts or escalates under explicit rules have each been studied, mostly for security incidents, but no included study combines them for IT service incidents. The evidence is recent, largely simulated and uneven in quality. Within those limits, the review supports the project's plan to study such an agent, and it indicates what the evaluation must include: controlled ambiguity, learned escalation with a cost, a record of every blocked proposal, and measures of escalation and compliance reported alongside decision quality.

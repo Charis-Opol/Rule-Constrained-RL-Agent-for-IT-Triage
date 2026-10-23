@@ -10,12 +10,16 @@ pushd research\thesis
 popd
 
 pushd research\slr
-"%TT%" slr_review.tex
+"%TT%" main.tex
 popd
 
 pushd documentation\milestone
 "%TT%" midsemester_summary.tex
 "%TT%" talking_points.tex
+popd
+
+pushd documentation\concept-note
+"%TT%" implementation_concept_note.tex
 popd
 
 pushd documentation\stakeholder\proposal

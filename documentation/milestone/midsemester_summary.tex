@@ -35,7 +35,6 @@
 
 \newcommand{\head}[1]{\par\vspace{4pt}{\bfseries\color{accent}\fontsize{10.4}{12}\selectfont #1}\par\vspace{0.5pt}}
 \newcommand{\lead}[1]{\textbf{#1}}
-\newcommand{\new}{\textcolor{newline}{\bfseries NEW}}
 
 \begin{document}
 
@@ -48,20 +47,20 @@
 {\bfseries\fontsize{11}{13}\selectfont Title: Rule-Constrained Reinforcement Learning for Ambiguity-Aware IT Incident Triage}
 
 \head{Problem and research objective}
-\lead{Problem.} When an IT incident is reported, support staff must act before they know the cause, and the first evidence is often incomplete or contradictory. They can check further, try a likely fix, or pass the incident to another technician. Current AI tools give one answer per ticket. They cannot ask for more evidence or signal that they are unsure~[1].
+\lead{Problem.} When an IT incident is reported, staff must act before they know the cause, and the first evidence is often incomplete or contradictory. They can investigate further, try a likely fix, or hand the incident to a more senior person. AI tools for IT operations (AIOps) give one answer per ticket: they cannot ask for more evidence, signal that they are unsure, or check their suggestion against the organisation's rules~[1].
 
-\lead{Objective.} To build and test an AI agent that learns when to check further, when to recommend a fix that the rules allow, and when to hand the incident to a human technician.
+\lead{Objective.} To build and evaluate an AI agent that learns when to investigate further, when to recommend a fix the rules allow, and when to escalate the incident to a human expert.
 
-\head{What exists, the gap and my contribution}
-\lead{What exists.}
+\head{What the research shows, the gap and my contribution}
+\lead{Systematic review} (PRISMA 2020; Scopus, IEEE Xplore, ACM Digital Library; 4,399 records screened down to \textbf{34 included studies})~[4]:
 \begin{itemize}
-  \item AI tools sort tickets using the report alone, but symptoms often do not reveal the cause, so tickets are passed between teams several times~[1].
-  \item ``Shielding'' stops a learning agent from breaking set rules, but it has been tested mainly on robots and games~[2].
-  \item ``Learning to defer'' passes hard cases to a person, but gives no option to gather more evidence first~[3].
+  \item 17 of the 34 studies let the agent gather information, but only 7 include escalation to a person, as in learning to defer~[3]. \textbf{Only one combines all three choices}, and there escalation is fixed by design, not learned.
+  \item Rule enforcement is mostly a reward penalty, which does not stop rule breaks~[2]. Only 5 studies use a hard rule filter (``shield''), and only 3 say what happens to a blocked decision.
+  \item Decision quality is measured in 31 studies; escalation in only 5 and rule compliance in 4.
 \end{itemize}
-\lead{Gap.} In the 46 sources I reviewed, these ideas appear only two at a time. No study puts all three choices in one agent for IT incidents, checks it against rules, and tests it as the evidence gets worse.
+\lead{Gap.} No reported agent \emph{learns} to investigate, act or escalate for IT service incidents under explicit rules, or is evaluated on all four measures as the evidence gets worse.
 
-\lead{Contribution.} (1)~A simulator of IT incidents in which the quality of the evidence can be turned up or down. (2)~An agent with the three choices and a separate rule checker. (3)~A fair comparison with six simpler strategies on four measures, not accuracy alone.
+\lead{Contribution.} (1)~An IT incident simulator built from UCU practice, with adjustable evidence quality. (2)~An agent with all three choices and a separate rule checker. (3)~A comparison with six strategies on four measures.
 
 \head{Full research pipeline}
 \vspace{1pt}
@@ -71,19 +70,19 @@
   box/.style={draw=boxline, fill=boxfill, rounded corners=2pt, line width=0.5pt, align=flush center, inner sep=3.2pt},
   newbox/.style={box, draw=newline, fill=newfill, line width=0.8pt},
   arr/.style={-latex, line width=0.6pt, draw=black!75}]
-  \node[box, text width=14.6cm] (input) {\textbf{INPUT: how IT incidents are handled in practice} (source: UCU Directorate of University ICT Services)\\
-    Causes, symptoms, diagnostic checks and operating rules. No personal data.};
-  \node[newbox, text width=17.7cm, below=3.2mm of input] (env) {\textbf{INCIDENT SIMULATOR} \;[\new]\\
-    25 causes, 20 checks (each with a cost) and 10 rules. Every simulated incident has a hidden cause.
-    Evidence can be made missing, wrong or confusing.};
+  \node[box, text width=14.6cm] (input) {\textbf{INPUT: how IT incidents are handled in practice} (source: UCU Directorate of University ICT Services, UIS)\\
+    Causes, symptoms, checks and rules via an elicitation workbook. No logs or personal data.};
+  \node[newbox, text width=17.7cm, below=3.2mm of input] (env) {\textbf{INCIDENT SIMULATOR} (Gymnasium)\\
+    About 15 causes in 4 categories, 20 checks (each with a cost) and 10 rules. Every simulated incident has a hidden cause.
+    Evidence can be made missing, wrong or overlapping between causes.};
   \node[box, text width=7.3cm, anchor=north west] (base) at ($(env.south west)+(0,-4mm)$) {\textbf{SIX COMPARISON STRATEGIES}\\
-    Guess from first symptoms; fixed checklist; always hand over; act when confident enough; learning agent with no rule checker; learning agent with penalties only};
-  \node[newbox, text width=9.7cm, anchor=north east] (agent) at ($(env.south east)+(0,-4mm)$) {\textbf{PROPOSED LEARNING AGENT (DQN)} \;[\new, under investigation]\\
-    The agent picks: \emph{run a check} \,|\, \emph{recommend a fix} \,|\, \emph{hand over}\\
-    \textbf{Rule checker:} allowed $\rightarrow$ applied; blocked $\rightarrow$ agent tries once more;\\ blocked again $\rightarrow$ handed to a technician};
+    Guess from first symptoms; fixed checklist; always escalate; act when confident enough; learning agent with no rule checker; learning agent with penalties only};
+  \node[newbox, text width=9.7cm, anchor=north east] (agent) at ($(env.south east)+(0,-4mm)$) {\textbf{PROPOSED LEARNING AGENT (DQN, 2$\times$128 network)}\\
+    36 actions: \emph{run one of 20 checks} \,|\, \emph{recommend one of 15 fixes} \,|\, \emph{escalate}\\
+    \textbf{Rule checker:} allowed $\rightarrow$ applied; blocked $\rightarrow$ agent tries once more;\\ blocked again $\rightarrow$ escalated to a human expert};
   \path let \p1=(base.south), \p2=(agent.south) in coordinate (lowy) at (0,{min(\y1,\y2)});
-  \node[box, text width=17.7cm, anchor=north] (out) at ($(env.south |- lowy) + (0,-4mm)$) {\textbf{RESULTS AND COMPARISON} (same simulated incidents for every strategy; each run repeated 10 times)\\
-    Four measures: correct and wrong fixes; cost of checks; whether the right incidents are handed over; rule breaks attempted.
+  \node[box, text width=17.7cm, anchor=north] (out) at ($(env.south |- lowy) + (0,-4mm)$) {\textbf{RESULTS AND COMPARISON} (same simulated incidents for every strategy; 10 training seeds)\\
+    Four measures: decision quality; investigation cost; escalation behaviour; rule compliance.
     All repeated as the evidence gets worse.};
   \draw[arr] (input) -- (env);
   \draw[arr] (env.south -| base.north) -- (base.north);
@@ -93,41 +92,41 @@
 \end{tikzpicture}
 \end{center}
 \vspace{-4pt}
-\lead{What is being researched:} how the three-way decision behaves under rules and poor evidence, not simply training a learning agent.
 
-\vspace{-2pt}
 \begin{minipage}[t]{0.485\textwidth}\raggedright
 \head{Progress to date}
 \lead{Done} (evidence in brackets)
 \begin{itemize}
-  \item Literature review: five databases searched, 46 sources reviewed, gap confirmed [Chapter 2].
-  \item Report: Chapters 1 to 3 written [40-page draft].
-  \item Design: simulator, agent, rule checker, comparisons and measures specified [Chapter 3].
-  \item Partner: the Directorate of University ICT Services has agreed to support the study.
+  \item \textbf{Approval:} UIS has approved the study and will supply the incident scenarios.
+  \item \textbf{Stakeholder interview} (19 Oct) with a UIS senior developer informed the design: application-led categories, API logs as evidence, escalation to a human expert [findings note].
+  \item \textbf{Systematic review:} 34 studies, gap confirmed [23-page draft]; \textbf{Chapters 1--3} drafted [42 pages].
+  \item \textbf{Elicitation workbook} ready: 15 causes, 20 checks, 10 rules [workbook].
+  \item \textbf{Environment:} construction started.
+  \item \textbf{Implementation plan} written [2-page concept note].
 \end{itemize}
 \vspace{1pt}
-\lead{Not yet done.} No code, no information collected from the Directorate and no experiments, so no results are claimed.
+\lead{Not yet done.} Elicitation session, training and experiments, so no results are claimed.
 \end{minipage}\hfill
 \begin{minipage}[t]{0.485\textwidth}\raggedright
-\head{Next six weeks}
+\head{Next five weeks}
 \begin{itemize}[label={}, leftmargin=0pt]
-  \item \lead{W1:} collect causes, checks and rules; build the simulator.
-  \item \lead{W2:} build the rule checker and comparison strategies; Directorate staff review the simulated incidents.
-  \item \lead{W3:} train the agent.
-  \item \lead{W4:} compare it with the six strategies.
-  \item \lead{W5:} test with worse evidence; analyse.
-  \item \lead{W6:} finish the prototype, poster and results.
+  \item \lead{W2 (26 Oct):} elicitation with UIS; finish the simulator; rule checker; first baselines.
+  \item \lead{W3 (2 Nov):} UIS staff review sample incidents; model frozen; train the agent (10 seeds).
+  \item \lead{W4 (9 Nov):} compare with the six strategies; ablations.
+  \item \lead{W5 (16 Nov):} test with worse evidence; analyse.
+  \item \lead{W6 (23 Nov):} prototype, poster and Chapter 4.
 \end{itemize}
 \vspace{1pt}
-\lead{Prototype.} The simulator and trained agent, with a simple screen that replays an incident step by step beside the comparison results.
+\lead{Prototype.} The simulator and trained agent, with a screen that replays an incident step by step beside the comparison results.
 
-\lead{Evaluation.} The four measures above, averaged over 10 runs.
+\lead{Evaluation.} The four measures above, mean of 10 seeds with 95\% confidence intervals.
 \end{minipage}
 
 \head{Key references}
 {\fontsize{8.2}{9.9}\selectfont
 [1]~Chen, Z., et al. (2020). Towards intelligent incident management: Why we need it and how we make it. \emph{Proc. ACM ESEC/FSE}, 1487--1497.
-[2]~Alshiekh, M., Bloem, R., Ehlers, R., Könighofer, B., Niekum, S., \& Topcu, U. (2018). Safe reinforcement learning via shielding. \emph{Proc. AAAI Conference on Artificial Intelligence}, 32(1).
-[3]~Madras, D., Pitassi, T., \& Zemel, R. (2018). Predict responsibly: Improving fairness and accuracy by learning to defer. \emph{Advances in Neural Information Processing Systems}, 31.\par}
+[2]~Alshiekh, M., Bloem, R., Ehlers, R., Könighofer, B., Niekum, S., \& Topcu, U. (2018). Safe reinforcement learning via shielding. \emph{Proc. AAAI}, 32(1).
+[3]~Madras, D., Pitassi, T., \& Zemel, R. (2018). Predict responsibly: Improving fairness and accuracy by learning to defer. \emph{NeurIPS}, 31.
+[4]~Opol, C. (2026). Reinforcement learning for investigating, acting and escalating in IT incident triage and response: A systematic literature review. Draft, Uganda Christian University.\par}
 
 \end{document}

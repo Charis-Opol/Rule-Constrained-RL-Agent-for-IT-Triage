@@ -4,7 +4,7 @@ Working notes for `Chapter_Three.tex`. Not for submission.
 
 ## 1. Decisions you made
 
-- Scale: 25 causes, 20 diagnostic checks, 10 operational rules.
+- Scale: about 15 causes, 20 diagnostic checks, 10 operational rules. (Reduced from 25 causes on 23 Oct 2026, before elicitation, to cut the cause–check ratings from 500 to 300 and keep the model reviewable; more causes are added if the Directorate can describe them well.)
 - Blocked proposals: reviewed once by the agent; a second block escalates the incident.
 - The Directorate of University ICT Services has agreed to support the study. The NDA is not mentioned in any chapter, as you asked.
 - Metrics are the standard ones from the reviewed literature.
@@ -16,7 +16,7 @@ These are written into the chapter as the plan. Change any of them before you st
 | Choice | What the chapter says | Why |
 |---|---|---|
 | Research design | Design-and-evaluate (design science), experiments in simulation | Fits the "how can / how well" research questions |
-| One remedy per cause | 25 recommend actions, one per cause; 46 actions in total | Keeps the model reviewable |
+| One remedy per cause | One recommend action per cause; 20 + K + 1 actions in total (36 with 15 causes) | Keeps the model reviewable |
 | Single cause, static check results | Stated as simplifying assumptions | Lets the evidence vector serve as the full state, so no recurrent network is needed |
 | Likelihood model | Probability of a positive result for each check and cause, elicited as expert judgements | The only parameters the simulator needs |
 | Incident context | Attributes such as production system and priority, visible to the agent | The rules need something to refer to |

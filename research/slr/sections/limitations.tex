@@ -1,0 +1,22 @@
+% ===========================================================================
+\section{Limitations}
+\label{sec:limitations}
+% ===========================================================================
+
+The limitations of this review lie in the evidence it found and in the way it was conducted.
+
+\subsection{Limitations of the Evidence}
+
+Most of the evidence comes from simulation. Of the \NIncluded{} studies, \NEnvSim{} built their own simulator, and only \NEnvOps{} used an organisation's operational data. Results from a simulator show what a policy can learn from the dynamics its authors chose, not how it will behave on real incidents. The evidence also leans towards security. Of the \NIncluded{} studies, \the\numexpr\NIncluded-\NSetITOPS\relax{} concern security operations, incident response, industrial systems or forensics, and most of the \NSetITOPS{} IT service studies concern root cause analysis rather than triage. Findings carried over from security alert triage to IT service incidents assume that the two decision problems are alike, which the studies do not test.
+
+The quality of the evidence is uneven. Of the included studies, \NQLow{} meet at most two of the eight checklist items, only \NQFive{} report variance over repeated runs, and only \NQEight{} give enough detail to repeat the work. Several studies contain internal inconsistencies (Section~\ref{sec:results}). The checklist itself was written for this review and has not been validated, so the ratings indicate reporting quality and should not be read as a measure of risk of bias. The studies differ too much in task, environment and metric for their results to be pooled, so the synthesis is narrative and the counts are descriptive.
+
+\subsection{Limitations of the Review Process}
+
+The search may have missed relevant studies. Only three databases were searched, and Web of Science and arXiv were not among them. The IEEE Xplore search was limited to open-access records and returned \NIEEE, so IEEE studies behind a paywall that Scopus does not index are missing. The ACM Digital Library export reached its limit of \NACM{} records, so records beyond that limit were not seen; most of the exported ACM records were proceedings volumes, which suggests that the all-fields search was too broad for that library. The year terms in the Scopus and ACM strings do not restrict publication year, and the year filter was applied afterwards by the script. Citation searching was planned but not carried out, and at least one known relevant study was therefore not found~\cite{ren2025}.
+
+Automated filtering removed \NAuto{} records by applying the string blocks to titles, abstracts and keywords. A relevant study that uses none of the method terms in these fields would have been removed without being read. Records without an abstract were judged on their titles alone.
+
+Seven reports could not be assessed. Five were closed access, only the landing page of a sixth was obtained, and for the seventh no full text is on file and no reason was recorded. One report was excluded because its full text is in French. The review cannot say whether these eight reports would have changed its findings; at least three of the unretrieved reports concern SOC alert prioritisation, which is close to the review's focus.
+
+Screening and extraction were not duplicated. The title and abstract decisions, the full-text assessments of the reports on file, the extraction and the quality ratings were made with an AI assistant, and two full-text decisions were made manually. The decision log, the extraction file and the quality ratings are provided so that every decision can be checked. Finally, the review was written to prepare for a particular study, and the themes were coded against that study's design. Section~\ref{sec:screening} and Appendix~\ref{app:decisionlog} state the decisions that required interpretation so that a reader can judge whether this framing affected them.

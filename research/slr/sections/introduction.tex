@@ -1,0 +1,44 @@
+% ===========================================================================
+\section{Introduction}
+% ===========================================================================
+
+\IEEEPARstart{O}{rganisations} depend on IT services that are expected to remain available, and incident management is the process that restores those services when they fail. Chen et al.\ describe it as the process of detecting a service problem, creating an incident, determining its cause, restoring the service, and capturing knowledge to prevent a recurrence~\cite{chen2020}. Triage is the stage at which a reported incident is assessed and directed towards resolution. Chen et al.\ define it as engaging the team responsible for investigating the problem~\cite{chen2020}, and Remil et al.\ use the term more broadly for the prioritisation, assignment and classification of incidents~\cite{remil2024}. In both descriptions, triage is a set of decisions made before the cause of the incident is known.
+
+These decisions are difficult because the evidence available when they are made is often incomplete or conflicting. In their study of incident management at Microsoft, Chen et al.\ found that distinct problems can produce similar symptoms, so that the symptoms alone may not identify the responsible team~\cite{chen2020}. Remil et al.\ note that data in real IT environments is commonly noisy and incomplete~\cite{remil2024}. Yet many triage models produce one prediction per incident report and are evaluated with classification or ranking metrics~\cite{remil2024}. A model of this kind returns an answer for every report. It has no way to state that more evidence is needed first, and no way to pass the incident to a person.
+
+Reinforcement learning (RL) offers a different framing. In RL, an agent learns a policy, which is a rule for choosing actions, by acting in an environment and receiving rewards that reflect the consequences of its actions~\cite{sutton2018}. When the agent cannot observe the true state of the environment, the problem can be described as a partially observable Markov decision process (POMDP), in which the agent keeps a belief about the hidden state and may choose an action for the information it yields, weighing the cost of that information against its value~\cite{kaelbling1998}. Under this framing, triage becomes a sequence of decisions: the agent can gather more evidence, recommend an action, or hand the incident to a human expert.
+
+Two further requirements follow when such an agent is meant for IT operations. The first is that its actions must respect operational rules. A reward signal alone does not ensure this, because penalising an undesirable action in the reward does not guarantee that the agent never selects it~\cite{konighofer2025}, and Remil et al.\ state that automatic healing actions need to be executed safely~\cite{remil2024}. The second is that the agent must know when to involve a person. Learning to defer trains a model to decide when a human should take over~\cite{madras2018}, and recent work treats escalation as a decision with costs in both directions, since a reviewer's attention is limited~\cite{turan2026}.
+
+The literature review for the project of which this review is part (Chapter Two of the project report) found that these strands have developed largely apart. Studies of information gathering let an agent choose between looking further and deciding~\cite{janisch2019,kim2025}, studies of deferral let it choose between deciding and handing over~\cite{madras2018,joshi2023}, and a shielded agent proposed for incident response selects responses without choosing whether to investigate or escalate~\cite{alauthman2026}. That review was thematic and not systematic. It drew on a core set of collected publications and on a database search run on 13 October 2026, which returned 10,694 records that were filtered by keyword and not screened. Its conclusions about gaps were therefore conclusions about the literature it had read. This review replaces that search with a narrower, documented one, screens its results against fixed criteria, and synthesises what the included studies report.
+
+The project plans an RL agent for IT incident triage that chooses among requesting a diagnostic check, recommending a fix that the organisation's operational rules permit, and escalating to a human expert, with every proposal checked by an independent rule-based mechanism. The agent is to be trained and evaluated in simulation. Because this review prepares for that study, it could lean towards the planned design. Three measures limit this. The eligibility criteria were written before screening, the decisions that required interpretation are stated in Section~\ref{sec:screening}, and the outcome of every report sought is listed in Appendix~\ref{app:decisionlog}. These measures do not remove the risk, because the screening and extraction were not independently duplicated (Section~\ref{sec:limitations}).
+
+The review addresses five questions:
+\begin{itemize}
+\item \textbf{SRQ1:} How have IT incident handling tasks been formulated as MDP, POMDP or RL problems, and how is incomplete or conflicting evidence represented in them?
+\item \textbf{SRQ2:} Which decisions do the agents make (gathering information, recommending or taking an action, escalating to a human), and does any study combine all three?
+\item \textbf{SRQ3:} How are operational constraints enforced, for example by a shield, action masking, constrained optimisation, a reward penalty or human approval, and what happens when an action is blocked?
+\item \textbf{SRQ4:} Which environments, datasets, baselines and evaluation metrics are used?
+\item \textbf{SRQ5:} How is robustness to missing, unreliable or ambiguous evidence evaluated, and what results are reported?
+\end{itemize}
+
+The general objective is to systematically identify and synthesise peer-reviewed studies that apply RL or sequential decision-making to IT incident management, with attention to how they represent uncertain evidence, which decisions the agent makes, how constraints are enforced, and how the agents are evaluated. Table~\ref{tab:objectives} gives the five specific objectives (SO1--SO5), the question each answers, the research question of the project that it informs, and the gap that motivated it. The gaps in the table are those stated by the project's thematic review before this search; Section~\ref{sec:discussion} returns to each of them in the light of the included evidence.
+
+\begin{table*}[!t]
+\centering
+\caption{Objectives, Research Questions and Gaps Addressed}
+\label{tab:objectives}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}P{3.6cm}P{1.1cm}P{2.3cm}L@{}}
+\toprule
+Specific objective & Review question & Project question informed & Gap that motivated it (from the thematic review) \\
+\midrule
+SO1: Identify which incident tasks have been formulated as sequential decision problems, and how they represent uncertain evidence & SRQ1 & RQ1 (representation of ambiguous scenarios) & The environments used in the reviewed studies model cyberattacks and microservice faults, and none lets the ambiguity of IT service incidents be varied~\cite{hammar2025,dunsin2025,wang2023hrlhf}. \\
+SO2: Classify the decisions the agents make & SRQ2 & RQ2 (investigate, recommend, escalate) & Information gathering and deferral have been studied separately; no reviewed study trained one policy to choose among all three options for IT incident triage~\cite{janisch2019,kim2025,madras2018,joshi2023}. \\
+SO3: Analyse how constraints are enforced and what is reported about blocked actions & SRQ3 & RQ3 (rule-based safety mechanism) & Shields have been demonstrated mainly on control tasks, and the reviewed literature did not report how a rule mechanism behaves when the agent can also investigate or escalate~\cite{alshiekh2018,konighofer2025,alauthman2026}. \\
+SO4: Catalogue environments, datasets, baselines and metrics & SRQ4 & RQ4 (comparison with baselines) & Decision quality, investigation cost, escalation and constraint compliance had each been measured, but not together for one agent~\cite{remil2024,levy2026,pacella2026}. \\
+SO5: Synthesise how robustness to increasing ambiguity is tested & SRQ5 & RQ5 (robustness) & Robustness had been tested for decision accuracy and for the validity of shields, but not for the mix of investigating, recommending and escalating~\cite{kim2025,hammar2025,hamel2026}. \\
+\bottomrule
+\end{tabularx}
+\end{table*}

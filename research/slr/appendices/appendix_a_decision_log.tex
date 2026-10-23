@@ -1,0 +1,25 @@
+% ===========================================================================
+\section{Decision Log for Reports Sought}
+\label{app:decisionlog}
+% ===========================================================================
+
+The table lists every report sought for retrieval, with its priority group from title and abstract screening (1 or 2) and its outcome. The decisions for all \NScreened{} screened records are in \texttt{audit/exclusion\_traceability.csv} and in the screening record.
+
+\begin{center}\refstepcounter{table}\label{tab:decisionlog}\footnotesize
+\MakeUppercase{\tablename}~\thetable\\[2pt]\textsc{Outcome of Every Report Sought for Retrieval}\end{center}
+\vspace{-6pt}
+{\footnotesize
+\begin{longtable}{@{}p{0.6cm}p{9.6cm}p{0.7cm}p{0.6cm}p{4.2cm}@{}}
+\toprule
+ID & Report & Year & Prio. & Outcome \\
+\midrule
+\endfirsthead
+\toprule
+ID & Report & Year & Prio. & Outcome \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\inputrows{tables/tab_decisionlog_long.tex}
+\end{longtable}
+}

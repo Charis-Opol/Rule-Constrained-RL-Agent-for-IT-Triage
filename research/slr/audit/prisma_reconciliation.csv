@@ -1,0 +1,17 @@
+stage,count,source,derivation
+Records identified: Scopus,3394,scopus export.csv,rows in export
+Records identified: ACM Digital Library,1000,acm (3).bib,entries in export
+Records identified: IEEE Xplore,5,IEEE Xplore BibTeX export,entries in export
+Records identified (total),4399,exports,sum of the three
+Duplicate records removed,73,dedup script,DOI then normalised title
+Removed by automation: document type,1462,dedup script,not article or conference paper
+Removed by automation: publication year,32,dedup script,outside 2015-2026
+Removed by automation: no block A term,2270,dedup script,"title, abstract, keywords"
+Removed by automation: no block B term,431,dedup script,"title, abstract, keywords"
+Records screened,131,title_abstract_screening.csv,4399 - 73 - 4195
+Records excluded at title and abstract,84,title_abstract_screening.csv,rows with decision Exclude
+Reports sought for retrieval,47,title_abstract_screening.csv,131 - 84
+Reports not retrieved,7,review_data.py FULLTEXT,outcome = not retrieved
+Reports assessed for eligibility,40,review_data.py FULLTEXT,47 - 7
+Reports excluded at full text,6,review_data.py FULLTEXT,outcome = excluded
+Studies included,34,review_data.py STUDIES,40 - 6

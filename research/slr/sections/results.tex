@@ -1,0 +1,216 @@
+% ===========================================================================
+\section{Results}
+\label{sec:results}
+% ===========================================================================
+
+\subsection{Study Selection}
+
+Figure~\ref{fig:prisma} shows the flow of records through the review, and Table~\ref{tab:reconcile} reconciles every count. The database searches identified \NIdentified{} records. Removing \NDuplicates{} duplicates and \NAuto{} records by automated filtering left \NScreened{} records for title and abstract screening. Of these, \NExclTA{} were excluded, for the reasons in Table~\ref{tab:tareasons}, and \NSought{} reports were sought for retrieval.
+
+\begin{table}[!t]
+\centering
+\caption{Primary Reasons for Exclusion at Title and Abstract Screening}
+\label{tab:tareasons}
+\footnotesize
+\begin{tabularx}{\columnwidth}{@{}lLr@{}}
+\toprule
+Code & Reason & Records \\
+\midrule
+\inputrows{tables/tab_ta_reasons.tex}
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[!t]
+\centering
+\caption{PRISMA Reconciliation}
+\label{tab:reconcile}
+\footnotesize
+\begin{tabularx}{\columnwidth}{@{}Lrl@{}}
+\toprule
+Stage & $n$ & Derivation \\
+\midrule
+Records identified & \NIdentified & \NScopus{} + \NIEEE{} + \NACM \\
+Duplicates removed & \NDuplicates & DOI, then title \\
+Removed by automation & \NAuto & \NAutoType{} + \NAutoYear{} + \NAutoA{} + \NAutoB \\
+Records screened & \NScreened & \NIdentified{} $-$ \NDuplicates{} $-$ \NAuto \\
+Records excluded & \NExclTA & Table~\ref{tab:tareasons} \\
+Reports sought for retrieval & \NSought & \NScreened{} $-$ \NExclTA \\
+Reports not retrieved & \NNotRetrieved & \NNotRetClosed{} + \NNotRetNoRecord \\
+Reports assessed for eligibility & \NAssessed & \NSought{} $-$ \NNotRetrieved \\
+Reports excluded & \NExclFT & Table~\ref{tab:ftexcl} \\
+Studies included & \NIncluded & \NAssessed{} $-$ \NExclFT \\
+\midrule
+Citation searching & 0 & Not carried out \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\input{figures/prisma_flow}
+
+Of the \NSought{} reports sought, \NNotRetrieved{} were not retrieved (Table~\ref{tab:notret}). Five were recorded as closed access at retrieval. For a sixth, Wang et al.'s AlertPro, only the publisher's landing page with the abstract and section snippets was obtained, which is not enough to assess the study. For the seventh, no full text is on file and no reason was recorded; this is an unresolved gap in the retrieval record. The remaining \NAssessed{} reports were assessed for eligibility, and \NExclFT{} were excluded (Table~\ref{tab:ftexcl}). Three described response actions but evaluated their models only as classifiers or detectors~\cite{manojkumar2026,bompally2026,reddyavula2026}. One, the shielded incident-response agent of Alauthman et al.~\cite{alauthman2026}, which the project's thematic review had treated as the closest precedent, reports an evaluation plan and ``indicative findings'' shown as arrows, but no measured values. One report was excluded as out of scope on manual judgement, and one because its full text is in French. In all, \NIncluded{} studies, each described in one report, entered the synthesis: \NInclPOne{} from the first priority group and \NInclPTwo{} from the second. Appendix~\ref{app:decisionlog} gives the outcome for every report sought.
+
+\begin{table}[!t]
+\centering
+\caption{Reports Not Retrieved}
+\label{tab:notret}
+\footnotesize
+\begin{tabularx}{\columnwidth}{@{}lLP{2.6cm}@{}}
+\toprule
+ID & Report & Reason \\
+\midrule
+\inputrows{tables/tab_not_retrieved.tex}
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table*}[!t]
+\centering
+\caption{Reports Excluded at Full-Text Assessment}
+\label{tab:ftexcl}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}lP{7.6cm}L@{}}
+\toprule
+ID & Report & Reason \\
+\midrule
+\inputrows{tables/tab_ft_exclusions.tex}
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\subsection{Study Characteristics}
+
+Table~\ref{tab:summary} summarises the \NIncluded{} included studies, and Appendix~\ref{app:characteristics} describes each one. The work is recent: \NYearRecent{} of the \NIncluded{} studies were published in 2025 or 2026, \NYearTwentySix{} of them in 2026, and the earliest in \NYearMin. Most of the evidence comes from security settings. Only \NSetITOPS{} studies concern IT service and cloud operations, and all but one of these address root cause analysis or the remediation of faults in microservice and cloud systems; the exception prioritises incident reports~\cite{peralta2025}. The other \the\numexpr\NIncluded-\NSetITOPS\relax{} studies concern alert triage in security operations centres, incident response on enterprise and military networks, industrial and IoT systems, or digital forensics during incident response.
+
+The environments are mostly constructed. Of the \NIncluded{} studies, \NEnvSim{} built their own simulator and \NEnvBench{} used a public benchmark, chiefly the CAGE-2 and CAGE-4 cyber-defence gyms and the RCAEval root-cause benchmark; \NEnvData{} replayed public datasets, most often intrusion-detection flow records regrouped into decision episodes, and \NEnvEmu{} used emulated testbeds. Only \NEnvOps{} studies used operational data from an organisation~\cite{peralta2025,wang2023hrlhf,ding2023}, and one evaluated on a physical testbed as well as a benchmark~\cite{hammar2026belief}.
+
+\begin{table}[!t]
+\centering
+\caption{Characteristics of the Included Studies}
+\label{tab:summary}
+\footnotesize
+\begin{tabularx}{\columnwidth}{@{}lLr@{}}
+\toprule
+Group & Category & Studies \\
+\midrule
+\inputrows{tables/tab_summary.tex}
+\bottomrule
+\end{tabularx}
+\vspace{2pt}
+
+\raggedright\footnotesize Formulation categories overlap; a study is counted in each that applies, and studies formulated as a fully observed MDP are not listed.
+\end{table}
+
+\subsection{Quality of the Included Studies}
+
+The quality of the evidence is uneven (Table~\ref{tab:qualsummary}). Of the \NIncluded{} studies, \NQHigh{} meet at least six of the eight checklist items, and \NQLow{} meet at most two. Hammar et al.~\cite{hammar2026belief} and Sahin and Mert~\cite{sahin2026} meet all eight; Nyberg and Johnson~\cite{nyberg2024} meet seven; Peralta et al.~\cite{peralta2025}, Okafor~\cite{okafor2026}, Rojas Rodriguez et al.~\cite{rojasrodriguez2026}, Ghanem et al.~\cite{ghanem2026}, Hammar and Li~\cite{hammar2025} and Kovtun et al.~\cite{kovtun2026} meet six. The weakly rated studies typically report a single run without variance, do not test the agent on unseen conditions, and describe their environment or hyperparameters too briefly for the work to be repeated. Appendix~\ref{app:quality} gives every rating.
+
+Three weaknesses run across the set. Only \NQFive{} studies report results over several runs with a measure of variance, only \NQSix{} test their agents on conditions not seen in training, and only \NQEight{} give enough detail, with public code or environment, for the work to be repeated. A non-learning baseline is more common, met by \NQThree. The synthesis below therefore gives most weight to the strongly rated studies and treats results from the weakest as indications only.
+
+\begin{table}[!t]
+\centering
+\caption{Quality Appraisal Summary (\NIncluded{} Studies)}
+\label{tab:qualsummary}
+\footnotesize
+\begin{tabularx}{\columnwidth}{@{}lLrrr@{}}
+\toprule
+Item & Question & Met & Part & Not \\
+\midrule
+\inputrows{tables/tab_quality_summary.tex}
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Coverage of the Review Questions}
+
+Table~\ref{tab:coverage} counts the studies that contain each element of the review questions, and Fig.~\ref{fig:coverage} shows the same counts against the size of the evidence base. Appendix~\ref{app:coverage} records the elements study by study. The counts are descriptive; no effect sizes were pooled, for the reasons given in Section~\ref{sec:method}.
+
+\begin{table}[!t]
+\centering
+\caption{Studies Containing Each Element of the Review Questions}
+\label{tab:coverage}
+\footnotesize
+\begin{tabularx}{\columnwidth}{@{}lLr@{}}
+\toprule
+Group & Element & Studies \\
+\midrule
+\inputrows{tables/tab_coverage_summary.tex}
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\input{figures/fig_coverage}
+
+\subsection{Synthesis for SRQ1: Formulation and Representation of Uncertain Evidence}
+
+The answer to SRQ1 is that incident handling is formulated mostly as a fully observed MDP, and that explicit representation of uncertain evidence is the exception. Four themes support this answer.
+
+\emph{1) Explicit belief over a hidden incident state is used by a minority of studies.} Only \NBelief{} studies formulate the problem as a POMDP and act on a belief, a probability distribution over the hidden security state. Hammar et al.\ estimate the belief with a particle filter and compute policies by belief aggregation and rollout~\cite{hammar2026belief}; Hammar and Li go further and hold a belief over the system model itself, updated by Bayesian learning as the incident unfolds~\cite{hammar2025}. Kovtun et al.\ track a belief over a hidden attack regime in a SOC~\cite{kovtun2026}, and Koupaei and Demirkol use a Dempster-Shafer belief for small-enterprise incident response~\cite{koupaei2026}. These are among the more strongly rated studies, so the representation the project needs exists and has been evaluated, although mainly on security benchmarks.
+
+\emph{2) Ambiguity is produced mainly by noisy, missing or overlapping evidence in a simulator, and it is usually fixed at one level.} Koupaei and Demirkol set false-positive and false-negative rates of 12\% and 18\%~\cite{koupaei2026}. Contractor et al.\ lower the detection rate from 95\% to 50\% and add benign users who raise false alerts~\cite{contractor2025}. Sahin and Mert design evidence that is stochastic and overlaps across classes, so that gathering evidence can lower confidence in a true threat or raise it for a benign alert, and add a hardened regime in which threats start at low confidence~\cite{sahin2026}. Wu et al.\ vary fault severity and change the link topology during episodes~\cite{wu2026}, Peralta et al.\ model the vagueness of incident descriptions with fuzzy sets~\cite{peralta2025}, and multi-agent studies give each agent only local observations~\cite{aenugu2026,ravi2025}. Only a few of these studies treat the level of ambiguity as an experimental factor that is varied~\cite{contractor2025,sahin2026,wu2026}.
+
+\emph{3) Many studies treat the incident state as a fully observed feature vector.} In about half the studies the state is a vector of metrics, alert scores or dataset features with no model of what the agent cannot see~\cite{saeed2025,noorulhassan2026,alturkistani2022,bhosale2026,raj2026,nimmathi2026,yuan2026,babar2026,hughes2022,jaber2025,singh2026,ghanem2026,dunsin2025,wang2024mrca,ding2023}. In these studies ambiguity is assumed away rather than modelled, and the agent's decision cannot depend on how certain it is.
+
+\emph{4) No shared environment exists for IT service incident triage.} The security studies share benchmarks: CAGE-2 is used by three studies~\cite{hammar2026belief,hammar2025,nyberg2024} and CAGE-4 or CybORG by two~\cite{castro2025,contractor2025}, and RCAEval serves root cause analysis~\cite{rojasrodriguez2026}. Three studies repurpose intrusion-detection datasets as alert streams or decision episodes~\cite{okafor2026,kovtun2026,alturkistani2022}. Apart from the root-cause studies that use RCAEval or open microservice benchmarks, the IT service studies each build their own fault-injection setup or use one organisation's data~\cite{peralta2025,wang2023hrlhf,ding2023,wu2026,yuan2026}. Results from different IT service studies therefore cannot be compared directly.
+
+\subsection{Synthesis for SRQ2: The Decisions the Agents Make}
+
+The answer to SRQ2 is that gathering information and acting are common decisions, escalation to a person is rare, and no study learns one policy over all three for IT service incidents. Four themes support this answer.
+
+\emph{1) Information gathering is an explicit, costed action in half the studies.} A total of \NInfo{} studies give the agent an action whose purpose is to obtain evidence. In security settings it takes the form of an analyse or investigate action~\cite{hammar2026belief,hammar2025,nyberg2024,castro2025,contractor2025,okafor2026}, queries to logs and threat intelligence~\cite{sahin2026}, a choice of which alerts analysts should investigate within a budget~\cite{tong2020}, a decision to defer and gather context~\cite{kovtun2026}, increased logging~\cite{jaber2025}, or the next step of a forensic examination~\cite{ghanem2026,dunsin2025}. In root cause analysis it is the choice of which part of the system to examine next, whether to stop, or which components to exclude~\cite{rojasrodriguez2026,wang2024mrca,wu2026,ding2023}, and Wang et al.\ let the agent choose which dependencies to ask engineers about~\cite{wang2023hrlhf}.
+
+\emph{2) Where investigation is available, it reduces errors or effort.} Wu et al.\ report 3.2 investigation steps on average against 6.1 for a plain DQN, with higher accuracy~\cite{wu2026}. Kovtun et al.\ find that the option to defer cut false escalations from 7.2\% to 5.0\% and from 9.4\% to 6.6\% on two datasets~\cite{kovtun2026}. Ghanem et al.\ report investigation time cut by up to 68\% against analyst-assisted baselines~\cite{ghanem2026}, and Wang et al.\ reduce the number of questions put to engineers from $O(N^2)$ to $O(1)$~\cite{wang2023hrlhf}. These results support treating investigation as a decision with a cost, as the project does.
+
+\emph{3) Escalation to a person is rarely a learned action.} Only \NEsc{} studies include escalation, deferral or hand-off to a person. Bhosale et al.\ let a DQN choose to allow, monitor or escalate phishing alerts, where escalation opens a ServiceNow incident~\cite{bhosale2026}, and Alturkistani and El-Affendi train a DQN to fix an alert or escalate it to the next tier of SOC operators~\cite{alturkistani2022}. Sahin and Mert's agent can escalate to incident response, and a separate layer defers the most uncertain alerts to an analyst~\cite{sahin2026}; Kovtun et al.'s agent escalates to deep analysis~\cite{kovtun2026}. In the other three the hand-off is fixed by design rather than learned: Okafor leaves containment to analysts in the deployed system~\cite{okafor2026}, Singh routes an action to a human when a deterministic safety check fails~\cite{singh2026}, and Koupaei and Demirkol include notifying a managed security provider as a playbook~\cite{koupaei2026}. Six of the \NEsc{} are in security operations or incident response. The only IT service study among them, Singh's, hands off when a rule check fails; none of the \NSetITOPS{} IT service studies learns when to escalate.
+
+\emph{4) No study learns one policy over investigating, remediating and escalating for IT service incidents.} Only \NAllThree{} study combines an information-gathering action, a response action and escalation: Okafor's offline agents choose to dismiss, investigate or contain SOC alerts, and analyst ownership of containment is a deployment decision, not a learned one~\cite{okafor2026}. Sahin and Mert combine evidence gathering with escalation and closure but have no remediation action~\cite{sahin2026}, and Kovtun et al.\ combine shallow triage, deep analysis and deferral, again without remediation~\cite{kovtun2026}. The three-way decision the project studies is therefore not covered in the evidence base; the nearest work is security alert triage.
+
+\subsection{Synthesis for SRQ3: Enforcement of Operational Constraints}
+
+The answer to SRQ3 is that constraints are most often encoded as reward penalties, that hard rule enforcement is proposed more often than it is measured, and that what replaces a blocked action is almost never reported. Reward penalties are the most common mechanism. A total of \NPenalty{} studies express their operational limits only as penalties in the reward: for destructive self-healing actions~\cite{yuan2026}, for restoring hosts~\cite{nyberg2024,hammar2026belief,hammar2025}, for under-escalation~\cite{bhosale2026}, or for violating an organisation's response policy encoded as a reward profile~\cite{hughes2022}. A further \NNoCon{} state no constraint at all. A penalty discourages a prohibited action but does not prevent it, which is the distinction the project's design depends on~\cite{konighofer2025}. Four themes describe the studies that go further.
+
+\emph{1) Action masking and expected-cost constraints are the common lightweight alternatives.} In \NMask{} studies, actions that are invalid or unsafe in the current state are masked. Contractor et al.\ unmask the disruptive restore action only when a persistent threat is present, and the analyse action only after a detection or a message from another agent~\cite{contractor2025}; root-cause and forensic studies mask expanded nodes or restrict actions to a pool derived from engineers~\cite{wang2024mrca,rojasrodriguez2026,ding2023,ghanem2026,wu2026}. Another \NCostCon{} bound an expected cost or a budget. Kovtun et al.\ constrain both the use of deep analysis and the attack-miss rate, and report that both constraints held in 14 of 15 seeds on one dataset and 13 of 15 on the other~\cite{kovtun2026}; Sahin and Mert certify error budgets on benign escalation and on threats closed automatically, realising rates of 0.0099 and 0.0101 against budgets of 0.01~\cite{sahin2026}.
+
+\emph{2) Hard runtime filters are proposed, but only two studies measure them.} In \NShield{} studies, proposals are checked against rules at run time. Ravi et al.\ check every proposed action against legal, service-level and safety rules and replace a violating action with a safer alternative or a no-op, with a penalty~\cite{ravi2025}. Singh restricts the agent to a feasible action region and adds a deterministic execution guard~\cite{singh2026}. Koupaei and Demirkol restrict the allowable action set by cost and time limits~\cite{koupaei2026}, Elicha and Lopez let expert rules handle known threats before the RL agent sees an alert~\cite{elicha2026}, and Okafor adds a severity floor that prevents medium- and high-severity alerts from being dismissed automatically~\cite{okafor2026}. Only Ravi et al.\ and Singh report how the rules behaved: Ravi et al.'s shield intervened 526 to 623 times per scenario~\cite{ravi2025}, and removing Singh's guard left the mean time to resolution almost unchanged (142~s to 144~s) but cut the governance compliance rate from 99.9\% to 72.3\%~\cite{singh2026}.
+
+\emph{3) What happens to a blocked decision is reported in \NBlocked{} studies.} Ravi et al.\ substitute an alternative or a no-op~\cite{ravi2025}, Singh hands the action to a human~\cite{singh2026}, and Sahin and Mert defer to an analyst any alert that cannot be decided within the error budgets~\cite{sahin2026}. None of the studies lets the agent propose again after a block, which is the project's rule.
+
+\emph{4) Rule enforcement changes behaviour and has a cost.} Singh's guard bought compliance at almost no cost in resolution time~\cite{singh2026}. In Ravi et al.'s study the cost was larger: the shielded agent took 9 to 11 times more false actions and incurred 74--77\% higher cost than an unshielded PPO agent, while detecting far more attacks (recall 0.96--0.99 against 0--0.084)~\cite{ravi2025}. This study is weakly rated, and its text reports that the PPO agent proposed unsafe actions although that agent ran without a shield, so its comparison should be read with caution.
+
+\subsection{Synthesis for SRQ4: Environments, Baselines and Metrics}
+
+The answer to SRQ4 is that the studies measure the quality of the final decision and the time taken, but rarely escalation behaviour or compliance, and that their reporting is often too weak for the results to be compared. Three themes support this answer.
+
+\emph{1) Decision quality and time dominate; escalation and compliance are rarely measured.} Decision quality is measured in \NDQ{} studies, through accuracy, reward, cost, recall or MCC, and \NEff{} studies measure time or investigation effort, most often as mean time to recovery~\cite{singh2026,koupaei2026,nimmathi2026,aenugu2026}. Only \NEscM{} measure escalation behaviour~\cite{peralta2025,sahin2026,nimmathi2026,bhosale2026,kovtun2026} and \NComp{} constraint compliance~\cite{singh2026,sahin2026,kovtun2026,ravi2025}. One study, Kovtun et al., reports measures in all four groups, for SOC alert escalation~\cite{kovtun2026}. Peralta et al.\ report the clearest operational effect on escalation: in a deployment trial, the escalation rate fell from 11.8\% to 9.2\% and manual priority overrides from 15.2\% to 6.2\%, although this was a before--after comparison without a control~\cite{peralta2025}.
+
+\emph{2) A static or rule-based comparison is common but not universal.} In all, \NRuleBase{} studies compare against a non-learning policy: static thresholds, fixed scripts, playbooks, heuristics, a periodic recovery policy, or human examiners~\cite{hammar2026belief,koupaei2026,bhosale2026,wu2026,yuan2026,aenugu2026,ghanem2026}. The others compare only learning methods with each other, compare with values reported by other studies, or have no baseline~\cite{saeed2025,noorulhassan2026,khozam2025,elicha2026,hughes2022,jaber2025,alturkistani2022}. The extracted results contain no case in which a static baseline outperformed the learned policy on a study's main measure. How much this reflects the strength of the learned policies and how much the weakness of the baselines cannot be separated from the reports.
+
+\emph{3) Reporting weaknesses limit the comparisons.} Several studies show how the choice of metric can mislead. Okafor found that value-based offline RL and a Decision Transformer degenerated into trivial detectors whose failure F1 and ROC-AUC concealed and MCC revealed~\cite{okafor2026}. Ravi et al.'s PPO baseline scored 0.98 accuracy with near-zero recall~\cite{ravi2025}. Sahin and Mert report that an earlier version of their simulator leaked the label into the confidence signal, so that any threshold appeared to achieve perfect recall, and recommend checks against this defect~\cite{sahin2026}. Several weaker studies contain internal inconsistencies: two different improvement figures for the same result~\cite{koupaei2026,varsha2025}, a train--test split that is stated but not used~\cite{bhosale2026}, an action in a worked example that is absent from the action set~\cite{jaber2025}, and training and testing on the same stream~\cite{alturkistani2022}.
+
+\subsection{Synthesis for SRQ5: Robustness to Ambiguity and Change}
+
+The answer to SRQ5 is that robustness is tested in under half the studies, mostly for the quality of the final decision, and that no study measures how the mix of investigating, acting and escalating changes as evidence becomes more ambiguous. Three themes support this answer.
+
+\emph{1) Robustness is tested through model error, change, unseen attackers and weaker detection.} A total of \NRobust{} studies test their agents under conditions that differ from training: a misspecified model of the system~\cite{hammar2025}, a non-stationary system~\cite{hammar2026belief}, unseen attacker profiles and network structures~\cite{ravi2025,nyberg2024,castro2025}, a lower detection rate~\cite{contractor2025}, dataset shift~\cite{sahin2026}, terminology drift~\cite{peralta2025}, dynamic topology~\cite{wu2026}, and load near capacity~\cite{aenugu2026,kovtun2026}. Performance generally degrades but does not collapse: Peralta et al.'s accuracy fell from 82.9\% to 79.4\% under drift~\cite{peralta2025}, Aenugu's mean time to recovery rose from 41.2~s to 79.4~s at peak load~\cite{aenugu2026}, and Nyberg and Johnson's graph agents worked on unseen networks without retraining but scored below agents trained on each network~\cite{nyberg2024}.
+
+\emph{2) Methods that maintain a belief or adapt their model degrade least.} Under a misspecified model, Hammar and Li's method incurred a cost of 35.91 against 91.51 or more for every other method, although it was slightly worse than the best methods when the model was correct~\cite{hammar2025}. Hammar et al.'s method adapted its policy to a system change in about 15 to 19 seconds, against more than 30 minutes for PPO, and PPO's results varied about ten times more~\cite{hammar2026belief}. Both studies are strongly rated.
+
+\emph{3) As ambiguity rises, deferral to people rises; how the full decision mix shifts is unmeasured.} Sahin and Mert show that when the scoring model degrades under dataset shift, the share of alerts deferred to analysts rises, to 79--99\% for the most affected classifiers, so that failure becomes visible instead of silent~\cite{sahin2026}. Kovtun et al.\ show that deferring to gather context reduces false escalations~\cite{kovtun2026}, and Contractor et al.\ show that lower detection rates lower returns and that unmasking investigation on a message from another agent recovers part of the loss~\cite{contractor2025}. No study reports the shares of investigating, acting and escalating at increasing levels of ambiguity.
+
+\subsection{Thematic Traceability}
+
+Table~\ref{tab:trace} links each review question to its themes, the studies that support each theme, and the interpretation drawn. It is the basis of the discussion that follows.
+
+\begin{table*}[!t]
+\centering
+\caption{Thematic Traceability Matrix: Review Question, Theme, Supporting Studies and Interpretation}
+\label{tab:trace}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}lP{5.2cm}P{4.4cm}L@{}}
+\toprule
+SRQ & Theme & Supporting studies & Interpretation \\
+\midrule
+\inputrows{tables/tab_traceability.tex}
+\bottomrule
+\end{tabularx}
+\end{table*}

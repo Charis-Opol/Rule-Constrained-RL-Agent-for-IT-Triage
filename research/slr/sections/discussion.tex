@@ -1,0 +1,75 @@
+% ===========================================================================
+\section{Discussion}
+\label{sec:discussion}
+% ===========================================================================
+
+This review set out to find how RL has been applied to IT incident handling, which decisions the agents make, how rules are enforced, and how the agents are evaluated. The \NIncluded{} included studies show that each part of the planned design has been studied somewhere, but not together and seldom for IT service incidents. This section interprets the findings for each review question, returns to the gaps stated in Table~\ref{tab:objectives}, and sets out what the findings imply for the project.
+
+\subsection{Representation of Uncertain Evidence}
+
+The thematic review stated that the environments in the literature model cyberattacks and microservice faults and that none lets the ambiguity of IT service incidents be varied. The systematic search confirms this gap and sharpens it. Belief-based formulations exist and perform well under change~\cite{hammar2026belief,hammar2025}, but all \NBelief{} studies that use them concern security incidents. The IT service studies are almost all root cause analysis on microservice benchmarks or on one company's data, and they treat the system's metrics as fully observed. Three studies vary the level of ambiguity as an experimental factor~\cite{contractor2025,sahin2026,wu2026}; none of them concerns user-reported IT service incidents.
+
+There are two ways to read this. One is that IT service triage does not need a model of hidden state because its evidence is good enough. The studies give no support for this reading, since none tests it. The other is that the field has not yet built an environment in which the question can be asked. Chen et al.'s observation that distinct problems produce similar symptoms~\cite{chen2020} favours the second reading. A simulator in which the overlap between incident causes can be set, as Sahin and Mert do for alert classes~\cite{sahin2026}, would let the question be tested directly.
+
+\subsection{The Three Decisions}
+
+The thematic review found that information gathering and deferral had been studied separately. The included studies agree. Investigation is an explicit action in \NInfo{} studies, and where it is measured it reduces either errors or effort~\cite{wu2026,kovtun2026,ghanem2026,wang2023hrlhf}. Escalation is much rarer, and where it is present it is often fixed by design: a severity floor, a rule-triggered hand-off, or a playbook~\cite{okafor2026,singh2026,koupaei2026}. Only one study combines all three kinds of decision, and its escalation is not learned~\cite{okafor2026}.
+
+The closest work to the project is therefore in security alert triage, not IT service management. Sahin and Mert's system gathers evidence, escalates or closes, and defers the uncertain cases to an analyst under certified error budgets~\cite{sahin2026}. Kovtun et al.'s agent chooses between shallow triage, deep analysis and deferral under a cost constraint~\cite{kovtun2026}. Both are strongly rated, and both treat escalation as a decision with a cost, as Turan et al.\ argue it should be~\cite{turan2026}. Neither recommends a remediation. The project's question is whether one policy can learn to make the choice between all three when the third option is a fix with operational consequences. The evidence does not answer that question; it shows the parts that have worked separately.
+
+\subsection{Enforcement of Operational Rules}
+
+The thematic review found that shields had been demonstrated mainly on control tasks~\cite{alshiekh2018,konighofer2025}, and that the one shielded incident-response agent it identified had not reported how its mechanism behaved~\cite{alauthman2026}. The systematic search confirms that study's status: it reports an evaluation plan and indicative findings, not measurements, and it was excluded on that ground. The \NShield{} included studies with a hard filter show that the idea has reached incident handling, but only two report what the filter did~\cite{ravi2025,singh2026}.
+
+Those two results point in different directions. Singh's guard raised governance compliance from 72.3\% to 99.9\% at almost no cost in resolution time~\cite{singh2026}. Ravi et al.'s shield intervened hundreds of times per scenario and the shielded agent took many more false actions than an unshielded one~\cite{ravi2025}. The difference may lie in how often the agent proposes prohibited actions, which depends on how it was trained. If the agent learns with the shield in place, as Alshiekh et al.\ propose~\cite{alshiekh2018}, it can learn to avoid proposals that will be blocked. Neither study reports the rate of blocked proposals over training, so this explanation cannot be checked from the evidence.
+
+The more important finding for the project is what is missing. Only \NBlocked{} studies say what happens after a block, and none lets the agent propose again. The project's rule, that a blocked agent may make one further proposal before the incident is escalated, has no direct precedent. Its effect on escalation rates and on the time to resolution will have to be measured, not assumed.
+
+\subsection{Environments, Baselines and Metrics}
+
+The thematic review stated that decision quality, investigation cost, escalation and constraint compliance had each been measured but not together. The systematic search finds one exception, Kovtun et al., who measure all four for SOC alert escalation~\cite{kovtun2026}. The rest measure decision quality and time, and few measure escalation or compliance. For an agent whose purpose is to choose between investigating, acting and escalating, decision quality alone is not enough: an agent that escalates every incident makes no wrong fix, and an agent that never escalates may look efficient. Measures of escalation and compliance are needed to see either failure.
+
+The quality appraisal adds a caution about baselines and reporting. A non-learning baseline is common, and the learned policy always beat it in the extracted results, but few studies report variance across runs or test on unseen conditions. Okafor's and Ravi et al.'s results show how a single metric can hide a degenerate policy~\cite{okafor2026,ravi2025}, and Sahin and Mert's account of label leakage in their own simulator shows how a simulator can make a policy look better than it is~\cite{sahin2026}. These are the failure modes the project's evaluation is most exposed to, because it too will train and test in a simulator it builds.
+
+\subsection{Robustness}
+
+The thematic review found that robustness had been tested for decision accuracy and for the validity of shields, but not for the mix of investigating, recommending and escalating. The systematic search confirms this. In \NRobust{} studies the agents are tested under changed conditions, and the methods that maintain a belief or adapt their model degrade least~\cite{hammar2025,hammar2026belief}. Sahin and Mert show the most relevant pattern: as the scoring model degrades, more alerts are deferred to people, so that failure becomes visible~\cite{sahin2026}. No study reports how the shares of the three decisions change as evidence becomes more ambiguous. That curve is what the project's fifth research question asks for.
+
+\subsection{Relevant Excluded Studies}
+
+Two groups of excluded reports bear on the interpretation. The first is the shielded incident-response agent of Alauthman et al.~\cite{alauthman2026}, which the thematic review treated as the closest precedent. Its exclusion leaves no included study that combines a shield with incident response in IT operations and reports measurements. The second is three reports that describe response actions but evaluate their models as classifiers~\cite{manojkumar2026,bompally2026,reddyavula2026}. They show a common pattern in the wider literature: a framework is described as autonomous response, but what is evaluated is detection. A reader who counts such papers as evidence of RL-based response would overestimate how much of that evidence exists.
+
+\subsection{Implications for the Project}
+
+Fig.~\ref{fig:evidence} places the project against the evidence. Each of its four components has a precedent among the included studies, mostly in security settings, and the combination has none. The findings suggest six things for the project's design and evaluation.
+
+\begin{enumerate}
+\item The simulator should let the level of ambiguity be set, by controlling how far the symptoms of different causes overlap and how reliable each diagnostic check is, so that robustness can be measured as a function of it~\cite{sahin2026,contractor2025}.
+\item The agent should be compared with a learning baseline that keeps a belief, not only with a fully observed one, because belief-based methods were the most robust in the included studies~\cite{hammar2025,hammar2026belief}.
+\item Escalation should be a learned action with a cost, and its rate should be reported alongside decision quality, so that an agent which escalates everything cannot appear safe~\cite{kovtun2026,turan2026}.
+\item The rule mechanism should log every block, the re-proposal that follows, and whether the incident was then escalated, because no included study reports this sequence.
+\item Results should be reported over several seeds with variance, with more than one decision-quality metric, and with checks for label leakage in the simulator~\cite{okafor2026,sahin2026}.
+\item The static, rule-based baseline should be as strong as a competent support team would use, because a weak baseline makes any learned policy look good.
+\end{enumerate}
+
+\begin{figure}[!t]
+\centering
+\footnotesize
+\begin{tikzpicture}[
+  comp/.style={draw, rectangle, rounded corners=2pt, align=center, text width=2.9cm, minimum height=1.0cm, fill=gray!8},
+  ev/.style={align=left, text width=3.6cm, font=\scriptsize},
+  node distance=3mm
+]
+\node[comp] (c1) {Belief over hidden incident cause};
+\node[ev, right=of c1] (e1) {\NBelief{} studies, all security~\cite{hammar2026belief,hammar2025,kovtun2026,koupaei2026}};
+\node[comp, below=of c1] (c2) {Costed investigate action};
+\node[ev, right=of c2] (e2) {\NInfo{} studies; effort reduced~\cite{wu2026,kovtun2026}};
+\node[comp, below=of c2] (c3) {Learned escalation};
+\node[ev, right=of c3] (e3) {\NEsc{} studies; learned in four, all security~\cite{bhosale2026,alturkistani2022,sahin2026,kovtun2026}};
+\node[comp, below=of c3] (c4) {Rule mechanism with blocked-action handling};
+\node[ev, right=of c4] (e4) {\NShield{} hard filters; \NBlocked{} report blocked handling; no re-proposal};
+\node[comp, fill=gray!25, text width=6.6cm, anchor=north] (all) at ($(c4.south west)!0.5!(e4.south east)+(0,-4mm)$) {All four combined for IT service incidents: no study};
+\end{tikzpicture}
+\caption{The components of the planned agent and the included evidence for each.}
+\label{fig:evidence}
+\end{figure}

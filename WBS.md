@@ -180,7 +180,7 @@
 
 ### 3.3 Gymnasium environment
 - **Status:** Todo · **Due:** 2026-10-25 · **Days:** 1.5 · **Label:** WP3, Milestone
-- **Deliverable:** Environment (evidence vector, 46 actions, rewards, step limit)
+- **Deliverable:** Environment (evidence vector, 36 actions (20 checks + 15 fixes + escalate), rewards, step limit)
 - **Depends on:** 3.2
 - **Checklist:**
   - [ ] One-hot evidence vector (checks 4 values, symptoms 3)
