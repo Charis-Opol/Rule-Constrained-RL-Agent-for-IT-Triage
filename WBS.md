@@ -1,4 +1,4 @@
-# WBS: Rule-Constrained RL for Ambiguity-Aware IT Incident Triage
+# WBS: Investigate, Recommend or Escalate (rule-constrained RL for IT incident triage)
 
 **Owner:** Opol Charis (solo project) · **Plan start:** Mon 19 Oct 2026 · **Plan end:** Sun 29 Nov 2026
 **Source:** `documentation/milestone/WBS_Six_Weeks.docx`, updated after the stakeholder interview of 19 Oct 2026.

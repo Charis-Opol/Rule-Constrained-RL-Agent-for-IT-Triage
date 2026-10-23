@@ -6,11 +6,15 @@ cd /d "%~dp0"
 set TT=%~dp0tools\tectonic.exe
 
 pushd research\thesis
-"%TT%" main.tex
+"%TT%" Opol_Charis_Thesis.tex
 popd
 
 pushd research\slr
-"%TT%" main.tex
+"%TT%" Opol_Charis_Systematic_Literature_Review.tex
+popd
+
+pushd research\proposal
+"%TT%" Opol_Charis_Research_Proposal.tex
 popd
 
 pushd documentation\milestone
@@ -20,6 +24,10 @@ popd
 
 pushd documentation\concept-note
 "%TT%" implementation_concept_note.tex
+popd
+
+pushd documentation\manual
+"%TT%" rl_environments_manual.tex
 popd
 
 pushd documentation\stakeholder\proposal

@@ -1,0 +1,24 @@
+\section{Masked Deep Q-Network Update}
+
+The agent is trained with the deep Q-network of Stable-Baselines3~\cite{raffin2021}. Because that implementation does not support action masking, the target of each update is restricted to the actions available in the next state, $A(s')$, which excludes checks already requested and a proposal that was just blocked:
+\begin{equation*}
+y = r + \gamma \max_{a' \in A(s')} Q_{\text{target}}(s', a').
+\end{equation*}
+The same restriction applies when the agent chooses an action. The PPO learner uses the MaskablePPO implementation of the sb3-contrib repository, which supports masking directly.
+
+\section{Review-then-Escalate Procedure}
+
+\begin{enumerate}
+\item The agent proposes action $a$. If no rule prohibits $a$, it passes to the environment.
+\item Otherwise the block is logged, the blocked flag is set, $a$ is removed from the available actions, and the step is consumed without reward.
+\item The agent proposes action $a_2$. If no rule prohibits $a_2$, it passes to the environment.
+\item Otherwise the incident is escalated to the human expert and recorded as a forced escalation.
+\end{enumerate}
+
+\section{Code Repositories}
+
+\begin{itemize}
+\item Stable-Baselines3 (DQN and PPO): \url{https://github.com/DLR-RM/stable-baselines3}
+\item sb3-contrib (MaskablePPO): \url{https://github.com/Stable-Baselines-Team/stable-baselines3-contrib}
+\item Gymnasium (environment interface): \url{https://github.com/Farama-Foundation/Gymnasium}
+\end{itemize}

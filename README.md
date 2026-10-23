@@ -1,4 +1,4 @@
-# Rule-Constrained Reinforcement Learning for Ambiguity-Aware IT Incident Triage
+# Investigate, Recommend or Escalate: A Rule-Constrained Reinforcement Learning Agent for IT Incident Triage under Ambiguous Evidence
 
 Final-year research project, BSc Computer Science, Uganda Christian University.
 **Author:** Opol Charis · **Supervision:** Department of Computing and Technology · **Partner:** Directorate of University ICT Services, Uganda Christian University
@@ -48,8 +48,8 @@ The plan and progress are tracked in [`WBS.md`](WBS.md) (Trello-ready, with prom
 ├── build.bat                      Builds every LaTeX document (Windows)
 ├── tools/                         Put tectonic.exe here (not tracked)
 ├── research/
-│   ├── thesis/                    The thesis: compile main.tex
-│   │   ├── main.tex, main.pdf
+│   ├── thesis/                    The thesis: compile Opol_Charis_Thesis.tex
+│   │   ├── Opol_Charis_Thesis.tex, Opol_Charis_Thesis.pdf
 │   │   ├── chapters/              chapter1_introduction, chapter2_literature_review, chapter3_methodology
 │   │   ├── citations/references.bib   (IEEEtran style)
 │   │   └── images/                Figures 1.1 and 3.1
@@ -71,13 +71,13 @@ The source notes were written before this reorganisation and use the old paths: 
 All documents are LaTeX and build with [Tectonic](https://tectonic-typesetting.github.io), so no full TeX installation is needed.
 
 1. Download `tectonic.exe` (version 0.17.0 was used) and place it in `tools/`.
-2. Run `build.bat`. It builds the thesis (`research/thesis/main.pdf`) and the milestone and stakeholder documents. The first run downloads LaTeX packages, so it needs an internet connection.
+2. Run `build.bat`. It builds the thesis (`research/thesis/Opol_Charis_Thesis.pdf`) and the milestone and stakeholder documents. The first run downloads LaTeX packages, so it needs an internet connection.
 
 To build only the thesis:
 
 ```bat
 cd research\thesis
-..\..\tools\tectonic.exe main.tex
+..\..\tools\tectonic.exe Opol_Charis_Thesis.tex
 ```
 
 The milestone documents need the Trebuchet MS font files (`trebuc.ttf`, `trebucbd.ttf`, `trebucit.ttf`, `trebucbi.ttf`). On Windows, copy them from `C:\Windows\Fonts` into `documentation/milestone/fonts/`.

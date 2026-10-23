@@ -8,7 +8,7 @@ From this folder:
 
 ```
 python -I audit/generate.py        # regenerate counts, tables, CSVs and references.bib
-..\..\tools\tectonic.exe main.tex  # compile main.pdf
+..\..\tools\tectonic.exe Opol_Charis_Systematic_Literature_Review.tex  # compile the PDF
 ```
 
 `build.bat` at the repository root also builds this paper.
@@ -17,7 +17,7 @@ python -I audit/generate.py        # regenerate counts, tables, CSVs and referen
 
 | Path | Contents |
 |---|---|
-| `main.tex` | Document root (IEEEtran journal) |
+| `Opol_Charis_Systematic_Literature_Review.tex` | Document root (IEEEtran journal) |
 | `sections/` | Abstract, Introduction, Methodology, Results, Discussion, Limitations, Future Research, Conclusion, AI declaration |
 | `appendices/` | A: decision log for every report sought; B: study characteristics; C: coding of review-question elements; D: quality ratings |
 | `figures/` | PRISMA flow diagram, coverage chart, ORCID icon |
@@ -35,6 +35,6 @@ Inputs read by the generator: `../new-slr-exports/screening/title_abstract_scree
 
 ## Open items
 
-- Verify the ORCID in `main.tex` (`\orcid` macro).
+- Verify the ORCID in `Opol_Charis_Systematic_Literature_Review.tex` (`\orcid` macro).
 - Complete the `\todo` in `sections/ai_declaration.tex`.
 - S108 has no full text and no recorded reason; S046 is a landing page only; five reports are closed access.

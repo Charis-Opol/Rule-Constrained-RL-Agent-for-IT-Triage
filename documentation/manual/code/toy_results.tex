@@ -1,0 +1,13 @@
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+Policy & Mean return & Correct & Wrong & Escalated & Step limit \\
+\midrule
+Random (valid actions) & -3.32 & 25.1\% & 49.2\% & 25.7\% & 0.0\% \\
+Always escalate & -3.00 & 0.0\% & 0.0\% & 100.0\% & 0.0\% \\
+Threshold (knows $\theta$) & 3.68 & 71.9\% & 28.1\% & 0.0\% & 0.0\% \\
+Masked DQN (100k steps) & 4.18 & 71.9\% & 28.1\% & 0.0\% & 0.0\% \\
+MaskablePPO (30k steps) & 4.18 & 71.9\% & 28.1\% & 0.0\% & 0.0\% \\
+Exact optimum & 4.18 & 71.9\% & 28.1\% & 0.0\% & 0.0\% \\
+Oracle (told the cause) & 10.00 & 100.0\% & 0.0\% & 0.0\% & 0.0\% \\
+\bottomrule
+\end{tabular}

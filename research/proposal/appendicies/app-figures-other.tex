@@ -1,0 +1,41 @@
+Figure~\ref{fig:prisma} shows the flow of records through the systematic literature review that informed Chapter~2.
+
+\begin{figure}[H]
+\centering
+\footnotesize
+\begin{tikzpicture}[
+  node distance=5mm and 7mm,
+  box/.style={draw, rectangle, align=left, text width=6.0cm, inner sep=4pt},
+  side/.style={draw, rectangle, align=left, text width=6.2cm, inner sep=4pt},
+  arr/.style={->, >=stealth}
+]
+\node[box] (id) {Records identified from databases ($n=4{,}399$):\\
+\quad Scopus ($n=3{,}394$)\\
+\quad ACM Digital Library ($n=1{,}000$)\\
+\quad IEEE Xplore ($n=5$)};
+\node[side, right=of id] (rm) {Records removed before screening:\\
+\quad Duplicates ($n=73$)\\
+\quad Removed by automation ($n=4{,}195$)};
+\node[box, below=10mm of id] (scr) {Records screened on title and abstract ($n=131$)};
+\node[side, right=of scr] (exta) {Records excluded ($n=84$)};
+\node[box, below=10mm of scr] (sought) {Reports sought for retrieval ($n=47$)};
+\node[side, right=of sought] (nr) {Reports not retrieved ($n=7$)};
+\node[box, below=10mm of sought] (ass) {Reports assessed for eligibility ($n=40$)};
+\node[side, right=of ass] (exft) {Reports excluded ($n=6$):\\
+\quad classifier or detector evaluation only ($n=3$)\\
+\quad no measured results ($n=1$)\\
+\quad out of scope ($n=1$)\\
+\quad not in English ($n=1$)};
+\node[box, below=10mm of ass] (inc) {Studies included in the review ($n=34$)};
+\draw[arr] (id) -- (scr);
+\draw[arr] (id) -- (rm);
+\draw[arr] (scr) -- (sought);
+\draw[arr] (scr) -- (exta);
+\draw[arr] (sought) -- (ass);
+\draw[arr] (sought) -- (nr);
+\draw[arr] (ass) -- (inc);
+\draw[arr] (ass) -- (exft);
+\end{tikzpicture}
+\caption{PRISMA 2020 flow diagram of the systematic literature review. Citation searching was not carried out.}
+\label{fig:prisma}
+\end{figure}

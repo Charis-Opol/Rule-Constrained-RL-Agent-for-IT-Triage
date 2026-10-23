@@ -1,0 +1,99 @@
+\section{Literature Review Plan}
+\label{ch02:sec:plan}
+
+The review was planned around the decision this research studies: what an agent should do with an IT incident whose cause is uncertain. It drew on two sources. The first was a core set of publications on AI for IT operations (AIOps), safe reinforcement learning and learning to defer, collected while the problem was being defined. The second was a systematic review that followed the PRISMA 2020 guideline~\cite{page2021,opol2026slr}. The systematic review searched Scopus, the ACM Digital Library and IEEE Xplore on 23 October 2026 with the strings in Appendix~\ref{App:scopus-search-strings}. It identified 4,399 records, screened 131 on title and abstract, assessed 40 reports in full, and included 34 studies that apply reinforcement learning or sequential decision-making to IT or security incident handling.
+
+The literature is discussed chronologically, in the order in which the strands developed: the foundations of safe reinforcement learning, then information gathering and deferral, then the prediction-based approaches of AIOps, then reinforcement learning for incident handling, and finally the recent studies that begin to combine these strands. Each approach is examined against the requirements of IT incident triage at a university IT directorate, and the chapter closes with the research gaps.
+
+\section{Review of Approaches to Incident Triage}
+\label{ch02:sec:review}
+
+\subsection{Foundations of Safe Reinforcement Learning (2015--2018)}
+
+These methods keep a learning agent from taking prohibited actions.
+
+\begin{itemize}
+\item \textbf{Constrained optimisation (2015--2017):} García and Fernández divided safe reinforcement learning into methods that change the optimisation criterion and methods that change exploration with external knowledge~\cite{garcia2015}. Constrained policy optimisation bounds the expected cumulative cost of a policy~\cite{achiam2017}. An expected-cost bound does not, however, enforce a rule that must hold at every step~\cite{zhao2023}, and a reward penalty discourages an action without preventing it~\cite{konighofer2025}.
+\item \textbf{Shielding (2018 onwards):} Alshiekh et al.\ introduced a shield, a separate component that checks each action the agent proposes and blocks or replaces it when it would violate a specification~\cite{alshiekh2018}. Later work found that a shield which silently replaces actions can hinder learning, because the agent does not know it was overridden~\cite{yang2023}. Shields were demonstrated mainly in control tasks and games~\cite{alshiekh2018,konighofer2025}, not on the rules of IT operations.
+\end{itemize}
+
+\subsection{Information Gathering and Deferral (2018--2023)}
+
+These methods let a model delay or hand over its decision.
+
+\begin{itemize}
+\item \textbf{Learning to defer (2018):} Madras et al.\ trained a model to hand a case to a human decision-maker when the person is likely to do better~\cite{madras2018}, and Joshi et al.\ later extended deferral to sequential settings~\cite{joshi2023}. Selective prediction gives a model the related option to abstain when its confidence is low~\cite{geifman2019}. In each case the choice is between deciding and handing over; gathering more evidence first is not an option.
+\item \textbf{Information gathering (2019):} Janisch et al.\ trained an agent to acquire costly features one at a time before it classifies~\cite{janisch2019}, building on the principle that, under partial observability, an action may be chosen for the information it yields~\cite{kaelbling1998}. Here the choice is between looking further and deciding; handing over is not an option.
+\end{itemize}
+
+\subsection{Triage as Prediction in AIOps (2020--2025)}
+
+These methods treat triage as the prediction of a label from the incident report.
+
+\begin{itemize}
+\item \textbf{Incident management at scale (2020):} Chen et al.\ studied two years of incident management at Microsoft. They found that distinct problems can produce similar symptoms, so that incidents are reassigned several times, and described a recurrent model that predicts the responsible team from the incident text~\cite{chen2020}.
+\item \textbf{AIOps surveys (2024--2025):} Remil et al.\ catalogued the methods for classifying, prioritising and assigning incidents, and criticised the reliance on classification metrics that ignore the cost of a wrong action~\cite{remil2024}. Zhang et al.\ observed that language-model assistants extended this work to diagnosis and mitigation suggestions, but that automation mainly stops at triage or recommendation~\cite{zhang2025}. These models return an answer for every report; they cannot state that more evidence is needed or that a person should decide.
+\end{itemize}
+
+\subsection{Reinforcement Learning for Incident Handling (2023--2026)}
+
+These studies treat incident handling as a sequence of decisions.
+
+\begin{itemize}
+\item \textbf{Root cause analysis (2023):} Wang et al.\ used hierarchical reinforcement learning to decide which questions to put to engineers when building a dependency graph for root cause analysis~\cite{wang2023hrlhf}, and Ding et al.\ learned to prune that graph before analysis~\cite{ding2023}. Both treat investigation as a decision with a cost.
+\item \textbf{Security incident response (2025--2026):} Dunsin et al.\ trained an agent to conduct a malware investigation step by step~\cite{dunsin2025}. Hammar and Li planned incident responses while holding a belief over the model of the incident itself~\cite{hammar2025}, and Hammar et al.\ adapted response policies to system change within seconds~\cite{hammar2026belief}. Their agents choose among responses or investigative steps, but none can hand the incident to a person.
+\end{itemize}
+
+\subsection{Recent Combinations (2025--2026)}
+
+The most recent studies begin to combine the strands above, mostly in security operations.
+
+\begin{itemize}
+\item \textbf{Gathering evidence and escalating in alert triage:} Okafor trained agents that dismiss, investigate or contain security alerts, with escalation to analysts fixed by design~\cite{okafor2026}. Sahin and Mert trained an agent that queries logs and threat intelligence before it escalates or closes an alert, with a separate layer that defers uncertain alerts to an analyst~\cite{sahin2026}, and Kovtun et al.\ learned a policy that chooses among shallow triage, deep analysis and deferral under analyst-capacity constraints~\cite{kovtun2026}. Their final actions close, prioritise or escalate an alert, however, and none recommends a fix that changes the affected system.
+\item \textbf{Rule mechanisms in incident response:} Ravi et al.'s shield for industrial intrusion response replaced blocked actions and produced many more false actions than an unshielded agent~\cite{ravi2025}. Singh's deterministic guard for cloud remediation hands an action to a human when it fails, and raised governance compliance from 72.3\% to 99.9\%~\cite{singh2026}. Alauthman et al.\ proposed a shielded agent for incident response in industrial control systems, but reported an evaluation plan and no measured values~\cite{alauthman2026}. Of the 34 studies in the systematic review, only three say what happens to a blocked decision, and none lets the agent propose again~\cite{opol2026slr}.
+\end{itemize}
+
+\subsection{Evaluation and Robustness}
+
+These studies show how such agents have been evaluated, and where the evaluations fall short.
+
+\begin{itemize}
+\item \textbf{Measures:} In the systematic review, 31 of 34 studies measure decision quality, but only five measure escalation behaviour and four constraint compliance; one study, Kovtun et al., reports all four kinds of measure, for SOC alert escalation~\cite{opol2026slr,kovtun2026}. A single metric can hide a degenerate policy: Okafor found that F1 and ROC-AUC concealed agents that had collapsed into trivial detectors, which the Matthews correlation coefficient exposed~\cite{okafor2026}.
+\item \textbf{Robustness:} Fifteen of the reviewed studies test their agents under changed conditions, and the methods that keep a belief over the hidden state degrade least~\cite{hammar2025,hammar2026belief}. Sahin and Mert show that deferral to analysts rises as the evidence degrades~\cite{sahin2026}. No study reports how the mix of investigating, acting and escalating changes as ambiguity increases.
+\end{itemize}
+
+Table~\ref{tab:comparison} compares the studies closest to this research against the capabilities it requires.
+
+\begin{table}[htbp]
+\centering
+\caption{Comparison of the studies closest to this research. \cellyes~=~addressed; \cellpart~=~partly addressed; \cellno~=~not addressed.}
+\label{tab:comparison}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{|p{3.4cm}|p{4.2cm}|c|c|c|c|c|}
+\hline
+\textbf{Study} & \textbf{Setting} & \textbf{Seq.} & \textbf{Info.} & \textbf{Rule} & \textbf{Esc.} & \textbf{Amb.} \\
+\hline
+Chen et al.~\cite{chen2020} & IT incident triage & \cellno & \cellno & \cellno & \cellno & \cellno \\ \hline
+Wang et al.~\cite{wang2023hrlhf} & Root cause analysis & \cellyes & \cellyes & \cellno & \cellpart & \cellno \\ \hline
+Dunsin et al.~\cite{dunsin2025} & Malware investigation & \cellyes & \cellyes & \cellno & \cellno & \cellno \\ \hline
+Hammar and Li~\cite{hammar2025} & Security incident response & \cellyes & \cellno & \cellno & \cellno & \cellyes \\ \hline
+Alauthman et al.~\cite{alauthman2026} & Industrial control incident response & \cellyes & \cellno & \cellyes & \cellpart & \cellno \\ \hline
+Ravi et al.~\cite{ravi2025} & Industrial control incident response & \cellyes & \cellno & \cellyes & \cellno & \cellno \\ \hline
+Okafor~\cite{okafor2026} & Security alert triage & \cellyes & \cellyes & \cellpart & \cellpart & \cellno \\ \hline
+Sahin and Mert~\cite{sahin2026} & Security alert triage & \cellyes & \cellyes & \cellpart & \cellyes & \cellyes \\ \hline
+Kovtun et al.~\cite{kovtun2026} & Security alert escalation & \cellyes & \cellpart & \cellpart & \cellyes & \cellno \\ \hline
+Singh~\cite{singh2026} & Cloud operations remediation & \cellpart & \cellno & \cellyes & \cellpart & \cellno \\ \hline
+\textbf{This study} & IT incident triage & \cellyes & \cellyes & \cellyes & \cellyes & \cellyes \\ \hline
+\end{tabular}
+
+\vspace{4pt}
+\raggedright\footnotesize Seq.\ = sequential policy; Info.\ = information gathering; Rule = rule check; Esc.\ = human escalation; Amb.\ = varied ambiguity.
+\end{table}
+
+\section{Research Gaps}
+\label{ch02:sec:gaps}
+
+The approaches reviewed above each solve part of the triage decision, but no study combines them for IT service incidents. The most significant gap is in the decision itself: information-gathering studies let an agent choose between looking further and deciding, deferral studies let it choose between deciding and handing over, and the security alert-triage studies that join the two do not recommend a fix that acts on the system. No reviewed study trains one policy to choose among investigating, recommending a remedy and escalating for IT service incidents. The second gap concerns the rules: hard rule mechanisms have been measured in only two studies, their results point in opposite directions, and no study gives a blocked agent a second proposal or reports how often blocked proposals occur during training. The third gap concerns robustness: decision accuracy and the rate of deferral have been tested under degraded evidence, but not the mix of investigating, recommending and escalating as ambiguity rises. Underneath all three lies a gap in representation, since the available environments model cyberattacks and microservice faults, and none lets the ambiguity of IT service incidents be varied.
+
+These gaps are stated for the literature reviewed. The systematic review searched three databases, limited its IEEE Xplore search to open-access records, did not carry out citation searching, and could not retrieve seven reports~\cite{opol2026slr}. The claim is that the reviewed literature leaves these questions open, not that they have never been examined.

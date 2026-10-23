@@ -94,9 +94,9 @@ For each paper, write one paragraph: *what it does, and how this study differs.*
   - The source of coverage and selective accuracy, and the idea behind your threshold baseline.
 - [ ] **Levy et al. (2026)**, *ST-WebAgentBench* (`core`: "ST-WebAgentBench.pdf")
   - Completion under policy, which your compliant success rate is based on.
-- [ ] **Pacella et al. (2026)**, floor-safety guardrail for escalation (`core` or `intro`: the floor-safety paper)
+- [ ] **Pacella et al. (2026)**, *Governed agentic process automation: a floor-safety guarantee for compliance-critical LLM routing* (`intro`: "A Floor-Safety Guarantee for Compliance-Critical LLM Routing.pdf")
   - Escalation recall, and policy-mandated escalation.
-- [ ] **Turan (2026)**, escalation rate and realised safety under reviewer overload (`core`: likely "Oversight Has a Capacity...pdf"; check the author before relying on this)
+- [ ] **Turan (2026)**, escalation rate and realised safety under reviewer overload (`core`: "Oversight Has a Capacity, Calibrating Agent Guards to a Subjective, Fatiguing Human (preprint).pdf")
   - Why escalating everything is not safe.
 - [ ] **Hevner et al. (2004)**, *Design science in information systems research* (online)
   - Justifies your build-and-evaluate design. Expect a defence question on it.

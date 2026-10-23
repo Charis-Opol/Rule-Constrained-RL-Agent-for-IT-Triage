@@ -1,0 +1,81 @@
+\section{Overview}
+
+To study how an agent should handle IT incidents whose cause is uncertain, this research adopts a design-and-evaluate approach~\cite{hevner2004}. It builds an artefact, a rule-constrained reinforcement learning agent together with the simulated environment in which it acts, and evaluates it in controlled experiments. The work proceeds in eight phases, shown in Figure~\ref{fig:pipeline}: specifying the problem, eliciting scenarios with the Directorate, building and validating the environment, encoding the rules, implementing the baselines, training the agents, running the experiments, and analysing the results.
+
+The evaluation is conducted entirely in simulation, for two reasons. Realistic incident data is scarce and confidential~\cite{remil2024}, and simulation lets the level of ambiguity be set, held constant and varied, which live incidents would not allow. The agent is never connected to any system of the university. The framework will be implemented in Python, with the Gymnasium interface for the environment~\cite{towers2024} and the Stable-Baselines3 library for the learning algorithms~\cite{raffin2021}. No personal data, credentials or confidential details of the university's systems will enter the simulator, and staff participation will be voluntary and with consent.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{Figure_3_1_Research_Pipeline.png}
+\caption{Research pipeline}
+\label{fig:pipeline}
+\end{figure}
+
+\section{Data Collection}
+
+The data for this research is a scenario model elicited from the Directorate of University ICT Services, not a dataset of incident records. The model will be elicited from Directorate staff using a structured workbook, and it will contain about 15 causes in four provisional categories (application and interface errors, authentication and access failures, database failures, and failures of infrastructure and external services), each with one correct fix; 20 diagnostic checks, such as an entry in the API logs, a value on the monitoring dashboard or the result of reproducing a failing request, each with an effort cost; a fixed list of symptoms; and 10 operational rules.
+
+For each pair of cause and check, staff will rate how often the check is positive when that cause is present, on a five-point scale (never, rarely, sometimes, often, almost always) that is mapped to the probabilities 0.05, 0.25, 0.5, 0.75 and 0.95. Asking for a verbal rating keeps the 300 judgements manageable for practitioners. Any parameter that the elicitation does not supply will be set by the researcher and reported as such. After the environment is built, sample incidents will be shown to Directorate staff, who will judge whether they are plausible and whether the rules are stated correctly. The model will be revised and then frozen before any agent is trained, so that the scenarios cannot be adjusted in favour of the proposed agent.
+
+\section{The Simulated Triage Environment}
+
+The environment casts triage as a sequential decision problem under partial observability~\cite{kaelbling1998}; one episode is the triage of one incident.
+
+\begin{itemize}
+\item \textbf{Hidden incident:} at the start of an episode a cause is drawn from the elicited prior and kept hidden from the agent. A visible context, such as whether the affected system is in production, is also drawn, and the rules refer to it. The result of every check is drawn once from the elicited likelihoods, so that requesting a check twice returns the same result.
+\item \textbf{Observation:} the agent sees a one-hot vector recording, for each check, whether it is not yet requested, unavailable, negative or positive, together with the symptoms, the context, the number of steps taken, and a flag set when its previous proposal was blocked. Because the checks are fixed within an episode and independent given the cause, this vector is a sufficient statistic for the belief that a partially observable agent would maintain.
+\item \textbf{Actions:} 36 actions: 20 that each request one check, 15 that each recommend the fix for one cause, and one that escalates the incident. A recommendation or an escalation ends the episode, and reaching the step limit counts as an escalation.
+\item \textbf{Reward:} a correct fix earns $+r_{\text{correct}}$, a wrong fix costs $\lambda_{\text{wrong}}$, each check costs $k_i$, and an escalation costs $\lambda_{\text{esc}}$, with $r_{\text{correct}} > -\lambda_{\text{esc}} > -\lambda_{\text{wrong}}$, so that resolving correctly is better than escalating and escalating is better than a wrong fix. The starting values are $+10$, $-3$ and $-10$, with check costs between 0.1 and 1.0, and they will be tuned in pilot runs.
+\item \textbf{Ambiguity controls:} missing evidence ($p_{\text{miss}} \in \{0, 0.2, 0.4, 0.6\}$) makes a check unavailable; unreliable evidence ($p_{\text{noise}} \in \{0, 0.1, 0.2, 0.3\}$) reverses its result; and overlapping evidence ($\omega \in \{0, 0.25, 0.5, 0.75\}$) moves each cause's likelihoods towards the average of its category, $\theta'_{ij} = (1-\omega)\theta_{ij} + \omega\bar{\theta}_i$, so that causes become harder to tell apart.
+\item \textbf{Reference labels:} for evaluation only, each incident is labelled as one that should be escalated if the rules forbid the fix for its true cause, or if it stays ambiguous even with every check observed. Before training, the simulator will be checked for leakage of the hidden cause into the observations, a defect that Sahin and Mert found in an earlier version of their own simulator~\cite{sahin2026}.
+\end{itemize}
+
+\section{The Reinforcement Learning Agent}
+
+\subsection{Deep Q-Network:}
+
+The primary learner is the deep Q-network (DQN), which estimates the expected return of each action with a neural network~\cite{mnih2015}. It suits the task because the action set is small and discrete, the $4^{20}$ combinations of check results rule out a lookup table, and the value it assigns to each action, such as a blocked fix against escalation, can be inspected. The network has two hidden layers of 128 units. Actions that are not available, such as checks already requested and blocked proposals, are masked both when an action is chosen and in the maximum of the learning target.
+
+\subsection{Proximal Policy Optimisation:}
+
+Proximal policy optimisation (PPO) with action masking will serve as a secondary learner, to show whether the findings depend on the choice of algorithm~\cite{schulman2017}. Each agent will be trained with ten random seeds, at a fixed base level of ambiguity and, in a second regime, with the ambiguity controls drawn at random for each episode.
+
+\section{The Rule-Based Safety Mechanism}
+
+The safety mechanism is a component separate from the agent that checks every proposed action against the ten operational rules. Each rule is a readable condition over the proposed action, the context of the incident and the evidence gathered so far; for example, a rule may forbid a fix on a production system, or forbid a fix until a named check has been observed. Escalation is never forbidden, so a permitted action always exists. When the agent proposes an action, a permitted action passes to the environment unchanged. A prohibited action is blocked and logged, and the agent sees the blocked flag, with that action masked, and proposes once more. If the second proposal is also prohibited, the incident is escalated to the human expert and recorded as a forced escalation. Telling the agent about the block responds to the finding that a shield which silently overrides actions can hinder learning~\cite{yang2023}. No study in the systematic review gives a blocked agent a second proposal~\cite{opol2026slr}.
+
+Figure~\ref{fig:framework} shows how the agent, the safety mechanism and the simulated environment work together.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{Figure_1_1_Conceptual_Framework.png}
+\caption{Proposed Architecture}
+\label{fig:framework}
+\end{figure}
+
+\section{Baseline Decision Policies}
+
+The agent will be compared with six baseline policies that run in the same environment on the same evaluation incidents, each standing for an approach from Chapter~2 (Table~\ref{tab:baselines}). Two ablations of the agent, one that cannot request checks and one that cannot escalate, will show what each option contributes.
+
+\begin{table}[htbp]
+\centering
+\caption{Baseline decision policies}
+\label{tab:baselines}
+\small
+\begin{tabular}{|p{2.9cm}|p{6.0cm}|p{3.2cm}|}
+\hline
+\textbf{Policy} & \textbf{Behaviour} & \textbf{Approach represented} \\ \hline
+Initial-symptom & Recommends the most likely cause from the first symptoms, without checks & Triage as one prediction \\ \hline
+Scripted checklist & Requests a fixed sequence of checks for the category, elicited from Directorate practice, then recommends & Runbook practice \\ \hline
+Always-escalate & Escalates every incident & The limit of deferral \\ \hline
+Confidence threshold & Tracks the posterior over causes, requests the most informative check until one cause passes a threshold, else escalates & Uncertainty-driven investigation (knows the model) \\ \hline
+Unconstrained agent & The same DQN without the safety mechanism & Standard shielding comparison \\ \hline
+Penalty-only agent & The same DQN without the mechanism, with a reward penalty per rule violation & Constraint by reward penalty \\ \hline
+\end{tabular}
+\end{table}
+
+\section{Evaluation Strategy}
+
+The framework will be evaluated across four groups of measures. Decision quality will be measured by resolution accuracy, coverage, selective accuracy and the wrong-fix rate. Investigation efficiency will be measured by the mean number and cost of checks and an accuracy--cost curve~\cite{janisch2019}. Escalation behaviour will be measured by the escalation rate and by the precision, recall, F1 score and Matthews correlation coefficient of escalations against the reference labels~\cite{okafor2026}. Constraint compliance will be measured by the proposed-violation rate, the forced-escalation rate, the executed-violation rate and the compliant success rate~\cite{levy2026}.
+
+Four experiments use these measures. Experiment~1 compares the agent with the six baselines at the base level of ambiguity. Experiment~2 compares it with the unconstrained and penalty-only agents and tracks the proposed-violation rate over training. Experiment~3 compares it with its two ablations. Experiment~4 evaluates every policy across the planned ambiguity levels, for both training regimes. A sensitivity analysis varies the cost of escalation. Results will be reported as the mean over ten seeds with 95\% bootstrap confidence intervals~\cite{agarwal2021}, on evaluation incidents generated with seeds never used in training.

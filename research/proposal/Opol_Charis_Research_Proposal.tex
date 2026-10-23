@@ -1,0 +1,188 @@
+% Research proposal: Investigate, Recommend or Escalate: A Rule-Constrained Reinforcement Learning
+% Agent for IT Incident Triage under Ambiguous Evidence
+%
+% Built on the department template _U_Proposal_Report_template_2026_CS_DS_Undergraduate.zip
+% (same preamble, title page, preliminary pages, chapter and appendix order).
+% Build from this folder:   ..\..\tools\tectonic.exe Opol_Charis_Research_Proposal.tex
+% References come from ../thesis/citations/references.bib and proposal_extra.bib;
+% figures from ../thesis/images/ and images/.
+
+\documentclass[12pt]{report}
+\usepackage{appendix}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage[table]{xcolor}
+\usepackage{longtable}
+\usepackage[paper=a4paper,bottom=2cm,footskip=0.25cm,top=2cm,headsep=0.25cm,rmargin=2cm,lmargin=2cm]{geometry}
+\usepackage{tabularx}
+\usepackage{xltabular}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage[parfill]{parskip}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{amssymb}
+\usepackage{multirow}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usepackage{cite}
+\usepackage[hyphens]{url}
+
+\usepackage{hyperref}
+\usepackage{mathtools}
+\hypersetup{
+    colorlinks=false,
+    linktoc=all,
+    linkcolor=blue,
+}
+
+\usepackage{soul}
+
+\setcounter{secnumdepth}{3}    % Number subsubsections in the chapters
+\setcounter{tocdepth}{3}       % Put subsubsections in the table of contents
+
+\graphicspath{{images/}{../thesis/images/}}
+\emergencystretch=1.5em
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcommand{\cellyes}{$\checkmark$}
+\newcommand{\cellpart}{$\circ$}
+\newcommand{\cellno}{--}
+\newcommand{\todo}[1]{\textcolor{red}{#1}}
+
+%%%% Student data fields %%%%
+\newcommand\theResearchTopic{\textit{Investigate, Recommend or Escalate: A Rule-Constrained Reinforcement Learning Agent for IT Incident Triage under Ambiguous Evidence}}
+
+\newcommand\theStudentName{\textit{OPOL CHARIS}}
+\newcommand\theStudentRegNo{\textit{S24B23/003}}
+\newcommand\theStudentNo{\textit{B29654}}
+\newcommand\theStudentEmail{\textit{charisopol@gmail.com}}
+\newcommand\theStudentPhoneNo{\textit{0765821211}}
+
+\newcommand\theSpecializationTrack{\textit{Artificial Intelligence and Robotics}}
+
+\newcommand\thePrimaryAdvisor{\textit{\todo{IAN RAYMOND OSOLO}}}
+\newcommand\theSupervisor{\thePrimaryAdvisor}
+
+\newcommand\theProgrameAward{Bachelor of Science in Computer Science}
+\newcommand\theTheDocumentType{proposal}
+\newcommand\theFinalOutputDocument{Degree}
+
+\newcommand\theFaculty{Faculty of Engineering Design \& Technology}
+\newcommand\theDepartment{Department of Computing \& Technology}
+
+\newcommand\theVersionDate{\textit{\todo{[Enter Version Date]}}}
+
+%%%%%=====================. %%%%
+
+\newcommand\makLogo{\includegraphics[scale=.3]{images/logos/UCU-Logo.png}}
+
+
+\pagenumbering{roman}
+\begin{document}
+    %%---- Title page
+    \begin{titlepage}
+        \centering
+        \makLogo  \\
+         \theDepartment \\
+    	\vspace{1cm}
+        \Large{
+            \theResearchTopic \\
+
+            \vspace{.5cm}
+            \textit{By}\\
+            \vspace{.5cm}
+            \theStudentName\\
+
+            Reg No: \theStudentRegNo, Student No: \theStudentNo  \\
+            E-mail: \theStudentEmail, Phone No:  \theStudentPhoneNo\\
+
+            \vspace{1cm}
+
+            A \theTheDocumentType~submitted to the \theFaculty~for the study leading to the \theFinalOutputDocument~in partial fulfilment of the requirements for the award of \textbf{\theProgrameAward}~of Uganda Christian University \\
+
+            \vspace{1cm}
+
+            SPECIALIZATION TRACK: \theSpecializationTrack\\
+              \vspace{1cm}
+            \thePrimaryAdvisor \\
+
+             \vspace{1cm}
+            \theVersionDate \\
+       }
+    \end{titlepage}
+
+
+%%%=== Preliminary pages ====
+\chapter*{Declaration}
+\label{pre:01-declaration}
+\addcontentsline{toc}{chapter}{Declaration}
+\input{preliminary-pages/01-declaration}
+
+\chapter*{Ethical Generative AI Usage Declaration}
+\label{pre:01b-AI-declaration}
+\addcontentsline{toc}{chapter}{Declaration}
+\input{preliminary-pages/01b-AI-declaration}
+
+\chapter*{Approval}
+\label{pre:02-approval}
+\addcontentsline{toc}{chapter}{Approval}
+\input{preliminary-pages/02-approval}
+
+\chapter*{Abstract}
+\label{pre:03-abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+\input{preliminary-pages/03-abstract}
+
+\chapter*{Dedication}
+\label{pre:04-dedication}
+\addcontentsline{toc}{chapter}{Dedication}
+\input{preliminary-pages/04-dedication}
+
+\input{preliminary-pages/05-toc-tof-symbols-abrevs}
+
+\chapter*{Acknowledgments}
+\label{pre:06-acknowledgments}
+\addcontentsline{toc}{chapter}{Acknowledgments}
+\input{preliminary-pages/06-acknowledgments}
+%%==End of preliminary pages
+
+
+%%%%======================== Beginning of Chapters
+\chapter{Introduction}
+\label{ch:chapter-01}
+ %%%%========================
+ \pagenumbering{arabic}
+ \renewcommand{\arraystretch}{1}
+ %%%=========================
+\input{chapters/chapter-01}
+
+\chapter{Literature Review}
+\label{ch:chapter-02}
+\input{chapters/chapter-02}
+
+\chapter{Methodology}
+\label{ch:chapter-03}
+\input{chapters/chapter-03}
+
+\chapter{Expected Results}
+\label{ch:chapter-04}
+\input{chapters/chapter-04}
+
+%%%=== =============Add bibliography & references
+\bibliographystyle{IEEEtran}
+\bibliography{../thesis/citations/references,proposal_extra}
+\addcontentsline{toc}{chapter}{REFERENCES}
+
+
+%%%==== Add Appendicies ==
+
+\appendix
+\addcontentsline{toc}{chapter}{APPENDICIES}
+\begin{appendices}
+    \input{appendicies/AAppendix-main}
+\end{appendices}
+
+
+\end{document}
