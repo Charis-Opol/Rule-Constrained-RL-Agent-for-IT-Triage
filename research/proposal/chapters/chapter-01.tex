@@ -8,11 +8,11 @@ Reinforcement learning (RL) offers a way to treat triage as a sequence of decisi
 
 \section{Problem Statement}
 
-IT support teams must decide how to handle an incident before they know its cause. A member of IT staff facing such an incident can investigate further, apply a likely remedy, or pass the incident to someone better placed to resolve it, and each choice has a cost. Further investigation takes time, a wrong remedy can prolong or worsen the incident, and unnecessary escalation consumes the attention of senior staff.
+IT support teams must decide how to handle an incident before they know its cause, because its symptoms are often not enough to identify the problem: distinct problems can produce similar symptoms~\cite{chen2020}. A member of IT staff facing such an incident can investigate further, apply a likely remedy, or pass the incident to someone better placed to resolve it, and each choice has a cost. Further investigation takes time, since engineers often need a long time to identify an incident's root cause~\cite{chen2020}. A wrong remedy can reduce availability instead of restoring it~\cite{alauthman2026}, and an incident sent to the wrong team is reassigned, which prolongs the downtime~\cite{chen2020}. Escalation draws on the limited attention of the people who receive it, and when they are overloaded, responses are delayed and significant incidents are missed~\cite{kovtun2026,turan2026}.
 
-Existing automated approaches address parts of this decision but not the choice among its options. Triage models commonly produce one prediction per incident report and are evaluated with classification metrics~\cite{chen2020,remil2024}, so they cannot ask for more evidence and cannot say that they are unsure. Reinforcement learning has been applied to incident response and investigation, mostly in cybersecurity~\cite{dunsin2025,hammar2025,hammar2026belief}, and a few studies of security alert triage let an agent gather evidence and then escalate or defer an alert to an analyst~\cite{sahin2026,kovtun2026}. Their agents close or escalate alerts, however, and do not recommend a fix that changes the affected system. A systematic review of 34 studies, conducted for this research, found escalation to a person in only seven of them, and only three that report what happens when a rule mechanism blocks a decision~\cite{opol2026slr}. A reward penalty alone does not ensure that an agent respects an organisation's operational rules, because penalising an action does not guarantee that the agent never selects it~\cite{konighofer2025}.
+Existing automated approaches address parts of this decision but not the choice among its options. Triage models commonly produce one prediction per incident report and are evaluated with classification metrics~\cite{chen2020,remil2024}, so they cannot ask for more evidence and cannot say that they are unsure. Reinforcement learning has been applied to incident response and investigation, mostly in cybersecurity~\cite{dunsin2025,hammar2025,hammar2026belief}, and a few studies of security alert triage let an agent gather evidence and then escalate or defer an alert to an analyst~\cite{sahin2026,kovtun2026}. Their agents close or escalate alerts, however, and do not recommend a fix that changes the affected system. A systematic review of 34 studies, conducted for this research, found escalation to a person in only seven of them, and only three that report what happens when a rule mechanism blocks a decision. A reward penalty alone does not ensure that an agent respects an organisation's operational rules, because penalising an action does not guarantee that the agent never selects it~\cite{konighofer2025}.
 
-As a result, there is no evaluated agent for IT service incidents that learns when to investigate, when to recommend a permitted fix and when to escalate, with its proposals checked against explicit operational rules, and no evidence on how such an agent behaves as the evidence becomes more ambiguous. This research seeks to address that gap. It does not claim that constraining a learned incident-handling agent is new; its contribution lies in the decision it studies, the setting, and the way the result is evaluated.
+As a result, the reviewed literature contains no evaluated agent for IT service incidents that learns when to investigate, when to recommend a permitted fix and when to escalate, with its proposals checked against explicit operational rules, and no evidence on how such an agent behaves as the evidence becomes more ambiguous. This research seeks to address that gap. It does not claim that constraining a learned incident-handling agent is new; its contribution lies in the decision it studies, the setting, and the way the result is evaluated.
 
 \section{Research Objectives}
 
@@ -20,15 +20,43 @@ The general objective of this study is to design and evaluate a rule-constrained
 
 \subsection{Scenario Model and Simulated Environment:}
 
-To build, by 1 November 2026, a simulated triage environment from a scenario model of about 15 causes, 20 diagnostic checks and 10 operational rules elicited from the Directorate and reviewed by its staff, in which an agent can request diagnostic information, recommend permitted actions or escalate incidents, and in which missing, unreliable and overlapping evidence can each be set independently. This objective addresses how ambiguous triage scenarios can be represented in a controlled environment.
+To build a simulated triage environment from a scenario model of about 15 causes, 20 diagnostic checks and 10 operational rules elicited from the Directorate and reviewed by its staff, in which an agent can request diagnostic information, recommend permitted actions or escalate incidents, and in which missing, unreliable and overlapping evidence can each be set independently. This objective addresses how ambiguous triage scenarios can be represented in a controlled environment.
 
 \subsection{Rule-Constrained Agent:}
 
-To train, by 8 November 2026, a deep Q-network agent over ten random seeds that chooses among requesting checks, recommending fixes and escalating, under an independent rule-based safety mechanism that returns a blocked proposal to the agent once and escalates the incident if the second proposal is also blocked, so that no prohibited action is executed. This objective addresses how reinforcement learning can support the three decisions and how effectively a rule mechanism prevents prohibited actions.
+To train a deep Q-network agent that chooses among requesting checks, recommending fixes and escalating, under an independent rule-based safety mechanism that returns a blocked proposal to the agent once and escalates the incident if the second proposal is also blocked, so that no prohibited action is executed, and to repeat the training with proximal policy optimisation as a robustness check on the choice of learning algorithm. This objective addresses how reinforcement learning can support the three decisions and how a rule mechanism affects the agent's decisions.
 
 \subsection{Evaluation against Baselines and under Ambiguity:}
 
-To evaluate the agent, by 22 November 2026, against six baseline decision policies on decision quality, investigation efficiency, escalation behaviour and constraint compliance, reported with 95\% confidence intervals, and to measure how its accuracy and its mix of investigating, recommending and escalating change across controlled levels of missing, unreliable and overlapping evidence. This objective addresses how the approach compares with simpler policies and how robust it is as the evidence becomes more ambiguous.
+To evaluate the agent against six baseline decision policies on decision quality, investigation efficiency, escalation behaviour and constraint compliance, and to measure how its accuracy and its mix of investigating, recommending and escalating change across controlled levels of missing, unreliable and overlapping evidence. This objective addresses how the approach compares with simpler policies and how robust it is as the evidence becomes more ambiguous.
+
+\section{Research Questions}
+
+This study will answer the following research questions:
+
+\begin{enumerate}
+\item How can ambiguous IT incident scenarios, built from the causes, diagnostic checks and operational rules of the Directorate, be represented in a simulated environment in which missing, unreliable and overlapping evidence can each be controlled?
+\item How effectively can a reinforcement learning agent learn when to request diagnostic information, when to recommend a permitted fix, and when to escalate an incident to a human expert, and do the findings hold when the deep Q-network is replaced by proximal policy optimisation?
+\item How does a rule-based safety mechanism, which returns a blocked proposal to the agent once and escalates the incident after a second block, affect the agent's compliant success, its rate of blocked proposals and its decisions, compared with an agent without the mechanism and an agent that learns the rules only from a reward penalty?
+\item How does the agent compare with the selected baseline decision policies, and how do its accuracy and its mix of investigating, recommending and escalating change as the evidence becomes more ambiguous?
+\end{enumerate}
+
+\section{Research Hypotheses}
+
+This study will test the following hypotheses. The criteria by which each is judged supported or not supported are stated in Section~\ref{sec:criteria}.
+
+\begin{description}[labelwidth=2.5em, leftmargin=3.2em, labelindent=0.5em]
+\item[H1:] At the base level of ambiguity, the agent will achieve a higher resolution accuracy than the initial-symptom, scripted-checklist and always-escalate baseline policies, with a mean investigation cost no higher than that of the scripted checklist.
+\item[H2:] The agent with the safety mechanism will achieve a higher compliant success rate, the share of incidents resolved correctly without any prohibited action taking effect, than the unconstrained and penalty-only agents.
+\item[H3:] The agent's response to ambiguity will depend on its source:
+\begin{description}[labelwidth=3.2em, leftmargin=3.6em]
+\item[H3a:] as more evidence goes missing, it will escalate more incidents, without requesting more checks, since unavailable checks cannot be requested;
+\item[H3b:] as evidence becomes less reliable, it will request more checks before deciding and recommend fixes on fewer incidents;
+\item[H3c:] as the evidence for different causes overlaps more, it will request more checks and escalate more incidents.
+\end{description}
+\end{description}
+
+That the safety mechanism prevents every prohibited action is not a hypothesis, because it holds by construction (Equation~\eqref{eq:mechanism}). It is checked as a verification of the implementation: the executed-violation rate must be zero on every evaluation incident in which the mechanism is active.
 
 \section{Justification}
 

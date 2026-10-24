@@ -1,14 +1,22 @@
 \section{Decision Quality}
 
-The agent is expected to achieve higher decision quality than the selected baseline policies in ambiguous incident scenarios (hypothesis H1). Specifically, it is expected to resolve a larger share of incidents correctly than the initial-symptom, scripted and always-escalate policies at equal or lower investigation cost, and to approach the confidence-threshold policy without being given the likelihood model. Numerical targets will be fixed after the pilot runs, and the results will be reported whether or not the hypothesis holds.
+At the base level of ambiguity, the agent is expected to resolve a larger share of incidents correctly than the initial-symptom, scripted-checklist and always-escalate policies, with a mean investigation cost no higher than that of the scripted checklist (hypothesis H1). The hypothesis is judged by the criteria of Section~\ref{sec:criteria}: a difference of at least 0.05 in resolution accuracy with non-overlapping 95\% bootstrap confidence intervals. The agent is also expected to approach the confidence-threshold policy, which is given the likelihood model that the agent must learn from experience; the gap between the two is reported but is not part of H1. The results will be reported whether or not the hypothesis holds.
 
 \section{Rule Compliance}
 
-With the safety mechanism in place, the agent is expected to achieve a higher rate of rule-compliant correct recommendations than the same agent without it (hypothesis H2). No prohibited action will be executed when the mechanism is active, so the comparison of interest is the compliant success rate against the unconstrained and penalty-only agents. The proposed-violation rate is expected to fall over training, which would show that the agent learns to act within the rules and does not rely on being stopped.
+The agent with the safety mechanism is expected to achieve a higher compliant success rate than the unconstrained and penalty-only agents (hypothesis H2), by at least 0.05 with non-overlapping confidence intervals. Because a blocked proposal earns the block penalty $\lambda_{\text{block}}$, the proposed-violation rate is expected to fall over training, which would show that the agent learns to act within the rules and does not rely on being stopped.
+
+That no prohibited action is carried out while the mechanism is active is not part of H2, because it holds by construction. It is verified instead: the executed-violation rate of the agent with the mechanism must be zero on every evaluation incident.
 
 \section{Robustness to Ambiguity}
 
-As the level of ambiguity rises, the agent is expected to request more diagnostic information and to escalate more incidents, and not to continue recommending fixes on weaker evidence (hypothesis H3). The agent trained across randomised ambiguity levels is expected to degrade less than the agent trained at a single level. The experiments will report what no reviewed study has reported: how the shares of investigating, recommending and escalating change across controlled levels of missing, unreliable and overlapping evidence.
+The agent is expected to respond differently to each source of ambiguity, judged one factor at a time from the base level:
+\begin{itemize}
+\item \textbf{Missing evidence (H3a):} as $p_{\text{miss}}$ rises, the agent is expected to escalate more incidents without requesting more checks, since a missing check cannot be requested and there is less evidence left to gather.
+\item \textbf{Unreliable evidence (H3b):} as $p_{\text{noise}}$ rises, the agent is expected to request more checks before deciding, to corroborate results it can no longer trust, and to recommend fixes on fewer incidents.
+\item \textbf{Overlapping evidence (H3c):} as $\omega$ rises, the agent is expected to request more checks and to escalate more incidents, since causes in the same category become harder to tell apart.
+\end{itemize}
+The agent trained across randomised ambiguity levels is expected to degrade less than the agent trained at a single level. The experiments will report what no reviewed study has reported: how the shares of investigating, recommending and escalating change across controlled levels of missing, unreliable and overlapping evidence.
 
 \section{Prototype}
 

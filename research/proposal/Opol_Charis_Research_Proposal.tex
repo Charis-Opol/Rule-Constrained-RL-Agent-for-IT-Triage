@@ -19,6 +19,8 @@
 \usepackage{xltabular}
 \usepackage{booktabs}
 \usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 \usepackage[parfill]{parskip}
 \usepackage{enumerate}
 \usepackage{enumitem}
@@ -28,6 +30,7 @@
 \usetikzlibrary{positioning}
 \usepackage{cite}
 \usepackage[hyphens]{url}
+\Urlmuskip=0mu plus 1mu
 
 \usepackage{hyperref}
 \usepackage{mathtools}
@@ -38,6 +41,9 @@
 }
 
 \usepackage{soul}
+\usepackage{etoolbox}
+% Tighter spacing between reference-list entries (parskip otherwise adds space between them).
+\apptocmd{\thebibliography}{\setlength{\itemsep}{2pt}\setlength{\parskip}{0pt}}{}{}
 
 \setcounter{secnumdepth}{3}    % Number subsubsections in the chapters
 \setcounter{tocdepth}{3}       % Put subsubsections in the table of contents
@@ -51,6 +57,17 @@
 \newcommand{\cellno}{--}
 \newcommand{\todo}[1]{\textcolor{red}{#1}}
 
+% \bstctlcite (from IEEEtran.cls) passes control options to IEEEtran.bst;
+% used to print repeated author names in full instead of a dash.
+\makeatletter
+\def\bstctlcite{\@ifnextchar[{\@bstctlcite}{\@bstctlcite[@auxout]}}
+\def\@bstctlcite[#1]#2{\@bsphack
+  \@for\@citeb:=#2\do{%
+    \edef\@citeb{\expandafter\@firstofone\@citeb}%
+    \if@filesw\immediate\write\csname #1\endcsname{\string\citation{\@citeb}}\fi}%
+  \@esphack}
+\makeatother
+
 %%%% Student data fields %%%%
 \newcommand\theResearchTopic{\textit{Investigate, Recommend or Escalate: A Rule-Constrained Reinforcement Learning Agent for IT Incident Triage under Ambiguous Evidence}}
 
@@ -62,7 +79,7 @@
 
 \newcommand\theSpecializationTrack{\textit{Artificial Intelligence and Robotics}}
 
-\newcommand\thePrimaryAdvisor{\textit{\todo{IAN RAYMOND OSOLO}}}
+\newcommand\thePrimaryAdvisor{\mbox{}}   % Left blank until a supervisor is officially assigned
 \newcommand\theSupervisor{\thePrimaryAdvisor}
 
 \newcommand\theProgrameAward{Bachelor of Science in Computer Science}
@@ -72,7 +89,7 @@
 \newcommand\theFaculty{Faculty of Engineering Design \& Technology}
 \newcommand\theDepartment{Department of Computing \& Technology}
 
-\newcommand\theVersionDate{\textit{\todo{[Enter Version Date]}}}
+\newcommand\theVersionDate{\textit{24th October 2026}}
 
 %%%%%=====================. %%%%
 
@@ -81,6 +98,7 @@
 
 \pagenumbering{roman}
 \begin{document}
+\bstctlcite{IEEEexample:BSTcontrol}
     %%---- Title page
     \begin{titlepage}
         \centering
@@ -122,7 +140,7 @@
 
 \chapter*{Ethical Generative AI Usage Declaration}
 \label{pre:01b-AI-declaration}
-\addcontentsline{toc}{chapter}{Declaration}
+\addcontentsline{toc}{chapter}{Ethical Generative AI Usage Declaration}
 \input{preliminary-pages/01b-AI-declaration}
 
 \chapter*{Approval}
@@ -179,7 +197,7 @@
 %%%==== Add Appendicies ==
 
 \appendix
-\addcontentsline{toc}{chapter}{APPENDICIES}
+\addcontentsline{toc}{chapter}{APPENDICES}
 \begin{appendices}
     \input{appendicies/AAppendix-main}
 \end{appendices}

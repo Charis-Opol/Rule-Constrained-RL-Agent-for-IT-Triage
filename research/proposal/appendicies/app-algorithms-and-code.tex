@@ -1,19 +1,167 @@
-\section{Masked Deep Q-Network Update}
+\algrenewcommand\algorithmicrequire{\textbf{Input:}}
+\algrenewcommand\algorithmicensure{\textbf{Output:}}
 
-The agent is trained with the deep Q-network of Stable-Baselines3~\cite{raffin2021}. Because that implementation does not support action masking, the target of each update is restricted to the actions available in the next state, $A(s')$, which excludes checks already requested and a proposal that was just blocked:
-\begin{equation*}
-y = r + \gamma \max_{a' \in A(s')} Q_{\text{target}}(s', a').
-\end{equation*}
-The same restriction applies when the agent chooses an action. The PPO learner uses the MaskablePPO implementation of the sb3-contrib repository, which supports masking directly.
+This appendix gives the five main procedures of the study as pseudocode. Together they follow one experiment from start to finish: simulate an incident (Algorithms~\ref{alg:env} and~\ref{alg:step}), check every proposed action against the rules (Algorithm~\ref{alg:mechanism}), train the agent (Algorithm~\ref{alg:dqn}), run the strongest baseline (Algorithm~\ref{alg:threshold}), and evaluate every policy (Algorithm~\ref{alg:evaluation}). The equations they refer to are in Chapter~\ref{ch:chapter-03}. The PPO learner is not listed, because it is run with the MaskablePPO implementation of sb3-contrib without change.
 
-\section{Review-then-Escalate Procedure}
+\section{Simulating an Incident}
 
-\begin{enumerate}
-\item The agent proposes action $a$. If no rule prohibits $a$, it passes to the environment.
-\item Otherwise the block is logged, the blocked flag is set, $a$ is removed from the available actions, and the step is consumed without reward.
-\item The agent proposes action $a_2$. If no rule prohibits $a_2$, it passes to the environment.
-\item Otherwise the incident is escalated to the human expert and recorded as a forced escalation.
-\end{enumerate}
+\begin{algorithm}[H]
+\caption{Simulating one incident}
+\label{alg:env}
+\begin{algorithmic}[1]
+\Require ambiguity level $\ell = (p_{\text{miss}}, p_{\text{noise}}, \omega)$
+\Ensure the first observation of a new incident
+\Procedure{Reset}{$\ell$}
+  \State Blend each cause's check and symptom likelihoods towards its category average by $\omega$ \Comment{Eq.~\eqref{eq:overlap}}
+  \State Pick the hidden cause $c$ from the prior, and the context $x$
+  \For{each check $j$}
+    \If{a random number is below $p_{\text{miss}}$}
+      \State Mark check $j$ as unavailable
+    \Else
+      \State Draw its result (positive or negative) for cause $c$
+      \State With probability $p_{\text{noise}}$, reverse the result
+    \EndIf
+  \EndFor
+  \For{each symptom $e$}
+    \State Mark symptom $e$ present with probability $\varphi'_{em}$ for cause $c$ \Comment{Eq.~\eqref{eq:symptoms}, blended by $\omega$}
+  \EndFor
+  \State Mark every check as not requested
+  \State \Return the first observation: symptoms, context, and all checks not requested
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+The symptoms and the results of the checks are drawn once, at the start, so asking for the same check twice always gives the same answer. Algorithm~\ref{alg:step} then carries out each permitted action.
+
+\begin{algorithm}[H]
+\caption{Taking one step in an incident}
+\label{alg:step}
+\begin{algorithmic}[1]
+\Require a permitted action $a$
+\Ensure the next observation, the reward, and whether the incident has ended
+\Procedure{Step}{$a$}
+  \If{$a$ requests check $j$}
+    \State Reveal the result of check $j$; \quad reward $= -k_j$
+  \ElsIf{$a$ recommends a fix}
+    \State reward $= +r_{\text{correct}}$ if the fix matches $c$, otherwise $-\lambda_{\text{wrong}}$; \quad end the incident
+  \ElsIf{$a$ escalates}
+    \State reward $= -\lambda_{\text{esc}}$; \quad end the incident
+  \EndIf
+  \If{the step limit $H$ is reached}
+    \State Treat the incident as escalated and end it
+  \EndIf
+  \State \Return next observation, reward, ended
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\section{Checking Actions against the Rules}
+
+\begin{algorithm}[H]
+\caption{Rule-based safety mechanism (review then escalate)}
+\label{alg:mechanism}
+\begin{algorithmic}[1]
+\Require the agent's policy $\pi$, the current observation, the ten operational rules
+\Ensure the action carried out, which is always permitted
+\Procedure{SafeStep}{$\pi$, observation}
+  \State $a_1 \gets$ the agent's proposal
+  \If{no rule forbids $a_1$}
+    \State \Return \Call{Step}{$a_1$}
+  \EndIf
+  \State Block $a_1$ and log it; reward $= -\lambda_{\text{block}}$; one step used \Comment{first proposal refused}
+  \State Tell the agent it was blocked, and remove $a_1$ from its choices
+  \State $a_2 \gets$ the agent's second proposal
+  \If{no rule forbids $a_2$}
+    \State \Return \Call{Step}{$a_2$}
+  \Else
+    \State Record a forced escalation
+    \State \Return \Call{Step}{escalate} \Comment{escalation is never forbidden}
+  \EndIf
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+A blocked proposal uses up one step and earns the block penalty $-\lambda_{\text{block}}$ of Equation~\eqref{eq:reward}. All the learning agents and baselines act through this procedure, except the unconstrained and penalty-only agents, which call \textsc{Step} directly.
+
+\section{Training the Agent}
+
+\begin{algorithm}[H]
+\caption{Training the deep Q-network}
+\label{alg:dqn}
+\begin{algorithmic}[1]
+\Require number of training steps, exploration rate $\epsilon$, mini-batch size $b$, target update interval $C$
+\Ensure a trained Q-network
+\State Create the Q-network with random weights, and a copy of it as the target network
+\State Create an empty replay buffer
+\Repeat
+  \State Start a new incident with \Call{Reset}{$\ell$} \Comment{$\ell$ fixed, or random in the second regime}
+  \While{the incident has not ended}
+    \State With probability $\epsilon$ pick a random allowed action;
+    \State \hspace{1em} otherwise pick the allowed action with the highest Q-value
+    \State Carry it out through \Call{SafeStep}{} and store what happened in the buffer
+    \State Take a random mini-batch of $b$ stored steps
+    \For{each step in the mini-batch}
+      \State target $= r$ if the incident ended, otherwise $r + \gamma \max_{a'} Q_{\text{target}}(\text{next}, a')$
+    \EndFor
+    \State Adjust the Q-network to bring its values closer to the targets \Comment{Eq.~\eqref{eq:dqnloss}}
+    \State Every $C$ steps, copy the Q-network into the target network
+    \State Lower $\epsilon$ a little
+  \EndWhile
+\Until{the number of training steps is reached}
+\State \Return the Q-network
+\end{algorithmic}
+\end{algorithm}
+
+``Allowed'' always means the masked set of Equation~\eqref{eq:mask}: checks already requested and blocked proposals are excluded, both when an action is chosen and when the target is computed. Each agent is trained in this way with ten random seeds.
+
+\section{Confidence-Threshold Baseline}
+
+\begin{algorithm}[H]
+\caption{Confidence-threshold baseline}
+\label{alg:threshold}
+\begin{algorithmic}[1]
+\Require the simulator's likelihoods, the prior, a confidence threshold $\xi$
+\Ensure the next action
+\Procedure{Decide}{observation}
+  \State Update the belief over causes from the results seen so far \Comment{Eq.~\eqref{eq:belief}}
+  \If{the most likely cause has probability at least $\xi$}
+    \State \Return recommend the fix for that cause
+  \ElsIf{some checks have not been requested}
+    \State \Return request the check expected to reduce uncertainty the most
+  \Else
+    \State \Return escalate
+  \EndIf
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+This baseline is given the model that the learning agent must learn from experience, so it is the reference the agent is expected to approach. ``Reduce uncertainty the most'' means the largest expected information gain, the expected fall in the entropy of the belief after the check's result is seen.
+
+\section{Evaluating the Policies}
+
+\begin{algorithm}[H]
+\caption{Evaluation protocol}
+\label{alg:evaluation}
+\begin{algorithmic}[1]
+\Require all policies (agent, ablations and baselines), the twelve ambiguity settings, $S = 10$, $N = 1{,}000$
+\Ensure each measure as a mean with a 95\% confidence interval
+\For{each ambiguity setting}
+  \State Generate $S$ evaluation sets of $N$ incidents, from seeds never used in training
+\EndFor
+\For{each policy and each ambiguity setting}
+  \For{$s = 1, \dots, S$}
+    \State Run the policy (trained with seed $s$, if it learns) on evaluation set $s$, through \Call{SafeStep}{}
+    \State Record each outcome, the checks used, escalations, blocks and violations
+    \State Compute every measure of Section~\ref{sec:evaluation} for this set
+  \EndFor
+  \State Average each measure over the $S$ values
+  \State Resample the $S$ values with replacement $B = 10{,}000$ times to get a 95\% bootstrap interval
+\EndFor
+\State \Return the table of means and intervals
+\end{algorithmic}
+\end{algorithm}
+
+Every policy meets the same incidents, so differences between policies are not caused by differences between incidents.
 
 \section{Code Repositories}
 

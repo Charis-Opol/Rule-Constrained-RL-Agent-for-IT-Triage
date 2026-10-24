@@ -1,5 +1,10 @@
 % References used by the proposal that are not in ../thesis/citations/references.bib.
 
+% IEEEtran control: print repeated author names in full instead of a dash.
+@IEEEtranBSTCTL{IEEEexample:BSTcontrol,
+  CTLdash_repeated_names = "no"
+}
+
 @article{page2021,
   author  = {Page, Matthew J. and McKenzie, Joanne E. and Bossuyt, Patrick M. and others},
   title   = {The {PRISMA} 2020 statement: an updated guideline for reporting systematic reviews},
@@ -11,9 +16,33 @@
 
 @techreport{vision2040,
   author      = {{National Planning Authority}},
-  title       = {Uganda Vision 2040},
-  institution = {National Planning Authority, Republic of Uganda},
+  title       = {{Uganda Vision 2040}},
+  institution = {National Planning Authority},
   address     = {Kampala, Uganda},
   year        = {2013},
   url         = {https://npa.go.ug/wp-content/uploads/2023/03/VISION-2040.pdf}
+}
+
+@techreport{ndp4,
+  author      = {{National Planning Authority}},
+  title       = {{Fourth National Development Plan (NDP IV) 2025/26--2029/30}},
+  institution = {National Planning Authority},
+  address     = {Kampala, Uganda},
+  year        = {2025}
+}
+
+@inproceedings{schulman2016,
+  author    = {Schulman, John and Moritz, Philipp and Levine, Sergey and Jordan, Michael I. and Abbeel, Pieter},
+  title     = {High-dimensional continuous control using generalized advantage estimation},
+  booktitle = {Proc. 4th Int. Conf. Learn. Represent. (ICLR)},
+  year      = {2016},
+  url       = {https://arxiv.org/abs/1506.02438}
+}
+
+@inproceedings{huang2022,
+  author    = {Huang, Shengyi and Onta{\~n}{\'o}n, Santiago},
+  title     = {A closer look at invalid action masking in policy gradient algorithms},
+  booktitle = {Proc. 35th Int. Florida Artif. Intell. Res. Soc. Conf. (FLAIRS)},
+  year      = {2022},
+  url       = {https://arxiv.org/abs/2006.14171}
 }
