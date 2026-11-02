@@ -235,9 +235,9 @@
 - **Deliverable:** Checker module; block log
 - **Depends on:** 4.1
 - **Checklist:**
-  - [ ] Permitted → passes
-  - [ ] First block → flag set, action masked, choose again
-  - [ ] Second block → forced escalation, recorded separately
+  - [x] Permitted → passes
+  - [x] First block → flag set, action masked, choose again
+  - [x] Second block → forced escalation, recorded separately
 
 ### 4.3 Rule checker tests
 - **Status:** Todo · **Due:** 2026-11-01 · **Days:** 0.5 · **Label:** WP4

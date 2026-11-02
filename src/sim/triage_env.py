@@ -62,7 +62,7 @@ class TriageEnv(gym.Env):
         """Evaluation only, never shown to the agent. Should this incident be escalated?"""
         s = self.scenario
         for rule in s.rules:
-            if (rule.cause == self.cause and self.context[rule.attribute] == rule.value
+            if (rule.cause == self.cause and rule.active(self.context)
                     and (rule.unless_observed is None or not self.available[rule.unless_observed])):
                 return "rule"
         belief = s.prior * np.prod(np.where(self.symptoms[:, None], s.symptom_theta, 1 - s.symptom_theta), axis=0)
@@ -92,6 +92,12 @@ class TriageEnv(gym.Env):
         if self.t >= self.max_steps:
             return self._end_at_step_limit()
         return self._obs(), 0.0, False, False, {}
+
+    def force_escalation(self):
+        """A second refused proposal in a row: the incident goes to the human expert."""
+        self.t += 1
+        self.blocked_action = None
+        return self._obs(), -self.scenario.cost_esc, True, False, self._info("forced_escalation")
 
     def _end_at_step_limit(self):
         self.blocked_action = None

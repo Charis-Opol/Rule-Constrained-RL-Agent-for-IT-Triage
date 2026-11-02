@@ -103,7 +103,7 @@ Hours are estimates, and DQN training speed has not been measured on this machin
 
 **Gate:** `check_env` passes and the same seed gives the same incident. Simulated rates match the ratings. Recommending the most probable cause after all checks scores 82% with no noise and 72% at noise 0.1.
 
-### Phase 2: Safety mechanism (1.5 h)
+### Phase 2: Safety mechanism (1.5 h) - done
 
 - Read the five rules from the configuration, separately from the agent.
 - Implement review-then-escalate: a block uses a step with no reward, sets the flag and masks that action for the next step. A second consecutive block forces an escalation.

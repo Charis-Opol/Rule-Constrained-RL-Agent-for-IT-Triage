@@ -34,7 +34,7 @@ An independent rule-based safety mechanism checks every proposal. A blocked prop
 | Chapter 2: Literature review | Drafted (thematic review; a systematic review is in progress) |
 | Chapter 3: Methodology | Drafted; revised after the stakeholder interview |
 | Scenario elicitation | Workbook ready; session with the Directorate pending |
-| Simulator, rule checker, agent, experiments | Pilot in progress (Phases 0 and 1 of 6 done); see [`documentation/pilot_experiment_plan.md`](documentation/pilot_experiment_plan.md) and [`WBS.md`](WBS.md) |
+| Simulator, rule checker, agent, experiments | Pilot in progress (Phases 0 to 2 of 6 done); see [`documentation/pilot_experiment_plan.md`](documentation/pilot_experiment_plan.md) and [`WBS.md`](WBS.md) |
 | Prototype and poster | Planned for Week 6 |
 
 The plan and progress are tracked in [`WBS.md`](WBS.md) (Trello-ready, with prompts for Claude and the Trello MCP) and in [`documentation/progress_log.md`](documentation/progress_log.md).
@@ -50,7 +50,7 @@ The plan and progress are tracked in [`WBS.md`](WBS.md) (Trello-ready, with prom
 ├── tools/                         Put tectonic.exe here (not tracked)
 ├── src/
 │   ├── sim/                       Scenario model loader and the Gymnasium environment
-│   ├── rules/                     Safety mechanism (to come)
+│   ├── rules/                     Safety mechanism
 │   └── agents/                    Agents and baselines (to come)
 ├── experiments/pilot/             Pilot scenario model and pre-training checks
 ├── results/pilot/                 Pilot results (to come)

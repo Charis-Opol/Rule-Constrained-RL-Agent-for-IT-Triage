@@ -8,10 +8,14 @@ import numpy as np
 
 @dataclass(frozen=True)
 class Rule:
+    id: str
     cause: int                  # index of the cause whose remedy is forbidden
     attribute: int              # index of the context attribute in the condition
     value: int                  # index of the value that activates the rule
     unless_observed: int | None   # index of the check that lifts the rule, if any
+
+    def active(self, context):
+        return context[self.attribute] == self.value
 
 
 @dataclass(frozen=True)
@@ -82,7 +86,7 @@ def build_scenario(model, settings):
     for rule in model["rules"]:
         attribute = attribute_ids.index(rule["when"]["attribute"])
         unless = rule["unless_observed"]
-        rules.append(Rule(cause_ids.index(rule["cause"]), attribute,
+        rules.append(Rule(rule["id"], cause_ids.index(rule["cause"]), attribute,
                           values[attribute].index(rule["when"]["value"]),
                           check_ids.index(unless) if unless else None))
 
