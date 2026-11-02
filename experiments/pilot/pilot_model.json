@@ -1,0 +1,392 @@
+{
+  "label": "pilot",
+  "rater": "Software developer, 3 years' experience (one rater, not Directorate data)",
+  "scale": {
+    "Never": 0.05,
+    "Rarely": 0.25,
+    "Sometimes": 0.5,
+    "Often": 0.75,
+    "Almost always": 0.95,
+    "Unrelated": 0.05
+  },
+  "default_probability": 0.05,
+  "causes": [
+    {
+      "id": "C01",
+      "category": "Infrastructure and external services",
+      "name": "Slow external service, outbound call has no timeout",
+      "description": "A request waits on a slow external service with no time limit, so threads pile up and pages stall or fail",
+      "remedy": "Set a timeout on the outbound call",
+      "frequency": "Occasional"
+    },
+    {
+      "id": "C02",
+      "category": "Database",
+      "name": "Long-running transaction holds row locks",
+      "description": "A background job or long transaction keeps rows locked, so other writes wait and then fail",
+      "remedy": "Kill the blocking transaction",
+      "frequency": "Common"
+    },
+    {
+      "id": "C03",
+      "category": "Database",
+      "name": "Missing index on a growing table",
+      "description": "A frequent query scans a whole table that has grown large, so one operation becomes slow",
+      "remedy": "Add the missing index",
+      "frequency": "Rare"
+    },
+    {
+      "id": "C04",
+      "category": "Application and interface",
+      "name": "Repeated queries per request (N+1) on a heavy endpoint",
+      "description": "One request runs a query per item, using heavy CPU and slowing the endpoint",
+      "remedy": "Batch the repeated queries",
+      "frequency": "Common"
+    },
+    {
+      "id": "C05",
+      "category": "Infrastructure and external services",
+      "name": "Cache failing silently, every request recomputes",
+      "description": "Cache reads or writes fail with only a warning, so every request falls back to the slow path",
+      "remedy": "Fix the cache serialisation",
+      "frequency": "Rare"
+    },
+    {
+      "id": "C06",
+      "category": "Application and interface",
+      "name": "Bad release or migration breaks a code path",
+      "description": "A recent release or schema change breaks behaviour that used to work",
+      "remedy": "Roll back the release",
+      "frequency": "Occasional"
+    },
+    {
+      "id": "C07",
+      "category": "Database",
+      "name": "Duplicate rows where one was expected",
+      "description": "Duplicate records make a single-row lookup throw an error, usually for particular records",
+      "remedy": "Remove the duplicate rows",
+      "frequency": "Common"
+    },
+    {
+      "id": "C08",
+      "category": "Authentication and access",
+      "name": "Sign-in writes collide on the user row",
+      "description": "Concurrent sign-in and token writes update the same user row and fail on lock conflicts",
+      "remedy": "Move the token write off the sign-in path",
+      "frequency": "Common"
+    }
+  ],
+  "checks": [
+    {
+      "id": "D01",
+      "name": "Long outbound span in traces",
+      "tests": "Whether requests are spending their time waiting on another service",
+      "positive_means": "Outbound call over 10s",
+      "effort": "Low"
+    },
+    {
+      "id": "D02",
+      "name": "Lock-wait errors in logs",
+      "tests": "Whether database writes are failing while waiting for locks",
+      "positive_means": "Present in last 15 min",
+      "effort": "Low"
+    },
+    {
+      "id": "D03",
+      "name": "DB connection pool usage",
+      "tests": "Whether the application is running short of database connections",
+      "positive_means": "Over 80% in use",
+      "effort": "Low"
+    },
+    {
+      "id": "D04",
+      "name": "API node CPU",
+      "tests": "Whether the application nodes are short of CPU",
+      "positive_means": "Over 80% sustained",
+      "effort": "Low"
+    },
+    {
+      "id": "D05",
+      "name": "Long transaction in the DB",
+      "tests": "Whether a database transaction has been open for an unusually long time",
+      "positive_means": "One open over 60s",
+      "effort": "Medium"
+    },
+    {
+      "id": "D06",
+      "name": "Query plan of slowest query",
+      "tests": "Whether the slowest query is reading a whole table",
+      "positive_means": "Full table scan",
+      "effort": "High"
+    },
+    {
+      "id": "D07",
+      "name": "Query count in a slow trace",
+      "tests": "Whether one request is running an unusually large number of queries",
+      "positive_means": "Over 100 queries",
+      "effort": "Medium"
+    },
+    {
+      "id": "D08",
+      "name": "Cache errors in logs",
+      "tests": "Whether cache reads or writes are failing",
+      "positive_means": "Cache warnings in last 15 min",
+      "effort": "Low"
+    },
+    {
+      "id": "D09",
+      "name": "Recent release or migration",
+      "tests": "Whether something changed shortly before the incident",
+      "positive_means": "One in last 24h",
+      "effort": "Low"
+    },
+    {
+      "id": "D10",
+      "name": "Failure scope",
+      "tests": "Whether the failure affects everyone or only some records or users",
+      "positive_means": "Only specific records or users affected",
+      "effort": "Medium"
+    }
+  ],
+  "symptoms": [
+    {
+      "id": "S01",
+      "name": "Users see a server error on a page",
+      "reported_as": "Error screen; 5xx in logs"
+    },
+    {
+      "id": "S02",
+      "name": "Pages very slow or timing out",
+      "reported_as": "\"System is slow\" complaints"
+    },
+    {
+      "id": "S03",
+      "name": "Users can't sign in or get logged out",
+      "reported_as": "Login complaints; auth errors"
+    },
+    {
+      "id": "S04",
+      "name": "A save or approval fails after a long wait",
+      "reported_as": "Spins about a minute, then errors"
+    }
+  ],
+  "context": [
+    {
+      "id": "X01",
+      "name": "Affected system is production",
+      "values": [
+        "Yes",
+        "No"
+      ]
+    },
+    {
+      "id": "X02",
+      "name": "Priority",
+      "values": [
+        "Low",
+        "Medium",
+        "High"
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "id": "R01",
+      "cause": "C02",
+      "when": {
+        "attribute": "X01",
+        "value": "Yes"
+      },
+      "unless_observed": "D05",
+      "reason": "Killing the wrong transaction rolls back valid work"
+    },
+    {
+      "id": "R02",
+      "cause": "C06",
+      "when": {
+        "attribute": "X01",
+        "value": "Yes"
+      },
+      "unless_observed": "D09",
+      "reason": "A rollback restarts every node, and migrations may not reverse"
+    },
+    {
+      "id": "R03",
+      "cause": "C07",
+      "when": {
+        "attribute": "X01",
+        "value": "Yes"
+      },
+      "unless_observed": "D10",
+      "reason": "Other records may depend on the rows, and deletes are hard to undo"
+    },
+    {
+      "id": "R04",
+      "cause": "C03",
+      "when": {
+        "attribute": "X02",
+        "value": "High"
+      },
+      "unless_observed": "D06",
+      "reason": "Index builds on large tables can block live traffic"
+    },
+    {
+      "id": "R05",
+      "cause": "C01",
+      "when": {
+        "attribute": "X01",
+        "value": "Yes"
+      },
+      "unless_observed": "D01",
+      "reason": "A wrong timeout can make failures look like real results"
+    }
+  ],
+  "costs": {
+    "escalation_minutes": 120.0,
+    "wrong_fix_multiple": 5.0
+  },
+  "check_likelihoods": [
+    [
+      0.95,
+      0.25,
+      0.5,
+      0.25,
+      0.25,
+      0.25,
+      0.05,
+      0.25
+    ],
+    [
+      0.25,
+      0.95,
+      0.25,
+      0.25,
+      0.05,
+      0.5,
+      0.05,
+      0.75
+    ],
+    [
+      0.75,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.5,
+      0.05,
+      0.25
+    ],
+    [
+      0.25,
+      0.25,
+      0.25,
+      0.75,
+      0.75,
+      0.5,
+      0.05,
+      0.25
+    ],
+    [
+      0.5,
+      0.95,
+      0.25,
+      0.25,
+      0.05,
+      0.5,
+      0.05,
+      0.5
+    ],
+    [
+      0.05,
+      0.25,
+      0.95,
+      0.5,
+      0.25,
+      0.25,
+      0.05,
+      0.05
+    ],
+    [
+      0.25,
+      0.75,
+      0.25,
+      0.95,
+      0.75,
+      0.25,
+      0.25,
+      0.25
+    ],
+    [
+      0.05,
+      0.05,
+      0.05,
+      0.05,
+      0.75,
+      0.25,
+      0.05,
+      0.05
+    ],
+    [
+      0.5,
+      0.5,
+      0.25,
+      0.5,
+      0.5,
+      0.95,
+      0.25,
+      0.25
+    ],
+    [
+      0.25,
+      0.5,
+      0.25,
+      0.25,
+      0.25,
+      0.5,
+      0.95,
+      0.5
+    ]
+  ],
+  "symptom_likelihoods": [
+    [
+      0.75,
+      0.75,
+      0.25,
+      0.25,
+      0.25,
+      0.95,
+      0.95,
+      0.75
+    ],
+    [
+      0.95,
+      0.5,
+      0.95,
+      0.95,
+      0.75,
+      0.5,
+      0.25,
+      0.5
+    ],
+    [
+      0.5,
+      0.5,
+      0.25,
+      0.25,
+      0.05,
+      0.25,
+      0.05,
+      0.95
+    ],
+    [
+      0.5,
+      0.95,
+      0.5,
+      0.5,
+      0.25,
+      0.5,
+      0.5,
+      0.25
+    ]
+  ]
+}

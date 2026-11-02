@@ -106,7 +106,7 @@
 - **Checklist:**
   - [x] Folders organised (research/, documentation/); README and .gitignore written
   - [ ] Git repo initialised and pushed
-  - [ ] Code folders: `src/sim/`, `src/agents/`, `src/rules/`, `experiments/`, `results/`
+  - [x] Code folders: `src/sim/`, `src/agents/`, `src/rules/`, `experiments/`, `results/`
   - [ ] `.gitignore` excludes Directorate data
 
 ### 1.3 Weekly supervisor check-in and plan update
@@ -166,26 +166,26 @@
 - **Deliverable:** Working environment; `requirements.txt`
 - **Depends on:** 1.2
 - **Checklist:**
-  - [ ] Python, Gymnasium, Stable-Baselines3 installed
-  - [ ] Versions pinned
+  - [x] Python, Gymnasium, Stable-Baselines3 installed
+  - [x] Versions pinned
 
 ### 3.2 Incident generator
 - **Status:** Todo · **Due:** 2026-10-25 · **Days:** 1.0 · **Label:** WP3
 - **Deliverable:** Generator module
 - **Depends on:** 2.3 or 2.4
 - **Checklist:**
-  - [ ] Draw hidden cause and context
-  - [ ] Generate symptoms and true check results
-  - [ ] Seeded and reproducible
+  - [x] Draw hidden cause and context
+  - [x] Generate symptoms and true check results
+  - [x] Seeded and reproducible
 
 ### 3.3 Gymnasium environment
 - **Status:** Todo · **Due:** 2026-10-25 · **Days:** 1.5 · **Label:** WP3, Milestone
 - **Deliverable:** Environment (evidence vector, 36 actions (20 checks + 15 fixes + escalate), rewards, step limit)
 - **Depends on:** 3.2
 - **Checklist:**
-  - [ ] One-hot evidence vector (checks 4 values, symptoms 3)
-  - [ ] Masks for blocked and already-requested actions
-  - [ ] Rewards and step limit
+  - [x] One-hot evidence vector (checks 4 values, symptoms 3)
+  - [x] Masks for blocked and already-requested actions
+  - [x] Rewards and step limit
   - [ ] **M1 reached**
 
 ### 3.4 Three ambiguity controls
@@ -193,8 +193,8 @@
 - **Deliverable:** Configurable ambiguity levels
 - **Depends on:** 3.3
 - **Checklist:**
-  - [ ] Missing evidence (p_miss)
-  - [ ] Unreliable evidence (p_noise)
+  - [x] Missing evidence (p_miss)
+  - [x] Unreliable evidence (p_noise)
   - [ ] Overlap (ω)
 
 ### 3.5 Reference labels
@@ -207,9 +207,9 @@
 - **Deliverable:** Test report
 - **Depends on:** 3.3
 - **Checklist:**
-  - [ ] Unit tests
-  - [ ] Random policy sanity run
-  - [ ] Oracle policy (knows the cause) sanity run
+  - [x] Unit tests
+  - [x] Random policy sanity run
+  - [x] Oracle policy (knows the cause) sanity run
 
 ### 3.7 Staff review; freeze scenario model
 - **Status:** Todo · **Due:** 2026-11-01 · **Days:** 1.0 · **Label:** WP3, Milestone

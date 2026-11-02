@@ -1,0 +1,15 @@
+{
+  "label": "pilot",
+  "note": "Every value here is set by the researcher, not elicited. Escalation and wrong-fix costs come from the costs in the scenario model. See documentation/pilot_experiment_plan.md, Section 3.",
+  "reward_unit_minutes": 60,
+  "correct_reward": 5.0,
+  "check_minutes": {"Low": 5, "Medium": 15, "High": 30},
+  "frequency_weights": {"Rare": 1, "Occasional": 2, "Common": 4},
+  "context_probabilities": {
+    "X01": {"Yes": 0.8, "No": 0.2},
+    "X02": {"Low": 0.3, "Medium": 0.5, "High": 0.2}
+  },
+  "p_noise": 0.1,
+  "p_miss": 0.0,
+  "max_steps": 12
+}

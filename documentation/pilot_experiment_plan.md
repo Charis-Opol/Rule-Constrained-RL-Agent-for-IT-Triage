@@ -1,7 +1,7 @@
 # Pilot Experiment Plan
 
 **Goal:** a working proof of concept and first experiment before the Directorate elicitation on Wednesday 4 Nov 2026.
-**Input:** `research/elicitation/Pilot Elicitation Workbook Responses.xlsx`, one developer with 3 years' experience, dated 2 Nov 2026.
+**Input:** `research/elicitation/private/Pilot Elicitation Workbook Responses.xlsx` (not tracked), loaded into `experiments/pilot/pilot_model.json`, one developer with 3 years' experience, dated 2 Nov 2026.
 **Status of the results:** pilot only. They show that the method runs and learns. They are not Directorate data and are not thesis findings.
 
 ## 1. What the responses give us
@@ -86,7 +86,7 @@ Researcher-set values must be reported as such.
 
 Hours are estimates, and DQN training speed has not been measured on this machine. Each phase has a gate that must pass before the next one starts.
 
-### Phase 0: Set up and freeze the data (1 h)
+### Phase 0: Set up and freeze the data (1 h) - done
 
 - Install `gymnasium`, `stable-baselines3` and `sb3-contrib`, which are not currently installed.
 - Create `src/sim/`, `src/rules/`, `src/agents/`, `experiments/pilot/` and `results/pilot/`.
@@ -95,7 +95,7 @@ Hours are estimates, and DQN training speed has not been measured on this machin
 
 **Gate:** the JSON has 8 causes, 10 checks, 4 symptoms and 5 rules, and matches the probability tabs.
 
-### Phase 1: Environment (3 h)
+### Phase 1: Environment (3 h) - done
 
 - Build the Gymnasium environment on the toy version in `documentation/manual/code/toy_triage_env.py`, with sizes taken from the configuration.
 - Add symptoms, context, noise and missing checks.
