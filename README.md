@@ -51,10 +51,11 @@ The plan and progress are tracked in [`WBS.md`](WBS.md) (Trello-ready, with prom
 ├── src/
 │   ├── sim/                       Scenario model loader and the Gymnasium environment
 │   ├── rules/                     Safety mechanism
-│   ├── agents/                    Baselines and the exact optimal policy; the DQN agent comes next
+│   ├── agents/                    DQN agent, training monitor, baselines, exact optimal policy
 │   └── evaluation.py              Runs a policy on fixed incidents; computes the Chapter 3 measures
 ├── experiments/pilot/             Pilot model, settings, pre-training checks, baseline run
-├── results/pilot/                 Pilot results (baselines.md, baselines.json)
+├── results/pilot/                 Pilot results; runs/ holds each training run (checkpoints not tracked)
+├── dashboard/                     Live training view and step-by-step "thinking" view (Streamlit)
 ├── tests/                         Run with: python -m pytest
 ├── research/
 │   ├── thesis/                    The thesis: compile Opol_Charis_Thesis.tex
@@ -74,6 +75,17 @@ The plan and progress are tracked in [`WBS.md`](WBS.md) (Trello-ready, with prom
 ```
 
 The source notes were written before this reorganisation and use the old paths: `Papers/` is now `research/literature/core-papers/`, `Papers for the introduction/` is `research/literature/introduction-papers/`, `notes/` is `documentation/source-notes/`, and `milestone/` is `documentation/milestone/`.
+
+## Running the pilot code
+
+```bat
+python -m venv --system-site-packages .venv
+.venv\Scripts\python -m pip install -r requirements.txt
+.venv\Scripts\python -m pytest                                    :: all tests (about 5 minutes)
+.venv\Scripts\python -m experiments.pilot.run_baselines           :: baseline results table
+.venv\Scripts\python -m experiments.pilot.train_dqn --seed 100    :: train one agent
+.venv\Scripts\python -m streamlit run dashboard/app.py            :: watch it at http://localhost:8501
+```
 
 ## Building the documents
 

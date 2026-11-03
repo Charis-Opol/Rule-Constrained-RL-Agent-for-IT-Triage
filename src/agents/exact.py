@@ -22,6 +22,40 @@ class ExactSolution:
     stats: dict                 # expected outcome shares, checks and cost
     actions: np.ndarray         # [check state, context, symptom pattern] -> action
     context_shape: tuple
+    V: np.ndarray               # optimal value in joint-probability units, same index
+    likelihood: np.ndarray      # [check state, cause]
+    base: np.ndarray            # [symptom pattern, cause] = P(cause) P(symptoms | cause)
+    env: object                 # the unwrapped environment it was solved for
+
+    def index(self, status, symptoms, context):
+        """State, context and symptom indices for an observation decoded by Layout."""
+        digits = np.select([status == TriageEnv.NEGATIVE, status == TriageEnv.POSITIVE], [1, 2], 0)
+        return (int(digits @ 3 ** np.arange(len(status))),
+                int(np.ravel_multi_index(context, self.context_shape)),
+                int(symptoms @ 2 ** np.arange(len(symptoms))))
+
+    def q_values(self, status, symptoms, context):
+        """Expected return from here of every action under optimal play afterwards, in reward
+        units. NaN for an action that is not available: a check already run or a prohibited fix."""
+        if (status == TriageEnv.UNAVAILABLE).any():
+            raise ValueError("The exact solution does not handle unavailable checks")
+        env, s = self.env, self.env.scenario
+        idx, ctx, pat = self.index(status, symptoms, context)
+        joint = self.base[pat] * self.likelihood[idx]
+        total = joint.sum()
+        q = np.full(env.n_actions, np.nan)
+        for i in np.flatnonzero(status == TriageEnv.NOT_REQUESTED):
+            step = 3 ** i
+            q[i] = (-s.check_costs[i] * total + self.V[idx + step, ctx, pat] + self.V[idx + 2 * step, ctx, pat]) / total
+        posterior = joint / total
+        fix = posterior * s.r_correct - (1 - posterior) * s.cost_wrong
+        for rule in s.rules:
+            if rule.active(context) and (rule.unless_observed is None
+                                         or status[rule.unless_observed] == TriageEnv.NOT_REQUESTED):
+                fix[rule.cause] = np.nan
+        q[env.n_checks:env.ESCALATE] = fix
+        q[env.ESCALATE] = -s.cost_esc
+        return q
 
 
 def solve(env):
@@ -93,7 +127,8 @@ def solve(env):
 
     value = float(p_context @ V[0].sum(1))
     expected = p_context @ stats[0].astype(float).sum(1)
-    return ExactSolution(value, dict(zip(STAT_NAMES, map(float, expected))), actions, shape)
+    return ExactSolution(value, dict(zip(STAT_NAMES, map(float, expected))), actions, shape,
+                         V, likelihood, base, env)
 
 
 class ExactPolicy(Policy):
@@ -102,15 +137,10 @@ class ExactPolicy(Policy):
     def __init__(self, env, solution=None):
         super().__init__(env)
         self.solution = solution or solve(env)
-        self.pow3 = 3 ** np.arange(self.n_checks)
-        self.pow2 = 2 ** np.arange(self.layout.n_symptoms)
 
     def __call__(self, obs, mask):
         status, symptoms, context, *_ = self.layout.decode(obs)
         if (status == TriageEnv.UNAVAILABLE).any():
             raise ValueError("The exact policy does not handle unavailable checks")
-        digits = np.select([status == TriageEnv.NEGATIVE, status == TriageEnv.POSITIVE], [1, 2], 0)
-        action = int(self.solution.actions[digits @ self.pow3,
-                                           np.ravel_multi_index(context, self.solution.context_shape),
-                                           symptoms @ self.pow2])
+        action = int(self.solution.actions[self.solution.index(status, symptoms, context)])
         return action if mask[action] else self.escalate

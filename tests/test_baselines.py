@@ -49,6 +49,35 @@ def test_exact_policy_scores_its_value_in_the_real_environment(exact):
     assert m["proposed_violation_rate"] == 0.0           # it never proposes a prohibited fix
 
 
+def test_exact_action_values_agree_with_the_solution(exact):
+    env, solution = exact
+    policy = ExactPolicy(env, solution)
+    for k in range(300):
+        obs, _ = env.reset(seed=k)
+        done = False
+        while not done:
+            status, symptoms, context, *_ = env.unwrapped.layout.decode(obs)
+            q = solution.q_values(status, symptoms, context)
+            idx, ctx, pat = solution.index(status, symptoms, context)
+            total = (solution.base[pat] * solution.likelihood[idx]).sum()
+            assert np.nanmax(q) == pytest.approx(solution.V[idx, ctx, pat] / total)
+            action = policy(obs, env.action_masks())
+            assert q[action] == pytest.approx(np.nanmax(q))
+            obs, _, done, *_ = env.step(action)
+
+
+def test_exact_action_values_mark_unavailable_actions(exact):
+    env, solution = exact
+    obs, _ = env.reset(seed=0)
+    env.unwrapped.context = np.array([0, 2])                 # production, high priority
+    env.step(1)
+    status, symptoms, context, *_ = env.unwrapped.layout.decode(env.unwrapped._obs())
+    q = solution.q_values(status, symptoms, context)
+    assert np.isnan(q[1])                                     # already run
+    assert all(np.isnan(q[10 + c]) for c in (0, 1, 2, 5, 6))  # every rule active, no named check run
+    assert not np.isnan(q[13]) and q[18] == -2.0
+
+
 def test_exact_solver_refuses_missing_checks():
     with pytest.raises(ValueError):
         solve(make(p_miss=0.2))

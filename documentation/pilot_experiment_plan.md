@@ -130,6 +130,17 @@ Hours are estimates, and DQN training speed has not been measured on this machin
 - **Target:** at or above the threshold policy (-0.04, measured in Phase 3), and closer to the exact 0.39.
 - **If it misses the must:** stop and diagnose it. Do not start Phase 5.
 
+**Phase 4 results (3 Nov 2026), tuning seed 100, 1,000 monitoring incidents per point:**
+
+| Run | Final return | Checks | Learned start value |
+|---|---|---|---|
+| DQN, 300k | -0.73 | 6.6 | 1.74 |
+| Double DQN, 300k | -0.60 | 5.7 | 1.11 |
+| Double DQN, 1M (exploration to 150k) | -0.27 (flat from about 450k) | 5.3 | 0.99 |
+| References | threshold -0.14, exact 0.40 | exact 3.7 | exact 0.39 |
+
+The must-pass gate holds in all three runs. The target, matching the threshold policy, is not met, although the gap is within the monitoring noise. Double DQN and longer training each helped, and gains stop at about 450k steps. The agent still over-checks and overvalues the start of an incident. Blocked proposals rise slowly late in training (about 15% to 25%), because a block costs nothing but a step. Runs 2 and 3 are identical over their first 300k steps, which confirms reproducibility. Figure: `results/pilot/figures/phase4_runs.png`.
+
 ### Phase 5: Preliminary experiment (2 h, mostly compute)
 
 - Train three agents with 5 seeds each: with the safety mechanism, unconstrained, and penalty-only (penalty of 10). This is fewer than the thesis's 10 seeds, as the WBS cut order allows.

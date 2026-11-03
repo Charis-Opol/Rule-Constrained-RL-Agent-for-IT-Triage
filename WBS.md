@@ -275,8 +275,8 @@
 - **Deliverable:** Training script
 - **Depends on:** 4.2
 - **Checklist:**
-  - [ ] Masked action selection
-  - [ ] Masked max in the target
+  - [x] Masked action selection
+  - [x] Masked max in the target
 
 ### 6.2 Pilot runs: fix rewards, base ambiguity, training length
 - **Status:** Todo · **Due:** 2026-11-08 · **Days:** 1.0 · **Label:** WP6
