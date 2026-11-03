@@ -1,6 +1,29 @@
+from dataclasses import dataclass
+
 import numpy as np
 import gymnasium as gym
 from gymnasium import spaces
+
+
+@dataclass(frozen=True)
+class Layout:
+    """Where each part of the evidence vector sits, so a policy can read an observation
+    without access to the environment."""
+    n_checks: int
+    n_symptoms: int
+    context_sizes: tuple
+    max_steps: int
+
+    def decode(self, obs):
+        status = obs[:4 * self.n_checks].reshape(-1, 4).argmax(1)
+        at = 4 * self.n_checks
+        symptoms = obs[at:at + 3 * self.n_symptoms].reshape(-1, 3).argmax(1) == 0
+        at += 3 * self.n_symptoms
+        context = []
+        for size in self.context_sizes:
+            context.append(int(obs[at] == 0) if size == 1 else int(obs[at:at + size].argmax()))
+            at += size
+        return status, symptoms, np.array(context), round(float(obs[at]) * self.max_steps), bool(obs[at + 1])
 
 
 class TriageEnv(gym.Env):
@@ -39,6 +62,7 @@ class TriageEnv(gym.Env):
         self.context_sizes = [1 if len(v) == 2 else len(v) for v in scenario.context_values]
         size = 4 * self.n_checks + 3 * self.n_symptoms + sum(self.context_sizes) + 2
         self.observation_space = spaces.Box(0.0, 1.0, shape=(size,), dtype=np.float32)
+        self.layout = Layout(self.n_checks, self.n_symptoms, tuple(self.context_sizes), self.max_steps)
 
     # ----- helpers -----------------------------------------------------------
     def _obs(self):

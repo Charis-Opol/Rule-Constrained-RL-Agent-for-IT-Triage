@@ -263,8 +263,8 @@
 - **Deliverable:** Metrics module; first results table
 - **Depends on:** 3.3, 4.2
 - **Checklist:**
-  - [ ] Fixed evaluation incident set
-  - [ ] Decision quality, investigation cost, escalation, compliance
+  - [x] Fixed evaluation incident set
+  - [x] Decision quality, investigation cost, escalation, compliance
 
 ---
 

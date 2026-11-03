@@ -1,0 +1,350 @@
+{
+  "note": "Pilot data, base ambiguity level (noise 0.1, no missing checks), with the safety mechanism.",
+  "n_eval": 5000,
+  "n_tune": 5000,
+  "exact": {
+    "value": 0.3902193591638402,
+    "correct": 0.6119824633002281,
+    "wrong": 0.17276319572702054,
+    "escalated": 0.21525435140356425,
+    "n_checks": 3.7575365819036963,
+    "check_cost": 0.51155227124691
+  },
+  "tuning": {
+    "threshold": [
+      {
+        "setting": 0.5,
+        "mean_return": -0.5972333333333334,
+        "resolution_accuracy": 0.633,
+        "wrong_rate": 0.3386,
+        "escalation_rate": 0.0284,
+        "mean_checks": 1.9006,
+        "mean_check_cost": 0.3194333333333333
+      },
+      {
+        "setting": 0.55,
+        "mean_return": -0.3155,
+        "resolution_accuracy": 0.6428,
+        "wrong_rate": 0.3014,
+        "escalation_rate": 0.0558,
+        "mean_checks": 2.3444,
+        "mean_check_cost": 0.4039
+      },
+      {
+        "setting": 0.6,
+        "mean_return": -0.1513,
+        "resolution_accuracy": 0.6308,
+        "wrong_rate": 0.2516,
+        "escalation_rate": 0.1176,
+        "mean_checks": 3.1488,
+        "mean_check_cost": 0.5541
+      },
+      {
+        "setting": 0.65,
+        "mean_return": 0.05373333333333337,
+        "resolution_accuracy": 0.613,
+        "wrong_rate": 0.1896,
+        "escalation_rate": 0.1974,
+        "mean_checks": 4.0906,
+        "mean_check_cost": 0.7204666666666666
+      },
+      {
+        "setting": 0.7,
+        "mean_return": -0.0027499999999999404,
+        "resolution_accuracy": 0.5878,
+        "wrong_rate": 0.1696,
+        "escalation_rate": 0.2426,
+        "mean_checks": 4.3592,
+        "mean_check_cost": 0.76055
+      },
+      {
+        "setting": 0.75,
+        "mean_return": -0.1948333333333333,
+        "resolution_accuracy": 0.5252,
+        "wrong_rate": 0.1124,
+        "escalation_rate": 0.3624,
+        "mean_checks": 5.555,
+        "mean_check_cost": 0.9720333333333332
+      },
+      {
+        "setting": 0.8,
+        "mean_return": -0.4990166666666666,
+        "resolution_accuracy": 0.464,
+        "wrong_rate": 0.0804,
+        "escalation_rate": 0.4556,
+        "mean_checks": 6.3022,
+        "mean_check_cost": 1.1038166666666664
+      },
+      {
+        "setting": 0.85,
+        "mean_return": -1.0594,
+        "resolution_accuracy": 0.3682,
+        "wrong_rate": 0.0444,
+        "escalation_rate": 0.5874,
+        "mean_checks": 7.4172,
+        "mean_check_cost": 1.2816
+      },
+      {
+        "setting": 0.9,
+        "mean_return": -1.7424333333333333,
+        "resolution_accuracy": 0.2676,
+        "wrong_rate": 0.0198,
+        "escalation_rate": 0.7126,
+        "mean_checks": 8.4128,
+        "mean_check_cost": 1.4572333333333332
+      },
+      {
+        "setting": 0.95,
+        "mean_return": -2.6553833333333334,
+        "resolution_accuracy": 0.1412,
+        "wrong_rate": 0.0042,
+        "escalation_rate": 0.8546,
+        "mean_checks": 9.2654,
+        "mean_check_cost": 1.6101833333333333
+      }
+    ],
+    "scripted": [
+      {
+        "setting": 0,
+        "mean_return": -2.0934,
+        "resolution_accuracy": 0.3078,
+        "wrong_rate": 0.281,
+        "escalation_rate": 0.4112,
+        "mean_checks": 0.0,
+        "mean_check_cost": 0.0
+      },
+      {
+        "setting": 1,
+        "mean_return": -2.4021333333333335,
+        "resolution_accuracy": 0.338,
+        "wrong_rate": 0.3356,
+        "escalation_rate": 0.3264,
+        "mean_checks": 1.0,
+        "mean_check_cost": 0.08333333333333334
+      },
+      {
+        "setting": 2,
+        "mean_return": -2.0171333333333337,
+        "resolution_accuracy": 0.4582,
+        "wrong_rate": 0.3614,
+        "escalation_rate": 0.1804,
+        "mean_checks": 2.0,
+        "mean_check_cost": 0.33333333333333337
+      },
+      {
+        "setting": 3,
+        "mean_return": -1.7047333333333332,
+        "resolution_accuracy": 0.4862,
+        "wrong_rate": 0.3156,
+        "escalation_rate": 0.1982,
+        "mean_checks": 3.0,
+        "mean_check_cost": 0.5833333333333331
+      },
+      {
+        "setting": 4,
+        "mean_return": -1.4622666666666668,
+        "resolution_accuracy": 0.5252,
+        "wrong_rate": 0.309,
+        "escalation_rate": 0.1658,
+        "mean_checks": 4.0,
+        "mean_check_cost": 0.6666666666666667
+      },
+      {
+        "setting": 5,
+        "mean_return": -1.493,
+        "resolution_accuracy": 0.535,
+        "wrong_rate": 0.311,
+        "escalation_rate": 0.154,
+        "mean_checks": 5.0,
+        "mean_check_cost": 0.75
+      },
+      {
+        "setting": 6,
+        "mean_return": -1.7764,
+        "resolution_accuracy": 0.5504,
+        "wrong_rate": 0.2974,
+        "escalation_rate": 0.1522,
+        "mean_checks": 6.0,
+        "mean_check_cost": 1.25
+      },
+      {
+        "setting": 7,
+        "mean_return": -2.5343333333333335,
+        "resolution_accuracy": 0.5866,
+        "wrong_rate": 0.4134,
+        "escalation_rate": 0.0,
+        "mean_checks": 7.0,
+        "mean_check_cost": 1.3333333333333335
+      },
+      {
+        "setting": 8,
+        "mean_return": -1.0863333333333332,
+        "resolution_accuracy": 0.6998,
+        "wrong_rate": 0.3002,
+        "escalation_rate": 0.0,
+        "mean_checks": 8.0,
+        "mean_check_cost": 1.5833333333333335
+      },
+      {
+        "setting": 9,
+        "mean_return": -0.9866666666666665,
+        "resolution_accuracy": 0.712,
+        "wrong_rate": 0.288,
+        "escalation_rate": 0.0,
+        "mean_checks": 9.0,
+        "mean_check_cost": 1.6666666666666665
+      },
+      {
+        "setting": 10,
+        "mean_return": -1.022,
+        "resolution_accuracy": 0.7152,
+        "wrong_rate": 0.2848,
+        "escalation_rate": 0.0,
+        "mean_checks": 10.0,
+        "mean_check_cost": 1.7499999999999996
+      }
+    ]
+  },
+  "results": {
+    "Always escalate": {
+      "n": 5000,
+      "mean_return": -2.0,
+      "return_ci": [
+        -2.0,
+        -2.0
+      ],
+      "resolution_accuracy": 0.0,
+      "resolution_ci": [
+        0.0,
+        0.0
+      ],
+      "coverage": 0.0,
+      "selective_accuracy": NaN,
+      "wrong_rate": 0.0,
+      "mean_checks": 0.0,
+      "mean_check_cost": 0.0,
+      "escalation_rate": 1.0,
+      "escalation_precision": 0.284,
+      "escalation_recall": 1.0,
+      "escalation_f1": 0.44236760124610586,
+      "escalation_mcc": NaN,
+      "proposed_violation_rate": 0.0,
+      "forced_escalation_rate": 0.0,
+      "executed_violation_rate": 0.0,
+      "compliant_success_rate": 0.0,
+      "ceiling": 0.716
+    },
+    "Initial-symptom": {
+      "n": 5000,
+      "mean_return": -2.0036,
+      "return_ci": [
+        -2.161415,
+        -1.8409550000000001
+      ],
+      "resolution_accuracy": 0.3268,
+      "resolution_ci": [
+        0.314,
+        0.3398
+      ],
+      "coverage": 0.6132,
+      "selective_accuracy": 0.532941943900848,
+      "wrong_rate": 0.2864,
+      "mean_checks": 0.0,
+      "mean_check_cost": 0.0,
+      "escalation_rate": 0.3868,
+      "escalation_precision": 0.29162357807652534,
+      "escalation_recall": 0.3971830985915493,
+      "escalation_f1": 0.3363148479427549,
+      "escalation_mcc": 0.013427196075346015,
+      "proposed_violation_rate": 0.5759336099585062,
+      "forced_escalation_rate": 0.3868,
+      "executed_violation_rate": 0.0,
+      "compliant_success_rate": 0.3268,
+      "ceiling": 0.716
+    },
+    "Scripted (k=9)": {
+      "n": 5000,
+      "mean_return": -1.0826666666666664,
+      "return_ci": [
+        -1.2657416666666665,
+        -0.8965916666666668
+      ],
+      "resolution_accuracy": 0.7056,
+      "resolution_ci": [
+        0.693395,
+        0.7180049999999999
+      ],
+      "coverage": 1.0,
+      "selective_accuracy": 0.7056,
+      "wrong_rate": 0.2944,
+      "mean_checks": 9.0,
+      "mean_check_cost": 1.6666666666666665,
+      "escalation_rate": 0.0,
+      "escalation_precision": NaN,
+      "escalation_recall": 0.0,
+      "escalation_f1": NaN,
+      "escalation_mcc": NaN,
+      "proposed_violation_rate": 0.0,
+      "forced_escalation_rate": 0.0,
+      "executed_violation_rate": 0.0,
+      "compliant_success_rate": 0.7056,
+      "ceiling": 0.716
+    },
+    "Threshold (tau=0.65)": {
+      "n": 5000,
+      "mean_return": -0.04406666666666665,
+      "return_ci": [
+        -0.21037333333333333,
+        0.12107083333333334
+      ],
+      "resolution_accuracy": 0.6044,
+      "resolution_ci": [
+        0.5909949999999999,
+        0.6172
+      ],
+      "coverage": 0.7994,
+      "selective_accuracy": 0.7560670502877158,
+      "wrong_rate": 0.195,
+      "mean_checks": 4.053,
+      "mean_check_cost": 0.7148666666666667,
+      "escalation_rate": 0.2006,
+      "escalation_precision": 0.5174476570289133,
+      "escalation_recall": 0.3654929577464789,
+      "escalation_f1": 0.4283945522080066,
+      "escalation_mcc": 0.25933266960067736,
+      "proposed_violation_rate": 0.051981220657277,
+      "forced_escalation_rate": 0.0,
+      "executed_violation_rate": 0.0,
+      "compliant_success_rate": 0.6044,
+      "ceiling": 0.716
+    },
+    "Exact optimal": {
+      "n": 5000,
+      "mean_return": 0.4092166666666667,
+      "return_ci": [
+        0.2529491666666667,
+        0.5664054166666667
+      ],
+      "resolution_accuracy": 0.6082,
+      "resolution_ci": [
+        0.5951949999999999,
+        0.6218
+      ],
+      "coverage": 0.7754,
+      "selective_accuracy": 0.7843693577508383,
+      "wrong_rate": 0.1672,
+      "mean_checks": 3.7686,
+      "mean_check_cost": 0.5105833333333333,
+      "escalation_rate": 0.2246,
+      "escalation_precision": 0.5325022261798753,
+      "escalation_recall": 0.4211267605633803,
+      "escalation_f1": 0.4703106567046795,
+      "escalation_mcc": 0.29659005197089694,
+      "proposed_violation_rate": 0.0,
+      "forced_escalation_rate": 0.0,
+      "executed_violation_rate": 0.0,
+      "compliant_success_rate": 0.6082,
+      "ceiling": 0.716
+    }
+  }
+}

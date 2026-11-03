@@ -39,7 +39,7 @@ Reference points at the base level:
 |---|---|
 | Always escalate | -2.00 |
 | Symptoms only, recommend or escalate (ignores rules) | -1.21 |
-| Threshold policy, best threshold about 0.7 (rough estimate) | about -0.39 |
+| Threshold policy, tuned threshold 0.65 (Phase 3, measured) | -0.04 (95% CI -0.21 to 0.12) |
 | Exact optimal | +0.39 |
 
 The threshold estimate is a quick simulation that wrongly counts some later blocks as forced escalations, so the Phase 3 version may score a little higher.
@@ -110,7 +110,7 @@ Hours are estimates, and DQN training speed has not been measured on this machin
 
 **Gate:** tests cover each rule with its check observed, not observed and unavailable. Rules are ignored in the wrong context, escalation is never blocked, and no prohibited action ever executes.
 
-### Phase 3: Baselines, metrics and exact reference (2 h)
+### Phase 3: Baselines, metrics and exact reference (2 h) - done
 
 - Baselines: always escalate, symptoms only, scripted, threshold (threshold tuned on separate seeds).
 - Exact optimal policy, adapted from `pilot_diagnostics.py`.
@@ -127,7 +127,7 @@ Hours are estimates, and DQN training speed has not been measured on this machin
 **Gate:**
 
 - **Must:** beats symptoms only (-1.21), runs checks, and does not collapse into always escalating.
-- **Target:** at or above the threshold policy (about -0.39), and closer to the exact 0.39.
+- **Target:** at or above the threshold policy (-0.04, measured in Phase 3), and closer to the exact 0.39.
 - **If it misses the must:** stop and diagnose it. Do not start Phase 5.
 
 ### Phase 5: Preliminary experiment (2 h, mostly compute)
