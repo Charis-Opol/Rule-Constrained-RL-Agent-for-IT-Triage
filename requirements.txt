@@ -8,6 +8,8 @@ scipy==1.17.1
 matplotlib==3.11.2
 openpyxl==3.1.5
 pytest==9.1.1
+# Prototype: language-model reader
+anthropic==2.4.0
 # Dashboard
 streamlit==1.59.2
 altair==6.2.2

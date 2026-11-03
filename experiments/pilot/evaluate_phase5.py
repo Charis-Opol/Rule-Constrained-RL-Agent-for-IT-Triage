@@ -8,6 +8,7 @@ training penalty, so their returns are comparable and their executed violations 
 """
 import argparse
 import json
+import textwrap
 import time
 from pathlib import Path
 
@@ -106,6 +107,13 @@ def training_curves(agents):
 
 
 # ----- Figures ---------------------------------------------------------------
+def footnote(fig, text, width):
+    """Wrapped note under the figure; returns the bottom margin it needs."""
+    wrapped = "\n".join(textwrap.wrap(text, width))
+    fig.text(0.01, 0.008, wrapped, fontsize=8, color=MUTED, va="bottom")
+    return (wrapped.count("\n") + 1) * 0.022 + 0.01
+
+
 def style(ax, title, percent=False):
     ax.set_title(title, loc="left", fontsize=10, fontweight="bold", color=INK)
     ax.grid(True, axis="x" if ax.get_ylabel() == "" else "both", color=GRID, linewidth=0.8)
@@ -113,10 +121,11 @@ def style(ax, title, percent=False):
     for side in ("top", "right"):
         ax.spines[side].set_visible(False)
     if percent:
-        ax.xaxis.set_major_formatter(matplotlib.ticker.PercentFormatter(1.0, decimals=0))
+        ax.xaxis.set_major_locator(matplotlib.ticker.MaxNLocator(nbins=5))
+        ax.xaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: f"{v * 100:g}%"))
 
 
-def comparison_figure(base, path):
+def comparison_figure(base, path, n_eval):
     panels = [("mean_return", "Return", False), ("resolution_accuracy", "Resolved correctly", True),
               ("wrong_rate", "Wrong fix", True), ("escalation_rate", "Escalated", True),
               ("mean_checks", "Checks per incident", False), ("executed_violation_rate", "Rule broken (executed)", True)]
@@ -139,13 +148,15 @@ def comparison_figure(base, path):
         ax.set_yticks(range(len(rows)), [r[0] for r in rows])
         ax.invert_yaxis()
         style(ax, title, percent)
-    fig.suptitle("Phase 5: all policies on the same 5,000 evaluation incidents (base level: noise 0.1, no missing checks)",
-                 x=0.01, ha="left", fontsize=11, fontweight="bold", color=INK)
-    fig.text(0.01, 0.01, "Grey: baselines (with the safety mechanism). Coloured: DQN agents, dot = mean of 5 seeds, "
-             "bar = 95% bootstrap interval over seeds, ticks = individual seeds. Unconstrained and penalty-only agents "
-             "run without enforcement.\nPilot data (one developer's ratings), not Directorate data.",
-             fontsize=8, color=MUTED)
-    fig.tight_layout(rect=(0, 0.05, 1, 0.95))
+    fig.suptitle(f"Phase 5: all policies on the same {n_eval:,} evaluation incidents "
+                 "(base level: noise 0.1, no missing checks)", x=0.01, ha="left", fontsize=11, fontweight="bold",
+                 color=INK)
+    seeds = sorted({len(d["per_seed"]) for d in base["agents"].values()})
+    bottom = footnote(fig, "Grey: baselines (with the safety mechanism). Coloured: DQN agents; dot = mean over "
+                      f"{' or '.join(map(str, seeds))} seeds, bar = 95% bootstrap interval over seeds, ticks = "
+                      "individual seeds. Unconstrained and penalty-only agents run without enforcement. Pilot data "
+                      "(one developer's ratings), not Directorate data.", 190)
+    fig.tight_layout(rect=(0, bottom, 1, 0.95))
     fig.savefig(path, dpi=150)
     fig.savefig(path.with_suffix(".pdf"))
     plt.close(fig)
@@ -188,9 +199,9 @@ def sweep_figure(levels, path):
     fig.legend(handles, labels, loc="upper center", ncol=len(labels), frameon=False, bbox_to_anchor=(0.5, 0.95))
     fig.suptitle("Robustness: saved agents scored at other ambiguity levels without retraining",
                  x=0.01, ha="left", fontsize=11, fontweight="bold", color=INK)
-    fig.text(0.01, 0.01, "Agents: mean of 5 seeds with 95% bootstrap band. The exact policy exists only without "
-             "missing checks. Pilot data, not Directorate data.", fontsize=8, color=MUTED)
-    fig.tight_layout(rect=(0, 0.03, 1, 0.92))
+    bottom = footnote(fig, "Agents: mean over seeds with a 95% bootstrap band. The exact policy exists only without "
+                      "missing checks. Pilot data, not Directorate data.", 220)
+    fig.tight_layout(rect=(0, bottom, 1, 0.92))
     fig.savefig(path, dpi=150)
     fig.savefig(path.with_suffix(".pdf"))
     plt.close(fig)
@@ -212,9 +223,10 @@ def blocked_figure(curves, path):
     for side in ("top", "right"):
         ax.spines[side].set_visible(False)
     ax.legend(frameon=False, loc="upper right")
-    fig.text(0.01, 0.01, "Mean of 5 seeds; band = lowest to highest seed. With the mechanism these proposals are "
-             "blocked; without it they execute. Monitoring incidents. Pilot data.", fontsize=8, color=MUTED)
-    fig.tight_layout(rect=(0, 0.05, 1, 1))
+    bottom = footnote(fig, "Mean over seeds; band = lowest to highest seed. With the mechanism these proposals are "
+                      "blocked; without it they execute. Monitoring incidents, not the evaluation incidents. "
+                      "Pilot data, not Directorate data.", 125)
+    fig.tight_layout(rect=(0, bottom, 1, 1))
     fig.savefig(path, dpi=150)
     fig.savefig(path.with_suffix(".pdf"))
     plt.close(fig)
@@ -235,7 +247,7 @@ def table(base, n_eval):
             ("Compliant success", "compliant_success_rate", True)]
     lines = [f"# Phase 5 results (base level)", "",
              f"{n_eval:,} evaluation incidents, the same for every policy; noise 0.1, no missing checks. Agents: "
-             "mean over 5 seeds, with the 95% bootstrap interval over seeds for the return. Unconstrained and "
+             "mean over their seeds, with the 95% bootstrap interval over seeds for the return. Unconstrained and "
              "penalty-only agents run without enforcement and without the training penalty. Pilot data, not "
              "Directorate data.", "",
              "| Policy | " + " | ".join(c[0] for c in cols) + " |", "|---" * (len(cols) + 1) + "|"]
@@ -249,8 +261,15 @@ def table(base, n_eval):
             if k == "mean_return":
                 cell += f" [{s[k]['ci'][0]:.2f}, {s[k]['ci'][1]:.2f}]"
             cells.append(cell)
-        lines.append(f"| {AGENT_LABELS[agent]} (5 seeds) | " + " | ".join(cells) + " |")
+        lines.append(f"| {AGENT_LABELS[agent]} ({len(data['per_seed'])} seeds) | " + " | ".join(cells) + " |")
     return "\n".join(lines) + "\n"
+
+
+def draw_figures(levels, agents, n_eval, prefix):
+    FIGURES.mkdir(parents=True, exist_ok=True)
+    comparison_figure(levels[BASE], FIGURES / f"{prefix}_comparison.png", n_eval)
+    sweep_figure(levels, FIGURES / f"{prefix}_sweep.png")
+    blocked_figure(training_curves(agents), FIGURES / f"{prefix}_blocked_over_training.png")
 
 
 def main():
@@ -259,8 +278,17 @@ def main():
     parser.add_argument("--n-sweep", type=int, default=2000)
     parser.add_argument("--allow-missing", action="store_true")
     parser.add_argument("--out-prefix", default="phase5")
+    parser.add_argument("--replot", action="store_true", help="redraw the figures from the saved results only")
     args = parser.parse_args()
     started = time.time()
+    if args.replot:
+        saved = json.loads((OUT / f"{args.out_prefix}.json").read_text(encoding="utf-8"))
+        levels = {tuple(float(part.split("=")[1]) for part in key.split(",")): value
+                  for key, value in saved["levels"].items()}
+        agents = {a: dict.fromkeys(seeds) for a, seeds in saved["seeds"].items()}
+        draw_figures(levels, agents, saved["n_eval"], args.out_prefix)
+        print("Figures redrawn from", OUT / f"{args.out_prefix}.json")
+        return
     s = scenario()
     agents = available_agents(args.allow_missing)
     print("Agents:", {a: sorted(m) for a, m in agents.items()})
@@ -271,11 +299,7 @@ def main():
         levels[(noise, miss)] = evaluate_level(s, agents, noise, miss, n)
         print(f"  level noise={noise} missing={miss} done ({time.time() - started:.0f} s)", flush=True)
     base = levels[BASE]
-
-    FIGURES.mkdir(parents=True, exist_ok=True)
-    comparison_figure(base, FIGURES / f"{args.out_prefix}_comparison.png")
-    sweep_figure(levels, FIGURES / f"{args.out_prefix}_sweep.png")
-    blocked_figure(training_curves(agents), FIGURES / f"{args.out_prefix}_blocked_over_training.png")
+    draw_figures(levels, agents, args.n_eval, args.out_prefix)
     out = {"note": "Pilot data, not Directorate data.", "n_eval": args.n_eval, "n_sweep": args.n_sweep,
            "seeds": {a: sorted(m) for a, m in agents.items()},
            "levels": {f"noise={k[0]},missing={k[1]}": v for k, v in levels.items()}}

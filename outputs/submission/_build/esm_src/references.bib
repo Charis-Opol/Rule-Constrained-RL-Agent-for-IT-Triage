@@ -1,0 +1,564 @@
+% References for: Reinforcement learning for investigating, acting and escalating in IT incident
+% triage and response: a systematic literature review (Artificial Intelligence Review submission).
+% Rebuilt from research/slr/references.bib for the Springer Nature sn-basic style.
+% Changes from the source file: DOIs moved from url to doi (printed as https://doi.org/...);
+% journal names abbreviated (ISSN LTWA) only where certain, otherwise given in full;
+% conference names written out; uncited entry hammar2026llm removed; dataset entry opol2026data added
+% (placeholder DOI). Entries marked FLAG are incomplete; see open_questions.md.
+
+% ---------------------------------------------------------------------------
+% Background
+% ---------------------------------------------------------------------------
+
+% FLAG: author list abbreviated with "others" in the source; full list preferred.
+@inproceedings{chen2020,
+  author    = {Chen, Zhuangbin and others},
+  title     = {Towards intelligent incident management: why we need it and how we make it},
+  booktitle = {Proceedings of the 28th ACM Joint Meeting on European Software Engineering Conference and Symposium on the Foundations of Software Engineering (ESEC/FSE 2020)},
+  year      = {2020},
+  pages     = {1487--1497},
+  doi       = {10.1145/3368089.3417055}
+}
+
+% FLAG: arXiv preprint (journal asks for published or accepted works only).
+@misc{remil2024,
+  author       = {Remil, Youcef and Bendimerad, Anes and Mathonat, Romain and Kaytoue, Mehdi},
+  title        = {{AIOps} solutions for incident management: technical guidelines and a comprehensive literature review},
+  howpublished = {arXiv preprint arXiv:2404.01363},
+  year         = {2024},
+  url          = {https://arxiv.org/abs/2404.01363}
+}
+
+@book{sutton2018,
+  author    = {Sutton, Richard S. and Barto, Andrew G.},
+  title     = {Reinforcement Learning: An Introduction},
+  edition   = {2nd},
+  publisher = {MIT Press},
+  address   = {Cambridge, MA},
+  year      = {2018}
+}
+
+@article{kaelbling1998,
+  author  = {Kaelbling, Leslie Pack and Littman, Michael L. and Cassandra, Anthony R.},
+  title   = {Planning and acting in partially observable stochastic domains},
+  journal = {Artif Intell},
+  volume  = {101},
+  number  = {1--2},
+  pages   = {99--134},
+  year    = {1998},
+  doi     = {10.1016/S0004-3702(98)00023-X}
+}
+
+@article{konighofer2025,
+  author  = {K{\"o}nighofer, Bettina and Bloem, Roderick and Jansen, Nils and Junges, Sebastian and Pranger, Stefan},
+  title   = {Shields for safe reinforcement learning},
+  journal = {Commun ACM},
+  volume  = {68},
+  number  = {11},
+  pages   = {80--90},
+  year    = {2025},
+  doi     = {10.1145/3715958}
+}
+
+% FLAG: no DOI (NeurIPS proceedings do not issue DOIs); page numbers missing.
+@inproceedings{madras2018,
+  author    = {Madras, David and Pitassi, Toniann and Zemel, Richard},
+  title     = {Predict responsibly: improving fairness and accuracy by learning to defer},
+  booktitle = {Advances in Neural Information Processing Systems 31 (NeurIPS 2018)},
+  year      = {2018}
+}
+
+% FLAG: arXiv preprint (journal asks for published or accepted works only).
+@misc{turan2026,
+  author       = {Turan, Emre},
+  title        = {Oversight has a capacity: calibrating agent guards to a subjective, fatiguing human},
+  howpublished = {arXiv preprint arXiv:2606.08919},
+  year         = {2026},
+  url          = {https://arxiv.org/abs/2606.08919}
+}
+
+@inproceedings{janisch2019,
+  author    = {Janisch, Jarom{\'i}r and Pevn{\'y}, Tom{\'a}{\v{s}} and Lis{\'y}, Viliam},
+  title     = {Classification with costly features using deep reinforcement learning},
+  booktitle = {Proceedings of the AAAI Conference on Artificial Intelligence},
+  volume    = {33},
+  number    = {1},
+  year      = {2019},
+  pages     = {3959--3966},
+  doi       = {10.1609/aaai.v33i01.33013959}
+}
+
+@article{kim2025,
+  author  = {Kim, Yeongwoo and D{\'a}n, Gy{\"o}rgy},
+  title   = {Dynamic alert prioritization for real-time situational awareness: a hidden {M}arkov model framework with active learning},
+  journal = {IEEE Trans Dependable Secure Comput},
+  volume  = {22},
+  number  = {6},
+  pages   = {6913--6928},
+  year    = {2025},
+  doi     = {10.1109/TDSC.2025.3592127}
+}
+
+% FLAG: no DOI or volume (Transactions on Machine Learning Research does not issue DOIs).
+@article{joshi2023,
+  author  = {Joshi, Shalmali and Parbhoo, Sonali and Doshi-Velez, Finale},
+  title   = {Learning-to-defer for sequential medical decision-making under uncertainty},
+  journal = {Transactions on Machine Learning Research},
+  year    = {2023},
+  url     = {https://openreview.net/forum?id=0pn3KnbH5F}
+}
+
+@inproceedings{alshiekh2018,
+  author    = {Alshiekh, Mohammed and Bloem, Roderick and Ehlers, R{\"u}diger and K{\"o}nighofer, Bettina and Niekum, Scott and Topcu, Ufuk},
+  title     = {Safe reinforcement learning via shielding},
+  booktitle = {Proceedings of the AAAI Conference on Artificial Intelligence},
+  volume    = {32},
+  number    = {1},
+  year      = {2018},
+  doi       = {10.1609/aaai.v32i1.11797}
+}
+
+@article{ren2025,
+  author  = {Ren, Shaochen and Jin, Jianian and Niu, Guanchong and Liu, Yang},
+  title   = {{ARCS}: adaptive reinforcement learning framework for automated cybersecurity incident response strategy optimization},
+  journal = {Appl Sci},
+  volume  = {15},
+  number  = {2},
+  pages   = {951},
+  year    = {2025},
+  doi     = {10.3390/app15020951}
+}
+
+% FLAG: author list abbreviated with "others"; no DOI (given as arXiv link); no pages.
+@inproceedings{levy2026,
+  author    = {Levy, Ido and others},
+  title     = {{ST-WebAgentBench}: a benchmark for evaluating safety and trustworthiness in web agents},
+  booktitle = {Proceedings of the International Conference on Learning Representations (ICLR 2026)},
+  year      = {2026},
+  url       = {https://arxiv.org/abs/2410.06703}
+}
+
+@article{pacella2026,
+  author  = {Pacella, Massimo and Papadia, Gabriele and Giliberti, Vincenzo},
+  title   = {Governed agentic process automation: a floor-safety guarantee for compliance-critical {LLM} routing},
+  journal = {Algorithms},
+  volume  = {19},
+  number  = {8},
+  pages   = {627},
+  year    = {2026},
+  doi     = {10.3390/a19080627}
+}
+
+% FLAG: arXiv preprint (journal asks for published or accepted works only).
+@misc{hamel2026,
+  author       = {{Hamel-De le Court}, Edwin and Badings, Thom and Abate, Alessandro and Belardinelli, Francesco and Fabiano, Francesco},
+  title        = {Robust shielding for safe reinforcement learning},
+  howpublished = {arXiv preprint arXiv:2606.00270},
+  year         = {2026},
+  url          = {https://arxiv.org/abs/2606.00270}
+}
+
+@inproceedings{alauthman2026,
+  author    = {Alauthman, Mohammad and Almomani, Ammar and Al-Qerem, Ahmad and Albesani, Ghadeer and Alkasassbeh, Mouhammd},
+  title     = {Explainable reinforcement learning for automated incident response in critical infrastructure},
+  booktitle = {Proceedings of the 2nd International Conference on Computational Intelligence Approaches and Applications (ICCIAA 2026)},
+  year      = {2026},
+  pages     = {1--7},
+  doi       = {10.1109/ICCIAA68481.2026.11543556}
+}
+
+% ---------------------------------------------------------------------------
+% Method references
+% ---------------------------------------------------------------------------
+
+% FLAG: DOI missing in the source (candidate 10.1136/bmj.n71 resolves at doi.org; awaiting confirmation).
+@article{page2021,
+  author  = {Page, Matthew J. and McKenzie, Joanne E. and Bossuyt, Patrick M. and others},
+  title   = {The {PRISMA} 2020 statement: an updated guideline for reporting systematic reviews},
+  journal = {BMJ},
+  volume  = {372},
+  pages   = {n71},
+  year    = {2021}
+}
+
+% FLAG: institution given only as "EBSE" in the source; no DOI or URL.
+@techreport{kitchenham2007,
+  author      = {Kitchenham, Barbara and Charters, Stuart},
+  title       = {Guidelines for performing systematic literature reviews in software engineering},
+  type        = {Technical Report},
+  institution = {EBSE},
+  number      = {EBSE-2007-01},
+  year        = {2007}
+}
+
+% ---------------------------------------------------------------------------
+% Included and excluded studies
+% ---------------------------------------------------------------------------
+
+% FLAG: author list abbreviated with "others" in the source.
+@inproceedings{ding2023,
+  author    = {Ding, Ruomeng and others},
+  title     = {{TraceDiag}: adaptive, interpretable, and efficient root cause analysis on large-scale microservice systems},
+  booktitle = {Proceedings of the 31st ACM Joint European Software Engineering Conference and Symposium on the Foundations of Software Engineering (ESEC/FSE 2023)},
+  year      = {2023},
+  pages     = {1762--1773},
+  doi       = {10.1145/3611643.3613864}
+}
+
+@article{dunsin2025,
+  author  = {Dunsin, Dipo and Ghanem, Mohamed Chahine and Ouazzane, Karim and Vassilev, Vassil},
+  title   = {Reinforcement learning for an efficient and effective malware investigation during cyber incident response},
+  journal = {High-Confidence Computing},
+  volume  = {5},
+  number  = {3},
+  pages   = {100299},
+  year    = {2025},
+  doi     = {10.1016/j.hcc.2025.100299}
+}
+
+@inproceedings{hammar2025,
+  author    = {Hammar, Kim and Li, Tao},
+  title     = {Online incident response planning under model misspecification through {B}ayesian learning and belief quantization},
+  booktitle = {Proceedings of the 18th ACM Workshop on Artificial Intelligence and Security (AISec 2025)},
+  year      = {2025},
+  pages     = {40--51},
+  doi       = {10.1145/3733799.3762965}
+}
+
+@article{hammar2026belief,
+  author  = {Hammar, Kim and Li, Yuchao and Alpcan, Tansu and Lupu, Emil C. and Bertsekas, Dimitri P.},
+  title   = {Adaptive network security policies via belief aggregation and rollout},
+  journal = {IEEE Trans Inf Forensics Secur},
+  volume  = {21},
+  pages   = {6544--6559},
+  year    = {2026},
+  doi     = {10.1109/TIFS.2026.3709131}
+}
+
+% FLAG: author list abbreviated with "others" in the source.
+@inproceedings{wang2023hrlhf,
+  author    = {Wang, Lu and others},
+  title     = {Root cause analysis for microservice systems via hierarchical reinforcement learning from human feedback},
+  booktitle = {Proceedings of the 29th ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD 2023)},
+  year      = {2023},
+  pages     = {5116--5125},
+  doi       = {10.1145/3580305.3599934}
+}
+
+@article{peralta2025,
+  author  = {Peralta, Arturo and Olivas, Jos{\'e} A. and Navarro-Illana, Pedro and Alvarado, Juan},
+  title   = {A hybrid mathematical framework for dynamic incident prioritization using fuzzy {Q}-learning and text analytics},
+  journal = {Mathematics},
+  volume  = {13},
+  number  = {12},
+  pages   = {1941},
+  year    = {2025},
+  doi     = {10.3390/math13121941}
+}
+
+@article{okafor2026,
+  author  = {Okafor, Emmanuel},
+  title   = {A leakage-free benchmark of offline policy learning for {SOC} alert triage},
+  journal = {Mach Learn Appl},
+  volume  = {25},
+  pages   = {100984},
+  year    = {2026},
+  doi     = {10.1016/j.mlwa.2026.100984}
+}
+
+@article{saeed2025,
+  author  = {Saeed, Mozamel M.},
+  title   = {An {AI}-driven cybersecurity framework for {IoT}: integrating {LSTM}-based anomaly detection, reinforcement learning, and post-quantum encryption},
+  journal = {IEEE Access},
+  volume  = {13},
+  pages   = {104027--104036},
+  year    = {2025},
+  doi     = {10.1109/ACCESS.2025.3576506}
+}
+
+% FLAG: page numbers missing.
+@inproceedings{noorulhassan2026,
+  author    = {{Noorul Hassan}, S. and Sivaraman, K.},
+  title     = {An intelligent proactive cyber threat prediction model leveraging self-supervised deep learning and reinforcement-based control strategies},
+  booktitle = {Proceedings of the 2026 International Conference on Trends in Quantum Computing and Emerging Business Technologies (TQCEBT 2026)},
+  year      = {2026},
+  doi       = {10.1109/TQCEBT67648.2026.11681196}
+}
+
+@inproceedings{singh2026,
+  author    = {Singh, Tanay},
+  title     = {Autonomous {AI} decision control tower: a deterministic multi-agent decision intelligence framework for enterprise {NoOps}},
+  booktitle = {Proceedings of the 2026 IEEE 1st International Conference on Artificial Intelligence Implementation and Applications (ICAIIA 2026)},
+  pages     = {190--195},
+  year      = {2026},
+  doi       = {10.1109/ICAIIA70172.2026.11691884}
+}
+
+@article{babar2026,
+  author  = {Babar, Ayesha and Halabi, Talal and Zulkernine, Mohammad},
+  title   = {Autonomous and adaptive cyber incident detection and response in industrial cyber-physical systems using hierarchical reinforcement learning},
+  journal = {ACM Trans Cyber-Phys Syst},
+  volume  = {10},
+  number  = {1},
+  pages   = {8},
+  year    = {2026},
+  doi     = {10.1145/3765622}
+}
+
+@inproceedings{rojasrodriguez2026,
+  author    = {{Rojas Rodriguez}, Jhon Sebastian and Lahmadi, Abdelkader and Rusinowitch, Michael},
+  title     = {{CauseRL}: reinforcement learning-based random walks for root cause analysis in microservices},
+  booktitle = {Proceedings of the ACM Symposium on Applied Computing (SAC 2026)},
+  pages     = {257--264},
+  year      = {2026},
+  doi       = {10.1145/3748522.3779836}
+}
+
+% FLAG: conference name not given in the source (only "ACM International Conference Proceeding Series").
+@inproceedings{khozam2025,
+  author    = {Khozam, Shurok and Blanc, Gregory and Tixeuil, Sebastien and Totel, Eric},
+  title     = {{DAMS}: double deep {Q}-network approach for {DDoS} attack mitigation in {SDN}},
+  booktitle = {ACM International Conference Proceeding Series},
+  pages     = {1049--1056},
+  year      = {2025},
+  doi       = {10.1145/3726122.3726282}
+}
+
+@article{koupaei2026,
+  author  = {Koupaei, Alireza Nik Aein and Demirkol, Ilker},
+  title   = {Designing a scalable and adaptive cyber incident response ({DACIR}) framework for {SMEs}},
+  journal = {Journal of Intelligent Decision Making and Information Science},
+  volume  = {3},
+  number  = {5S},
+  pages   = {131--141},
+  year    = {2026},
+  doi     = {10.59543/jidmis.v3.1073}
+}
+
+@article{elicha2026,
+  author  = {Elicha, Jacobo and Lopez, Javier},
+  title   = {Dispatching advanced and adaptive intrusion responses for {IIoT}-based systems},
+  journal = {Future Gener Comput Syst},
+  volume  = {179},
+  pages   = {108314},
+  year    = {2026},
+  doi     = {10.1016/j.future.2025.108314}
+}
+
+@article{sahin2026,
+  author  = {{\c{S}}ahin, Fatih and Mert, Necibe Sare},
+  title   = {Dual-threshold conformal deferral for trustworthy security alert triage},
+  journal = {Electronics},
+  volume  = {15},
+  number  = {18},
+  pages   = {4084},
+  year    = {2026},
+  doi     = {10.3390/electronics15184084}
+}
+
+% FLAG: DOI missing in the source (candidate 10.1609/aaai.v34i01.5442 found via Crossref; awaiting confirmation).
+@inproceedings{tong2020,
+  author    = {Tong, Liang and Laszka, Aron and Yan, Chao and Zhang, Ning and Vorobeychik, Yevgeniy},
+  title     = {Finding needles in a moving haystack: prioritizing alerts with adversarial reinforcement learning},
+  booktitle = {Proceedings of the 34th AAAI Conference on Artificial Intelligence (AAAI 2020)},
+  pages     = {946--953},
+  year      = {2020}
+}
+
+@inproceedings{nimmathi2026,
+  author    = {Nimmathi, Shekar Reddy},
+  title     = {Hybrid reinforcement learning and agentic artificial intelligence framework for predictive platform operations and {DevOps} orchestration},
+  booktitle = {Proceedings of the 7th International Conference on Computational Vision and Bio Inspired Computing (ICCVBIC 2026)},
+  pages     = {1197--1203},
+  year      = {2026},
+  doi       = {10.1109/ICCVBIC71195.2026.11689187}
+}
+
+@inproceedings{castro2025,
+  author    = {Castro, Sebastian R. and Campbell, Roberto and Lau, Nancy and Villalobos, Octavio and Duan, Jiaqi and Cardenas, Alvaro A.},
+  title     = {Large language models are autonomous cyber defenders},
+  booktitle = {Proceedings of the 2025 IEEE Conference on Artificial Intelligence (CAI 2025)},
+  pages     = {1125--1132},
+  year      = {2025},
+  doi       = {10.1109/CAI64502.2025.00195}
+}
+
+@inproceedings{contractor2025,
+  author    = {Contractor, Faizan and Li, Li and {Al Mallah}, Ranwa},
+  title     = {Learning to communicate in multi-agent reinforcement learning for autonomous cyber defence},
+  booktitle = {Proceedings of the International Conference on Machine Learning and Cybernetics (ICMLC 2025)},
+  pages     = {26--31},
+  year      = {2025},
+  doi       = {10.1109/ICMLC66258.2025.11280109}
+}
+
+@article{ghanem2026,
+  author  = {Ghanem, Mohamed Chahine and Wojtczak, Dominik and Benkhelifa, Elhadj and Kheddar, Hamza and Nepomuceno, Erivelton G. and Li, Wanpeng},
+  title   = {Leveraging reinforcement learning for an efficient {W}indows registry analysis during cyber incident response},
+  journal = {Sci Rep},
+  volume  = {16},
+  number  = {1},
+  pages   = {26867},
+  year    = {2026},
+  doi     = {10.1038/s41598-026-57787-6}
+}
+
+@inproceedings{varsha2025,
+  author    = {Varsha, M. P. and Samyuktha, S. and Manochithra, S. and Sudha, K.},
+  title     = {{LLM}-powered deep reinforcement learning for predictive cyber threat mitigation},
+  booktitle = {Proceedings of the 5th International Conference on Ubiquitous Computing and Intelligent Information Systems (ICUIS 2025)},
+  pages     = {1020--1025},
+  year      = {2025},
+  doi       = {10.1109/ICUIS67429.2025.11380737}
+}
+
+% FLAG: page numbers missing (source field "number = 2025" dropped as a duplicate of the year).
+@inproceedings{jaber2025,
+  author    = {Jaber, Aws and Endregard, Monica and Mancini, Federico and Grov, Gudmund},
+  title     = {Mission-aware cyber incident response generation using reinforcement learning},
+  booktitle = {Proceedings of the International Conference on Military Communication and Information Systems (ICMCIS 2025)},
+  year      = {2025},
+  doi       = {10.1109/ICMCIS64378.2025.11047892}
+}
+
+@inproceedings{wang2024mrca,
+  author    = {Wang, Yidan and Zhu, Zhouruixing and Fu, Qiuai and Ma, Yuchi and He, Pinjia},
+  title     = {{MRCA}: metric-level root cause analysis for microservices via multi-modal data},
+  booktitle = {Proceedings of the 39th ACM/IEEE International Conference on Automated Software Engineering (ASE 2024)},
+  pages     = {1057--1068},
+  year      = {2024},
+  doi       = {10.1145/3691620.3695485}
+}
+
+@inproceedings{aenugu2026,
+  author    = {Aenugu, Goutham Reddy},
+  title     = {Multi-agent proximal policy optimization framework for autonomous reliability engineering in {K}ubernetes-based cloud-native distributed systems},
+  booktitle = {Proceedings of the 7th International Conference on Computational Vision and Bio Inspired Computing (ICCVBIC 2026)},
+  pages     = {500--506},
+  year      = {2026},
+  doi       = {10.1109/ICCVBIC71195.2026.11688912}
+}
+
+@article{alturkistani2022,
+  author  = {Alturkistani, Hilala and El-Affendi, Mohammed A.},
+  title   = {Optimizing cybersecurity incident response decisions using deep reinforcement learning},
+  journal = {Int J Electr Comput Eng},
+  volume  = {12},
+  number  = {6},
+  pages   = {6768--6776},
+  year    = {2022},
+  doi     = {10.11591/ijece.v12i6.pp6768-6776}
+}
+
+% FLAG: page numbers missing.
+@inproceedings{bhosale2026,
+  author    = {Bhosale, Atharva and Rambhia, Jeenal and Kharche, Shubhangi and Kadam, Sheetal and Dhupkar, Atharv Amol and Gupta, Aman Sanjay},
+  title     = {{PhishRL}: an end-to-end reinforcement learning pipeline for automated email threat triage},
+  booktitle = {Proceedings of the 2026 6th International Conference on Intelligent Technologies (CONIT 2026)},
+  year      = {2026},
+  doi       = {10.1109/CONIT69683.2026.11620809}
+}
+
+@inproceedings{hughes2022,
+  author    = {Hughes, Kieran and McLaughlin, Kieran and Sezer, Sakir},
+  title     = {Policy-based profiles for network intrusion response systems},
+  booktitle = {Proceedings of the 2022 IEEE International Conference on Cyber Security and Resilience (CSR 2022)},
+  pages     = {279--286},
+  year      = {2022},
+  doi       = {10.1109/CSR54599.2022.9850304}
+}
+
+@inproceedings{wu2026,
+  author    = {Wu, Zhengdong and Fu, Haixiang and Wang, Lin and Wang, Xinqiang and Zhang, Shujun and Xiang, Yuzhe and Ge, Weiyi},
+  title     = {Research on cross-layer link fault root cause localization algorithm for microservice architecture integrating deep reinforcement learning},
+  booktitle = {Proceedings of the 2026 IEEE 6th International Conference on Electronic Technology, Communication and Information (ICETCI 2026)},
+  pages     = {421--426},
+  year      = {2026},
+  doi       = {10.1109/ICETCI68937.2026.11610700}
+}
+
+% FLAG: no DOI (CEUR Workshop Proceedings do not issue DOIs); volume URL could be added.
+@inproceedings{kovtun2026,
+  author    = {Kovtun, Viacheslav and Huralnyk, Artem and Husak, Lyudmila and Kovaliuk, Oleh},
+  title     = {Risk-sensitive decision-making in security operations center alert escalation under resource constraints},
+  booktitle = {CEUR Workshop Proceedings},
+  volume    = {4242},
+  pages     = {65--83},
+  year      = {2026}
+}
+
+% FLAG: page numbers missing.
+@inproceedings{ravi2025,
+  author    = {Ravi, Remya V. and Priyanga, K. K. and Adarsh, M. D.},
+  title     = {{SAFE-HGX}: a hierarchical and safety-aware reinforcement learning framework for intrusion response in industrial control systems},
+  booktitle = {Proceedings of the 2025 1st International Conference on Advancement in Futuristic Technologies (ICAFT 2025)},
+  year      = {2025},
+  doi       = {10.1109/ICAFT66710.2025.11453104}
+}
+
+@inproceedings{yuan2026,
+  author    = {Yuan, Yingqiang},
+  title     = {Self-healing and intelligent root cause analysis system for data link faults in cloud-native environments},
+  booktitle = {Proceedings of the 2026 6th International Conference on Applied Mathematics, Modelling and Intelligent Computing (CAMMIC 2026)},
+  pages     = {941--946},
+  year      = {2026},
+  doi       = {10.1145/3817124.3817267}
+}
+
+@inproceedings{nyberg2024,
+  author    = {Nyberg, Jakob and Johnson, Pontus},
+  title     = {Structural generalization in autonomous cyber incident response with message-passing neural networks and reinforcement learning},
+  booktitle = {Proceedings of the 2024 IEEE International Conference on Cyber Security and Resilience (CSR 2024)},
+  pages     = {282--289},
+  year      = {2024},
+  doi       = {10.1109/CSR61664.2024.10679456}
+}
+
+@inproceedings{raj2026,
+  author    = {Raj, A. Pramod and Gantayat, Sasanko Sekhar and Sharma, K. Venkatesh},
+  title     = {{XAI-HDRL}: an intelligent framework for cyber threat prediction and automated security response},
+  booktitle = {Proceedings of the 7th International Conference on Smart Systems and Inventive Technology (ICSSIT 2026)},
+  pages     = {1115--1123},
+  year      = {2026},
+  doi       = {10.1109/ICSSIT69151.2026.11656470}
+}
+
+@inproceedings{manojkumar2026,
+  author    = {{Manoj Kumar}, R. and Srinivasan, K. and Rohidh, S. and Sibirajan, D. and Sakthivel, G. and Iniavan, G.},
+  title     = {Adaptive {NeuroDefense}: graph neural network and reinforcement learning-based self-healing cybersecurity architecture},
+  booktitle = {Proceedings of the 4th International Conference on Augmented Intelligence and Sustainable Systems (ICAISS 2026)},
+  pages     = {251--257},
+  year      = {2026},
+  doi       = {10.1109/ICAISS68683.2026.11525610}
+}
+
+% FLAG: page numbers missing.
+@inproceedings{bompally2026,
+  author    = {Bompally, Santosh Datta},
+  title     = {{AI}-powered incident response framework for secure {DevOps} environments},
+  booktitle = {Proceedings of the 2026 IEEE International Conference on Emerging Computing and Intelligent Technologies (ICoECIT 2026)},
+  year      = {2026},
+  doi       = {10.1109/ICoECIT68303.2026.11497511}
+}
+
+% FLAG: page numbers missing.
+@inproceedings{reddyavula2026,
+  author    = {{Reddy Avula}, Chandra Shekar},
+  title     = {{XAI} for automated prediction model for cyber incident response and security support in cloud},
+  booktitle = {Proceedings of the 2026 2nd International Conference on Big Data and Machine Learning (ICBDML 2026)},
+  year      = {2026},
+  doi       = {10.1109/ICBDML68582.2026.11544635}
+}
+
+% ---------------------------------------------------------------------------
+% Data citation (DataCite minimum: creator, title, repository, year, identifier)
+% ---------------------------------------------------------------------------
+
+% FLAG: PLACEHOLDER. Replace repository and DOI once the deposit is made.
+@misc{opol2026data,
+  author       = {Opol, Charis},
+  title        = {Audit files for ``Reinforcement learning for investigating, acting and escalating in {IT} incident triage and response: a systematic literature review''},
+  howpublished = {Zenodo [dataset]},
+  year         = {2026},
+  doi          = {10.5281/zenodo.XXXXXXX}
+}

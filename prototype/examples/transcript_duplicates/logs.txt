@@ -1,0 +1,6 @@
+2026-10-25T12:00:00Z INFO  deploy release v3.7.4 deployed to production
+2026-11-02T10:05:11Z ERROR api    GET /api/transcripts/STU-0001 500 duration=0.4s error="MultipleResultsFound: expected one row for student_programme"
+2026-11-02T10:06:00Z INFO  db     active_transactions=2 oldest_tx_age=0s
+2026-11-02T10:06:00Z INFO  node   api-1 cpu=18%
+2026-11-02T10:06:00Z INFO  cache  hit_rate=0.95
+2026-11-02T10:06:30Z ERROR api    GET /api/transcripts/STU-0002 500 duration=0.3s error="MultipleResultsFound: expected one row for student_programme"

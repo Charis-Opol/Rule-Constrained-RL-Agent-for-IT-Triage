@@ -1,0 +1,216 @@
+{
+  "label": "pilot",
+  "note": "How the prototype reads a ticket and its logs for the pilot model. Every keyword, pattern and threshold here is set by the researcher; thresholds follow each check's 'positive_means' in pilot_model.json. The log format is the one used in prototype/examples, not a Directorate format. See documentation/pilot_experiment_plan.md, Phase 7.",
+  "agent_run": "results/pilot/runs/phase5_shielded_seed0",
+  "context_defaults": {
+    "X01": "Yes",
+    "X02": "High"
+  },
+  "context_defaults_reason": "When the ticket does not say, assume the stricter case: production and high priority both switch rules on.",
+  "categories": {
+    "Infrastructure and external services": [
+      "external",
+      "gateway",
+      "third-party",
+      "third party",
+      "bank",
+      "server",
+      "network",
+      "cache"
+    ],
+    "Database": [
+      "database",
+      "db",
+      "query",
+      "record",
+      "duplicate",
+      "save",
+      "saving"
+    ],
+    "Application and interface": [
+      "page",
+      "screen",
+      "button",
+      "release",
+      "update",
+      "new version",
+      "feature"
+    ],
+    "Authentication and access": [
+      "sign in",
+      "sign-in",
+      "log in",
+      "login",
+      "logged out",
+      "password",
+      "account",
+      "session"
+    ]
+  },
+  "symptoms": {
+    "S01": {
+      "ticket": [
+        "server error",
+        "error page",
+        "error screen",
+        "internal error",
+        "500",
+        "something went wrong",
+        "shows an error"
+      ],
+      "logs": "\\s5\\d\\d\\s"
+    },
+    "S02": {
+      "ticket": [
+        "slow",
+        "timing out",
+        "times out",
+        "timed out",
+        "takes forever",
+        "not loading",
+        "hangs"
+      ],
+      "logs": "duration=(?:[2-9]\\d|\\d{3,})(?:\\.\\d+)?s"
+    },
+    "S03": {
+      "ticket": [
+        "can't sign in",
+        "cannot sign in",
+        "can't log in",
+        "cannot log in",
+        "unable to log in",
+        "unable to sign in",
+        "logged out",
+        "login fails",
+        "sign-in fails"
+      ],
+      "logs": "\\b(auth|login|signin)\\b.*\\s(401|5\\d\\d)\\s"
+    },
+    "S04": {
+      "ticket": [
+        "spins",
+        "spinning",
+        "after a long wait",
+        "after about a minute",
+        "then fails",
+        "then errors",
+        "save fails",
+        "approval fails",
+        "won't save"
+      ],
+      "logs": "\\b(POST|PUT|PATCH)\\b.*\\s5\\d\\d\\s.*duration=(?:[3-9]\\d|\\d{3,})(?:\\.\\d+)?s"
+    }
+  },
+  "context": {
+    "X01": {
+      "No": [
+        "staging",
+        "test server",
+        "test environment",
+        "uat",
+        "dev server",
+        "development server"
+      ],
+      "Yes": [
+        "production",
+        "live system",
+        "live site",
+        "prod"
+      ]
+    },
+    "X02": {
+      "High": [
+        "priority: high",
+        "urgent",
+        "critical",
+        "asap",
+        "deadline",
+        "exam",
+        "all students",
+        "everyone"
+      ],
+      "Low": [
+        "priority: low",
+        "not urgent",
+        "when you get a chance",
+        "minor",
+        "cosmetic"
+      ],
+      "Medium": [
+        "priority: medium"
+      ]
+    }
+  },
+  "checks": {
+    "D01": {
+      "covers": "\\boutbound\\b",
+      "positive": "\\boutbound\\b.*duration=(?P<value>[\\d.]+)s",
+      "above": 10
+    },
+    "D02": {
+      "covers": "\\bdb\\b",
+      "positive": "lock wait|deadlock|could not obtain lock|lock timeout"
+    },
+    "D03": {
+      "covers": "\\bpool\\b",
+      "positive": "\\bpool\\b.*\\((?P<value>\\d+)%\\)",
+      "above": 80
+    },
+    "D04": {
+      "covers": "\\bcpu=",
+      "positive": "\\bcpu=(?P<value>\\d+)%",
+      "above": 80,
+      "aggregate": "median"
+    },
+    "D05": {
+      "covers": "\\boldest_tx_age=",
+      "positive": "\\boldest_tx_age=(?P<value>\\d+)s",
+      "above": 60
+    },
+    "D06": {
+      "covers": "\\bplan\\b",
+      "positive": "seq scan|full table scan"
+    },
+    "D07": {
+      "covers": "\\bqueries=",
+      "positive": "\\bqueries=(?P<value>\\d+)",
+      "above": 100
+    },
+    "D08": {
+      "covers": "\\bcache\\b",
+      "positive": "\\bcache\\b.*\\b(warn|warning|error|failed|failure)\\b"
+    },
+    "D09": {
+      "covers": "\\bdeploy\\b",
+      "positive": "\\bdeploy\\b.*\\b(release|migration)\\b",
+      "within_hours": 24
+    },
+    "D10": {
+      "ticket_positive": [
+        "only some",
+        "only certain",
+        "some students",
+        "some users",
+        "some records",
+        "particular",
+        "specific record",
+        "specific student",
+        "only for",
+        "a few students",
+        "others are fine",
+        "others can"
+      ],
+      "ticket_negative": [
+        "everyone",
+        "all users",
+        "all students",
+        "nobody can",
+        "no one can",
+        "for all",
+        "every student",
+        "every user",
+        "everybody"
+      ]
+    }
+  }
+}

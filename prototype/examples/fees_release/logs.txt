@@ -1,0 +1,7 @@
+2026-11-03T06:10:00Z INFO  deploy release v3.9.0 deployed to production (migration 0057_fee_items applied)
+2026-11-03T08:12:44Z ERROR api    GET /api/fees/statement 500 duration=0.3s error="column fee_items.waiver_code does not exist"
+2026-11-03T08:13:00Z INFO  node   api-1 cpu=22%
+2026-11-03T08:13:00Z INFO  pool   db_pool in_use=4/20 (20%)
+2026-11-03T08:13:00Z INFO  db     active_transactions=3 oldest_tx_age=1s
+2026-11-03T08:13:00Z INFO  cache  hit_rate=0.91
+2026-11-03T08:13:02Z ERROR api    GET /api/fees/statement 500 duration=0.2s

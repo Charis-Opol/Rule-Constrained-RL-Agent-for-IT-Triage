@@ -1,0 +1,3 @@
+Subject: Fees statement page broken
+
+Since this morning the fees statement page shows an error for every student who opens it. It was working yesterday. Live system, and it is urgent because the fees deadline is next week.

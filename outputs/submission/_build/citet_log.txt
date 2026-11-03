@@ -1,0 +1,92 @@
+chen2020	Chen et al.\
+chen2020	Chen et al.\
+remil2024	Remil et al.\
+chen2020	Chen et al.\
+remil2024	Remil et al.\
+remil2024	Remil et al.\
+kitchenham2007	Kitchenham and Charters
+alauthman2026	Alauthman et al.
+hammar2025	Hammar and Li
+hammar2026belief	Hammar et al.
+wang2023hrlhf	Wang et al.
+ding2023	Ding et al.
+ren2025	Ren et al.
+dunsin2025	Dunsin et al.
+ren2025	Ren et al.
+alauthman2026	Alauthman et al.
+hammar2026belief	Hammar et al.
+sahin2026	Sahin and Mert
+nyberg2024	Nyberg and Johnson
+peralta2025	Peralta et al.
+okafor2026	Okafor
+rojasrodriguez2026	Rojas Rodriguez et al.
+ghanem2026	Ghanem et al.
+hammar2025	Hammar and Li
+kovtun2026	Kovtun et al.
+hammar2026belief	Hammar et al.\
+hammar2025	Hammar and Li
+kovtun2026	Kovtun et al.\
+koupaei2026	Koupaei and Demirkol
+koupaei2026	Koupaei and Demirkol
+contractor2025	Contractor et al.\
+sahin2026	Sahin and Mert
+wu2026	Wu et al.\
+peralta2025	Peralta et al.\
+wang2023hrlhf	Wang et al.\
+wu2026	Wu et al.\
+kovtun2026	Kovtun et al.\
+ghanem2026	Ghanem et al.\
+wang2023hrlhf	Wang et al.\
+bhosale2026	Bhosale et al.\
+alturkistani2022	Alturkistani and El-Affendi
+sahin2026	Sahin and Mert's
+kovtun2026	Kovtun et al.'s
+okafor2026	Okafor
+singh2026	Singh
+koupaei2026	Koupaei and Demirkol
+okafor2026	Okafor's
+sahin2026	Sahin and Mert
+kovtun2026	Kovtun et al.\
+contractor2025	Contractor et al.\
+kovtun2026	Kovtun et al.\
+sahin2026	Sahin and Mert
+ravi2025	Ravi et al.\
+singh2026	Singh
+koupaei2026	Koupaei and Demirkol
+elicha2026	Elicha and Lopez
+okafor2026	Okafor
+ravi2025	Ravi et al.'s
+singh2026	Singh's
+ravi2025	Ravi et al.\
+singh2026	Singh
+sahin2026	Sahin and Mert
+singh2026	Singh's
+ravi2025	Ravi et al.'s
+kovtun2026	Kovtun et al.
+peralta2025	Peralta et al.\
+okafor2026	Okafor
+ravi2025	Ravi et al.'s
+sahin2026	Sahin and Mert
+peralta2025	Peralta et al.'s
+aenugu2026	Aenugu's
+nyberg2024	Nyberg and Johnson's
+hammar2025	Hammar and Li's
+hammar2026belief	Hammar et al.'s
+sahin2026	Sahin and Mert
+kovtun2026	Kovtun et al.\
+contractor2025	Contractor et al.\
+chen2020	Chen et al.'s
+sahin2026	Sahin and Mert
+sahin2026	Sahin and Mert's
+kovtun2026	Kovtun et al.'s
+turan2026	Turan
+singh2026	Singh's
+ravi2025	Ravi et al.'s
+alshiekh2018	Alshiekh et al.\
+kovtun2026	Kovtun et al.
+sahin2026	Sahin and Mert's
+sahin2026	Sahin and Mert
+alauthman2026	Alauthman et al.
+sahin2026	Sahin and Mert
+kovtun2026	Kovtun et al.
+sahin2026	Sahin and Mert

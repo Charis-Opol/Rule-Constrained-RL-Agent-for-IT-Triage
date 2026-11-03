@@ -1,0 +1,1075 @@
+{
+  "agent_run": "results/pilot/runs/phase5_shielded_seed0",
+  "cases": {
+    "results_approval": {
+      "intended_cause": "C02",
+      "readers": {
+        "keyword": {
+          "agreement": {
+            "category": false,
+            "symptoms": [
+              4,
+              4
+            ],
+            "context": [
+              2,
+              2
+            ],
+            "checks": [
+              10,
+              10
+            ]
+          },
+          "decision": {
+            "outcome": "forced_escalation",
+            "checks_run": 2,
+            "check_minutes": 10,
+            "blocked_proposals": 3,
+            "reason": "The safety mechanism refused two proposals in a row."
+          },
+          "steps": [
+            {
+              "action": "Recommend C01: Set a timeout on the outbound call",
+              "value": 0.008357129991054535,
+              "margin": 0.10674864053726196,
+              "escalate_value": -1.9814753532409668,
+              "blocked_by": [
+                {
+                  "rule": "R05",
+                  "needs": "D01",
+                  "reason": "A wrong timeout can make failures look like real results"
+                }
+              ]
+            },
+            {
+              "action": "Run D02 Lock-wait errors in logs",
+              "value": -0.19571201875805855,
+              "margin": 0.06111098453402519,
+              "escalate_value": -1.9769270718097687,
+              "result": "positive",
+              "evidence": "2026-11-02T09:00:15Z WARN  db     lock wait timeout exceeded; try restarting transaction table=results_approval",
+              "source": "logs"
+            },
+            {
+              "action": "Run D09 Recent release or migration",
+              "value": 0.28272930532693863,
+              "margin": 0.2567640319466591,
+              "escalate_value": -1.9949381053447723,
+              "result": "negative",
+              "evidence": "2026-10-30T17:20:00Z INFO  deploy release v3.8.1 deployed to production",
+              "source": "logs"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 0.8296171575784683,
+              "margin": 0.15019908547401428,
+              "escalate_value": -1.9943977892398834,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Recommend C03: Add the missing index",
+              "value": 0.5585350096225739,
+              "margin": 0.01208968460559845,
+              "escalate_value": -1.9918844103813171,
+              "blocked_by": [
+                {
+                  "rule": "R04",
+                  "needs": "D06",
+                  "reason": "Index builds on large tables can block live traffic"
+                }
+              ]
+            }
+          ],
+          "warnings": []
+        },
+        "expected": {
+          "decision": {
+            "outcome": "forced_escalation",
+            "checks_run": 2,
+            "check_minutes": 10,
+            "blocked_proposals": 3,
+            "reason": "The safety mechanism refused two proposals in a row."
+          },
+          "steps": [
+            {
+              "action": "Recommend C01: Set a timeout on the outbound call",
+              "value": 0.008357129991054535,
+              "margin": 0.10674864053726196,
+              "escalate_value": -1.9814753532409668,
+              "blocked_by": [
+                {
+                  "rule": "R05",
+                  "needs": "D01",
+                  "reason": "A wrong timeout can make failures look like real results"
+                }
+              ]
+            },
+            {
+              "action": "Run D02 Lock-wait errors in logs",
+              "value": -0.19571201875805855,
+              "margin": 0.06111098453402519,
+              "escalate_value": -1.9769270718097687,
+              "result": "positive",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D09 Recent release or migration",
+              "value": 0.28272930532693863,
+              "margin": 0.2567640319466591,
+              "escalate_value": -1.9949381053447723,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 0.8296171575784683,
+              "margin": 0.15019908547401428,
+              "escalate_value": -1.9943977892398834,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Recommend C03: Add the missing index",
+              "value": 0.5585350096225739,
+              "margin": 0.01208968460559845,
+              "escalate_value": -1.9918844103813171,
+              "blocked_by": [
+                {
+                  "rule": "R04",
+                  "needs": "D06",
+                  "reason": "Index builds on large tables can block live traffic"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sign_in": {
+      "intended_cause": "C08",
+      "readers": {
+        "keyword": {
+          "agreement": {
+            "category": true,
+            "symptoms": [
+              4,
+              4
+            ],
+            "context": [
+              2,
+              2
+            ],
+            "checks": [
+              10,
+              10
+            ]
+          },
+          "decision": {
+            "outcome": "recommended",
+            "checks_run": 0,
+            "check_minutes": 0,
+            "blocked_proposals": 0,
+            "cause": "C08",
+            "cause_name": "Sign-in writes collide on the user row",
+            "remedy": "Move the token write off the sign-in path"
+          },
+          "steps": [
+            {
+              "action": "Recommend C08: Move the token write off the sign-in path",
+              "value": 2.8003451228141785,
+              "margin": 0.26894330978393555,
+              "escalate_value": -2.010871320962906
+            }
+          ],
+          "warnings": []
+        },
+        "expected": {
+          "decision": {
+            "outcome": "recommended",
+            "checks_run": 0,
+            "check_minutes": 0,
+            "blocked_proposals": 0,
+            "cause": "C08",
+            "cause_name": "Sign-in writes collide on the user row",
+            "remedy": "Move the token write off the sign-in path"
+          },
+          "steps": [
+            {
+              "action": "Recommend C08: Move the token write off the sign-in path",
+              "value": 2.8003451228141785,
+              "margin": 0.26894330978393555,
+              "escalate_value": -2.010871320962906
+            }
+          ]
+        }
+      }
+    },
+    "fees_release": {
+      "intended_cause": "C06",
+      "readers": {
+        "keyword": {
+          "agreement": {
+            "category": true,
+            "symptoms": [
+              4,
+              4
+            ],
+            "context": [
+              2,
+              2
+            ],
+            "checks": [
+              10,
+              10
+            ]
+          },
+          "decision": {
+            "outcome": "recommended",
+            "checks_run": 5,
+            "check_minutes": 55,
+            "blocked_proposals": 3,
+            "cause": "C07",
+            "cause_name": "Duplicate rows where one was expected",
+            "remedy": "Remove the duplicate rows"
+          },
+          "steps": [
+            {
+              "action": "Recommend C07: Remove the duplicate rows",
+              "value": 2.398138791322708,
+              "margin": 0.17825916409492493,
+              "escalate_value": -1.9788917899131775,
+              "blocked_by": [
+                {
+                  "rule": "R03",
+                  "needs": "D10",
+                  "reason": "Other records may depend on the rows, and deletes are hard to undo"
+                }
+              ]
+            },
+            {
+              "action": "Run D10 Failure scope",
+              "value": 2.110458165407181,
+              "margin": 0.13078510761260986,
+              "escalate_value": -1.9815580546855927,
+              "result": "negative",
+              "evidence": "Since this morning the fees statement page shows an error for every student who opens it.",
+              "source": "ticket"
+            },
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": -0.3052854724228382,
+              "margin": 0.06594983860850334,
+              "escalate_value": -1.9897879660129547,
+              "result": "negative",
+              "evidence": "2026-11-03T08:13:00Z INFO  pool   db_pool in_use=4/20 (20%)",
+              "source": "logs"
+            },
+            {
+              "action": "Run D08 Cache errors in logs",
+              "value": 0.09165020659565926,
+              "margin": 0.07209453731775284,
+              "escalate_value": -1.9872458279132843,
+              "result": "negative",
+              "evidence": "2026-11-03T08:13:00Z INFO  cache  hit_rate=0.91",
+              "source": "logs"
+            },
+            {
+              "action": "Run D07 Query count in a slow trace",
+              "value": 0.36591555923223495,
+              "margin": 0.018702559173107147,
+              "escalate_value": -1.9864559173583984,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "logs"
+            },
+            {
+              "action": "Recommend C01: Set a timeout on the outbound call",
+              "value": 1.0739250481128693,
+              "margin": 0.45198265463113785,
+              "escalate_value": -1.979086846113205,
+              "blocked_by": [
+                {
+                  "rule": "R05",
+                  "needs": "D01",
+                  "reason": "A wrong timeout can make failures look like real results"
+                }
+              ]
+            },
+            {
+              "action": "Run D05 Long transaction in the DB",
+              "value": 0.44467538595199585,
+              "margin": 0.005786865949630737,
+              "escalate_value": -1.9812586903572083,
+              "result": "negative",
+              "evidence": "2026-11-03T08:13:00Z INFO  db     active_transactions=3 oldest_tx_age=1s",
+              "source": "logs"
+            },
+            {
+              "action": "Recommend C01: Set a timeout on the outbound call",
+              "value": 1.0048426687717438,
+              "margin": 0.3230712562799454,
+              "escalate_value": -1.9877363741397858,
+              "blocked_by": [
+                {
+                  "rule": "R05",
+                  "needs": "D01",
+                  "reason": "A wrong timeout can make failures look like real results"
+                }
+              ]
+            },
+            {
+              "action": "Recommend C07: Remove the duplicate rows",
+              "value": 1.0781700164079666,
+              "margin": 0.5092814564704895,
+              "escalate_value": -1.9844648241996765
+            }
+          ],
+          "warnings": []
+        },
+        "expected": {
+          "decision": {
+            "outcome": "recommended",
+            "checks_run": 5,
+            "check_minutes": 55,
+            "blocked_proposals": 3,
+            "cause": "C07",
+            "cause_name": "Duplicate rows where one was expected",
+            "remedy": "Remove the duplicate rows"
+          },
+          "steps": [
+            {
+              "action": "Recommend C07: Remove the duplicate rows",
+              "value": 2.398138791322708,
+              "margin": 0.17825916409492493,
+              "escalate_value": -1.9788917899131775,
+              "blocked_by": [
+                {
+                  "rule": "R03",
+                  "needs": "D10",
+                  "reason": "Other records may depend on the rows, and deletes are hard to undo"
+                }
+              ]
+            },
+            {
+              "action": "Run D10 Failure scope",
+              "value": 2.110458165407181,
+              "margin": 0.13078510761260986,
+              "escalate_value": -1.9815580546855927,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": -0.3052854724228382,
+              "margin": 0.06594983860850334,
+              "escalate_value": -1.9897879660129547,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D08 Cache errors in logs",
+              "value": 0.09165020659565926,
+              "margin": 0.07209453731775284,
+              "escalate_value": -1.9872458279132843,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D07 Query count in a slow trace",
+              "value": 0.36591555923223495,
+              "margin": 0.018702559173107147,
+              "escalate_value": -1.9864559173583984,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C01: Set a timeout on the outbound call",
+              "value": 1.0739250481128693,
+              "margin": 0.45198265463113785,
+              "escalate_value": -1.979086846113205,
+              "blocked_by": [
+                {
+                  "rule": "R05",
+                  "needs": "D01",
+                  "reason": "A wrong timeout can make failures look like real results"
+                }
+              ]
+            },
+            {
+              "action": "Run D05 Long transaction in the DB",
+              "value": 0.44467538595199585,
+              "margin": 0.005786865949630737,
+              "escalate_value": -1.9812586903572083,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C01: Set a timeout on the outbound call",
+              "value": 1.0048426687717438,
+              "margin": 0.3230712562799454,
+              "escalate_value": -1.9877363741397858,
+              "blocked_by": [
+                {
+                  "rule": "R05",
+                  "needs": "D01",
+                  "reason": "A wrong timeout can make failures look like real results"
+                }
+              ]
+            },
+            {
+              "action": "Recommend C07: Remove the duplicate rows",
+              "value": 1.0781700164079666,
+              "margin": 0.5092814564704895,
+              "escalate_value": -1.9844648241996765
+            }
+          ]
+        }
+      }
+    },
+    "transcript_duplicates": {
+      "intended_cause": "C07",
+      "readers": {
+        "keyword": {
+          "agreement": {
+            "category": false,
+            "symptoms": [
+              4,
+              4
+            ],
+            "context": [
+              2,
+              2
+            ],
+            "checks": [
+              10,
+              10
+            ]
+          },
+          "decision": {
+            "outcome": "recommended",
+            "checks_run": 2,
+            "check_minutes": 20,
+            "blocked_proposals": 2,
+            "cause": "C07",
+            "cause_name": "Duplicate rows where one was expected",
+            "remedy": "Remove the duplicate rows"
+          },
+          "steps": [
+            {
+              "action": "Recommend C07: Remove the duplicate rows",
+              "value": 2.3587463796138763,
+              "margin": 0.12018784880638123,
+              "escalate_value": -1.9894571602344513,
+              "blocked_by": [
+                {
+                  "rule": "R03",
+                  "needs": "D10",
+                  "reason": "Other records may depend on the rows, and deletes are hard to undo"
+                }
+              ]
+            },
+            {
+              "action": "Run D10 Failure scope",
+              "value": 2.0305481553077698,
+              "margin": 0.03536641597747803,
+              "escalate_value": -1.989189237356186,
+              "result": "positive",
+              "evidence": "Subject: Transcript error for a few students",
+              "source": "ticket"
+            },
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": 3.1326645612716675,
+              "margin": 0.1106119155883789,
+              "escalate_value": -1.9859234988689423,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "logs"
+            },
+            {
+              "action": "Recommend C01: Set a timeout on the outbound call",
+              "value": 3.1410953402519226,
+              "margin": 0.2781015634536743,
+              "escalate_value": -1.973550021648407,
+              "blocked_by": [
+                {
+                  "rule": "R05",
+                  "needs": "D01",
+                  "reason": "A wrong timeout can make failures look like real results"
+                }
+              ]
+            },
+            {
+              "action": "Recommend C07: Remove the duplicate rows",
+              "value": 3.003060221672058,
+              "margin": 0.28402626514434814,
+              "escalate_value": -1.9661398231983185
+            }
+          ],
+          "warnings": []
+        },
+        "expected": {
+          "decision": {
+            "outcome": "recommended",
+            "checks_run": 2,
+            "check_minutes": 20,
+            "blocked_proposals": 2,
+            "cause": "C07",
+            "cause_name": "Duplicate rows where one was expected",
+            "remedy": "Remove the duplicate rows"
+          },
+          "steps": [
+            {
+              "action": "Recommend C07: Remove the duplicate rows",
+              "value": 2.3587463796138763,
+              "margin": 0.12018784880638123,
+              "escalate_value": -1.9894571602344513,
+              "blocked_by": [
+                {
+                  "rule": "R03",
+                  "needs": "D10",
+                  "reason": "Other records may depend on the rows, and deletes are hard to undo"
+                }
+              ]
+            },
+            {
+              "action": "Run D10 Failure scope",
+              "value": 2.0305481553077698,
+              "margin": 0.03536641597747803,
+              "escalate_value": -1.989189237356186,
+              "result": "positive",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": 3.1326645612716675,
+              "margin": 0.1106119155883789,
+              "escalate_value": -1.9859234988689423,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C01: Set a timeout on the outbound call",
+              "value": 3.1410953402519226,
+              "margin": 0.2781015634536743,
+              "escalate_value": -1.973550021648407,
+              "blocked_by": [
+                {
+                  "rule": "R05",
+                  "needs": "D01",
+                  "reason": "A wrong timeout can make failures look like real results"
+                }
+              ]
+            },
+            {
+              "action": "Recommend C07: Remove the duplicate rows",
+              "value": 3.003060221672058,
+              "margin": 0.28402626514434814,
+              "escalate_value": -1.9661398231983185
+            }
+          ]
+        }
+      }
+    },
+    "payment_gateway": {
+      "intended_cause": "C01",
+      "readers": {
+        "keyword": {
+          "agreement": {
+            "category": true,
+            "symptoms": [
+              4,
+              4
+            ],
+            "context": [
+              2,
+              2
+            ],
+            "checks": [
+              10,
+              10
+            ]
+          },
+          "decision": {
+            "outcome": "recommended",
+            "checks_run": 5,
+            "check_minutes": 35,
+            "blocked_proposals": 3,
+            "cause": "C01",
+            "cause_name": "Slow external service, outbound call has no timeout",
+            "remedy": "Set a timeout on the outbound call"
+          },
+          "steps": [
+            {
+              "action": "Recommend C01: Set a timeout on the outbound call",
+              "value": 0.008357129991054535,
+              "margin": 0.10674864053726196,
+              "escalate_value": -1.9814753532409668,
+              "blocked_by": [
+                {
+                  "rule": "R05",
+                  "needs": "D01",
+                  "reason": "A wrong timeout can make failures look like real results"
+                }
+              ]
+            },
+            {
+              "action": "Run D02 Lock-wait errors in logs",
+              "value": -0.19571201875805855,
+              "margin": 0.06111098453402519,
+              "escalate_value": -1.9769270718097687,
+              "result": "negative",
+              "evidence": "2026-11-03T11:21:00Z INFO  db     active_transactions=19 oldest_tx_age=58s",
+              "source": "logs"
+            },
+            {
+              "action": "Run D09 Recent release or migration",
+              "value": -0.27564220130443573,
+              "margin": 0.021012872457504272,
+              "escalate_value": -1.9828680157661438,
+              "result": "negative",
+              "evidence": "2026-10-29T09:00:00Z INFO  deploy release v3.8.0 deployed to production",
+              "source": "logs"
+            },
+            {
+              "action": "Run D01 Long outbound span in traces",
+              "value": 0.7345876842737198,
+              "margin": 0.07515944540500641,
+              "escalate_value": -1.9809731841087341,
+              "result": "positive",
+              "evidence": "2026-11-03T11:20:01Z INFO  span   outbound POST bank-gateway/pay duration=31.4s",
+              "source": "logs"
+            },
+            {
+              "action": "Run D10 Failure scope",
+              "value": -0.30104123055934906,
+              "margin": 0.194271057844162,
+              "escalate_value": -1.9936828315258026,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "ticket"
+            },
+            {
+              "action": "Recommend C03: Add the missing index",
+              "value": 0.5817325413227081,
+              "margin": 0.9013570845127106,
+              "escalate_value": -2.000003159046173,
+              "blocked_by": [
+                {
+                  "rule": "R04",
+                  "needs": "D06",
+                  "reason": "Index builds on large tables can block live traffic"
+                }
+              ]
+            },
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": -0.4564330726861954,
+              "margin": 0.12801006436347961,
+              "escalate_value": -1.9889944791793823,
+              "result": "positive",
+              "evidence": "2026-11-03T11:21:00Z INFO  pool   db_pool in_use=19/20 (95%)",
+              "source": "logs"
+            },
+            {
+              "action": "Recommend C03: Add the missing index",
+              "value": -0.438692569732666,
+              "margin": 0.7461737096309662,
+              "escalate_value": -2.004353702068329,
+              "blocked_by": [
+                {
+                  "rule": "R04",
+                  "needs": "D06",
+                  "reason": "Index builds on large tables can block live traffic"
+                }
+              ]
+            },
+            {
+              "action": "Recommend C01: Set a timeout on the outbound call",
+              "value": -1.143478900194168,
+              "margin": 0.04967875778675079,
+              "escalate_value": -1.9918328523635864
+            }
+          ],
+          "warnings": []
+        },
+        "expected": {
+          "decision": {
+            "outcome": "recommended",
+            "checks_run": 5,
+            "check_minutes": 35,
+            "blocked_proposals": 3,
+            "cause": "C01",
+            "cause_name": "Slow external service, outbound call has no timeout",
+            "remedy": "Set a timeout on the outbound call"
+          },
+          "steps": [
+            {
+              "action": "Recommend C01: Set a timeout on the outbound call",
+              "value": 0.008357129991054535,
+              "margin": 0.10674864053726196,
+              "escalate_value": -1.9814753532409668,
+              "blocked_by": [
+                {
+                  "rule": "R05",
+                  "needs": "D01",
+                  "reason": "A wrong timeout can make failures look like real results"
+                }
+              ]
+            },
+            {
+              "action": "Run D02 Lock-wait errors in logs",
+              "value": -0.19571201875805855,
+              "margin": 0.06111098453402519,
+              "escalate_value": -1.9769270718097687,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D09 Recent release or migration",
+              "value": -0.27564220130443573,
+              "margin": 0.021012872457504272,
+              "escalate_value": -1.9828680157661438,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D01 Long outbound span in traces",
+              "value": 0.7345876842737198,
+              "margin": 0.07515944540500641,
+              "escalate_value": -1.9809731841087341,
+              "result": "positive",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D10 Failure scope",
+              "value": -0.30104123055934906,
+              "margin": 0.194271057844162,
+              "escalate_value": -1.9936828315258026,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C03: Add the missing index",
+              "value": 0.5817325413227081,
+              "margin": 0.9013570845127106,
+              "escalate_value": -2.000003159046173,
+              "blocked_by": [
+                {
+                  "rule": "R04",
+                  "needs": "D06",
+                  "reason": "Index builds on large tables can block live traffic"
+                }
+              ]
+            },
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": -0.4564330726861954,
+              "margin": 0.12801006436347961,
+              "escalate_value": -1.9889944791793823,
+              "result": "positive",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C03: Add the missing index",
+              "value": -0.438692569732666,
+              "margin": 0.7461737096309662,
+              "escalate_value": -2.004353702068329,
+              "blocked_by": [
+                {
+                  "rule": "R04",
+                  "needs": "D06",
+                  "reason": "Index builds on large tables can block live traffic"
+                }
+              ]
+            },
+            {
+              "action": "Recommend C01: Set a timeout on the outbound call",
+              "value": -1.143478900194168,
+              "margin": 0.04967875778675079,
+              "escalate_value": -1.9918328523635864
+            }
+          ]
+        }
+      }
+    },
+    "vague_slow": {
+      "intended_cause": null,
+      "readers": {
+        "keyword": {
+          "agreement": {
+            "category": true,
+            "symptoms": [
+              4,
+              4
+            ],
+            "context": [
+              2,
+              2
+            ],
+            "checks": [
+              10,
+              10
+            ]
+          },
+          "decision": {
+            "outcome": "recommended",
+            "checks_run": 5,
+            "check_minutes": 35,
+            "blocked_proposals": 4,
+            "cause": "C04",
+            "cause_name": "Repeated queries per request (N+1) on a heavy endpoint",
+            "remedy": "Batch the repeated queries"
+          },
+          "steps": [
+            {
+              "action": "Run D01 Long outbound span in traces",
+              "value": 0.49041226506233215,
+              "margin": 0.00694960355758667,
+              "escalate_value": -2.0016102492809296,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "logs"
+            },
+            {
+              "action": "Run D07 Query count in a slow trace",
+              "value": 0.6454958021640778,
+              "margin": 0.11345043778419495,
+              "escalate_value": -1.9962266087532043,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "logs"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 0.91969795525074,
+              "margin": 1.281108483672142,
+              "escalate_value": -1.9852128624916077,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D04 API node CPU",
+              "value": -0.2709592133760452,
+              "margin": 0.05202285945415497,
+              "escalate_value": -1.9873583316802979,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "logs"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 1.8397817015647888,
+              "margin": 2.5179243087768555,
+              "escalate_value": -1.993265450000763,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D08 Cache errors in logs",
+              "value": -0.24295715615153313,
+              "margin": 0.015159938484430313,
+              "escalate_value": -1.9960568845272064,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "logs"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 1.2235396355390549,
+              "margin": 1.848331242799759,
+              "escalate_value": -1.9979821145534515,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": -0.5142080783843994,
+              "margin": 0.09069640189409256,
+              "escalate_value": -1.9991755485534668,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "logs"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 0.45183252543210983,
+              "margin": 1.0761665180325508,
+              "escalate_value": -1.9796736538410187,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Recommend C04: Batch the repeated queries",
+              "value": 0.15345681458711624,
+              "margin": 0.871068574488163,
+              "escalate_value": -1.9815024733543396
+            }
+          ],
+          "warnings": []
+        },
+        "expected": {
+          "decision": {
+            "outcome": "recommended",
+            "checks_run": 5,
+            "check_minutes": 35,
+            "blocked_proposals": 4,
+            "cause": "C04",
+            "cause_name": "Repeated queries per request (N+1) on a heavy endpoint",
+            "remedy": "Batch the repeated queries"
+          },
+          "steps": [
+            {
+              "action": "Run D01 Long outbound span in traces",
+              "value": 0.49041226506233215,
+              "margin": 0.00694960355758667,
+              "escalate_value": -2.0016102492809296,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D07 Query count in a slow trace",
+              "value": 0.6454958021640778,
+              "margin": 0.11345043778419495,
+              "escalate_value": -1.9962266087532043,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 0.91969795525074,
+              "margin": 1.281108483672142,
+              "escalate_value": -1.9852128624916077,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D04 API node CPU",
+              "value": -0.2709592133760452,
+              "margin": 0.05202285945415497,
+              "escalate_value": -1.9873583316802979,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 1.8397817015647888,
+              "margin": 2.5179243087768555,
+              "escalate_value": -1.993265450000763,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D08 Cache errors in logs",
+              "value": -0.24295715615153313,
+              "margin": 0.015159938484430313,
+              "escalate_value": -1.9960568845272064,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 1.2235396355390549,
+              "margin": 1.848331242799759,
+              "escalate_value": -1.9979821145534515,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": -0.5142080783843994,
+              "margin": 0.09069640189409256,
+              "escalate_value": -1.9991755485534668,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 0.45183252543210983,
+              "margin": 1.0761665180325508,
+              "escalate_value": -1.9796736538410187,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Recommend C04: Batch the repeated queries",
+              "value": 0.15345681458711624,
+              "margin": 0.871068574488163,
+              "escalate_value": -1.9815024733543396
+            }
+          ]
+        }
+      }
+    }
+  }
+}

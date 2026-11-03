@@ -1,0 +1,10 @@
+2026-10-30T17:20:00Z INFO  deploy release v3.8.1 deployed to production
+2026-11-02T08:58:10Z INFO  db     active_transactions=14 oldest_tx_age=412s job=nightly_gpa_recalc
+2026-11-02T08:59:02Z INFO  pool   db_pool in_use=11/20 (55%)
+2026-11-02T08:59:02Z INFO  node   api-1 cpu=35%
+2026-11-02T08:59:02Z INFO  node   api-2 cpu=41%
+2026-11-02T09:00:15Z WARN  db     lock wait timeout exceeded; try restarting transaction table=results_approval
+2026-11-02T09:00:15Z ERROR api    POST /api/results/approve 500 duration=61.3s
+2026-11-02T09:01:40Z WARN  db     lock wait timeout exceeded; try restarting transaction table=results_approval
+2026-11-02T09:01:40Z ERROR api    POST /api/results/approve 500 duration=60.9s
+2026-11-02T09:02:00Z INFO  cache  hit_rate=0.94

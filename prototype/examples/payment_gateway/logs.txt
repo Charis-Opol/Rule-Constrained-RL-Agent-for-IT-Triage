@@ -1,0 +1,8 @@
+2026-10-29T09:00:00Z INFO  deploy release v3.8.0 deployed to production
+2026-11-03T11:20:01Z INFO  span   outbound POST bank-gateway/pay duration=31.4s
+2026-11-03T11:20:40Z ERROR api    POST /api/payments 504 duration=60.0s
+2026-11-03T11:21:00Z INFO  pool   db_pool in_use=19/20 (95%)
+2026-11-03T11:21:00Z INFO  node   api-1 cpu=52%
+2026-11-03T11:21:00Z INFO  db     active_transactions=19 oldest_tx_age=58s
+2026-11-03T11:21:00Z INFO  cache  hit_rate=0.93
+2026-11-03T11:21:05Z INFO  span   outbound POST bank-gateway/pay duration=28.9s

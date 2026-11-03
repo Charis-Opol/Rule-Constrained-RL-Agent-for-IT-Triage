@@ -362,7 +362,17 @@
 ### 8.3 Demo script and clean-machine run-through
 - **Status:** Todo · **Due:** 2026-11-29 · **Days:** 0.5 · **Label:** WP8
 - **Deliverable:** Demo checklist
-- **Depends on:** 8.1, 8.2
+- **Depends on:** 8.1, 8.2, 8.4
+
+### 8.4 Ticket-and-log prototype with a language-model reader (lecturer's request, 3 Nov 2026)
+- **Status:** In progress · **Due:** 2026-11-22 · **Days:** 2.0 · **Label:** WP8
+- **Deliverable:** Prototype that reads a natural-language ticket and its logs and returns investigate, recommend or escalate (pilot plan, Phase 7)
+- **Depends on:** 6.4
+- **Checklist:**
+  - [x] Keyword and Claude readers, live environment, command line, dashboard view, six fictional cases, tests
+  - [ ] Reader test on 20 to 30 tickets not written by the researcher (keyword vs Claude)
+  - [ ] Retrain the shielded agent with missing checks (with 7.7)
+  - [ ] Log patterns for the Directorate's log format, and approval for sending tickets to a language-model service
 
 ---
 

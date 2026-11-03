@@ -141,7 +141,23 @@ Hours are estimates, and DQN training speed has not been measured on this machin
 
 The must-pass gate holds in all three runs. The target, matching the threshold policy, is not met, although the gap is within the monitoring noise. Double DQN and longer training each helped, and gains stop at about 450k steps. The agent still over-checks and overvalues the start of an incident. Blocked proposals rise slowly late in training (about 15% to 25%), because a block costs nothing but a step. Runs 2 and 3 are identical over their first 300k steps, which confirms reproducibility. Figure: `results/pilot/figures/phase4_runs.png`.
 
-### Phase 5: Preliminary experiment (2 h, mostly compute)
+### Phase 5: Preliminary experiment (2 h, mostly compute) - done
+
+**Phase 5 results (3 Nov 2026).** Double DQN, 500k steps, exploration to 150k, seeds 0-4; 5,000 evaluation incidents at the base level, 2,000 per sweep level. Tables: `results/pilot/phase5.md`; figures: `results/pilot/figures/phase5_*.png`.
+
+| Policy | Return [95% CI over seeds] | Correct | Wrong | Escalated | Checks | Rule broken (executed) |
+|---|---|---|---|---|---|---|
+| Threshold (0.65) | -0.04 | 60.4% | 19.5% | 20.1% | 4.05 | 0% |
+| Exact optimal | 0.41 | 60.8% | 16.7% | 22.5% | 3.77 | 0% |
+| DQN with safety mechanism | -0.28 [-0.34, -0.22] | 51.5% | 15.3% | 33.2% | 4.80 | 0% |
+| DQN unconstrained | -0.23 [-0.31, -0.16] | 58.8% | 18.8% | 22.4% | 5.63 | 6.3% (seeds 0.2% to 13.9%) |
+| DQN penalty-only | -0.29 [-0.32, -0.24] | 57.9% | 18.9% | 23.2% | 5.67 | 0% |
+
+1. All three agents learned to investigate, recommend and escalate, and all beat the initial-symptom, scripted and always-escalate baselines.
+2. No agent reached the threshold policy; all are about 0.65 below the exact optimum.
+3. The mechanism gave zero executed violations at every level. Its return cost against the unconstrained agent (-0.28 against -0.23) is within the seed intervals. The penalty-only agent also had zero at the training level, but broke rules in 4.3% of incidents at 20% missing checks and 7.3% at 40%, conditions it was not trained on. The mechanism stayed at 0%.
+4. Under the mechanism, blocked proposals fall from about 35% to about 20% and then stay there: the agent relies on being stopped, because a block costs only a step. The penalty-only agent stops proposing violations within 25k steps.
+5. As noise rises, every agent escalates more but keeps about the same number of checks, unlike the exact policy. The shielded agent degrades least at 20% noise (-0.95 against about -1.2).
 
 - Train three agents with 5 seeds each: with the safety mechanism, unconstrained, and penalty-only (penalty of 10). This is fewer than the thesis's 10 seeds, as the WBS cut order allows.
 - Compare them with the baselines and the exact policy on the same incidents, using 95% bootstrap intervals.
@@ -162,7 +178,65 @@ Questions it answers:
 - One-page note: setup, results table, one learning curve, limitations, clearly labelled as pilot.
 - Take the questions in Section 5 to the elicitation.
 
-**Total: about 13.5 hours.**
+### Phase 7: Natural-language input and prototype (added 3 Nov 2026, at the lecturer's request)
+
+**Goal:** a prototype that takes a ticket written in ordinary language and the logs that go with it, and returns investigate, recommend or escalate, with its reasons. A language model reads the input; the trained agent still decides.
+
+**Design.** Four stages, each replaceable on its own:
+
+| Stage | Does | Built from |
+|---|---|---|
+| 1. Reader | Turns the ticket and logs into a fixed form: category (the topic), one-line summary, each symptom (present, absent, not mentioned), each context attribute, and each check's result (positive, negative, not shown), with the quoted line behind every finding | `src/prototype/reading.py` (offline keyword reader), `src/prototype/llm.py` (Claude reader) |
+| 2. Agent | The trained DQN from Phase 5 (safety mechanism, seed 0, the best seed at the base level), unchanged. It runs checks one at a time; a check's result is looked up in the form when the agent asks for it, or asked of the operator if the logs do not show it | `src/prototype/triage.py`, `LiveTriageEnv` |
+| 3. Safety mechanism | Unchanged from Phase 2: every proposal is checked against the five rules, with review-then-escalate | `src/rules/safety.py` |
+| 4. Output | A recommendation that a person applies, or an escalation with a handover: what was checked, what each check showed, and the most probable causes from the ratings | `src/prototype/cli.py`, dashboard "Prototype" view |
+
+**Why the language model does not decide.** This answers the Directorate's question of how the project differs from passing error logs to an AI coding agent. The language model does what it is good at, reading free text, and fills in a form whose fields come from the scenario model. Its output is constrained by a JSON schema, so it cannot propose a fix or an escalation. Deciding when to gather more evidence, act or escalate, under check costs and rules, stays with the agent that was trained and evaluated for it, and the rule checker stays independent of both. The form is built from `pilot_model.json`, so the Directorate model replaces it without code changes.
+
+**Safeguards.**
+
+- **Evidence must exist.** A language-model finding whose quote is not in the ticket or logs is discarded and shown as a warning.
+- **Unknown context is strict.** Context the ticket does not state defaults to production and high priority, which switches the rules on.
+- **Symptoms not mentioned count as absent,** as in training.
+- **Offline by default.** The keyword reader is the default and sends nothing anywhere. The Claude reader removes e-mail addresses, phone numbers, IP addresses and tokens before sending, and must not be used on real Directorate tickets without the Directorate's approval (Section 5, question 6).
+- **Recommend only.** The prototype never applies a fix.
+- **Language-model settings:** `claude-opus-5-5`, effort `low` (form filling, not reasoning), structured output, and the server-side refusal fallback. A refusal or a cut-off answer is an error, never an empty form.
+
+**Built (3 Nov 2026):** the readers, the live environment, the command line (`python -m src.prototype.cli --ticket ... --logs ... [--reader claude] [--ask]`), the dashboard view, six fictional cases in `prototype/examples/` with the researcher's expected reading, `experiments/pilot/prototype_config.json` (keywords, log patterns, thresholds and defaults, all researcher-set), `experiments/pilot/evaluate_prototype.py`, and 31 tests in `tests/test_prototype.py`.
+
+**First results (3 Nov 2026), keyword reader:** `results/pilot/prototype.md`.
+
+| Case | Written to show | Agent's decision |
+|---|---|---|
+| sign_in | C08 | Recommend C08, no checks |
+| transcript_duplicates | C07 | Recommend C07 after the mechanism blocked it until D10 was run |
+| payment_gateway | C01 | Recommend C01 after the mechanism blocked it until D01 was run |
+| results_approval | C02 | Forced escalation: proposed C02 before running D05, then C03 |
+| fees_release | C06 | Recommend C07 (wrong): never ran D09, which the logs show positive |
+| vague_slow (no logs) | Escalate | Recommend C04 after five checks came back unavailable |
+
+1. **The pipeline works end to end,** and no prohibited fix got through in any case.
+2. **The keyword reader matched the researcher's reading on every field** except category (2 of 6 wrong). This is not evidence of accuracy, because the same person wrote the keywords and the cases.
+3. **The mistakes come from the agent, not the reader.** The agent makes the same decision from the researcher's expected reading in all six cases.
+4. **It leans on the mechanism.** In five of six cases it proposed a prohibited fix before the check that would allow it, as in Phase 5 (finding 4).
+5. **Missing evidence is the weak point.** The agent was trained with no missing checks, so a check the logs do not show is new to it. With no logs it recommended a fix where it should have escalated.
+
+**Gate:**
+
+- **Must (met):** tests pass; no prohibited fix is ever recommended; every finding traces to a quoted line; it runs offline.
+- **Target (to do):** the steps below.
+
+**Still to do:**
+
+1. **Reader test on unseen tickets.** 20 to 30 tickets with logs, written by someone other than the researcher (for example the pilot developer), each with an expected reading. Compare the keyword and Claude readers field by field. Report check results separately, because they drive the agent. This is where the language model should earn its place: the keyword reader only knows the phrasings it was given. Run with `python -m experiments.pilot.evaluate_prototype --claude`.
+2. **Train with missing checks.** Retrain the shielded agent with the missing-check rate drawn from 0 to 0.4 in each episode (the randomised training listed as optional in WBS 7.7). In the prototype, missing checks are the normal case, not the stress test. Re-run the Phase 5 base table and the six cases.
+3. **A block that costs something.** At present a block costs only a step, so the agent proposes first and checks later. Charging a block like a Low check would change the Chapter 3 design, so agree it with the supervisor first and report it as an ablation, not a quiet fix.
+4. **Directorate log format.** The log patterns fit the example format only. They need rewriting for the Directorate's API console and Grafana output (Section 5, question 6), or the Claude reader can be relied on for logs.
+5. **Write-up:** the four stages as one figure for Chapter 3 and the poster, and the reader test and the six cases in Chapter 4.
+
+**Limits:** six cases written by the researcher show that the pipeline works, not how accurate it is. The agent and the rules are the pilot ones (one rater). Choosing seed 0 because it scored best on the evaluation incidents is a selection on test data; that is acceptable for a demonstration, but not for reported results.
+
+**Total: about 13.5 hours for Phases 0 to 6; Phase 7 so far about 4 hours, with about 1.5 days of remaining work.**
 
 **If time runs short, cut in this order:** the sweep, the penalty-only agent, then seeds from 5 to 3. Never cut the gates in Phases 1 to 3, because they are what make any result believable.
 
@@ -175,6 +249,8 @@ Questions it answers:
 3. **Remedy risk:** do wrong fixes differ in cost? The pilot uses one 5x figure for all, though its rule reasons suggest a rollback and an index change carry different risks.
 4. **Frequency:** can approximate counts replace the verbal frequency ratings? Otherwise the prior weights remain my assumption.
 5. **Dependent checks:** the model assumes checks are independent given the cause, but some probably are not, such as lock-wait errors and long transactions.
+6. **Tickets, logs and language models (Phase 7):** what do the ticket tracker, API console and Grafana logs look like? May tickets and logs, with personal details removed, be sent to an external language-model service, or must the model run on university machines?
+7. **Sample tickets:** can the Directorate provide anonymised tickets with their logs, or review fictional ones, for testing the reader?
 
 ## 6. Limits on what can be claimed
 

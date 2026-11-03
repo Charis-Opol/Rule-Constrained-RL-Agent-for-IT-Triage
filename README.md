@@ -34,8 +34,9 @@ An independent rule-based safety mechanism checks every proposal. A blocked prop
 | Chapter 2: Literature review | Drafted (thematic review; a systematic review is in progress) |
 | Chapter 3: Methodology | Drafted; revised after the stakeholder interview |
 | Scenario elicitation | Workbook ready; session with the Directorate pending |
-| Simulator, rule checker, agent, experiments | Pilot in progress (Phases 0 to 3 of 6 done); see [`documentation/pilot_experiment_plan.md`](documentation/pilot_experiment_plan.md) and [`WBS.md`](WBS.md) |
-| Prototype and poster | Planned for Week 6 |
+| Simulator, rule checker, agent, experiments | Pilot in progress (Phases 0 to 5 done; Phase 6 note and Phase 7 prototype in progress); see [`documentation/pilot_experiment_plan.md`](documentation/pilot_experiment_plan.md) and [`WBS.md`](WBS.md) |
+| Prototype | First version working: reads a natural-language ticket and its logs (keyword reader offline, or a Claude reader), then the trained agent decides under the safety mechanism; see Phase 7 of the pilot plan |
+| Poster | Planned for Week 6 |
 
 The plan and progress are tracked in [`WBS.md`](WBS.md) (Trello-ready, with prompts for Claude and the Trello MCP) and in [`documentation/progress_log.md`](documentation/progress_log.md).
 
@@ -52,8 +53,10 @@ The plan and progress are tracked in [`WBS.md`](WBS.md) (Trello-ready, with prom
 │   ├── sim/                       Scenario model loader and the Gymnasium environment
 │   ├── rules/                     Safety mechanism
 │   ├── agents/                    DQN agent, training monitor, baselines, exact optimal policy
+│   ├── prototype/                 Ticket-and-log readers (keyword, Claude), live environment, command line
 │   └── evaluation.py              Runs a policy on fixed incidents; computes the Chapter 3 measures
 ├── experiments/pilot/             Pilot model, settings, pre-training checks, baseline run
+├── prototype/examples/            Fictional tickets and logs, with the expected reading of each
 ├── results/pilot/                 Pilot results; runs/ holds each training run (checkpoints not tracked)
 ├── dashboard/                     Live training view and step-by-step "thinking" view (Streamlit)
 ├── tests/                         Run with: python -m pytest
@@ -87,6 +90,16 @@ python -m venv --system-site-packages .venv
 .venv\Scripts\python -m streamlit run dashboard/app.py            :: watch it at http://localhost:8501
 ```
 
+Triage a ticket and its logs with the trained agent (also in the dashboard's Prototype view):
+
+```bat
+.venv\Scripts\python -m src.prototype.cli --ticket prototype\examples\payment_gateway\ticket.txt --logs prototype\examples\payment_gateway\logs.txt
+.venv\Scripts\python -m src.prototype.cli --ticket my_ticket.txt --logs my_logs.txt --reader claude --ask
+.venv\Scripts\python -m experiments.pilot.evaluate_prototype     :: all examples; results/pilot/prototype.md
+```
+
+The keyword reader is the default and works offline. `--reader claude` needs Anthropic credentials and sends the ticket and logs, with personal details removed, to the Claude API. `--ask` asks you for any check the logs do not show.
+
 ## Building the documents
 
 All documents are LaTeX and build with [Tectonic](https://tectonic-typesetting.github.io), so no full TeX installation is needed.
@@ -118,7 +131,7 @@ These rules are in [`.gitignore`](.gitignore). If this repository is private and
 
 ## Data and ethics
 
-The agent is trained and evaluated only in simulation. It is not connected to any university system and takes no action on university infrastructure. The simulator is built from elicited descriptions of incident types, checks, fixes and rules, not from logs, tickets or personal data. No member of staff is identified. Material derived from the Directorate's information is published only where the non-disclosure agreement allows it.
+The agent is trained and evaluated only in simulation. It is not connected to any university system and takes no action on university infrastructure. The simulator is built from elicited descriptions of incident types, checks, fixes and rules, not from logs, tickets or personal data. The prototype reads a ticket and logs that a person gives it and only recommends; the examples in `prototype/examples/` are fictional. Real Directorate tickets are not sent to an external language-model service without the Directorate's approval. No member of staff is identified. Material derived from the Directorate's information is published only where the non-disclosure agreement allows it.
 
 ## Use of AI assistance
 

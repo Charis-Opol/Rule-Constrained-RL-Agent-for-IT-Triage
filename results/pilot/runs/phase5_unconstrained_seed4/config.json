@@ -1,0 +1,56 @@
+{
+  "agent": "unconstrained",
+  "seed": 4,
+  "steps": 500000,
+  "every": 25000,
+  "incidents": 1000,
+  "hyperparameters": {
+    "learning_rate": 0.0001,
+    "buffer_size": 200000,
+    "learning_starts": 1000,
+    "batch_size": 64,
+    "gamma": 1.0,
+    "train_freq": 4,
+    "gradient_steps": 1,
+    "target_update_interval": 1000,
+    "exploration_fraction": 0.3,
+    "exploration_initial_eps": 1.0,
+    "exploration_final_eps": 0.05,
+    "check_bias": 0.8,
+    "double_q": true,
+    "net_arch": [
+      128,
+      128
+    ]
+  },
+  "model": "experiments\\pilot\\pilot_model.json",
+  "settings": "experiments\\pilot\\pilot_settings.json",
+  "p_noise": 0.1,
+  "p_miss": 0.0,
+  "git_commit": "6761b2c",
+  "exact_value": 0.3902193591638402,
+  "references": {
+    "Always escalate": {
+      "mean_return": -2.0,
+      "resolution_accuracy": 0.0,
+      "wrong_rate": 0.0,
+      "escalation_rate": 1.0,
+      "mean_checks": 0.0
+    },
+    "Threshold (0.65)": {
+      "mean_return": -0.2821666666666666,
+      "resolution_accuracy": 0.597,
+      "wrong_rate": 0.232,
+      "escalation_rate": 0.171,
+      "mean_checks": 3.409
+    },
+    "Exact optimal": {
+      "mean_return": 0.401,
+      "resolution_accuracy": 0.608,
+      "wrong_rate": 0.169,
+      "escalation_rate": 0.223,
+      "mean_checks": 3.691
+    }
+  },
+  "started": "2026-11-03 13:12:04"
+}

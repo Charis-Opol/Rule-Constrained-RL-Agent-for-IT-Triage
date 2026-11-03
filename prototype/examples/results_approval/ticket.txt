@@ -1,0 +1,3 @@
+Subject: Marks approval keeps failing
+
+Heads of department say that when they approve marks on the results portal, the page spins for about a minute and then fails with an error. This is on the live system and the exam board meets on Friday, so it is urgent. It happens for everyone who tries to approve.

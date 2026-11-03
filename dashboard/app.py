@@ -5,6 +5,8 @@
 Training: live charts of a run, read from results/pilot/runs/<run>/metrics.jsonl.
 Thinking: step through one incident with any saved checkpoint and see the agent's value for
 every action beside the exact optimal values and what the evidence says about the cause.
+Prototype: paste a ticket and its logs and see what the trained agent, with the safety
+mechanism, does with them.
 """
 import json
 import sys
@@ -20,6 +22,9 @@ sys.path.insert(0, str(ROOT))
 from src.agents.dqn import MaskedDQN                           # noqa: E402
 from src.agents.monitoring import MONITOR_SEED                 # noqa: E402
 from dashboard.thinking import exact_for, load_run_scenario, trace  # noqa: E402
+from src.prototype.cli import load_inputs, make_reader          # noqa: E402
+from src.prototype.reading import NOT_SHOWN                     # noqa: E402
+from src.prototype.triage import triage                         # noqa: E402
 
 RUNS = ROOT / "results" / "pilot" / "runs"
 COLOURS = {"correct": "#2e7d32", "wrong": "#c62828", "escalated": "#9e9e9e"}
@@ -246,6 +251,73 @@ def thinking_page(run):
                 f"(hidden from the agent)")
 
 
+# ----- Prototype ---------------------------------------------------------------
+EXAMPLES = ROOT / "prototype" / "examples"
+
+
+def example_text(name, file):
+    path = EXAMPLES / name / file
+    return path.read_text(encoding="utf-8") if path.exists() else ""
+
+
+def prototype_page():
+    model, config, scenario = load_inputs()
+    st.subheader("Prototype: triage a ticket and its logs")
+    st.caption("The reader turns the ticket and logs into symptoms, context and check results. The agent "
+               "decides; the safety mechanism checks every proposal. The prototype only recommends. Pilot model: "
+               "use fictional or approved tickets only.")
+    examples = sorted(p.name for p in EXAMPLES.iterdir() if p.is_dir()) if EXAMPLES.exists() else []
+    c1, c2 = st.columns([1, 1])
+    example = c1.selectbox("Start from an example", ["(none)"] + examples)
+    reader_name = c2.radio("Reader", ["keyword", "claude"], horizontal=True,
+                           help="keyword runs offline. claude sends the redacted text to the Claude API.")
+    key = example if example != "(none)" else ""
+    ticket = st.text_area("Ticket", example_text(key, "ticket.txt") if key else "", height=130, key=f"t{key}")
+    logs = st.text_area("Logs", example_text(key, "logs.txt") if key else "", height=200, key=f"l{key}")
+    if not st.button("Triage", type="primary") or not ticket.strip():
+        return
+
+    try:
+        reading = make_reader(reader_name, model, config).read(ticket, logs)
+    except Exception as error:                     # missing credentials, refusal, network
+        st.error(f"The {reader_name} reader failed: {error}")
+        return
+    agent = load_model(str(ROOT / config["agent_run"] / "final.zip"))
+    report = triage(reading, scenario, model, agent)
+    names = {x["id"]: x["name"] for group in ("symptoms", "context", "checks") for x in model[group]}
+
+    left, right = st.columns([1, 1])
+    with left:
+        st.markdown(f"**Reading** · category: {reading.category}")
+        rows = [{"Item": f"{k} {names[k]}", "Value": f.value, "Evidence": f.evidence or ""}
+                for group in (reading.symptoms, reading.context) for k, f in group.items()]
+        rows += [{"Item": f"{k} {names[k]}", "Value": f.value, "Evidence": f.evidence or ""}
+                 for k, f in reading.checks.items() if f.value != NOT_SHOWN]
+        st.dataframe(pd.DataFrame(rows), hide_index=True, width="stretch")
+        for warning in reading.warnings:
+            st.warning(warning)
+    with right:
+        st.markdown("**What the agent did**")
+        steps = []
+        for i, s in enumerate(report["steps"], 1):
+            outcome = s.get("result", "")
+            if "blocked_by" in s:
+                outcome = "blocked: " + "; ".join(f"{b['rule']} needs {b['needs']}" for b in s["blocked_by"])
+            steps.append({"Step": i, "Action": s["action"], "Result": outcome, "Agent value": s["value"]})
+        st.dataframe(pd.DataFrame(steps), hide_index=True, width="stretch",
+                     column_config={"Agent value": st.column_config.NumberColumn(format="%.2f")})
+
+    d = report["decision"]
+    if d["outcome"] == "recommended":
+        st.success(f"**Recommend:** {d['remedy']} (likely cause {d['cause']}: {d['cause_name']}). "
+                   "A person applies the fix.")
+    else:
+        st.warning(f"**Escalate to a human expert.** {d['reason']}")
+    st.caption(f"Checks run: {d['checks_run']} (about {d['check_minutes']} min) · blocked proposals: "
+               f"{d['blocked_proposals']} · reference probabilities from the ratings (the agent does not see "
+               "them): " + ", ".join(f"{r['cause']} {r['probability']:.0%}" for r in report["reference"]))
+
+
 # ----- Layout ----------------------------------------------------------------
 st.title("Investigate, Recommend or Escalate: Training Dashboard")
 runs = list_runs()
@@ -253,10 +325,12 @@ if not runs:
     st.info("No runs yet. Start one with: python -m experiments.pilot.train_dqn")
     st.stop()
 with st.sidebar:
-    page = st.radio("View", ["Training", "Thinking"])
-    run = st.selectbox("Run", runs, format_func=lambda p: p.name)
+    page = st.radio("View", ["Training", "Thinking", "Prototype"])
+    run = st.selectbox("Run", runs, format_func=lambda p: p.name, disabled=page == "Prototype")
     st.caption("Monitoring uses its own incidents, never the evaluation incidents.")
 if page == "Training":
     training_page(run)
-else:
+elif page == "Thinking":
     thinking_page(run)
+else:
+    prototype_page()

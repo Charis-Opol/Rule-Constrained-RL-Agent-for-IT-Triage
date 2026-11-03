@@ -1,0 +1,3 @@
+Subject: Transcript error for a few students
+
+A few students get an error when they open their transcript; others can open theirs fine. Registry noticed it on the live system yesterday. Priority: Medium.

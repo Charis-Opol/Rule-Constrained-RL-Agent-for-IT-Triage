@@ -1,0 +1,5974 @@
+{
+  "note": "Pilot data, not Directorate data.",
+  "n_eval": 5000,
+  "n_sweep": 2000,
+  "seeds": {
+    "shielded": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "unconstrained": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "penalty": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  "levels": {
+    "noise=0.0,missing=0.0": {
+      "baselines": {
+        "Always escalate": {
+          "mean_return": -2.0,
+          "resolution_accuracy": 0.0,
+          "wrong_rate": 0.0,
+          "escalation_rate": 1.0,
+          "coverage": 0.0,
+          "selective_accuracy": null,
+          "mean_checks": 0.0,
+          "mean_check_cost": 0.0,
+          "escalation_precision": 0.1835,
+          "escalation_recall": 1.0,
+          "escalation_f1": 0.3100971694127588,
+          "escalation_mcc": null,
+          "proposed_violation_rate": 0.0,
+          "forced_escalation_rate": 0.0,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.0,
+          "ceiling": 0.8165,
+          "return_ci": [
+            -2.0,
+            -2.0
+          ]
+        },
+        "Initial-symptom": {
+          "mean_return": -1.9535,
+          "resolution_accuracy": 0.3175,
+          "wrong_rate": 0.272,
+          "escalation_rate": 0.4105,
+          "coverage": 0.5895,
+          "selective_accuracy": 0.5385920271416454,
+          "mean_checks": 0.0,
+          "mean_check_cost": 0.0,
+          "escalation_precision": 0.16930572472594396,
+          "escalation_recall": 0.3787465940054496,
+          "escalation_f1": 0.23400673400673405,
+          "escalation_mcc": -0.03060072884360822,
+          "proposed_violation_rate": 0.5973360655737705,
+          "forced_escalation_rate": 0.4105,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.3175,
+          "ceiling": 0.8165,
+          "return_ci": [
+            -2.219525,
+            -1.707475
+          ]
+        },
+        "Scripted (k=9)": {
+          "mean_return": 0.11583333333333437,
+          "resolution_accuracy": 0.7855,
+          "wrong_rate": 0.2145,
+          "escalation_rate": 0.0,
+          "coverage": 1.0,
+          "selective_accuracy": 0.7855,
+          "mean_checks": 9.0,
+          "mean_check_cost": 1.666666666666667,
+          "escalation_precision": null,
+          "escalation_recall": 0.0,
+          "escalation_f1": null,
+          "escalation_mcc": null,
+          "proposed_violation_rate": 0.0,
+          "forced_escalation_rate": 0.0,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.7855,
+          "ceiling": 0.8165,
+          "return_ci": [
+            -0.15435416666666577,
+            0.37833333333333435
+          ]
+        },
+        "Threshold (tau=0.65)": {
+          "mean_return": 0.8787083333333332,
+          "resolution_accuracy": 0.7375,
+          "wrong_rate": 0.2345,
+          "escalation_rate": 0.028,
+          "coverage": 0.972,
+          "selective_accuracy": 0.7587448559670782,
+          "mean_checks": 2.3585,
+          "mean_check_cost": 0.4077916666666666,
+          "escalation_precision": 0.42857142857142855,
+          "escalation_recall": 0.0653950953678474,
+          "escalation_f1": 0.11347517730496452,
+          "escalation_mcc": 0.10745891141738784,
+          "proposed_violation_rate": 0.08203445447087777,
+          "forced_escalation_rate": 0.0,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.7375,
+          "ceiling": 0.8165,
+          "return_ci": [
+            0.5921479166666668,
+            1.1581062500000001
+          ]
+        },
+        "Exact optimal": {
+          "mean_return": 1.5075833333333335,
+          "resolution_accuracy": 0.765,
+          "wrong_rate": 0.1565,
+          "escalation_rate": 0.0785,
+          "coverage": 0.9215,
+          "selective_accuracy": 0.8301682040151926,
+          "mean_checks": 4.3715,
+          "mean_check_cost": 0.5954166666666666,
+          "escalation_precision": 0.42038216560509556,
+          "escalation_recall": 0.17983651226158037,
+          "escalation_f1": 0.2519083969465649,
+          "escalation_mcc": 0.17861724830289952,
+          "proposed_violation_rate": 0.0,
+          "forced_escalation_rate": 0.0,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.765,
+          "ceiling": 0.8165,
+          "return_ci": [
+            1.2517364583333332,
+            1.752591666666666
+          ]
+        }
+      },
+      "agents": {
+        "shielded": {
+          "per_seed": {
+            "0": {
+              "mean_return": 0.540125,
+              "resolution_accuracy": 0.6055,
+              "wrong_rate": 0.1425,
+              "escalation_rate": 0.252,
+              "coverage": 0.748,
+              "selective_accuracy": 0.8094919786096256,
+              "mean_checks": 4.286,
+              "mean_check_cost": 0.558375,
+              "escalation_precision": 0.30357142857142855,
+              "escalation_recall": 0.41689373297002724,
+              "escalation_f1": 0.35132032146957515,
+              "escalation_mcc": 0.180049956337252,
+              "proposed_violation_rate": 0.27270831885468066,
+              "forced_escalation_rate": 0.014,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.6055,
+              "ceiling": 0.8165,
+              "return_ci": [
+                0.28736666666666666,
+                0.7734833333333331
+              ]
+            },
+            "1": {
+              "mean_return": 0.33145833333333335,
+              "resolution_accuracy": 0.594,
+              "wrong_rate": 0.145,
+              "escalation_rate": 0.261,
+              "coverage": 0.739,
+              "selective_accuracy": 0.803788903924222,
+              "mean_checks": 5.1255,
+              "mean_check_cost": 0.6665416666666667,
+              "escalation_precision": 0.27011494252873564,
+              "escalation_recall": 0.38419618528610355,
+              "escalation_f1": 0.3172103487064117,
+              "escalation_mcc": 0.13298257165163413,
+              "proposed_violation_rate": 0.20156465715600552,
+              "forced_escalation_rate": 0.0125,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.594,
+              "ceiling": 0.8165,
+              "return_ci": [
+                0.08012708333333336,
+                0.5526677083333335
+              ]
+            },
+            "2": {
+              "mean_return": 0.2499583333333333,
+              "resolution_accuracy": 0.593,
+              "wrong_rate": 0.147,
+              "escalation_rate": 0.26,
+              "coverage": 0.74,
+              "selective_accuracy": 0.8013513513513514,
+              "mean_checks": 4.9395,
+              "mean_check_cost": 0.7250416666666667,
+              "escalation_precision": 0.2692307692307692,
+              "escalation_recall": 0.3814713896457766,
+              "escalation_f1": 0.31567080045095824,
+              "escalation_mcc": 0.13128388069688343,
+              "proposed_violation_rate": 0.12152519696744463,
+              "forced_escalation_rate": 0.019,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.593,
+              "ceiling": 0.8165,
+              "return_ci": [
+                0.010056249999999975,
+                0.47596041666666666
+              ]
+            },
+            "3": {
+              "mean_return": 0.268125,
+              "resolution_accuracy": 0.5715,
+              "wrong_rate": 0.123,
+              "escalation_rate": 0.3055,
+              "coverage": 0.6945,
+              "selective_accuracy": 0.8228941684665226,
+              "mean_checks": 5.3125,
+              "mean_check_cost": 0.748375,
+              "escalation_precision": 0.27823240589198034,
+              "escalation_recall": 0.46321525885558584,
+              "escalation_f1": 0.34764826175869123,
+              "escalation_mcc": 0.1623199575770697,
+              "proposed_violation_rate": 0.16830368993894346,
+              "forced_escalation_rate": 0.0065,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.5715,
+              "ceiling": 0.8165,
+              "return_ci": [
+                0.03161979166666667,
+                0.4882677083333333
+              ]
+            },
+            "4": {
+              "mean_return": 0.21550000000000005,
+              "resolution_accuracy": 0.5715,
+              "wrong_rate": 0.152,
+              "escalation_rate": 0.2765,
+              "coverage": 0.7235,
+              "selective_accuracy": 0.7899101589495507,
+              "mean_checks": 4.06,
+              "mean_check_cost": 0.569,
+              "escalation_precision": 0.27124773960216997,
+              "escalation_recall": 0.4087193460490463,
+              "escalation_f1": 0.3260869565217391,
+              "escalation_mcc": 0.1401419347900308,
+              "proposed_violation_rate": 0.22032450896669514,
+              "forced_escalation_rate": 0.016,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.5715,
+              "ceiling": 0.8165,
+              "return_ci": [
+                -0.026560416666666642,
+                0.45328229166666656
+              ]
+            }
+          },
+          "summary": {
+            "mean_return": {
+              "mean": 0.32103333333333334,
+              "ci": [
+                0.23980833333333335,
+                0.431325
+              ],
+              "seeds": [
+                0.540125,
+                0.33145833333333335,
+                0.2499583333333333,
+                0.268125,
+                0.21550000000000005
+              ]
+            },
+            "resolution_accuracy": {
+              "mean": 0.5871,
+              "ci": [
+                0.5758,
+                0.5984
+              ],
+              "seeds": [
+                0.6055,
+                0.594,
+                0.593,
+                0.5715,
+                0.5715
+              ]
+            },
+            "wrong_rate": {
+              "mean": 0.1419,
+              "ci": [
+                0.1322,
+                0.149
+              ],
+              "seeds": [
+                0.1425,
+                0.145,
+                0.147,
+                0.123,
+                0.152
+              ]
+            },
+            "escalation_rate": {
+              "mean": 0.271,
+              "ci": [
+                0.257,
+                0.289
+              ],
+              "seeds": [
+                0.252,
+                0.261,
+                0.26,
+                0.3055,
+                0.2765
+              ]
+            },
+            "coverage": {
+              "mean": 0.7290000000000001,
+              "ci": [
+                0.7110000000000001,
+                0.7430000000000001
+              ],
+              "seeds": [
+                0.748,
+                0.739,
+                0.74,
+                0.6945,
+                0.7235
+              ]
+            },
+            "selective_accuracy": {
+              "mean": 0.8054873122602544,
+              "ci": [
+                0.7966022718765,
+                0.8147645521350283
+              ],
+              "seeds": [
+                0.8094919786096256,
+                0.803788903924222,
+                0.8013513513513514,
+                0.8228941684665226,
+                0.7899101589495507
+              ]
+            },
+            "mean_checks": {
+              "mean": 4.7447,
+              "ci": [
+                4.310499999999999,
+                5.162904999999999
+              ],
+              "seeds": [
+                4.286,
+                5.1255,
+                4.9395,
+                5.3125,
+                4.06
+              ]
+            },
+            "mean_check_cost": {
+              "mean": 0.6534666666666666,
+              "ci": [
+                0.5842583333333333,
+                0.7226750000000001
+              ],
+              "seeds": [
+                0.558375,
+                0.6665416666666667,
+                0.7250416666666667,
+                0.748375,
+                0.569
+              ]
+            },
+            "escalation_precision": {
+              "mean": 0.27847945716501676,
+              "ci": [
+                0.27003755737932955,
+                0.29163549216740703
+              ],
+              "seeds": [
+                0.30357142857142855,
+                0.27011494252873564,
+                0.2692307692307692,
+                0.27823240589198034,
+                0.27124773960216997
+              ]
+            },
+            "escalation_recall": {
+              "mean": 0.41089918256130786,
+              "ci": [
+                0.3885558583106267,
+                0.4365395095367846
+              ],
+              "seeds": [
+                0.41689373297002724,
+                0.38419618528610355,
+                0.3814713896457766,
+                0.46321525885558584,
+                0.4087193460490463
+              ]
+            },
+            "escalation_f1": {
+              "mean": 0.33158733778147503,
+              "ci": [
+                0.3186777606183865,
+                0.3448048245956544
+              ],
+              "seeds": [
+                0.35132032146957515,
+                0.3172103487064117,
+                0.31567080045095824,
+                0.34764826175869123,
+                0.3260869565217391
+              ]
+            },
+            "escalation_mcc": {
+              "mean": 0.14935566021057403,
+              "ci": [
+                0.1340747060883633,
+                0.16709047964809196
+              ],
+              "seeds": [
+                0.180049956337252,
+                0.13298257165163413,
+                0.13128388069688343,
+                0.1623199575770697,
+                0.1401419347900308
+              ]
+            },
+            "proposed_violation_rate": {
+              "mean": 0.19688527437675388,
+              "ci": [
+                0.15173379476030943,
+                0.24135063109393612
+              ],
+              "seeds": [
+                0.27270831885468066,
+                0.20156465715600552,
+                0.12152519696744463,
+                0.16830368993894346,
+                0.22032450896669514
+              ]
+            },
+            "forced_escalation_rate": {
+              "mean": 0.013600000000000001,
+              "ci": [
+                0.010095,
+                0.016800000000000002
+              ],
+              "seeds": [
+                0.014,
+                0.0125,
+                0.019,
+                0.0065,
+                0.016
+              ]
+            },
+            "executed_violation_rate": {
+              "mean": 0.0,
+              "ci": [
+                0.0,
+                0.0
+              ],
+              "seeds": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "compliant_success_rate": {
+              "mean": 0.5871,
+              "ci": [
+                0.5758,
+                0.5984
+              ],
+              "seeds": [
+                0.6055,
+                0.594,
+                0.593,
+                0.5715,
+                0.5715
+              ]
+            },
+            "ceiling": {
+              "mean": 0.8164999999999999,
+              "ci": [
+                0.8164999999999999,
+                0.8164999999999999
+              ],
+              "seeds": [
+                0.8165,
+                0.8165,
+                0.8165,
+                0.8165,
+                0.8165
+              ]
+            }
+          }
+        },
+        "unconstrained": {
+          "per_seed": {
+            "0": {
+              "mean_return": 0.5105833333333334,
+              "resolution_accuracy": 0.6675,
+              "wrong_rate": 0.1625,
+              "escalation_rate": 0.17,
+              "coverage": 0.83,
+              "selective_accuracy": 0.8042168674698795,
+              "mean_checks": 5.3205,
+              "mean_check_cost": 0.8619166666666666,
+              "escalation_precision": 0.35,
+              "escalation_recall": 0.3242506811989101,
+              "escalation_f1": 0.33663366336633666,
+              "escalation_mcc": 0.19467201470450707,
+              "proposed_violation_rate": 0.00031643066213116053,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.002,
+              "compliant_success_rate": 0.6655,
+              "ceiling": 0.8165,
+              "return_ci": [
+                0.2607614583333334,
+                0.763171875
+              ]
+            },
+            "1": {
+              "mean_return": 0.548875,
+              "resolution_accuracy": 0.652,
+              "wrong_rate": 0.155,
+              "escalation_rate": 0.193,
+              "coverage": 0.807,
+              "selective_accuracy": 0.8079306071871127,
+              "mean_checks": 5.1055,
+              "mean_check_cost": 0.775125,
+              "escalation_precision": 0.3082901554404145,
+              "escalation_recall": 0.3242506811989101,
+              "escalation_f1": 0.3160690571049137,
+              "escalation_mcc": 0.15766165604572135,
+              "proposed_violation_rate": 0.021865531078535748,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.1335,
+              "compliant_success_rate": 0.5345,
+              "ceiling": 0.8165,
+              "return_ci": [
+                0.29894583333333336,
+                0.7942625
+              ]
+            },
+            "2": {
+              "mean_return": 0.672,
+              "resolution_accuracy": 0.662,
+              "wrong_rate": 0.1605,
+              "escalation_rate": 0.1775,
+              "coverage": 0.8225,
+              "selective_accuracy": 0.8048632218844984,
+              "mean_checks": 5.0185,
+              "mean_check_cost": 0.678,
+              "escalation_precision": 0.3380281690140845,
+              "escalation_recall": 0.32697547683923706,
+              "escalation_f1": 0.33240997229916897,
+              "escalation_mcc": 0.185456797176124,
+              "proposed_violation_rate": 0.00847387222729916,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.051,
+              "compliant_success_rate": 0.623,
+              "ceiling": 0.8165,
+              "return_ci": [
+                0.42460937499999996,
+                0.9148927083333332
+              ]
+            },
+            "3": {
+              "mean_return": 0.6245,
+              "resolution_accuracy": 0.696,
+              "wrong_rate": 0.1495,
+              "escalation_rate": 0.1545,
+              "coverage": 0.8455,
+              "selective_accuracy": 0.8231815493790656,
+              "mean_checks": 6.754,
+              "mean_check_cost": 1.0515,
+              "escalation_precision": 0.34951456310679613,
+              "escalation_recall": 0.29427792915531337,
+              "escalation_f1": 0.319526627218935,
+              "escalation_mcc": 0.18334011267402622,
+              "proposed_violation_rate": 0.0011606912561258704,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.009,
+              "compliant_success_rate": 0.6885,
+              "ceiling": 0.8165,
+              "return_ci": [
+                0.375490625,
+                0.8795895833333331
+              ]
+            },
+            "4": {
+              "mean_return": 0.4565416666666666,
+              "resolution_accuracy": 0.674,
+              "wrong_rate": 0.1775,
+              "escalation_rate": 0.1485,
+              "coverage": 0.8515,
+              "selective_accuracy": 0.7915443335290664,
+              "mean_checks": 5.713,
+              "mean_check_cost": 0.8414583333333333,
+              "escalation_precision": 0.37373737373737376,
+              "escalation_recall": 0.3024523160762943,
+              "escalation_f1": 0.33433734939759036,
+              "escalation_mcc": 0.20524406787166327,
+              "proposed_violation_rate": 0.020482645612989722,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.1375,
+              "compliant_success_rate": 0.5715,
+              "ceiling": 0.8165,
+              "return_ci": [
+                0.20142604166666672,
+                0.7263604166666667
+              ]
+            }
+          },
+          "summary": {
+            "mean_return": {
+              "mean": 0.5625,
+              "ci": [
+                0.49013333333333337,
+                0.6289410416666665
+              ],
+              "seeds": [
+                0.5105833333333334,
+                0.548875,
+                0.672,
+                0.6245,
+                0.4565416666666666
+              ]
+            },
+            "resolution_accuracy": {
+              "mean": 0.6703,
+              "ci": [
+                0.6590825,
+                0.6834999999999999
+              ],
+              "seeds": [
+                0.6675,
+                0.652,
+                0.662,
+                0.696,
+                0.674
+              ]
+            },
+            "wrong_rate": {
+              "mean": 0.16099999999999998,
+              "ci": [
+                0.15389999999999998,
+                0.16999999999999998
+              ],
+              "seeds": [
+                0.1625,
+                0.155,
+                0.1605,
+                0.1495,
+                0.1775
+              ]
+            },
+            "escalation_rate": {
+              "mean": 0.1687,
+              "ci": [
+                0.15519999999999998,
+                0.1822
+              ],
+              "seeds": [
+                0.17,
+                0.193,
+                0.1775,
+                0.1545,
+                0.1485
+              ]
+            },
+            "coverage": {
+              "mean": 0.8313,
+              "ci": [
+                0.8177999999999999,
+                0.8448
+              ],
+              "seeds": [
+                0.83,
+                0.807,
+                0.8225,
+                0.8455,
+                0.8515
+              ]
+            },
+            "selective_accuracy": {
+              "mean": 0.8063473158899246,
+              "ci": [
+                0.797485365931762,
+                0.815724947498315
+              ],
+              "seeds": [
+                0.8042168674698795,
+                0.8079306071871127,
+                0.8048632218844984,
+                0.8231815493790656,
+                0.7915443335290664
+              ]
+            },
+            "mean_checks": {
+              "mean": 5.582300000000001,
+              "ci": [
+                5.1137,
+                6.1987
+              ],
+              "seeds": [
+                5.3205,
+                5.1055,
+                5.0185,
+                6.754,
+                5.713
+              ]
+            },
+            "mean_check_cost": {
+              "mean": 0.8416,
+              "ci": [
+                0.7474749999999999,
+                0.9542166666666667
+              ],
+              "seeds": [
+                0.8619166666666666,
+                0.775125,
+                0.678,
+                1.0515,
+                0.8414583333333333
+              ]
+            },
+            "escalation_precision": {
+              "mean": 0.34391405225973376,
+              "ci": [
+                0.3248745787011419,
+                0.36175097066660034
+              ],
+              "seeds": [
+                0.35,
+                0.3082901554404145,
+                0.3380281690140845,
+                0.34951456310679613,
+                0.37373737373737376
+              ]
+            },
+            "escalation_recall": {
+              "mean": 0.31444141689373295,
+              "ci": [
+                0.3019073569482289,
+                0.32534059945504085
+              ],
+              "seeds": [
+                0.3242506811989101,
+                0.3242506811989101,
+                0.32697547683923706,
+                0.29427792915531337,
+                0.3024523160762943
+              ]
+            },
+            "escalation_f1": {
+              "mean": 0.3277953338773889,
+              "ci": [
+                0.3207202681893732,
+                0.3349441869394696
+              ],
+              "seeds": [
+                0.33663366336633666,
+                0.3160690571049137,
+                0.33240997229916897,
+                0.319526627218935,
+                0.33433734939759036
+              ]
+            },
+            "escalation_mcc": {
+              "mean": 0.1852749296944084,
+              "ci": [
+                0.17062275600355906,
+                0.19874886619870463
+              ],
+              "seeds": [
+                0.19467201470450707,
+                0.15766165604572135,
+                0.185456797176124,
+                0.18334011267402622,
+                0.20524406787166327
+              ]
+            },
+            "proposed_violation_rate": {
+              "mean": 0.010459834167416332,
+              "ci": [
+                0.0022856232127626444,
+                0.018357468028960815
+              ],
+              "seeds": [
+                0.00031643066213116053,
+                0.021865531078535748,
+                0.00847387222729916,
+                0.0011606912561258704,
+                0.020482645612989722
+              ]
+            },
+            "forced_escalation_rate": {
+              "mean": 0.0,
+              "ci": [
+                0.0,
+                0.0
+              ],
+              "seeds": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "executed_violation_rate": {
+              "mean": 0.0666,
+              "ci": [
+                0.014599999999999998,
+                0.11779999999999999
+              ],
+              "seeds": [
+                0.002,
+                0.1335,
+                0.051,
+                0.009,
+                0.1375
+              ]
+            },
+            "compliant_success_rate": {
+              "mean": 0.6165999999999999,
+              "ci": [
+                0.567,
+                0.6651
+              ],
+              "seeds": [
+                0.6655,
+                0.5345,
+                0.623,
+                0.6885,
+                0.5715
+              ]
+            },
+            "ceiling": {
+              "mean": 0.8164999999999999,
+              "ci": [
+                0.8164999999999999,
+                0.8164999999999999
+              ],
+              "seeds": [
+                0.8165,
+                0.8165,
+                0.8165,
+                0.8165,
+                0.8165
+              ]
+            }
+          }
+        },
+        "penalty": {
+          "per_seed": {
+            "0": {
+              "mean_return": 0.7006666666666667,
+              "resolution_accuracy": 0.6765,
+              "wrong_rate": 0.1625,
+              "escalation_rate": 0.161,
+              "coverage": 0.839,
+              "selective_accuracy": 0.8063170441001192,
+              "mean_checks": 5.2275,
+              "mean_check_cost": 0.7348333333333332,
+              "escalation_precision": 0.33229813664596275,
+              "escalation_recall": 0.29155313351498635,
+              "escalation_f1": 0.31059506531204645,
+              "escalation_mcc": 0.16839660109248164,
+              "proposed_violation_rate": 0.0,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.6765,
+              "ceiling": 0.8165,
+              "return_ci": [
+                0.44059062499999996,
+                0.9537541666666663
+              ]
+            },
+            "1": {
+              "mean_return": 0.47120833333333334,
+              "resolution_accuracy": 0.681,
+              "wrong_rate": 0.177,
+              "escalation_rate": 0.142,
+              "coverage": 0.858,
+              "selective_accuracy": 0.7937062937062938,
+              "mean_checks": 6.1715,
+              "mean_check_cost": 0.8797916666666665,
+              "escalation_precision": 0.29577464788732394,
+              "escalation_recall": 0.22888283378746593,
+              "escalation_f1": 0.25806451612903225,
+              "escalation_mcc": 0.11800111232358776,
+              "proposed_violation_rate": 0.0,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.681,
+              "ceiling": 0.8165,
+              "return_ci": [
+                0.20901562499999998,
+                0.7142239583333331
+              ]
+            },
+            "2": {
+              "mean_return": 0.3839166666666667,
+              "resolution_accuracy": 0.6325,
+              "wrong_rate": 0.147,
+              "escalation_rate": 0.2205,
+              "coverage": 0.7795,
+              "selective_accuracy": 0.8114175753688262,
+              "mean_checks": 5.6905,
+              "mean_check_cost": 0.8675833333333333,
+              "escalation_precision": 0.30612244897959184,
+              "escalation_recall": 0.3678474114441417,
+              "escalation_f1": 0.3341584158415842,
+              "escalation_mcc": 0.16848843399627025,
+              "proposed_violation_rate": 0.0,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.6325,
+              "ceiling": 0.8165,
+              "return_ci": [
+                0.14357812499999997,
+                0.6342552083333333
+              ]
+            },
+            "3": {
+              "mean_return": 0.3034583333333334,
+              "resolution_accuracy": 0.6515,
+              "wrong_rate": 0.183,
+              "escalation_rate": 0.1655,
+              "coverage": 0.8345,
+              "selective_accuracy": 0.78070701018574,
+              "mean_checks": 5.3415,
+              "mean_check_cost": 0.7930416666666668,
+              "escalation_precision": 0.27794561933534745,
+              "escalation_recall": 0.2506811989100817,
+              "escalation_f1": 0.2636103151862464,
+              "escalation_mcc": 0.10866045483605336,
+              "proposed_violation_rate": 0.0,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.6515,
+              "ceiling": 0.8165,
+              "return_ci": [
+                0.039207291666666665,
+                0.554428125
+              ]
+            },
+            "4": {
+              "mean_return": 0.5834583333333334,
+              "resolution_accuracy": 0.6835,
+              "wrong_rate": 0.1725,
+              "escalation_rate": 0.144,
+              "coverage": 0.856,
+              "selective_accuracy": 0.798481308411215,
+              "mean_checks": 5.385,
+              "mean_check_cost": 0.8210416666666667,
+              "escalation_precision": 0.3263888888888889,
+              "escalation_recall": 0.2561307901907357,
+              "escalation_f1": 0.28702290076335885,
+              "escalation_mcc": 0.15140725786674972,
+              "proposed_violation_rate": 0.0,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.6835,
+              "ceiling": 0.8165,
+              "return_ci": [
+                0.32682291666666663,
+                0.8345218749999999
+              ]
+            }
+          },
+          "summary": {
+            "mean_return": {
+              "mean": 0.4885416666666667,
+              "ci": [
+                0.3691916666666667,
+                0.613875
+              ],
+              "seeds": [
+                0.7006666666666667,
+                0.47120833333333334,
+                0.3839166666666667,
+                0.3034583333333334,
+                0.5834583333333334
+              ]
+            },
+            "resolution_accuracy": {
+              "mean": 0.6649999999999999,
+              "ci": [
+                0.646,
+                0.6811
+              ],
+              "seeds": [
+                0.6765,
+                0.681,
+                0.6325,
+                0.6515,
+                0.6835
+              ]
+            },
+            "wrong_rate": {
+              "mean": 0.1684,
+              "ci": [
+                0.1563,
+                0.17850000000000002
+              ],
+              "seeds": [
+                0.1625,
+                0.177,
+                0.147,
+                0.183,
+                0.1725
+              ]
+            },
+            "escalation_rate": {
+              "mean": 0.1666,
+              "ci": [
+                0.147,
+                0.19419999999999998
+              ],
+              "seeds": [
+                0.161,
+                0.142,
+                0.2205,
+                0.1655,
+                0.144
+              ]
+            },
+            "coverage": {
+              "mean": 0.8333999999999999,
+              "ci": [
+                0.8058,
+                0.853
+              ],
+              "seeds": [
+                0.839,
+                0.858,
+                0.7795,
+                0.8345,
+                0.856
+              ]
+            },
+            "selective_accuracy": {
+              "mean": 0.7981258463544388,
+              "ci": [
+                0.7893838766137107,
+                0.8068552127825782
+              ],
+              "seeds": [
+                0.8063170441001192,
+                0.7937062937062938,
+                0.8114175753688262,
+                0.78070701018574,
+                0.798481308411215
+              ]
+            },
+            "mean_checks": {
+              "mean": 5.5632,
+              "ci": [
+                5.2959,
+                5.8865
+              ],
+              "seeds": [
+                5.2275,
+                6.1715,
+                5.6905,
+                5.3415,
+                5.385
+              ]
+            },
+            "mean_check_cost": {
+              "mean": 0.8192583333333333,
+              "ci": [
+                0.7693166666666666,
+                0.8607597916666664
+              ],
+              "seeds": [
+                0.7348333333333332,
+                0.8797916666666665,
+                0.8675833333333333,
+                0.7930416666666668,
+                0.8210416666666667
+              ]
+            },
+            "escalation_precision": {
+              "mean": 0.307705948347423,
+              "ci": [
+                0.29071259668498695,
+                0.3258811495612738
+              ],
+              "seeds": [
+                0.33229813664596275,
+                0.29577464788732394,
+                0.30612244897959184,
+                0.27794561933534745,
+                0.3263888888888889
+              ]
+            },
+            "escalation_recall": {
+              "mean": 0.2790190735694823,
+              "ci": [
+                0.244141689373297,
+                0.3247956403269755
+              ],
+              "seeds": [
+                0.29155313351498635,
+                0.22888283378746593,
+                0.3678474114441417,
+                0.2506811989100817,
+                0.2561307901907357
+              ]
+            },
+            "escalation_f1": {
+              "mean": 0.2906902426464536,
+              "ci": [
+                0.267183672490226,
+                0.3153361256046091
+              ],
+              "seeds": [
+                0.31059506531204645,
+                0.25806451612903225,
+                0.3341584158415842,
+                0.2636103151862464,
+                0.28702290076335885
+              ]
+            },
+            "escalation_mcc": {
+              "mean": 0.14299077202302854,
+              "ci": [
+                0.1209460784372064,
+                0.1650175581926119
+              ],
+              "seeds": [
+                0.16839660109248164,
+                0.11800111232358776,
+                0.16848843399627025,
+                0.10866045483605336,
+                0.15140725786674972
+              ]
+            },
+            "proposed_violation_rate": {
+              "mean": 0.0,
+              "ci": [
+                0.0,
+                0.0
+              ],
+              "seeds": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "forced_escalation_rate": {
+              "mean": 0.0,
+              "ci": [
+                0.0,
+                0.0
+              ],
+              "seeds": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "executed_violation_rate": {
+              "mean": 0.0,
+              "ci": [
+                0.0,
+                0.0
+              ],
+              "seeds": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "compliant_success_rate": {
+              "mean": 0.6649999999999999,
+              "ci": [
+                0.646,
+                0.6811
+              ],
+              "seeds": [
+                0.6765,
+                0.681,
+                0.6325,
+                0.6515,
+                0.6835
+              ]
+            },
+            "ceiling": {
+              "mean": 0.8164999999999999,
+              "ci": [
+                0.8164999999999999,
+                0.8164999999999999
+              ],
+              "seeds": [
+                0.8165,
+                0.8165,
+                0.8165,
+                0.8165,
+                0.8165
+              ]
+            }
+          }
+        }
+      }
+    },
+    "noise=0.1,missing=0.0": {
+      "baselines": {
+        "Always escalate": {
+          "mean_return": -2.0,
+          "resolution_accuracy": 0.0,
+          "wrong_rate": 0.0,
+          "escalation_rate": 1.0,
+          "coverage": 0.0,
+          "selective_accuracy": null,
+          "mean_checks": 0.0,
+          "mean_check_cost": 0.0,
+          "escalation_precision": 0.284,
+          "escalation_recall": 1.0,
+          "escalation_f1": 0.44236760124610586,
+          "escalation_mcc": null,
+          "proposed_violation_rate": 0.0,
+          "forced_escalation_rate": 0.0,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.0,
+          "ceiling": 0.716,
+          "return_ci": [
+            -2.0,
+            -2.0
+          ]
+        },
+        "Initial-symptom": {
+          "mean_return": -2.0036,
+          "resolution_accuracy": 0.3268,
+          "wrong_rate": 0.2864,
+          "escalation_rate": 0.3868,
+          "coverage": 0.6132,
+          "selective_accuracy": 0.532941943900848,
+          "mean_checks": 0.0,
+          "mean_check_cost": 0.0,
+          "escalation_precision": 0.29162357807652534,
+          "escalation_recall": 0.3971830985915493,
+          "escalation_f1": 0.3363148479427549,
+          "escalation_mcc": 0.013427196075346015,
+          "proposed_violation_rate": 0.5759336099585062,
+          "forced_escalation_rate": 0.3868,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.3268,
+          "ceiling": 0.716,
+          "return_ci": [
+            -2.161415,
+            -1.8409550000000001
+          ]
+        },
+        "Scripted (k=9)": {
+          "mean_return": -1.0826666666666664,
+          "resolution_accuracy": 0.7056,
+          "wrong_rate": 0.2944,
+          "escalation_rate": 0.0,
+          "coverage": 1.0,
+          "selective_accuracy": 0.7056,
+          "mean_checks": 9.0,
+          "mean_check_cost": 1.6666666666666665,
+          "escalation_precision": null,
+          "escalation_recall": 0.0,
+          "escalation_f1": null,
+          "escalation_mcc": null,
+          "proposed_violation_rate": 0.0,
+          "forced_escalation_rate": 0.0,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.7056,
+          "ceiling": 0.716,
+          "return_ci": [
+            -1.2657416666666665,
+            -0.8965916666666668
+          ]
+        },
+        "Threshold (tau=0.65)": {
+          "mean_return": -0.04406666666666665,
+          "resolution_accuracy": 0.6044,
+          "wrong_rate": 0.195,
+          "escalation_rate": 0.2006,
+          "coverage": 0.7994,
+          "selective_accuracy": 0.7560670502877158,
+          "mean_checks": 4.053,
+          "mean_check_cost": 0.7148666666666667,
+          "escalation_precision": 0.5174476570289133,
+          "escalation_recall": 0.3654929577464789,
+          "escalation_f1": 0.4283945522080066,
+          "escalation_mcc": 0.25933266960067736,
+          "proposed_violation_rate": 0.051981220657277,
+          "forced_escalation_rate": 0.0,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.6044,
+          "ceiling": 0.716,
+          "return_ci": [
+            -0.21037333333333333,
+            0.12107083333333334
+          ]
+        },
+        "Exact optimal": {
+          "mean_return": 0.4092166666666667,
+          "resolution_accuracy": 0.6082,
+          "wrong_rate": 0.1672,
+          "escalation_rate": 0.2246,
+          "coverage": 0.7754,
+          "selective_accuracy": 0.7843693577508383,
+          "mean_checks": 3.7686,
+          "mean_check_cost": 0.5105833333333333,
+          "escalation_precision": 0.5325022261798753,
+          "escalation_recall": 0.4211267605633803,
+          "escalation_f1": 0.4703106567046795,
+          "escalation_mcc": 0.29659005197089694,
+          "proposed_violation_rate": 0.0,
+          "forced_escalation_rate": 0.0,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.6082,
+          "ceiling": 0.716,
+          "return_ci": [
+            0.2529491666666667,
+            0.5664054166666667
+          ]
+        }
+      },
+      "agents": {
+        "shielded": {
+          "per_seed": {
+            "0": {
+              "mean_return": -0.1899833333333333,
+              "resolution_accuracy": 0.5316,
+              "wrong_rate": 0.1676,
+              "escalation_rate": 0.3008,
+              "coverage": 0.6992,
+              "selective_accuracy": 0.7602974828375286,
+              "mean_checks": 4.3852,
+              "mean_check_cost": 0.5703833333333334,
+              "escalation_precision": 0.4421542553191489,
+              "escalation_recall": 0.46830985915492956,
+              "escalation_f1": 0.45485636114911077,
+              "escalation_mcc": 0.23004002523256134,
+              "proposed_violation_rate": 0.2775135223288304,
+              "forced_escalation_rate": 0.0152,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.5316,
+              "ceiling": 0.716,
+              "return_ci": [
+                -0.3539158333333333,
+                -0.03663875000000016
+              ]
+            },
+            "1": {
+              "mean_return": -0.2225166666666666,
+              "resolution_accuracy": 0.5232,
+              "wrong_rate": 0.1518,
+              "escalation_rate": 0.325,
+              "coverage": 0.675,
+              "selective_accuracy": 0.7751111111111111,
+              "mean_checks": 5.1572,
+              "mean_check_cost": 0.6705166666666666,
+              "escalation_precision": 0.4258461538461538,
+              "escalation_recall": 0.48732394366197185,
+              "escalation_f1": 0.45451559934318553,
+              "escalation_mcc": 0.21826880830445694,
+              "proposed_violation_rate": 0.209243152018694,
+              "forced_escalation_rate": 0.0146,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.5232,
+              "ceiling": 0.716,
+              "return_ci": [
+                -0.3838508333333333,
+                -0.07332708333333343
+              ]
+            },
+            "2": {
+              "mean_return": -0.3382666666666667,
+              "resolution_accuracy": 0.5184,
+              "wrong_rate": 0.1546,
+              "escalation_rate": 0.327,
+              "coverage": 0.673,
+              "selective_accuracy": 0.7702823179791977,
+              "mean_checks": 5.027,
+              "mean_check_cost": 0.7302666666666666,
+              "escalation_precision": 0.4434250764525994,
+              "escalation_recall": 0.5105633802816901,
+              "escalation_f1": 0.47463175122749585,
+              "escalation_mcc": 0.24643778516851814,
+              "proposed_violation_rate": 0.13144845585036974,
+              "forced_escalation_rate": 0.0192,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.5184,
+              "ceiling": 0.716,
+              "return_ci": [
+                -0.49294250000000006,
+                -0.18759208333333338
+              ]
+            },
+            "3": {
+              "mean_return": -0.38015000000000004,
+              "resolution_accuracy": 0.495,
+              "wrong_rate": 0.1372,
+              "escalation_rate": 0.3678,
+              "coverage": 0.6322,
+              "selective_accuracy": 0.7829800695982284,
+              "mean_checks": 5.3458,
+              "mean_check_cost": 0.74755,
+              "escalation_precision": 0.41653072321914086,
+              "escalation_recall": 0.5394366197183098,
+              "escalation_f1": 0.47008284749923285,
+              "escalation_mcc": 0.22417103834205662,
+              "proposed_violation_rate": 0.18325015595757954,
+              "forced_escalation_rate": 0.0102,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.495,
+              "ceiling": 0.716,
+              "return_ci": [
+                -0.5263641666666666,
+                -0.2372187500000001
+              ]
+            },
+            "4": {
+              "mean_return": -0.2720166666666667,
+              "resolution_accuracy": 0.506,
+              "wrong_rate": 0.1558,
+              "escalation_rate": 0.3382,
+              "coverage": 0.6618,
+              "selective_accuracy": 0.7645814445451798,
+              "mean_checks": 4.1034,
+              "mean_check_cost": 0.5676166666666667,
+              "escalation_precision": 0.4169130691898285,
+              "escalation_recall": 0.4964788732394366,
+              "escalation_f1": 0.4532304725168756,
+              "escalation_mcc": 0.21070528347572606,
+              "proposed_violation_rate": 0.23460081805787003,
+              "forced_escalation_rate": 0.0218,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.506,
+              "ceiling": 0.716,
+              "return_ci": [
+                -0.42935125,
+                -0.12683333333333338
+              ]
+            }
+          },
+          "summary": {
+            "mean_return": {
+              "mean": -0.28058666666666665,
+              "ci": [
+                -0.34177,
+                -0.2194033333333333
+              ],
+              "seeds": [
+                -0.1899833333333333,
+                -0.2225166666666666,
+                -0.3382666666666667,
+                -0.38015000000000004,
+                -0.2720166666666667
+              ]
+            },
+            "resolution_accuracy": {
+              "mean": 0.5148400000000001,
+              "ci": [
+                0.5038,
+                0.5256000000000001
+              ],
+              "seeds": [
+                0.5316,
+                0.5232,
+                0.5184,
+                0.495,
+                0.506
+              ]
+            },
+            "wrong_rate": {
+              "mean": 0.15339999999999998,
+              "ci": [
+                0.14415999999999998,
+                0.1624
+              ],
+              "seeds": [
+                0.1676,
+                0.1518,
+                0.1546,
+                0.1372,
+                0.1558
+              ]
+            },
+            "escalation_rate": {
+              "mean": 0.33176000000000005,
+              "ci": [
+                0.31351999999999997,
+                0.35148
+              ],
+              "seeds": [
+                0.3008,
+                0.325,
+                0.327,
+                0.3678,
+                0.3382
+              ]
+            },
+            "coverage": {
+              "mean": 0.6682400000000001,
+              "ci": [
+                0.6485200000000001,
+                0.6864800000000001
+              ],
+              "seeds": [
+                0.6992,
+                0.675,
+                0.673,
+                0.6322,
+                0.6618
+              ]
+            },
+            "selective_accuracy": {
+              "mean": 0.7706504852142492,
+              "ci": [
+                0.7632602084922452,
+                0.7777265528901952
+              ],
+              "seeds": [
+                0.7602974828375286,
+                0.7751111111111111,
+                0.7702823179791977,
+                0.7829800695982284,
+                0.7645814445451798
+              ]
+            },
+            "mean_checks": {
+              "mean": 4.80372,
+              "ci": [
+                4.3518799999999995,
+                5.195211999999998
+              ],
+              "seeds": [
+                4.3852,
+                5.1572,
+                5.027,
+                5.3458,
+                4.1034
+              ]
+            },
+            "mean_check_cost": {
+              "mean": 0.6572666666666667,
+              "ci": [
+                0.58875,
+                0.72523
+              ],
+              "seeds": [
+                0.5703833333333334,
+                0.6705166666666666,
+                0.7302666666666666,
+                0.74755,
+                0.5676166666666667
+              ]
+            },
+            "escalation_precision": {
+              "mean": 0.4289738556053743,
+              "ci": [
+                0.4185467477328185,
+                0.43940096347793006
+              ],
+              "seeds": [
+                0.4421542553191489,
+                0.4258461538461538,
+                0.4434250764525994,
+                0.41653072321914086,
+                0.4169130691898285
+              ]
+            },
+            "escalation_recall": {
+              "mean": 0.5004225352112676,
+              "ci": [
+                0.4805422535211267,
+                0.5222535211267605
+              ],
+              "seeds": [
+                0.46830985915492956,
+                0.48732394366197185,
+                0.5105633802816901,
+                0.5394366197183098,
+                0.4964788732394366
+              ]
+            },
+            "escalation_f1": {
+              "mean": 0.4614634063471801,
+              "ci": [
+                0.4540697009738466,
+                0.46969874010498114
+              ],
+              "seeds": [
+                0.45485636114911077,
+                0.45451559934318553,
+                0.47463175122749585,
+                0.47008284749923285,
+                0.4532304725168756
+              ]
+            },
+            "escalation_mcc": {
+              "mean": 0.22592458810466381,
+              "ci": [
+                0.21608493679283933,
+                0.23752443780851454
+              ],
+              "seeds": [
+                0.23004002523256134,
+                0.21826880830445694,
+                0.24643778516851814,
+                0.22417103834205662,
+                0.21070528347572606
+              ]
+            },
+            "proposed_violation_rate": {
+              "mean": 0.20721122084266871,
+              "ci": [
+                0.16252947591469563,
+                0.25008148485049786
+              ],
+              "seeds": [
+                0.2775135223288304,
+                0.209243152018694,
+                0.13144845585036974,
+                0.18325015595757954,
+                0.23460081805787003
+              ]
+            },
+            "forced_escalation_rate": {
+              "mean": 0.0162,
+              "ci": [
+                0.012879999999999999,
+                0.01944
+              ],
+              "seeds": [
+                0.0152,
+                0.0146,
+                0.0192,
+                0.0102,
+                0.0218
+              ]
+            },
+            "executed_violation_rate": {
+              "mean": 0.0,
+              "ci": [
+                0.0,
+                0.0
+              ],
+              "seeds": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "compliant_success_rate": {
+              "mean": 0.5148400000000001,
+              "ci": [
+                0.5038,
+                0.5256000000000001
+              ],
+              "seeds": [
+                0.5316,
+                0.5232,
+                0.5184,
+                0.495,
+                0.506
+              ]
+            },
+            "ceiling": {
+              "mean": 0.716,
+              "ci": [
+                0.716,
+                0.716
+              ],
+              "seeds": [
+                0.716,
+                0.716,
+                0.716,
+                0.716,
+                0.716
+              ]
+            }
+          }
+        },
+        "unconstrained": {
+          "per_seed": {
+            "0": {
+              "mean_return": -0.24543333333333325,
+              "resolution_accuracy": 0.5844,
+              "wrong_rate": 0.1844,
+              "escalation_rate": 0.2312,
+              "coverage": 0.7688,
+              "selective_accuracy": 0.7601456815816857,
+              "mean_checks": 5.3262,
+              "mean_check_cost": 0.8610333333333332,
+              "escalation_precision": 0.4826989619377163,
+              "escalation_recall": 0.3929577464788732,
+              "escalation_f1": 0.43322981366459623,
+              "escalation_mcc": 0.24163906388765508,
+              "proposed_violation_rate": 0.0003793746640953495,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0024,
+              "compliant_success_rate": 0.5822,
+              "ceiling": 0.716,
+              "return_ci": [
+                -0.4036666666666667,
+                -0.08844041666666687
+              ]
+            },
+            "1": {
+              "mean_return": -0.1933,
+              "resolution_accuracy": 0.5768,
+              "wrong_rate": 0.1796,
+              "escalation_rate": 0.2436,
+              "coverage": 0.7564,
+              "selective_accuracy": 0.7625594923320994,
+              "mean_checks": 5.2406,
+              "mean_check_cost": 0.7941,
+              "escalation_precision": 0.4827586206896552,
+              "escalation_recall": 0.4140845070422535,
+              "escalation_f1": 0.44579226686884005,
+              "escalation_mcc": 0.2501342573415719,
+              "proposed_violation_rate": 0.018043136877864307,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.1126,
+              "compliant_success_rate": 0.4824,
+              "ceiling": 0.716,
+              "return_ci": [
+                -0.36108874999999996,
+                -0.02780041666666692
+              ]
+            },
+            "2": {
+              "mean_return": -0.11776666666666666,
+              "resolution_accuracy": 0.5792,
+              "wrong_rate": 0.1852,
+              "escalation_rate": 0.2356,
+              "coverage": 0.7644,
+              "selective_accuracy": 0.7577184720041863,
+              "mean_checks": 5.085,
+              "mean_check_cost": 0.6905666666666667,
+              "escalation_precision": 0.4847198641765705,
+              "escalation_recall": 0.40211267605633805,
+              "escalation_f1": 0.43956889915319486,
+              "escalation_mcc": 0.24711663249235777,
+              "proposed_violation_rate": 0.007986852917009039,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0486,
+              "compliant_success_rate": 0.5434,
+              "ceiling": 0.716,
+              "return_ci": [
+                -0.27257499999999996,
+                0.04012166666666665
+              ]
+            },
+            "3": {
+              "mean_return": -0.38076666666666664,
+              "resolution_accuracy": 0.602,
+              "wrong_rate": 0.1918,
+              "escalation_rate": 0.2062,
+              "coverage": 0.7938,
+              "selective_accuracy": 0.7583774250440917,
+              "mean_checks": 6.8124,
+              "mean_check_cost": 1.0603666666666665,
+              "escalation_precision": 0.49660523763336567,
+              "escalation_recall": 0.36056338028169016,
+              "escalation_f1": 0.41778865769073853,
+              "escalation_mcc": 0.2402962876323159,
+              "proposed_violation_rate": 0.0013824176949464952,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0108,
+              "compliant_success_rate": 0.595,
+              "ceiling": 0.716,
+              "return_ci": [
+                -0.547015,
+                -0.22804916666666683
+              ]
+            },
+            "4": {
+              "mean_return": -0.2135666666666666,
+              "resolution_accuracy": 0.5992,
+              "wrong_rate": 0.1974,
+              "escalation_rate": 0.2034,
+              "coverage": 0.7966,
+              "selective_accuracy": 0.7521968365553603,
+              "mean_checks": 5.6904,
+              "mean_check_cost": 0.8287666666666667,
+              "escalation_precision": 0.4896755162241888,
+              "escalation_recall": 0.35070422535211265,
+              "escalation_f1": 0.40869922035289286,
+              "escalation_mcc": 0.23047415856596293,
+              "proposed_violation_rate": 0.020746143728327154,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.1388,
+              "compliant_success_rate": 0.4952,
+              "ceiling": 0.716,
+              "return_ci": [
+                -0.3834041666666666,
+                -0.05201583333333341
+              ]
+            }
+          },
+          "summary": {
+            "mean_return": {
+              "mean": -0.23016666666666663,
+              "ci": [
+                -0.3098333333333333,
+                -0.16246
+              ],
+              "seeds": [
+                -0.24543333333333325,
+                -0.1933,
+                -0.11776666666666666,
+                -0.38076666666666664,
+                -0.2135666666666666
+              ]
+            },
+            "resolution_accuracy": {
+              "mean": 0.5883200000000001,
+              "ci": [
+                0.57928,
+                0.5973599999999999
+              ],
+              "seeds": [
+                0.5844,
+                0.5768,
+                0.5792,
+                0.602,
+                0.5992
+              ]
+            },
+            "wrong_rate": {
+              "mean": 0.18768,
+              "ci": [
+                0.18264,
+                0.19368000000000002
+              ],
+              "seeds": [
+                0.1844,
+                0.1796,
+                0.1852,
+                0.1918,
+                0.1974
+              ]
+            },
+            "escalation_rate": {
+              "mean": 0.22400000000000003,
+              "ci": [
+                0.21008,
+                0.23792
+              ],
+              "seeds": [
+                0.2312,
+                0.2436,
+                0.2356,
+                0.2062,
+                0.2034
+              ]
+            },
+            "coverage": {
+              "mean": 0.776,
+              "ci": [
+                0.7620800000000001,
+                0.7899200000000001
+              ],
+              "seeds": [
+                0.7688,
+                0.7564,
+                0.7644,
+                0.7938,
+                0.7966
+              ]
+            },
+            "selective_accuracy": {
+              "mean": 0.7581995815034847,
+              "ci": [
+                0.7548909326503906,
+                0.7608866654168963
+              ],
+              "seeds": [
+                0.7601456815816857,
+                0.7625594923320994,
+                0.7577184720041863,
+                0.7583774250440917,
+                0.7521968365553603
+              ]
+            },
+            "mean_checks": {
+              "mean": 5.630920000000001,
+              "ci": [
+                5.195480000000001,
+                6.242520000000001
+              ],
+              "seeds": [
+                5.3262,
+                5.2406,
+                5.085,
+                6.8124,
+                5.6904
+              ]
+            },
+            "mean_check_cost": {
+              "mean": 0.8469666666666665,
+              "ci": [
+                0.7523000000000001,
+                0.9607933333333332
+              ],
+              "seeds": [
+                0.8610333333333332,
+                0.7941,
+                0.6905666666666667,
+                1.0603666666666665,
+                0.8287666666666667
+              ]
+            },
+            "escalation_precision": {
+              "mean": 0.48729164013229925,
+              "ci": [
+                0.4831270058862627,
+                0.49243803821240045
+              ],
+              "seeds": [
+                0.4826989619377163,
+                0.4827586206896552,
+                0.4847198641765705,
+                0.49660523763336567,
+                0.4896755162241888
+              ]
+            },
+            "escalation_recall": {
+              "mean": 0.3840845070422535,
+              "ci": [
+                0.36295774647887324,
+                0.40507042253521125
+              ],
+              "seeds": [
+                0.3929577464788732,
+                0.4140845070422535,
+                0.40211267605633805,
+                0.36056338028169016,
+                0.35070422535211265
+              ]
+            },
+            "escalation_f1": {
+              "mean": 0.4290157715460525,
+              "ci": [
+                0.41669104358052234,
+                0.4407904291417332
+              ],
+              "seeds": [
+                0.43322981366459623,
+                0.44579226686884005,
+                0.43956889915319486,
+                0.41778865769073853,
+                0.40869922035289286
+              ]
+            },
+            "escalation_mcc": {
+              "mean": 0.24193207998397273,
+              "ci": [
+                0.2357670791645125,
+                0.24722816871110292
+              ],
+              "seeds": [
+                0.24163906388765508,
+                0.2501342573415719,
+                0.24711663249235777,
+                0.2402962876323159,
+                0.23047415856596293
+              ]
+            },
+            "proposed_violation_rate": {
+              "mean": 0.009707585176448468,
+              "ci": [
+                0.0023020875270185455,
+                0.016873398521651022
+              ],
+              "seeds": [
+                0.0003793746640953495,
+                0.018043136877864307,
+                0.007986852917009039,
+                0.0013824176949464952,
+                0.020746143728327154
+              ]
+            },
+            "forced_escalation_rate": {
+              "mean": 0.0,
+              "ci": [
+                0.0,
+                0.0
+              ],
+              "seeds": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "executed_violation_rate": {
+              "mean": 0.06264,
+              "ci": [
+                0.015,
+                0.11028
+              ],
+              "seeds": [
+                0.0024,
+                0.1126,
+                0.0486,
+                0.0108,
+                0.1388
+              ]
+            },
+            "compliant_success_rate": {
+              "mean": 0.5396400000000001,
+              "ci": [
+                0.5022800000000001,
+                0.5770000000000002
+              ],
+              "seeds": [
+                0.5822,
+                0.4824,
+                0.5434,
+                0.595,
+                0.4952
+              ]
+            },
+            "ceiling": {
+              "mean": 0.716,
+              "ci": [
+                0.716,
+                0.716
+              ],
+              "seeds": [
+                0.716,
+                0.716,
+                0.716,
+                0.716,
+                0.716
+              ]
+            }
+          }
+        },
+        "penalty": {
+          "per_seed": {
+            "0": {
+              "mean_return": -0.20075000000000004,
+              "resolution_accuracy": 0.5856,
+              "wrong_rate": 0.1904,
+              "escalation_rate": 0.224,
+              "coverage": 0.776,
+              "selective_accuracy": 0.7546391752577319,
+              "mean_checks": 5.4726,
+              "mean_check_cost": 0.77675,
+              "escalation_precision": 0.4830357142857143,
+              "escalation_recall": 0.38098591549295774,
+              "escalation_f1": 0.4259842519685039,
+              "escalation_mcc": 0.23714200043172698,
+              "proposed_violation_rate": 0.0,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.5856,
+              "ceiling": 0.716,
+              "return_ci": [
+                -0.36275833333333335,
+                -0.03926666666666681
+              ]
+            },
+            "1": {
+              "mean_return": -0.2891333333333333,
+              "resolution_accuracy": 0.5912,
+              "wrong_rate": 0.1922,
+              "escalation_rate": 0.2166,
+              "coverage": 0.7834,
+              "selective_accuracy": 0.7546591779423028,
+              "mean_checks": 6.2092,
+              "mean_check_cost": 0.8899333333333332,
+              "escalation_precision": 0.4866112650046168,
+              "escalation_recall": 0.3711267605633803,
+              "escalation_f1": 0.4210946863763484,
+              "escalation_mcc": 0.236257361470569,
+              "proposed_violation_rate": 0.0,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.5912,
+              "ceiling": 0.716,
+              "return_ci": [
+                -0.4466737499999999,
+                -0.1302987500000002
+              ]
+            },
+            "2": {
+              "mean_return": -0.3141666666666667,
+              "resolution_accuracy": 0.5508,
+              "wrong_rate": 0.1632,
+              "escalation_rate": 0.286,
+              "coverage": 0.714,
+              "selective_accuracy": 0.7714285714285715,
+              "mean_checks": 5.7084,
+              "mean_check_cost": 0.8641666666666667,
+              "escalation_precision": 0.4671328671328671,
+              "escalation_recall": 0.4704225352112676,
+              "escalation_f1": 0.4687719298245614,
+              "escalation_mcc": 0.2570304190523594,
+              "proposed_violation_rate": 0.0,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.5508,
+              "ceiling": 0.716,
+              "return_ci": [
+                -0.46271125,
+                -0.15986250000000016
+              ]
+            },
+            "3": {
+              "mean_return": -0.309,
+              "resolution_accuracy": 0.5754,
+              "wrong_rate": 0.191,
+              "escalation_rate": 0.2336,
+              "coverage": 0.7664,
+              "selective_accuracy": 0.7507828810020877,
+              "mean_checks": 5.4872,
+              "mean_check_cost": 0.8088,
+              "escalation_precision": 0.4803082191780822,
+              "escalation_recall": 0.39507042253521124,
+              "escalation_f1": 0.43353941267387947,
+              "escalation_mcc": 0.24034299753609603,
+              "proposed_violation_rate": 0.0,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.5754,
+              "ceiling": 0.716,
+              "return_ci": [
+                -0.47528500000000007,
+                -0.14266250000000022
+              ]
+            },
+            "4": {
+              "mean_return": -0.3298,
+              "resolution_accuracy": 0.5942,
+              "wrong_rate": 0.2068,
+              "escalation_rate": 0.199,
+              "coverage": 0.801,
+              "selective_accuracy": 0.7418227215980024,
+              "mean_checks": 5.477,
+              "mean_check_cost": 0.8348,
+              "escalation_precision": 0.46934673366834173,
+              "escalation_recall": 0.3288732394366197,
+              "escalation_f1": 0.3867494824016563,
+              "escalation_mcc": 0.20487055121222647,
+              "proposed_violation_rate": 0.0,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.5942,
+              "ceiling": 0.716,
+              "return_ci": [
+                -0.49038624999999997,
+                -0.16701625000000067
+              ]
+            }
+          },
+          "summary": {
+            "mean_return": {
+              "mean": -0.28857,
+              "ci": [
+                -0.31938666666666665,
+                -0.2442366666666667
+              ],
+              "seeds": [
+                -0.20075000000000004,
+                -0.2891333333333333,
+                -0.3141666666666667,
+                -0.309,
+                -0.3298
+              ]
+            },
+            "resolution_accuracy": {
+              "mean": 0.57944,
+              "ci": [
+                0.5644,
+                0.5912799999999999
+              ],
+              "seeds": [
+                0.5856,
+                0.5912,
+                0.5508,
+                0.5754,
+                0.5942
+              ]
+            },
+            "wrong_rate": {
+              "mean": 0.18872000000000003,
+              "ci": [
+                0.17444,
+                0.20048
+              ],
+              "seeds": [
+                0.1904,
+                0.1922,
+                0.1632,
+                0.191,
+                0.2068
+              ]
+            },
+            "escalation_rate": {
+              "mean": 0.23184,
+              "ci": [
+                0.20944000000000002,
+                0.2612
+              ],
+              "seeds": [
+                0.224,
+                0.2166,
+                0.286,
+                0.2336,
+                0.199
+              ]
+            },
+            "coverage": {
+              "mean": 0.7681600000000001,
+              "ci": [
+                0.7388,
+                0.79056
+              ],
+              "seeds": [
+                0.776,
+                0.7834,
+                0.714,
+                0.7664,
+                0.801
+              ]
+            },
+            "selective_accuracy": {
+              "mean": 0.7546665054457392,
+              "ci": [
+                0.7469533035988084,
+                0.763945554646021
+              ],
+              "seeds": [
+                0.7546391752577319,
+                0.7546591779423028,
+                0.7714285714285715,
+                0.7507828810020877,
+                0.7418227215980024
+              ]
+            },
+            "mean_checks": {
+              "mean": 5.67088,
+              "ci": [
+                5.4772799999999995,
+                5.96172
+              ],
+              "seeds": [
+                5.4726,
+                6.2092,
+                5.7084,
+                5.4872,
+                5.477
+              ]
+            },
+            "mean_check_cost": {
+              "mean": 0.83489,
+              "ci": [
+                0.7999699999999998,
+                0.8685533333333334
+              ],
+              "seeds": [
+                0.77675,
+                0.8899333333333332,
+                0.8641666666666667,
+                0.8088,
+                0.8348
+              ]
+            },
+            "escalation_precision": {
+              "mean": 0.4772869598539245,
+              "ci": [
+                0.4706534841561,
+                0.4839204355517489
+              ],
+              "seeds": [
+                0.4830357142857143,
+                0.4866112650046168,
+                0.4671328671328671,
+                0.4803082191780822,
+                0.46934673366834173
+              ]
+            },
+            "escalation_recall": {
+              "mean": 0.38929577464788734,
+              "ci": [
+                0.35056338028169015,
+                0.43464788732394366
+              ],
+              "seeds": [
+                0.38098591549295774,
+                0.3711267605633803,
+                0.4704225352112676,
+                0.39507042253521124,
+                0.3288732394366197
+              ]
+            },
+            "escalation_f1": {
+              "mean": 0.4272279526489899,
+              "ci": [
+                0.40297650925103934,
+                0.4516568586821384
+              ],
+              "seeds": [
+                0.4259842519685039,
+                0.4210946863763484,
+                0.4687719298245614,
+                0.43353941267387947,
+                0.3867494824016563
+              ]
+            },
+            "escalation_mcc": {
+              "mean": 0.23512866594059556,
+              "ci": [
+                0.2182424025286689,
+                0.24907505160410642
+              ],
+              "seeds": [
+                0.23714200043172698,
+                0.236257361470569,
+                0.2570304190523594,
+                0.24034299753609603,
+                0.20487055121222647
+              ]
+            },
+            "proposed_violation_rate": {
+              "mean": 0.0,
+              "ci": [
+                0.0,
+                0.0
+              ],
+              "seeds": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "forced_escalation_rate": {
+              "mean": 0.0,
+              "ci": [
+                0.0,
+                0.0
+              ],
+              "seeds": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "executed_violation_rate": {
+              "mean": 0.0,
+              "ci": [
+                0.0,
+                0.0
+              ],
+              "seeds": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "compliant_success_rate": {
+              "mean": 0.57944,
+              "ci": [
+                0.5644,
+                0.5912799999999999
+              ],
+              "seeds": [
+                0.5856,
+                0.5912,
+                0.5508,
+                0.5754,
+                0.5942
+              ]
+            },
+            "ceiling": {
+              "mean": 0.716,
+              "ci": [
+                0.716,
+                0.716
+              ],
+              "seeds": [
+                0.716,
+                0.716,
+                0.716,
+                0.716,
+                0.716
+              ]
+            }
+          }
+        }
+      }
+    },
+    "noise=0.2,missing=0.0": {
+      "baselines": {
+        "Always escalate": {
+          "mean_return": -2.0,
+          "resolution_accuracy": 0.0,
+          "wrong_rate": 0.0,
+          "escalation_rate": 1.0,
+          "coverage": 0.0,
+          "selective_accuracy": null,
+          "mean_checks": 0.0,
+          "mean_check_cost": 0.0,
+          "escalation_precision": 0.358,
+          "escalation_recall": 1.0,
+          "escalation_f1": 0.5272459499263622,
+          "escalation_mcc": null,
+          "proposed_violation_rate": 0.0,
+          "forced_escalation_rate": 0.0,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.0,
+          "ceiling": 0.642,
+          "return_ci": [
+            -2.0,
+            -2.0
+          ]
+        },
+        "Initial-symptom": {
+          "mean_return": -1.9535,
+          "resolution_accuracy": 0.3175,
+          "wrong_rate": 0.272,
+          "escalation_rate": 0.4105,
+          "coverage": 0.5895,
+          "selective_accuracy": 0.5385920271416454,
+          "mean_checks": 0.0,
+          "mean_check_cost": 0.0,
+          "escalation_precision": 0.3751522533495737,
+          "escalation_recall": 0.4301675977653631,
+          "escalation_f1": 0.40078074170461936,
+          "escalation_mcc": 0.029855670670910644,
+          "proposed_violation_rate": 0.5973360655737705,
+          "forced_escalation_rate": 0.4105,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.3175,
+          "ceiling": 0.642,
+          "return_ci": [
+            -2.219525,
+            -1.707475
+          ]
+        },
+        "Scripted (k=9)": {
+          "mean_return": -2.1341666666666663,
+          "resolution_accuracy": 0.6355,
+          "wrong_rate": 0.3645,
+          "escalation_rate": 0.0,
+          "coverage": 1.0,
+          "selective_accuracy": 0.6355,
+          "mean_checks": 9.0,
+          "mean_check_cost": 1.666666666666667,
+          "escalation_precision": null,
+          "escalation_recall": 0.0,
+          "escalation_f1": null,
+          "escalation_mcc": null,
+          "proposed_violation_rate": 0.0,
+          "forced_escalation_rate": 0.0,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.6355,
+          "ceiling": 0.642,
+          "return_ci": [
+            -2.4716666666666667,
+            -1.8416666666666666
+          ]
+        },
+        "Threshold (tau=0.65)": {
+          "mean_return": -0.9937916666666667,
+          "resolution_accuracy": 0.462,
+          "wrong_rate": 0.163,
+          "escalation_rate": 0.375,
+          "coverage": 0.625,
+          "selective_accuracy": 0.7392,
+          "mean_checks": 5.2855,
+          "mean_check_cost": 0.9237916666666667,
+          "escalation_precision": 0.532,
+          "escalation_recall": 0.5572625698324022,
+          "escalation_f1": 0.5443383356070941,
+          "escalation_mcc": 0.28113560170164237,
+          "proposed_violation_rate": 0.04570342205323194,
+          "forced_escalation_rate": 0.0,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.462,
+          "ceiling": 0.642,
+          "return_ci": [
+            -1.2415697916666668,
+            -0.7477635416666669
+          ]
+        },
+        "Exact optimal": {
+          "mean_return": -0.39529166666666665,
+          "resolution_accuracy": 0.4605,
+          "wrong_rate": 0.157,
+          "escalation_rate": 0.3825,
+          "coverage": 0.6175,
+          "selective_accuracy": 0.745748987854251,
+          "mean_checks": 2.877,
+          "mean_check_cost": 0.3627916666666666,
+          "escalation_precision": 0.5372549019607843,
+          "escalation_recall": 0.5740223463687151,
+          "escalation_f1": 0.5550303848750843,
+          "escalation_mcc": 0.29427898691998877,
+          "proposed_violation_rate": 0.0,
+          "forced_escalation_rate": 0.0,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.4605,
+          "ceiling": 0.642,
+          "return_ci": [
+            -0.6363552083333334,
+            -0.1604843750000001
+          ]
+        }
+      },
+      "agents": {
+        "shielded": {
+          "per_seed": {
+            "0": {
+              "mean_return": -0.9419583333333333,
+              "resolution_accuracy": 0.4595,
+              "wrong_rate": 0.1975,
+              "escalation_rate": 0.343,
+              "coverage": 0.657,
+              "selective_accuracy": 0.6993911719939118,
+              "mean_checks": 4.4375,
+              "mean_check_cost": 0.5784583333333333,
+              "escalation_precision": 0.4970845481049563,
+              "escalation_recall": 0.4762569832402235,
+              "escalation_f1": 0.48644793152639093,
+              "escalation_mcc": 0.20962073126044392,
+              "proposed_violation_rate": 0.27968603247014623,
+              "forced_escalation_rate": 0.023,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.4595,
+              "ceiling": 0.642,
+              "return_ci": [
+                -1.2002093750000002,
+                -0.6946791666666667
+              ]
+            },
+            "1": {
+              "mean_return": -0.9177916666666667,
+              "resolution_accuracy": 0.445,
+              "wrong_rate": 0.1685,
+              "escalation_rate": 0.3865,
+              "coverage": 0.6135,
+              "selective_accuracy": 0.7253463732681337,
+              "mean_checks": 5.2565,
+              "mean_check_cost": 0.6847916666666667,
+              "escalation_precision": 0.5045278137128072,
+              "escalation_recall": 0.5446927374301676,
+              "escalation_f1": 0.5238415043653457,
+              "escalation_mcc": 0.24259313560809856,
+              "proposed_violation_rate": 0.21277002485184476,
+              "forced_escalation_rate": 0.015,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.445,
+              "ceiling": 0.642,
+              "return_ci": [
+                -1.1612552083333332,
+                -0.6856541666666667
+              ]
+            },
+            "2": {
+              "mean_return": -1.00425,
+              "resolution_accuracy": 0.4495,
+              "wrong_rate": 0.1785,
+              "escalation_rate": 0.372,
+              "coverage": 0.628,
+              "selective_accuracy": 0.7157643312101911,
+              "mean_checks": 5.0015,
+              "mean_check_cost": 0.72275,
+              "escalation_precision": 0.5067204301075269,
+              "escalation_recall": 0.526536312849162,
+              "escalation_f1": 0.5164383561643836,
+              "escalation_mcc": 0.23875542779223421,
+              "proposed_violation_rate": 0.13425690868209184,
+              "forced_escalation_rate": 0.016,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.4495,
+              "ceiling": 0.642,
+              "return_ci": [
+                -1.2599635416666666,
+                -0.7672229166666668
+              ]
+            },
+            "3": {
+              "mean_return": -1.0542083333333334,
+              "resolution_accuracy": 0.4195,
+              "wrong_rate": 0.1535,
+              "escalation_rate": 0.427,
+              "coverage": 0.573,
+              "selective_accuracy": 0.7321116928446771,
+              "mean_checks": 5.4405,
+              "mean_check_cost": 0.7627083333333332,
+              "escalation_precision": 0.4859484777517564,
+              "escalation_recall": 0.5796089385474861,
+              "escalation_f1": 0.5286624203821656,
+              "escalation_mcc": 0.23038952134568735,
+              "proposed_violation_rate": 0.18738049713193117,
+              "forced_escalation_rate": 0.009,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.4195,
+              "ceiling": 0.642,
+              "return_ci": [
+                -1.2980614583333334,
+                -0.8209979166666667
+              ]
+            },
+            "4": {
+              "mean_return": -0.838875,
+              "resolution_accuracy": 0.448,
+              "wrong_rate": 0.1755,
+              "escalation_rate": 0.3765,
+              "coverage": 0.6235,
+              "selective_accuracy": 0.7185244587008821,
+              "mean_checks": 4.1765,
+              "mean_check_cost": 0.570875,
+              "escalation_precision": 0.50199203187251,
+              "escalation_recall": 0.5279329608938548,
+              "escalation_f1": 0.5146358066712049,
+              "escalation_mcc": 0.23339615335943753,
+              "proposed_violation_rate": 0.23991696322657177,
+              "forced_escalation_rate": 0.0185,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.448,
+              "ceiling": 0.642,
+              "return_ci": [
+                -1.0685677083333334,
+                -0.6014604166666669
+              ]
+            }
+          },
+          "summary": {
+            "mean_return": {
+              "mean": -0.9514166666666666,
+              "ci": [
+                -1.0118366666666667,
+                -0.8876956250000001
+              ],
+              "seeds": [
+                -0.9419583333333333,
+                -0.9177916666666667,
+                -1.00425,
+                -1.0542083333333334,
+                -0.838875
+              ]
+            },
+            "resolution_accuracy": {
+              "mean": 0.44430000000000003,
+              "ci": [
+                0.4309,
+                0.45489999999999997
+              ],
+              "seeds": [
+                0.4595,
+                0.445,
+                0.4495,
+                0.4195,
+                0.448
+              ]
+            },
+            "wrong_rate": {
+              "mean": 0.1747,
+              "ci": [
+                0.16229999999999997,
+                0.1887
+              ],
+              "seeds": [
+                0.1975,
+                0.1685,
+                0.1785,
+                0.1535,
+                0.1755
+              ]
+            },
+            "escalation_rate": {
+              "mean": 0.38100000000000006,
+              "ci": [
+                0.3564,
+                0.40679999999999994
+              ],
+              "seeds": [
+                0.343,
+                0.3865,
+                0.372,
+                0.427,
+                0.3765
+              ]
+            },
+            "coverage": {
+              "mean": 0.619,
+              "ci": [
+                0.5932,
+                0.6436
+              ],
+              "seeds": [
+                0.657,
+                0.6135,
+                0.628,
+                0.573,
+                0.6235
+              ]
+            },
+            "selective_accuracy": {
+              "mean": 0.7182276056035592,
+              "ci": [
+                0.7070444866767,
+                0.726719180168918
+              ],
+              "seeds": [
+                0.6993911719939118,
+                0.7253463732681337,
+                0.7157643312101911,
+                0.7321116928446771,
+                0.7185244587008821
+              ]
+            },
+            "mean_checks": {
+              "mean": 4.8625,
+              "ci": [
+                4.4293,
+                5.2649
+              ],
+              "seeds": [
+                4.4375,
+                5.2565,
+                5.0015,
+                5.4405,
+                4.1765
+              ]
+            },
+            "mean_check_cost": {
+              "mean": 0.6639166666666666,
+              "ci": [
+                0.595175,
+                0.7311416666666666
+              ],
+              "seeds": [
+                0.5784583333333333,
+                0.6847916666666667,
+                0.72275,
+                0.7627083333333332,
+                0.570875
+              ]
+            },
+            "escalation_precision": {
+              "mean": 0.4992546603099114,
+              "ci": [
+                0.4926235144495858,
+                0.5048290708135201
+              ],
+              "seeds": [
+                0.4970845481049563,
+                0.5045278137128072,
+                0.5067204301075269,
+                0.4859484777517564,
+                0.50199203187251
+              ]
+            },
+            "escalation_recall": {
+              "mean": 0.5310055865921788,
+              "ci": [
+                0.49692737430167605,
+                0.5589385474860336
+              ],
+              "seeds": [
+                0.4762569832402235,
+                0.5446927374301676,
+                0.526536312849162,
+                0.5796089385474861,
+                0.5279329608938548
+              ]
+            },
+            "escalation_f1": {
+              "mean": 0.5140052038218983,
+              "ci": [
+                0.49843508863412206,
+                0.524807868240407
+              ],
+              "seeds": [
+                0.48644793152639093,
+                0.5238415043653457,
+                0.5164383561643836,
+                0.5286624203821656,
+                0.5146358066712049
+              ]
+            },
+            "escalation_mcc": {
+              "mean": 0.23095099387318033,
+              "ci": [
+                0.21913090010004135,
+                0.23921865603202064
+              ],
+              "seeds": [
+                0.20962073126044392,
+                0.24259313560809856,
+                0.23875542779223421,
+                0.23038952134568735,
+                0.23339615335943753
+              ]
+            },
+            "proposed_violation_rate": {
+              "mean": 0.21080208527251715,
+              "ci": [
+                0.1660136372809557,
+                0.25327111155378834
+              ],
+              "seeds": [
+                0.27968603247014623,
+                0.21277002485184476,
+                0.13425690868209184,
+                0.18738049713193117,
+                0.23991696322657177
+              ]
+            },
+            "forced_escalation_rate": {
+              "mean": 0.016300000000000002,
+              "ci": [
+                0.0121,
+                0.0205
+              ],
+              "seeds": [
+                0.023,
+                0.015,
+                0.016,
+                0.009,
+                0.0185
+              ]
+            },
+            "executed_violation_rate": {
+              "mean": 0.0,
+              "ci": [
+                0.0,
+                0.0
+              ],
+              "seeds": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "compliant_success_rate": {
+              "mean": 0.44430000000000003,
+              "ci": [
+                0.4309,
+                0.45489999999999997
+              ],
+              "seeds": [
+                0.4595,
+                0.445,
+                0.4495,
+                0.4195,
+                0.448
+              ]
+            },
+            "ceiling": {
+              "mean": 0.642,
+              "ci": [
+                0.642,
+                0.642
+              ],
+              "seeds": [
+                0.642,
+                0.642,
+                0.642,
+                0.642,
+                0.642
+              ]
+            }
+          }
+        },
+        "unconstrained": {
+          "per_seed": {
+            "0": {
+              "mean_return": -1.176,
+              "resolution_accuracy": 0.499,
+              "wrong_rate": 0.2235,
+              "escalation_rate": 0.2775,
+              "coverage": 0.7225,
+              "selective_accuracy": 0.6906574394463668,
+              "mean_checks": 5.4615,
+              "mean_check_cost": 0.881,
+              "escalation_precision": 0.5351351351351351,
+              "escalation_recall": 0.41480446927374304,
+              "escalation_f1": 0.46734854445318647,
+              "escalation_mcc": 0.22898564297379684,
+              "proposed_violation_rate": 0.0001547628259692022,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.001,
+              "compliant_success_rate": 0.498,
+              "ceiling": 0.642,
+              "return_ci": [
+                -1.4519385416666664,
+                -0.9259927083333335
+              ]
+            },
+            "1": {
+              "mean_return": -1.1124166666666668,
+              "resolution_accuracy": 0.4885,
+              "wrong_rate": 0.216,
+              "escalation_rate": 0.2955,
+              "coverage": 0.7045,
+              "selective_accuracy": 0.6933995741660752,
+              "mean_checks": 5.3195,
+              "mean_check_cost": 0.8039166666666666,
+              "escalation_precision": 0.5245346869712352,
+              "escalation_recall": 0.4329608938547486,
+              "escalation_f1": 0.4743687834736037,
+              "escalation_mcc": 0.22497482444101996,
+              "proposed_violation_rate": 0.0162196376295593,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.1025,
+              "compliant_success_rate": 0.4075,
+              "ceiling": 0.642,
+              "return_ci": [
+                -1.3808166666666666,
+                -0.853619791666667
+              ]
+            },
+            "2": {
+              "mean_return": -0.9528750000000001,
+              "resolution_accuracy": 0.5025,
+              "wrong_rate": 0.2215,
+              "escalation_rate": 0.276,
+              "coverage": 0.724,
+              "selective_accuracy": 0.694060773480663,
+              "mean_checks": 5.1315,
+              "mean_check_cost": 0.698375,
+              "escalation_precision": 0.5271739130434783,
+              "escalation_recall": 0.4064245810055866,
+              "escalation_f1": 0.4589905362776025,
+              "escalation_mcc": 0.21787611635465054,
+              "proposed_violation_rate": 0.007909973089782273,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0485,
+              "compliant_success_rate": 0.4685,
+              "ceiling": 0.642,
+              "return_ci": [
+                -1.2360114583333333,
+                -0.6894041666666667
+              ]
+            },
+            "3": {
+              "mean_return": -1.4791666666666665,
+              "resolution_accuracy": 0.507,
+              "wrong_rate": 0.245,
+              "escalation_rate": 0.248,
+              "coverage": 0.752,
+              "selective_accuracy": 0.6742021276595744,
+              "mean_checks": 6.851,
+              "mean_check_cost": 1.0681666666666665,
+              "escalation_precision": 0.5201612903225806,
+              "escalation_recall": 0.36033519553072624,
+              "escalation_f1": 0.42574257425742573,
+              "escalation_mcc": 0.19424734170772606,
+              "proposed_violation_rate": 0.0014647815564896192,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0115,
+              "compliant_success_rate": 0.501,
+              "ceiling": 0.642,
+              "return_ci": [
+                -1.7557239583333335,
+                -1.2062781249999999
+              ]
+            },
+            "4": {
+              "mean_return": -1.33175,
+              "resolution_accuracy": 0.503,
+              "wrong_rate": 0.255,
+              "escalation_rate": 0.242,
+              "coverage": 0.758,
+              "selective_accuracy": 0.6635883905013192,
+              "mean_checks": 5.6325,
+              "mean_check_cost": 0.81275,
+              "escalation_precision": 0.5041322314049587,
+              "escalation_recall": 0.3407821229050279,
+              "escalation_f1": 0.4066666666666666,
+              "escalation_mcc": 0.17223050251884217,
+              "proposed_violation_rate": 0.022314361100640785,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.148,
+              "compliant_success_rate": 0.403,
+              "ceiling": 0.642,
+              "return_ci": [
+                -1.6237156250000002,
+                -1.055891666666667
+              ]
+            }
+          },
+          "summary": {
+            "mean_return": {
+              "mean": -1.2104416666666666,
+              "ci": [
+                -1.3616108333333332,
+                -1.0612977083333337
+              ],
+              "seeds": [
+                -1.176,
+                -1.1124166666666668,
+                -0.9528750000000001,
+                -1.4791666666666665,
+                -1.33175
+              ]
+            },
+            "resolution_accuracy": {
+              "mean": 0.5,
+              "ci": [
+                0.4941999999999999,
+                0.5045000000000001
+              ],
+              "seeds": [
+                0.499,
+                0.4885,
+                0.5025,
+                0.507,
+                0.503
+              ]
+            },
+            "wrong_rate": {
+              "mean": 0.23220000000000002,
+              "ci": [
+                0.2197,
+                0.24630000000000002
+              ],
+              "seeds": [
+                0.2235,
+                0.216,
+                0.2215,
+                0.245,
+                0.255
+              ]
+            },
+            "escalation_rate": {
+              "mean": 0.2678,
+              "ci": [
+                0.2503,
+                0.28440000000000004
+              ],
+              "seeds": [
+                0.2775,
+                0.2955,
+                0.276,
+                0.248,
+                0.242
+              ]
+            },
+            "coverage": {
+              "mean": 0.7322,
+              "ci": [
+                0.7156,
+                0.7497
+              ],
+              "seeds": [
+                0.7225,
+                0.7045,
+                0.724,
+                0.752,
+                0.758
+              ]
+            },
+            "selective_accuracy": {
+              "mean": 0.6831816610507998,
+              "ci": [
+                0.671805614528839,
+                0.6931156269479686
+              ],
+              "seeds": [
+                0.6906574394463668,
+                0.6933995741660752,
+                0.694060773480663,
+                0.6742021276595744,
+                0.6635883905013192
+              ]
+            },
+            "mean_checks": {
+              "mean": 5.6792,
+              "ci": [
+                5.272699999999999,
+                6.2951999999999995
+              ],
+              "seeds": [
+                5.4615,
+                5.3195,
+                5.1315,
+                6.851,
+                5.6325
+              ]
+            },
+            "mean_check_cost": {
+              "mean": 0.8528416666666667,
+              "ci": [
+                0.757775,
+                0.9642333333333332
+              ],
+              "seeds": [
+                0.881,
+                0.8039166666666666,
+                0.698375,
+                1.0681666666666665,
+                0.81275
+              ]
+            },
+            "escalation_precision": {
+              "mean": 0.5222274513754775,
+              "ci": [
+                0.5122932136314693,
+                0.5300287296733516
+              ],
+              "seeds": [
+                0.5351351351351351,
+                0.5245346869712352,
+                0.5271739130434783,
+                0.5201612903225806,
+                0.5041322314049587
+              ]
+            },
+            "escalation_recall": {
+              "mean": 0.3910614525139665,
+              "ci": [
+                0.35949022346368714,
+                0.420391061452514
+              ],
+              "seeds": [
+                0.41480446927374304,
+                0.4329608938547486,
+                0.4064245810055866,
+                0.36033519553072624,
+                0.3407821229050279
+              ]
+            },
+            "escalation_f1": {
+              "mean": 0.446623421025697,
+              "ci": [
+                0.4226009529670512,
+                0.46848503842623657
+              ],
+              "seeds": [
+                0.46734854445318647,
+                0.4743687834736037,
+                0.4589905362776025,
+                0.42574257425742573,
+                0.4066666666666666
+              ]
+            },
+            "escalation_mcc": {
+              "mean": 0.2076628855992071,
+              "ci": [
+                0.1871827347410545,
+                0.22515941023685682
+              ],
+              "seeds": [
+                0.22898564297379684,
+                0.22497482444101996,
+                0.21787611635465054,
+                0.19424734170772606,
+                0.17223050251884217
+              ]
+            },
+            "proposed_violation_rate": {
+              "mean": 0.009612703240488235,
+              "ci": [
+                0.0022298123709399834,
+                0.01699559411003649
+              ],
+              "seeds": [
+                0.0001547628259692022,
+                0.0162196376295593,
+                0.007909973089782273,
+                0.0014647815564896192,
+                0.022314361100640785
+              ]
+            },
+            "forced_escalation_rate": {
+              "mean": 0.0,
+              "ci": [
+                0.0,
+                0.0
+              ],
+              "seeds": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "executed_violation_rate": {
+              "mean": 0.0623,
+              "ci": [
+                0.014700000000000001,
+                0.10994249999999976
+              ],
+              "seeds": [
+                0.001,
+                0.1025,
+                0.0485,
+                0.0115,
+                0.148
+              ]
+            },
+            "compliant_success_rate": {
+              "mean": 0.4556,
+              "ci": [
+                0.41879999999999995,
+                0.49269999999999997
+              ],
+              "seeds": [
+                0.498,
+                0.4075,
+                0.4685,
+                0.501,
+                0.403
+              ]
+            },
+            "ceiling": {
+              "mean": 0.642,
+              "ci": [
+                0.642,
+                0.642
+              ],
+              "seeds": [
+                0.642,
+                0.642,
+                0.642,
+                0.642,
+                0.642
+              ]
+            }
+          }
+        },
+        "penalty": {
+          "per_seed": {
+            "0": {
+              "mean_return": -1.2440416666666667,
+              "resolution_accuracy": 0.4915,
+              "wrong_rate": 0.236,
+              "escalation_rate": 0.2725,
+              "coverage": 0.7275,
+              "selective_accuracy": 0.6756013745704468,
+              "mean_checks": 5.614,
+              "mean_check_cost": 0.7965416666666667,
+              "escalation_precision": 0.5339449541284403,
+              "escalation_recall": 0.4064245810055866,
+              "escalation_f1": 0.46153846153846156,
+              "escalation_mcc": 0.22461282157739448,
+              "proposed_violation_rate": 0.0,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.4915,
+              "ceiling": 0.642,
+              "return_ci": [
+                -1.526515625,
+                -0.9845562500000005
+              ]
+            },
+            "1": {
+              "mean_return": -1.3732083333333336,
+              "resolution_accuracy": 0.502,
+              "wrong_rate": 0.249,
+              "escalation_rate": 0.249,
+              "coverage": 0.751,
+              "selective_accuracy": 0.6684420772303595,
+              "mean_checks": 6.2175,
+              "mean_check_cost": 0.8952083333333333,
+              "escalation_precision": 0.5401606425702812,
+              "escalation_recall": 0.3756983240223464,
+              "escalation_f1": 0.443163097199341,
+              "escalation_mcc": 0.21878887101958877,
+              "proposed_violation_rate": 0.0,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.502,
+              "ceiling": 0.642,
+              "return_ci": [
+                -1.642984375,
+                -1.100354166666667
+              ]
+            },
+            "2": {
+              "mean_return": -1.1071666666666666,
+              "resolution_accuracy": 0.4735,
+              "wrong_rate": 0.1955,
+              "escalation_rate": 0.331,
+              "coverage": 0.669,
+              "selective_accuracy": 0.7077727952167414,
+              "mean_checks": 5.698,
+              "mean_check_cost": 0.8576666666666666,
+              "escalation_precision": 0.5166163141993958,
+              "escalation_recall": 0.4776536312849162,
+              "escalation_f1": 0.4963715529753266,
+              "escalation_mcc": 0.23272324532383787,
+              "proposed_violation_rate": 0.0,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.4735,
+              "ceiling": 0.642,
+              "return_ci": [
+                -1.3670635416666665,
+                -0.8605614583333334
+              ]
+            },
+            "3": {
+              "mean_return": -1.236083333333333,
+              "resolution_accuracy": 0.4935,
+              "wrong_rate": 0.233,
+              "escalation_rate": 0.2735,
+              "coverage": 0.7265,
+              "selective_accuracy": 0.6792842395044735,
+              "mean_checks": 5.6195,
+              "mean_check_cost": 0.8265833333333332,
+              "escalation_precision": 0.5338208409506399,
+              "escalation_recall": 0.40782122905027934,
+              "escalation_f1": 0.4623911322248615,
+              "escalation_mcc": 0.2250205498711739,
+              "proposed_violation_rate": 0.0,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.4935,
+              "ceiling": 0.642,
+              "return_ci": [
+                -1.5060458333333333,
+                -0.9805343750000002
+              ]
+            },
+            "4": {
+              "mean_return": -1.3165,
+              "resolution_accuracy": 0.5095,
+              "wrong_rate": 0.2535,
+              "escalation_rate": 0.237,
+              "coverage": 0.763,
+              "selective_accuracy": 0.6677588466579292,
+              "mean_checks": 5.6255,
+              "mean_check_cost": 0.855,
+              "escalation_precision": 0.5232067510548524,
+              "escalation_recall": 0.3463687150837989,
+              "escalation_f1": 0.4168067226890757,
+              "escalation_mcc": 0.19205723279135176,
+              "proposed_violation_rate": 0.0,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.5095,
+              "ceiling": 0.642,
+              "return_ci": [
+                -1.5980552083333333,
+                -1.0609447916666666
+              ]
+            }
+          },
+          "summary": {
+            "mean_return": {
+              "mean": -1.2553999999999998,
+              "ci": [
+                -1.3246916666666668,
+                -1.1748166666666666
+              ],
+              "seeds": [
+                -1.2440416666666667,
+                -1.3732083333333336,
+                -1.1071666666666666,
+                -1.236083333333333,
+                -1.3165
+              ]
+            },
+            "resolution_accuracy": {
+              "mean": 0.49400000000000005,
+              "ci": [
+                0.4828,
+                0.5044
+              ],
+              "seeds": [
+                0.4915,
+                0.502,
+                0.4735,
+                0.4935,
+                0.5095
+              ]
+            },
+            "wrong_rate": {
+              "mean": 0.2334,
+              "ci": [
+                0.2137,
+                0.2485
+              ],
+              "seeds": [
+                0.236,
+                0.249,
+                0.1955,
+                0.233,
+                0.2535
+              ]
+            },
+            "escalation_rate": {
+              "mean": 0.2726,
+              "ci": [
+                0.2467,
+                0.3031
+              ],
+              "seeds": [
+                0.2725,
+                0.249,
+                0.331,
+                0.2735,
+                0.237
+              ]
+            },
+            "coverage": {
+              "mean": 0.7274,
+              "ci": [
+                0.6969000000000001,
+                0.7533
+              ],
+              "seeds": [
+                0.7275,
+                0.751,
+                0.669,
+                0.7265,
+                0.763
+              ]
+            },
+            "selective_accuracy": {
+              "mean": 0.67977186663599,
+              "ci": [
+                0.6696006444694049,
+                0.6942089404770114
+              ],
+              "seeds": [
+                0.6756013745704468,
+                0.6684420772303595,
+                0.7077727952167414,
+                0.6792842395044735,
+                0.6677588466579292
+              ]
+            },
+            "mean_checks": {
+              "mean": 5.7549,
+              "ci": [
+                5.6185,
+                5.992900000000001
+              ],
+              "seeds": [
+                5.614,
+                6.2175,
+                5.698,
+                5.6195,
+                5.6255
+              ]
+            },
+            "mean_check_cost": {
+              "mean": 0.8462,
+              "ci": [
+                0.8162749999999999,
+                0.8734416666666664
+              ],
+              "seeds": [
+                0.7965416666666667,
+                0.8952083333333333,
+                0.8576666666666666,
+                0.8265833333333332,
+                0.855
+              ]
+            },
+            "escalation_precision": {
+              "mean": 0.5295499005807219,
+              "ci": [
+                0.521400129556296,
+                0.5364064068696165
+              ],
+              "seeds": [
+                0.5339449541284403,
+                0.5401606425702812,
+                0.5166163141993958,
+                0.5338208409506399,
+                0.5232067510548524
+              ]
+            },
+            "escalation_recall": {
+              "mean": 0.4027932960893855,
+              "ci": [
+                0.3645251396648045,
+                0.4432960893854749
+              ],
+              "seeds": [
+                0.4064245810055866,
+                0.3756983240223464,
+                0.4776536312849162,
+                0.40782122905027934,
+                0.3463687150837989
+              ]
+            },
+            "escalation_f1": {
+              "mean": 0.45605419332541325,
+              "ci": [
+                0.4326205473952349,
+                0.4789337776700364
+              ],
+              "seeds": [
+                0.46153846153846156,
+                0.443163097199341,
+                0.4963715529753266,
+                0.4623911322248615,
+                0.4168067226890757
+              ]
+            },
+            "escalation_mcc": {
+              "mean": 0.21864054411666936,
+              "ci": [
+                0.2050523871944487,
+                0.22839583137245523
+              ],
+              "seeds": [
+                0.22461282157739448,
+                0.21878887101958877,
+                0.23272324532383787,
+                0.2250205498711739,
+                0.19205723279135176
+              ]
+            },
+            "proposed_violation_rate": {
+              "mean": 0.0,
+              "ci": [
+                0.0,
+                0.0
+              ],
+              "seeds": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "forced_escalation_rate": {
+              "mean": 0.0,
+              "ci": [
+                0.0,
+                0.0
+              ],
+              "seeds": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "executed_violation_rate": {
+              "mean": 0.0,
+              "ci": [
+                0.0,
+                0.0
+              ],
+              "seeds": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "compliant_success_rate": {
+              "mean": 0.49400000000000005,
+              "ci": [
+                0.4828,
+                0.5044
+              ],
+              "seeds": [
+                0.4915,
+                0.502,
+                0.4735,
+                0.4935,
+                0.5095
+              ]
+            },
+            "ceiling": {
+              "mean": 0.642,
+              "ci": [
+                0.642,
+                0.642
+              ],
+              "seeds": [
+                0.642,
+                0.642,
+                0.642,
+                0.642,
+                0.642
+              ]
+            }
+          }
+        }
+      }
+    },
+    "noise=0.1,missing=0.2": {
+      "baselines": {
+        "Always escalate": {
+          "mean_return": -2.0,
+          "resolution_accuracy": 0.0,
+          "wrong_rate": 0.0,
+          "escalation_rate": 1.0,
+          "coverage": 0.0,
+          "selective_accuracy": null,
+          "mean_checks": 0.0,
+          "mean_check_cost": 0.0,
+          "escalation_precision": 0.37,
+          "escalation_recall": 1.0,
+          "escalation_f1": 0.5401459854014599,
+          "escalation_mcc": null,
+          "proposed_violation_rate": 0.0,
+          "forced_escalation_rate": 0.0,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.0,
+          "ceiling": 0.63,
+          "return_ci": [
+            -2.0,
+            -2.0
+          ]
+        },
+        "Initial-symptom": {
+          "mean_return": -1.9535,
+          "resolution_accuracy": 0.3175,
+          "wrong_rate": 0.272,
+          "escalation_rate": 0.4105,
+          "coverage": 0.5895,
+          "selective_accuracy": 0.5385920271416454,
+          "mean_checks": 0.0,
+          "mean_check_cost": 0.0,
+          "escalation_precision": 0.438489646772229,
+          "escalation_recall": 0.4864864864864865,
+          "escalation_f1": 0.4612427930813581,
+          "escalation_mcc": 0.11837730966738048,
+          "proposed_violation_rate": 0.5973360655737705,
+          "forced_escalation_rate": 0.4105,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.3175,
+          "ceiling": 0.63,
+          "return_ci": [
+            -2.219525,
+            -1.707475
+          ]
+        },
+        "Scripted (k=9)": {
+          "mean_return": -1.9266666666666665,
+          "resolution_accuracy": 0.64,
+          "wrong_rate": 0.3425,
+          "escalation_rate": 0.0175,
+          "coverage": 0.9825,
+          "selective_accuracy": 0.6513994910941476,
+          "mean_checks": 9.0,
+          "mean_check_cost": 1.666666666666667,
+          "escalation_precision": 1.0,
+          "escalation_recall": 0.0472972972972973,
+          "escalation_f1": 0.09032258064516129,
+          "escalation_mcc": 0.17414947017325588,
+          "proposed_violation_rate": 0.01055605114481118,
+          "forced_escalation_rate": 0.0175,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.64,
+          "ceiling": 0.63,
+          "return_ci": [
+            -2.244791666666666,
+            -1.6201416666666661
+          ]
+        },
+        "Threshold (tau=0.65)": {
+          "mean_return": -0.73425,
+          "resolution_accuracy": 0.496,
+          "wrong_rate": 0.166,
+          "escalation_rate": 0.338,
+          "coverage": 0.662,
+          "selective_accuracy": 0.7492447129909365,
+          "mean_checks": 4.9995,
+          "mean_check_cost": 0.87825,
+          "escalation_precision": 0.6390532544378699,
+          "escalation_recall": 0.5837837837837838,
+          "escalation_f1": 0.6101694915254239,
+          "escalation_mcc": 0.3981956104701196,
+          "proposed_violation_rate": 0.07166276346604215,
+          "forced_escalation_rate": 0.0,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.496,
+          "ceiling": 0.63,
+          "return_ci": [
+            -0.9911322916666667,
+            -0.4901614583333333
+          ]
+        }
+      },
+      "agents": {
+        "shielded": {
+          "per_seed": {
+            "0": {
+              "mean_return": -0.6547916666666668,
+              "resolution_accuracy": 0.4405,
+              "wrong_rate": 0.1405,
+              "escalation_rate": 0.419,
+              "coverage": 0.581,
+              "selective_accuracy": 0.7581755593803786,
+              "mean_checks": 4.6365,
+              "mean_check_cost": 0.6142916666666667,
+              "escalation_precision": 0.5584725536992841,
+              "escalation_recall": 0.6324324324324324,
+              "escalation_f1": 0.5931558935361216,
+              "escalation_mcc": 0.3315094581444839,
+              "proposed_violation_rate": 0.311046511627907,
+              "forced_escalation_rate": 0.0625,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.4405,
+              "ceiling": 0.63,
+              "return_ci": [
+                -0.900846875,
+                -0.42494479166666715
+              ]
+            },
+            "1": {
+              "mean_return": -0.847,
+              "resolution_accuracy": 0.423,
+              "wrong_rate": 0.139,
+              "escalation_rate": 0.438,
+              "coverage": 0.562,
+              "selective_accuracy": 0.7526690391459074,
+              "mean_checks": 5.2735,
+              "mean_check_cost": 0.696,
+              "escalation_precision": 0.5490867579908676,
+              "escalation_recall": 0.65,
+              "escalation_f1": 0.5952970297029703,
+              "escalation_mcc": 0.3274622452156011,
+              "proposed_violation_rate": 0.25976692228730147,
+              "forced_escalation_rate": 0.0175,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.423,
+              "ceiling": 0.63,
+              "return_ci": [
+                -1.06735,
+                -0.62120625
+              ]
+            },
+            "2": {
+              "mean_return": -0.9940833333333333,
+              "resolution_accuracy": 0.4175,
+              "wrong_rate": 0.143,
+              "escalation_rate": 0.4395,
+              "coverage": 0.5605,
+              "selective_accuracy": 0.7448706512042819,
+              "mean_checks": 5.264,
+              "mean_check_cost": 0.7725833333333334,
+              "escalation_precision": 0.5381114903299203,
+              "escalation_recall": 0.6391891891891892,
+              "escalation_f1": 0.5843113032736257,
+              "escalation_mcc": 0.3083314978751432,
+              "proposed_violation_rate": 0.2155615523001799,
+              "forced_escalation_rate": 0.0635,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.4175,
+              "ceiling": 0.63,
+              "return_ci": [
+                -1.2310875000000001,
+                -0.7661989583333334
+              ]
+            },
+            "3": {
+              "mean_return": -0.9662916666666667,
+              "resolution_accuracy": 0.39,
+              "wrong_rate": 0.1145,
+              "escalation_rate": 0.4955,
+              "coverage": 0.5045,
+              "selective_accuracy": 0.7730426164519326,
+              "mean_checks": 5.5405,
+              "mean_check_cost": 0.7802916666666667,
+              "escalation_precision": 0.5257315842583249,
+              "escalation_recall": 0.7040540540540541,
+              "escalation_f1": 0.6019641825534373,
+              "escalation_mcc": 0.31966626670252907,
+              "proposed_violation_rate": 0.2499407863571767,
+              "forced_escalation_rate": 0.0505,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.39,
+              "ceiling": 0.63,
+              "return_ci": [
+                -1.1797239583333332,
+                -0.7631072916666668
+              ]
+            },
+            "4": {
+              "mean_return": -0.76625,
+              "resolution_accuracy": 0.414,
+              "wrong_rate": 0.1325,
+              "escalation_rate": 0.4535,
+              "coverage": 0.5465,
+              "selective_accuracy": 0.757548032936871,
+              "mean_checks": 4.399,
+              "mean_check_cost": 0.60425,
+              "escalation_precision": 0.5446527012127894,
+              "escalation_recall": 0.6675675675675675,
+              "escalation_f1": 0.5998785670916817,
+              "escalation_mcc": 0.32953210509981345,
+              "proposed_violation_rate": 0.2959375840731773,
+              "forced_escalation_rate": 0.0595,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.414,
+              "ceiling": 0.63,
+              "return_ci": [
+                -0.9946906249999998,
+                -0.545121875
+              ]
+            }
+          },
+          "summary": {
+            "mean_return": {
+              "mean": -0.8456833333333333,
+              "ci": [
+                -0.9535499999999999,
+                -0.731675
+              ],
+              "seeds": [
+                -0.6547916666666668,
+                -0.847,
+                -0.9940833333333333,
+                -0.9662916666666667,
+                -0.76625
+              ]
+            },
+            "resolution_accuracy": {
+              "mean": 0.417,
+              "ci": [
+                0.40140000000000003,
+                0.4306
+              ],
+              "seeds": [
+                0.4405,
+                0.423,
+                0.4175,
+                0.39,
+                0.414
+              ]
+            },
+            "wrong_rate": {
+              "mean": 0.1339,
+              "ci": [
+                0.12380000000000002,
+                0.1412
+              ],
+              "seeds": [
+                0.1405,
+                0.139,
+                0.143,
+                0.1145,
+                0.1325
+              ]
+            },
+            "escalation_rate": {
+              "mean": 0.44909999999999994,
+              "ci": [
+                0.43,
+                0.47309999999999997
+              ],
+              "seeds": [
+                0.419,
+                0.438,
+                0.4395,
+                0.4955,
+                0.4535
+              ]
+            },
+            "coverage": {
+              "mean": 0.5509000000000001,
+              "ci": [
+                0.5269,
+                0.5700000000000001
+              ],
+              "seeds": [
+                0.581,
+                0.562,
+                0.5605,
+                0.5045,
+                0.5465
+              ]
+            },
+            "selective_accuracy": {
+              "mean": 0.7572611798238743,
+              "ci": [
+                0.750067109186019,
+                0.7658689842877153
+              ],
+              "seeds": [
+                0.7581755593803786,
+                0.7526690391459074,
+                0.7448706512042819,
+                0.7730426164519326,
+                0.757548032936871
+              ]
+            },
+            "mean_checks": {
+              "mean": 5.0227,
+              "ci": [
+                4.6213999999999995,
+                5.376547500000001
+              ],
+              "seeds": [
+                4.6365,
+                5.2735,
+                5.264,
+                5.5405,
+                4.399
+              ]
+            },
+            "mean_check_cost": {
+              "mean": 0.6934833333333333,
+              "ci": [
+                0.6246083333333333,
+                0.7603500000000001
+              ],
+              "seeds": [
+                0.6142916666666667,
+                0.696,
+                0.7725833333333334,
+                0.7802916666666667,
+                0.60425
+              ]
+            },
+            "escalation_precision": {
+              "mean": 0.5432110174982372,
+              "ci": [
+                0.5331595279012822,
+                0.5525311292434907
+              ],
+              "seeds": [
+                0.5584725536992841,
+                0.5490867579908676,
+                0.5381114903299203,
+                0.5257315842583249,
+                0.5446527012127894
+              ]
+            },
+            "escalation_recall": {
+              "mean": 0.6586486486486487,
+              "ci": [
+                0.6386486486486487,
+                0.6824324324324325
+              ],
+              "seeds": [
+                0.6324324324324324,
+                0.65,
+                0.6391891891891892,
+                0.7040540540540541,
+                0.6675675675675675
+              ]
+            },
+            "escalation_f1": {
+              "mean": 0.5949213952315674,
+              "ci": [
+                0.5891936740897361,
+                0.5997965057986417
+              ],
+              "seeds": [
+                0.5931558935361216,
+                0.5952970297029703,
+                0.5843113032736257,
+                0.6019641825534373,
+                0.5998785670916817
+              ]
+            },
+            "escalation_mcc": {
+              "mean": 0.3233003146075142,
+              "ci": [
+                0.3151323591715747,
+                0.32990907434083916
+              ],
+              "seeds": [
+                0.3315094581444839,
+                0.3274622452156011,
+                0.3083314978751432,
+                0.31966626670252907,
+                0.32953210509981345
+              ]
+            },
+            "proposed_violation_rate": {
+              "mean": 0.26645067132914846,
+              "ci": [
+                0.23815431992040295,
+                0.295803581062815
+              ],
+              "seeds": [
+                0.311046511627907,
+                0.25976692228730147,
+                0.2155615523001799,
+                0.2499407863571767,
+                0.2959375840731773
+              ]
+            },
+            "forced_escalation_rate": {
+              "mean": 0.0507,
+              "ci": [
+                0.0343,
+                0.06210499999999997
+              ],
+              "seeds": [
+                0.0625,
+                0.0175,
+                0.0635,
+                0.0505,
+                0.0595
+              ]
+            },
+            "executed_violation_rate": {
+              "mean": 0.0,
+              "ci": [
+                0.0,
+                0.0
+              ],
+              "seeds": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "compliant_success_rate": {
+              "mean": 0.417,
+              "ci": [
+                0.40140000000000003,
+                0.4306
+              ],
+              "seeds": [
+                0.4405,
+                0.423,
+                0.4175,
+                0.39,
+                0.414
+              ]
+            },
+            "ceiling": {
+              "mean": 0.63,
+              "ci": [
+                0.63,
+                0.63
+              ],
+              "seeds": [
+                0.63,
+                0.63,
+                0.63,
+                0.63,
+                0.63
+              ]
+            }
+          }
+        },
+        "unconstrained": {
+          "per_seed": {
+            "0": {
+              "mean_return": -0.6270833333333332,
+              "resolution_accuracy": 0.528,
+              "wrong_rate": 0.172,
+              "escalation_rate": 0.3,
+              "coverage": 0.7,
+              "selective_accuracy": 0.7542857142857143,
+              "mean_checks": 5.8365,
+              "mean_check_cost": 0.9470833333333333,
+              "escalation_precision": 0.5666666666666667,
+              "escalation_recall": 0.4594594594594595,
+              "escalation_f1": 0.5074626865671642,
+              "escalation_mcc": 0.2666681988066545,
+              "proposed_violation_rate": 0.006216631317194471,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0425,
+              "compliant_success_rate": 0.4935,
+              "ceiling": 0.63,
+              "return_ci": [
+                -0.8792947916666665,
+                -0.39364375000000007
+              ]
+            },
+            "1": {
+              "mean_return": -0.6874166666666667,
+              "resolution_accuracy": 0.508,
+              "wrong_rate": 0.1685,
+              "escalation_rate": 0.3235,
+              "coverage": 0.6765,
+              "selective_accuracy": 0.7509238728750924,
+              "mean_checks": 5.7865,
+              "mean_check_cost": 0.8954166666666666,
+              "escalation_precision": 0.5579598145285936,
+              "escalation_recall": 0.48783783783783785,
+              "escalation_f1": 0.5205479452054794,
+              "escalation_mcc": 0.26921367283723024,
+              "proposed_violation_rate": 0.018418919914536213,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.125,
+              "compliant_success_rate": 0.4055,
+              "ceiling": 0.63,
+              "return_ci": [
+                -0.9405864583333333,
+                -0.4573739583333333
+              ]
+            },
+            "2": {
+              "mean_return": -0.5398333333333333,
+              "resolution_accuracy": 0.531,
+              "wrong_rate": 0.189,
+              "escalation_rate": 0.28,
+              "coverage": 0.72,
+              "selective_accuracy": 0.7375,
+              "mean_checks": 5.3355,
+              "mean_check_cost": 0.7448333333333332,
+              "escalation_precision": 0.5642857142857143,
+              "escalation_recall": 0.42702702702702705,
+              "escalation_f1": 0.48615384615384616,
+              "escalation_mcc": 0.2509472836374511,
+              "proposed_violation_rate": 0.01578407386946571,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.1,
+              "compliant_success_rate": 0.4585,
+              "ceiling": 0.63,
+              "return_ci": [
+                -0.8057625,
+                -0.281157291666667
+              ]
+            },
+            "3": {
+              "mean_return": -0.8092916666666666,
+              "resolution_accuracy": 0.5585,
+              "wrong_rate": 0.201,
+              "escalation_rate": 0.2405,
+              "coverage": 0.7595,
+              "selective_accuracy": 0.7353522053982884,
+              "mean_checks": 7.0785,
+              "mean_check_cost": 1.1107916666666666,
+              "escalation_precision": 0.5488565488565489,
+              "escalation_recall": 0.3567567567567568,
+              "escalation_f1": 0.43243243243243246,
+              "escalation_mcc": 0.20846222124145097,
+              "proposed_violation_rate": 0.009036331002042458,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.073,
+              "compliant_success_rate": 0.505,
+              "ceiling": 0.63,
+              "return_ci": [
+                -1.0689979166666665,
+                -0.5509489583333333
+              ]
+            },
+            "4": {
+              "mean_return": -0.6613333333333332,
+              "resolution_accuracy": 0.546,
+              "wrong_rate": 0.1955,
+              "escalation_rate": 0.2585,
+              "coverage": 0.7415,
+              "selective_accuracy": 0.7363452461227242,
+              "mean_checks": 6.165,
+              "mean_check_cost": 0.9193333333333332,
+              "escalation_precision": 0.5377176015473888,
+              "escalation_recall": 0.37567567567567567,
+              "escalation_f1": 0.4423229912490056,
+              "escalation_mcc": 0.20510781229290617,
+              "proposed_violation_rate": 0.021284019539427775,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.1525,
+              "compliant_success_rate": 0.439,
+              "ceiling": 0.63,
+              "return_ci": [
+                -0.9233416666666666,
+                -0.4002375000000001
+              ]
+            }
+          },
+          "summary": {
+            "mean_return": {
+              "mean": -0.6649916666666666,
+              "ci": [
+                -0.7432583333333332,
+                -0.5884333333333334
+              ],
+              "seeds": [
+                -0.6270833333333332,
+                -0.6874166666666667,
+                -0.5398333333333333,
+                -0.8092916666666666,
+                -0.6613333333333332
+              ]
+            },
+            "resolution_accuracy": {
+              "mean": 0.5343,
+              "ci": [
+                0.52,
+                0.548
+              ],
+              "seeds": [
+                0.528,
+                0.508,
+                0.531,
+                0.5585,
+                0.546
+              ]
+            },
+            "wrong_rate": {
+              "mean": 0.18520000000000003,
+              "ci": [
+                0.174,
+                0.1962
+              ],
+              "seeds": [
+                0.172,
+                0.1685,
+                0.189,
+                0.201,
+                0.1955
+              ]
+            },
+            "escalation_rate": {
+              "mean": 0.28049999999999997,
+              "ci": [
+                0.2556,
+                0.30579999999999996
+              ],
+              "seeds": [
+                0.3,
+                0.3235,
+                0.28,
+                0.2405,
+                0.2585
+              ]
+            },
+            "coverage": {
+              "mean": 0.7195,
+              "ci": [
+                0.6942,
+                0.7444
+              ],
+              "seeds": [
+                0.7,
+                0.6765,
+                0.72,
+                0.7595,
+                0.7415
+              ]
+            },
+            "selective_accuracy": {
+              "mean": 0.7428814077363638,
+              "ci": [
+                0.736211323238973,
+                0.7495899050983672
+              ],
+              "seeds": [
+                0.7542857142857143,
+                0.7509238728750924,
+                0.7375,
+                0.7353522053982884,
+                0.7363452461227242
+              ]
+            },
+            "mean_checks": {
+              "mean": 6.0404,
+              "ci": [
+                5.6015999999999995,
+                6.5817
+              ],
+              "seeds": [
+                5.8365,
+                5.7865,
+                5.3355,
+                7.0785,
+                6.165
+              ]
+            },
+            "mean_check_cost": {
+              "mean": 0.9234916666666665,
+              "ci": [
+                0.8201833333333333,
+                1.029425
+              ],
+              "seeds": [
+                0.9470833333333333,
+                0.8954166666666666,
+                0.7448333333333332,
+                1.1107916666666666,
+                0.9193333333333332
+              ]
+            },
+            "escalation_precision": {
+              "mean": 0.5550972691769823,
+              "ci": [
+                0.5452590135568858,
+                0.563972915286671
+              ],
+              "seeds": [
+                0.5666666666666667,
+                0.5579598145285936,
+                0.5642857142857143,
+                0.5488565488565489,
+                0.5377176015473888
+              ]
+            },
+            "escalation_recall": {
+              "mean": 0.4213513513513513,
+              "ci": [
+                0.3783783783783784,
+                0.46432432432432436
+              ],
+              "seeds": [
+                0.4594594594594595,
+                0.48783783783783785,
+                0.42702702702702705,
+                0.3567567567567568,
+                0.37567567567567567
+              ]
+            },
+            "escalation_f1": {
+              "mean": 0.4777839803215856,
+              "ci": [
+                0.44743848325937885,
+                0.5084350219398267
+              ],
+              "seeds": [
+                0.5074626865671642,
+                0.5205479452054794,
+                0.48615384615384616,
+                0.43243243243243246,
+                0.4423229912490056
+              ]
+            },
+            "escalation_mcc": {
+              "mean": 0.24007983776313857,
+              "ci": [
+                0.2156174701412331,
+                0.26454220538504414
+              ],
+              "seeds": [
+                0.2666681988066545,
+                0.26921367283723024,
+                0.2509472836374511,
+                0.20846222124145097,
+                0.20510781229290617
+              ]
+            },
+            "proposed_violation_rate": {
+              "mean": 0.014147995128533325,
+              "ci": [
+                0.009230108961641132,
+                0.019037990555478734
+              ],
+              "seeds": [
+                0.006216631317194471,
+                0.018418919914536213,
+                0.01578407386946571,
+                0.009036331002042458,
+                0.021284019539427775
+              ]
+            },
+            "forced_escalation_rate": {
+              "mean": 0.0,
+              "ci": [
+                0.0,
+                0.0
+              ],
+              "seeds": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "executed_violation_rate": {
+              "mean": 0.0986,
+              "ci": [
+                0.0655,
+                0.131
+              ],
+              "seeds": [
+                0.0425,
+                0.125,
+                0.1,
+                0.073,
+                0.1525
+              ]
+            },
+            "compliant_success_rate": {
+              "mean": 0.4603,
+              "ci": [
+                0.4295,
+                0.4911
+              ],
+              "seeds": [
+                0.4935,
+                0.4055,
+                0.4585,
+                0.505,
+                0.439
+              ]
+            },
+            "ceiling": {
+              "mean": 0.63,
+              "ci": [
+                0.63,
+                0.63
+              ],
+              "seeds": [
+                0.63,
+                0.63,
+                0.63,
+                0.63,
+                0.63
+              ]
+            }
+          }
+        },
+        "penalty": {
+          "per_seed": {
+            "0": {
+              "mean_return": -0.775625,
+              "resolution_accuracy": 0.534,
+              "wrong_rate": 0.1975,
+              "escalation_rate": 0.2685,
+              "coverage": 0.7315,
+              "selective_accuracy": 0.7300068352699932,
+              "mean_checks": 6.257,
+              "mean_check_cost": 0.9336249999999999,
+              "escalation_precision": 0.590316573556797,
+              "escalation_recall": 0.4283783783783784,
+              "escalation_f1": 0.49647611589663276,
+              "escalation_mcc": 0.2764655433321477,
+              "proposed_violation_rate": 0.0052363235496761746,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.038,
+              "compliant_success_rate": 0.503,
+              "ceiling": 0.63,
+              "return_ci": [
+                -1.0475885416666668,
+                -0.5091197916666668
+              ]
+            },
+            "1": {
+              "mean_return": -0.8987083333333332,
+              "resolution_accuracy": 0.519,
+              "wrong_rate": 0.1835,
+              "escalation_rate": 0.2975,
+              "coverage": 0.7025,
+              "selective_accuracy": 0.7387900355871886,
+              "mean_checks": 6.9755,
+              "mean_check_cost": 1.0637083333333335,
+              "escalation_precision": 0.5563025210084034,
+              "escalation_recall": 0.4472972972972973,
+              "escalation_f1": 0.4958801498127341,
+              "escalation_mcc": 0.25111225942672266,
+              "proposed_violation_rate": 0.004451131590495894,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0355,
+              "compliant_success_rate": 0.489,
+              "ceiling": 0.63,
+              "return_ci": [
+                -1.15934375,
+                -0.6560343750000002
+              ]
+            },
+            "2": {
+              "mean_return": -0.7165,
+              "resolution_accuracy": 0.4945,
+              "wrong_rate": 0.157,
+              "escalation_rate": 0.3485,
+              "coverage": 0.6515,
+              "selective_accuracy": 0.7590176515732924,
+              "mean_checks": 6.0615,
+              "mean_check_cost": 0.9219999999999999,
+              "escalation_precision": 0.5466284074605452,
+              "escalation_recall": 0.5148648648648648,
+              "escalation_f1": 0.5302713987473904,
+              "escalation_mcc": 0.2675676458821263,
+              "proposed_violation_rate": 0.005593712384054379,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0395,
+              "compliant_success_rate": 0.4635,
+              "ceiling": 0.63,
+              "return_ci": [
+                -0.9607302083333333,
+                -0.46491250000000006
+              ]
+            },
+            "3": {
+              "mean_return": -0.7785833333333334,
+              "resolution_accuracy": 0.541,
+              "wrong_rate": 0.206,
+              "escalation_rate": 0.253,
+              "coverage": 0.747,
+              "selective_accuracy": 0.7242302543507363,
+              "mean_checks": 6.0805,
+              "mean_check_cost": 0.9175833333333333,
+              "escalation_precision": 0.5474308300395256,
+              "escalation_recall": 0.37432432432432433,
+              "escalation_f1": 0.44462279293739965,
+              "escalation_mcc": 0.21387395823958336,
+              "proposed_violation_rate": 0.0063554833698185155,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.045,
+              "compliant_success_rate": 0.506,
+              "ceiling": 0.63,
+              "return_ci": [
+                -1.0587552083333334,
+                -0.5275281250000002
+              ]
+            },
+            "4": {
+              "mean_return": -0.77975,
+              "resolution_accuracy": 0.5475,
+              "wrong_rate": 0.2055,
+              "escalation_rate": 0.247,
+              "coverage": 0.753,
+              "selective_accuracy": 0.7270916334661355,
+              "mean_checks": 6.2495,
+              "mean_check_cost": 0.96825,
+              "escalation_precision": 0.5465587044534413,
+              "escalation_recall": 0.36486486486486486,
+              "escalation_f1": 0.4376012965964344,
+              "escalation_mcc": 0.20944451200017397,
+              "proposed_violation_rate": 0.007655700393130561,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0555,
+              "compliant_success_rate": 0.508,
+              "ceiling": 0.63,
+              "return_ci": [
+                -1.0398541666666667,
+                -0.5224781250000001
+              ]
+            }
+          },
+          "summary": {
+            "mean_return": {
+              "mean": -0.7898333333333334,
+              "ci": [
+                -0.8500666666666665,
+                -0.7413333333333334
+              ],
+              "seeds": [
+                -0.775625,
+                -0.8987083333333332,
+                -0.7165,
+                -0.7785833333333334,
+                -0.77975
+              ]
+            },
+            "resolution_accuracy": {
+              "mean": 0.5271999999999999,
+              "ci": [
+                0.51,
+                0.5422
+              ],
+              "seeds": [
+                0.534,
+                0.519,
+                0.4945,
+                0.541,
+                0.5475
+              ]
+            },
+            "wrong_rate": {
+              "mean": 0.1899,
+              "ci": [
+                0.1721,
+                0.2041
+              ],
+              "seeds": [
+                0.1975,
+                0.1835,
+                0.157,
+                0.206,
+                0.2055
+              ]
+            },
+            "escalation_rate": {
+              "mean": 0.2829,
+              "ci": [
+                0.2537,
+                0.31799999999999995
+              ],
+              "seeds": [
+                0.2685,
+                0.2975,
+                0.3485,
+                0.253,
+                0.247
+              ]
+            },
+            "coverage": {
+              "mean": 0.7171000000000001,
+              "ci": [
+                0.682,
+                0.7463
+              ],
+              "seeds": [
+                0.7315,
+                0.7025,
+                0.6515,
+                0.747,
+                0.753
+              ]
+            },
+            "selective_accuracy": {
+              "mean": 0.7358272820494692,
+              "ci": [
+                0.7265301221807473,
+                0.7480146489315603
+              ],
+              "seeds": [
+                0.7300068352699932,
+                0.7387900355871886,
+                0.7590176515732924,
+                0.7242302543507363,
+                0.7270916334661355
+              ]
+            },
+            "mean_checks": {
+              "mean": 6.324800000000001,
+              "ci": [
+                6.1044,
+                6.651300000000001
+              ],
+              "seeds": [
+                6.257,
+                6.9755,
+                6.0615,
+                6.0805,
+                6.2495
+              ]
+            },
+            "mean_check_cost": {
+              "mean": 0.9610333333333333,
+              "ci": [
+                0.9225583333333333,
+                1.0116749999999999
+              ],
+              "seeds": [
+                0.9336249999999999,
+                1.0637083333333335,
+                0.9219999999999999,
+                0.9175833333333333,
+                0.96825
+              ]
+            },
+            "escalation_precision": {
+              "mean": 0.5574474073037425,
+              "ci": [
+                0.5467610107734997,
+                0.5731622761498885
+              ],
+              "seeds": [
+                0.590316573556797,
+                0.5563025210084034,
+                0.5466284074605452,
+                0.5474308300395256,
+                0.5465587044534413
+              ]
+            },
+            "escalation_recall": {
+              "mean": 0.4259459459459459,
+              "ci": [
+                0.3813513513513514,
+                0.47324324324324324
+              ],
+              "seeds": [
+                0.4283783783783784,
+                0.4472972972972973,
+                0.5148648648648648,
+                0.37432432432432433,
+                0.36486486486486486
+              ]
+            },
+            "escalation_f1": {
+              "mean": 0.48097035079811823,
+              "ci": [
+                0.452033538124795,
+                0.5098750358201561
+              ],
+              "seeds": [
+                0.49647611589663276,
+                0.4958801498127341,
+                0.5302713987473904,
+                0.44462279293739965,
+                0.4376012965964344
+              ]
+            },
+            "escalation_mcc": {
+              "mean": 0.2436927837761508,
+              "ci": [
+                0.2195498399812475,
+                0.2678357275710541
+              ],
+              "seeds": [
+                0.2764655433321477,
+                0.25111225942672266,
+                0.2675676458821263,
+                0.21387395823958336,
+                0.20944451200017397
+              ]
+            },
+            "proposed_violation_rate": {
+              "mean": 0.005858470257435105,
+              "ci": [
+                0.004993724532879703,
+                0.006875570179143334
+              ],
+              "seeds": [
+                0.0052363235496761746,
+                0.004451131590495894,
+                0.005593712384054379,
+                0.0063554833698185155,
+                0.007655700393130561
+              ]
+            },
+            "forced_escalation_rate": {
+              "mean": 0.0,
+              "ci": [
+                0.0,
+                0.0
+              ],
+              "seeds": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "executed_violation_rate": {
+              "mean": 0.042699999999999995,
+              "ci": [
+                0.0373,
+                0.0494
+              ],
+              "seeds": [
+                0.038,
+                0.0355,
+                0.0395,
+                0.045,
+                0.0555
+              ]
+            },
+            "compliant_success_rate": {
+              "mean": 0.4939,
+              "ci": [
+                0.47750000000000004,
+                0.5062
+              ],
+              "seeds": [
+                0.503,
+                0.489,
+                0.4635,
+                0.506,
+                0.508
+              ]
+            },
+            "ceiling": {
+              "mean": 0.63,
+              "ci": [
+                0.63,
+                0.63
+              ],
+              "seeds": [
+                0.63,
+                0.63,
+                0.63,
+                0.63,
+                0.63
+              ]
+            }
+          }
+        }
+      }
+    },
+    "noise=0.1,missing=0.4": {
+      "baselines": {
+        "Always escalate": {
+          "mean_return": -2.0,
+          "resolution_accuracy": 0.0,
+          "wrong_rate": 0.0,
+          "escalation_rate": 1.0,
+          "coverage": 0.0,
+          "selective_accuracy": null,
+          "mean_checks": 0.0,
+          "mean_check_cost": 0.0,
+          "escalation_precision": 0.4475,
+          "escalation_recall": 1.0,
+          "escalation_f1": 0.6183074265975821,
+          "escalation_mcc": null,
+          "proposed_violation_rate": 0.0,
+          "forced_escalation_rate": 0.0,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.0,
+          "ceiling": 0.5525,
+          "return_ci": [
+            -2.0,
+            -2.0
+          ]
+        },
+        "Initial-symptom": {
+          "mean_return": -1.9535,
+          "resolution_accuracy": 0.3175,
+          "wrong_rate": 0.272,
+          "escalation_rate": 0.4105,
+          "coverage": 0.5895,
+          "selective_accuracy": 0.5385920271416454,
+          "mean_checks": 0.0,
+          "mean_check_cost": 0.0,
+          "escalation_precision": 0.5749086479902558,
+          "escalation_recall": 0.5273743016759777,
+          "escalation_f1": 0.5501165501165501,
+          "escalation_mcc": 0.21382127859384678,
+          "proposed_violation_rate": 0.5973360655737705,
+          "forced_escalation_rate": 0.4105,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.3175,
+          "ceiling": 0.5525,
+          "return_ci": [
+            -2.219525,
+            -1.707475
+          ]
+        },
+        "Scripted (k=9)": {
+          "mean_return": -2.556166666666666,
+          "resolution_accuracy": 0.5775,
+          "wrong_rate": 0.3665,
+          "escalation_rate": 0.056,
+          "coverage": 0.944,
+          "selective_accuracy": 0.6117584745762712,
+          "mean_checks": 9.0,
+          "mean_check_cost": 1.666666666666667,
+          "escalation_precision": 1.0,
+          "escalation_recall": 0.12513966480446928,
+          "escalation_f1": 0.2224428997020854,
+          "escalation_mcc": 0.2706310594586613,
+          "proposed_violation_rate": 0.023470490032406952,
+          "forced_escalation_rate": 0.056,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.5775,
+          "ceiling": 0.5525,
+          "return_ci": [
+            -2.866904166666666,
+            -2.2666041666666663
+          ]
+        },
+        "Threshold (tau=0.65)": {
+          "mean_return": -1.2924583333333335,
+          "resolution_accuracy": 0.401,
+          "wrong_rate": 0.135,
+          "escalation_rate": 0.464,
+          "coverage": 0.536,
+          "selective_accuracy": 0.7481343283582089,
+          "mean_checks": 5.837,
+          "mean_check_cost": 1.0194583333333334,
+          "escalation_precision": 0.6842672413793104,
+          "escalation_recall": 0.7094972067039106,
+          "escalation_f1": 0.6966538672517828,
+          "escalation_mcc": 0.44303246140810026,
+          "proposed_violation_rate": 0.0774175899329777,
+          "forced_escalation_rate": 0.0,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.401,
+          "ceiling": 0.5525,
+          "return_ci": [
+            -1.5241291666666665,
+            -1.0687864583333335
+          ]
+        }
+      },
+      "agents": {
+        "shielded": {
+          "per_seed": {
+            "0": {
+              "mean_return": -1.2119583333333335,
+              "resolution_accuracy": 0.3515,
+              "wrong_rate": 0.1285,
+              "escalation_rate": 0.52,
+              "coverage": 0.48,
+              "selective_accuracy": 0.7322916666666667,
+              "mean_checks": 4.8335,
+              "mean_check_cost": 0.6444583333333332,
+              "escalation_precision": 0.614423076923077,
+              "escalation_recall": 0.7139664804469273,
+              "escalation_f1": 0.6604651162790697,
+              "escalation_mcc": 0.34940955225086706,
+              "proposed_violation_rate": 0.3388449414143817,
+              "forced_escalation_rate": 0.092,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.3515,
+              "ceiling": 0.5525,
+              "return_ci": [
+                -1.4334854166666668,
+                -1.0006177083333334
+              ]
+            },
+            "1": {
+              "mean_return": -1.2490416666666666,
+              "resolution_accuracy": 0.333,
+              "wrong_rate": 0.109,
+              "escalation_rate": 0.558,
+              "coverage": 0.442,
+              "selective_accuracy": 0.753393665158371,
+              "mean_checks": 5.33,
+              "mean_check_cost": 0.7080416666666668,
+              "escalation_precision": 0.6137992831541219,
+              "escalation_recall": 0.7653631284916201,
+              "escalation_f1": 0.6812531079065143,
+              "escalation_mcc": 0.3757800163262329,
+              "proposed_violation_rate": 0.3064019171516604,
+              "forced_escalation_rate": 0.0395,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.333,
+              "ceiling": 0.5525,
+              "return_ci": [
+                -1.453330208333333,
+                -1.0553666666666666
+              ]
+            },
+            "2": {
+              "mean_return": -1.4525833333333336,
+              "resolution_accuracy": 0.3265,
+              "wrong_rate": 0.117,
+              "escalation_rate": 0.5565,
+              "coverage": 0.4435,
+              "selective_accuracy": 0.7361894024802705,
+              "mean_checks": 5.4485,
+              "mean_check_cost": 0.8020833333333333,
+              "escalation_precision": 0.5992812219227314,
+              "escalation_recall": 0.7452513966480447,
+              "escalation_f1": 0.6643426294820718,
+              "escalation_mcc": 0.3419331097724558,
+              "proposed_violation_rate": 0.27675732956552457,
+              "forced_escalation_rate": 0.134,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.3265,
+              "ceiling": 0.5525,
+              "return_ci": [
+                -1.6566333333333334,
+                -1.2506239583333334
+              ]
+            },
+            "3": {
+              "mean_return": -1.5693333333333332,
+              "resolution_accuracy": 0.2865,
+              "wrong_rate": 0.0945,
+              "escalation_rate": 0.619,
+              "coverage": 0.381,
+              "selective_accuracy": 0.7519685039370079,
+              "mean_checks": 5.745,
+              "mean_check_cost": 0.8188333333333333,
+              "escalation_precision": 0.5718901453957996,
+              "escalation_recall": 0.7910614525139665,
+              "escalation_f1": 0.6638537271448663,
+              "escalation_mcc": 0.31886448553724694,
+              "proposed_violation_rate": 0.30665291947037115,
+              "forced_escalation_rate": 0.1085,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.2865,
+              "ceiling": 0.5525,
+              "return_ci": [
+                -1.76518125,
+                -1.376854166666667
+              ]
+            },
+            "4": {
+              "mean_return": -1.1740416666666664,
+              "resolution_accuracy": 0.3275,
+              "wrong_rate": 0.1055,
+              "escalation_rate": 0.567,
+              "coverage": 0.433,
+              "selective_accuracy": 0.75635103926097,
+              "mean_checks": 4.542,
+              "mean_check_cost": 0.6225416666666668,
+              "escalation_precision": 0.6137566137566137,
+              "escalation_recall": 0.7776536312849162,
+              "escalation_f1": 0.6860522424839822,
+              "escalation_mcc": 0.38261663773213894,
+              "proposed_violation_rate": 0.347025143141648,
+              "forced_escalation_rate": 0.121,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.3275,
+              "ceiling": 0.5525,
+              "return_ci": [
+                -1.3685541666666665,
+                -0.9745760416666666
+              ]
+            }
+          },
+          "summary": {
+            "mean_return": {
+              "mean": -1.3313916666666668,
+              "ci": [
+                -1.4745083333333333,
+                -1.2040416666666665
+              ],
+              "seeds": [
+                -1.2119583333333335,
+                -1.2490416666666666,
+                -1.4525833333333336,
+                -1.5693333333333332,
+                -1.1740416666666664
+              ]
+            },
+            "resolution_accuracy": {
+              "mean": 0.325,
+              "ci": [
+                0.30379999999999996,
+                0.3419
+              ],
+              "seeds": [
+                0.3515,
+                0.333,
+                0.3265,
+                0.2865,
+                0.3275
+              ]
+            },
+            "wrong_rate": {
+              "mean": 0.1109,
+              "ci": [
+                0.1017875,
+                0.1216
+              ],
+              "seeds": [
+                0.1285,
+                0.109,
+                0.117,
+                0.0945,
+                0.1055
+              ]
+            },
+            "escalation_rate": {
+              "mean": 0.5641,
+              "ci": [
+                0.5367000000000001,
+                0.5942999999999999
+              ],
+              "seeds": [
+                0.52,
+                0.558,
+                0.5565,
+                0.619,
+                0.567
+              ]
+            },
+            "coverage": {
+              "mean": 0.4359,
+              "ci": [
+                0.40570000000000006,
+                0.4633
+              ],
+              "seeds": [
+                0.48,
+                0.442,
+                0.4435,
+                0.381,
+                0.433
+              ]
+            },
+            "selective_accuracy": {
+              "mean": 0.7460388555006572,
+              "ci": [
+                0.7372916135277283,
+                0.754291582555138
+              ],
+              "seeds": [
+                0.7322916666666667,
+                0.753393665158371,
+                0.7361894024802705,
+                0.7519685039370079,
+                0.75635103926097
+              ]
+            },
+            "mean_checks": {
+              "mean": 5.1798,
+              "ci": [
+                4.757900000000001,
+                5.5434
+              ],
+              "seeds": [
+                4.8335,
+                5.33,
+                5.4485,
+                5.745,
+                4.542
+              ]
+            },
+            "mean_check_cost": {
+              "mean": 0.7191916666666666,
+              "ci": [
+                0.6440250000000001,
+                0.7899749999999999
+              ],
+              "seeds": [
+                0.6444583333333332,
+                0.7080416666666668,
+                0.8020833333333333,
+                0.8188333333333333,
+                0.6225416666666668
+              ]
+            },
+            "escalation_precision": {
+              "mean": 0.6026300682304686,
+              "ci": [
+                0.5858749470066414,
+                0.6140402667822024
+              ],
+              "seeds": [
+                0.614423076923077,
+                0.6137992831541219,
+                0.5992812219227314,
+                0.5718901453957996,
+                0.6137566137566137
+              ]
+            },
+            "escalation_recall": {
+              "mean": 0.758659217877095,
+              "ci": [
+                0.7329608938547485,
+                0.7805586592178771
+              ],
+              "seeds": [
+                0.7139664804469273,
+                0.7653631284916201,
+                0.7452513966480447,
+                0.7910614525139665,
+                0.7776536312849162
+              ]
+            },
+            "escalation_f1": {
+              "mean": 0.6711933646593009,
+              "ci": [
+                0.6625960632659889,
+                0.6799919333818351
+              ],
+              "seeds": [
+                0.6604651162790697,
+                0.6812531079065143,
+                0.6643426294820718,
+                0.6638537271448663,
+                0.6860522424839822
+              ]
+            },
+            "escalation_mcc": {
+              "mean": 0.3537207603237883,
+              "ci": [
+                0.3342009485740545,
+                0.3732405720735222
+              ],
+              "seeds": [
+                0.34940955225086706,
+                0.3757800163262329,
+                0.3419331097724558,
+                0.31886448553724694,
+                0.38261663773213894
+              ]
+            },
+            "proposed_violation_rate": {
+              "mean": 0.31513645014871716,
+              "ci": [
+                0.29459428258094816,
+                0.33726445759819723
+              ],
+              "seeds": [
+                0.3388449414143817,
+                0.3064019171516604,
+                0.27675732956552457,
+                0.30665291947037115,
+                0.347025143141648
+              ]
+            },
+            "forced_escalation_rate": {
+              "mean": 0.099,
+              "ci": [
+                0.0689,
+                0.1237
+              ],
+              "seeds": [
+                0.092,
+                0.0395,
+                0.134,
+                0.1085,
+                0.121
+              ]
+            },
+            "executed_violation_rate": {
+              "mean": 0.0,
+              "ci": [
+                0.0,
+                0.0
+              ],
+              "seeds": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "compliant_success_rate": {
+              "mean": 0.325,
+              "ci": [
+                0.30379999999999996,
+                0.3419
+              ],
+              "seeds": [
+                0.3515,
+                0.333,
+                0.3265,
+                0.2865,
+                0.3275
+              ]
+            },
+            "ceiling": {
+              "mean": 0.5525,
+              "ci": [
+                0.5525,
+                0.5525
+              ],
+              "seeds": [
+                0.5525,
+                0.5525,
+                0.5525,
+                0.5525,
+                0.5525
+              ]
+            }
+          }
+        },
+        "unconstrained": {
+          "per_seed": {
+            "0": {
+              "mean_return": -1.0121666666666664,
+              "resolution_accuracy": 0.457,
+              "wrong_rate": 0.153,
+              "escalation_rate": 0.39,
+              "coverage": 0.61,
+              "selective_accuracy": 0.7491803278688525,
+              "mean_checks": 6.1225,
+              "mean_check_cost": 0.9871666666666665,
+              "escalation_precision": 0.617948717948718,
+              "escalation_recall": 0.5385474860335195,
+              "escalation_f1": 0.5755223880597015,
+              "escalation_mcc": 0.2740933279624914,
+              "proposed_violation_rate": 0.011091611091611091,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.079,
+              "compliant_success_rate": 0.4005,
+              "ceiling": 0.5525,
+              "return_ci": [
+                -1.24431875,
+                -0.7854145833333332
+              ]
+            },
+            "1": {
+              "mean_return": -1.2238333333333336,
+              "resolution_accuracy": 0.4225,
+              "wrong_rate": 0.1475,
+              "escalation_rate": 0.43,
+              "coverage": 0.57,
+              "selective_accuracy": 0.7412280701754386,
+              "mean_checks": 6.3365,
+              "mean_check_cost": 1.0013333333333332,
+              "escalation_precision": 0.6034883720930233,
+              "escalation_recall": 0.5798882681564246,
+              "escalation_f1": 0.5914529914529915,
+              "escalation_mcc": 0.2724748139511569,
+              "proposed_violation_rate": 0.01608396374292919,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.118,
+              "compliant_success_rate": 0.3305,
+              "ceiling": 0.5525,
+              "return_ci": [
+                -1.4569656250000003,
+                -1.0028270833333333
+              ]
+            },
+            "2": {
+              "mean_return": -0.9455833333333332,
+              "resolution_accuracy": 0.4835,
+              "wrong_rate": 0.19,
+              "escalation_rate": 0.3265,
+              "coverage": 0.6735,
+              "selective_accuracy": 0.7178916109873794,
+              "mean_checks": 5.605,
+              "mean_check_cost": 0.8100833333333333,
+              "escalation_precision": 0.6232771822358346,
+              "escalation_recall": 0.4547486033519553,
+              "escalation_f1": 0.5258397932816538,
+              "escalation_mcc": 0.24613457834976898,
+              "proposed_violation_rate": 0.022710068130204392,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.15,
+              "compliant_success_rate": 0.388,
+              "ceiling": 0.5525,
+              "return_ci": [
+                -1.2029916666666667,
+                -0.7001760416666667
+              ]
+            },
+            "3": {
+              "mean_return": -1.272375,
+              "resolution_accuracy": 0.5065,
+              "wrong_rate": 0.201,
+              "escalation_rate": 0.2925,
+              "coverage": 0.7075,
+              "selective_accuracy": 0.7159010600706713,
+              "mean_checks": 7.502,
+              "mean_check_cost": 1.209875,
+              "escalation_precision": 0.6170940170940171,
+              "escalation_recall": 0.4033519553072626,
+              "escalation_f1": 0.48783783783783785,
+              "escalation_mcc": 0.21930451822949149,
+              "proposed_violation_rate": 0.013526229122559397,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.115,
+              "compliant_success_rate": 0.43,
+              "ceiling": 0.5525,
+              "return_ci": [
+                -1.5350427083333331,
+                -1.0119020833333336
+              ]
+            },
+            "4": {
+              "mean_return": -1.1115416666666667,
+              "resolution_accuracy": 0.4985,
+              "wrong_rate": 0.1985,
+              "escalation_rate": 0.303,
+              "coverage": 0.697,
+              "selective_accuracy": 0.7152080344332855,
+              "mean_checks": 6.6495,
+              "mean_check_cost": 1.0130416666666666,
+              "escalation_precision": 0.5924092409240924,
+              "escalation_recall": 0.4011173184357542,
+              "escalation_f1": 0.4783477681545637,
+              "escalation_mcc": 0.19214909604759642,
+              "proposed_violation_rate": 0.023204130988953527,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.1775,
+              "compliant_success_rate": 0.3795,
+              "ceiling": 0.5525,
+              "return_ci": [
+                -1.37076875,
+                -0.8596604166666667
+              ]
+            }
+          },
+          "summary": {
+            "mean_return": {
+              "mean": -1.1131,
+              "ci": [
+                -1.2203447916666668,
+                -1.0054083333333332
+              ],
+              "seeds": [
+                -1.0121666666666664,
+                -1.2238333333333336,
+                -0.9455833333333332,
+                -1.272375,
+                -1.1115416666666667
+              ]
+            },
+            "resolution_accuracy": {
+              "mean": 0.47359999999999997,
+              "ci": [
+                0.44460000000000005,
+                0.49729999999999996
+              ],
+              "seeds": [
+                0.457,
+                0.4225,
+                0.4835,
+                0.5065,
+                0.4985
+              ]
+            },
+            "wrong_rate": {
+              "mean": 0.178,
+              "ci": [
+                0.15819999999999998,
+                0.1973
+              ],
+              "seeds": [
+                0.153,
+                0.1475,
+                0.19,
+                0.201,
+                0.1985
+              ]
+            },
+            "escalation_rate": {
+              "mean": 0.3484,
+              "ci": [
+                0.3056,
+                0.39659999999999995
+              ],
+              "seeds": [
+                0.39,
+                0.43,
+                0.3265,
+                0.2925,
+                0.303
+              ]
+            },
+            "coverage": {
+              "mean": 0.6516,
+              "ci": [
+                0.6033999999999999,
+                0.6944000000000001
+              ],
+              "seeds": [
+                0.61,
+                0.57,
+                0.6735,
+                0.7075,
+                0.697
+              ]
+            },
+            "selective_accuracy": {
+              "mean": 0.7278818207071255,
+              "ci": [
+                0.7160219599990586,
+                0.7397680248208888
+              ],
+              "seeds": [
+                0.7491803278688525,
+                0.7412280701754386,
+                0.7178916109873794,
+                0.7159010600706713,
+                0.7152080344332855
+              ]
+            },
+            "mean_checks": {
+              "mean": 6.443099999999999,
+              "ci": [
+                5.9174,
+                6.992999999999999
+              ],
+              "seeds": [
+                6.1225,
+                6.3365,
+                5.605,
+                7.502,
+                6.6495
+              ]
+            },
+            "mean_check_cost": {
+              "mean": 1.0043,
+              "ci": [
+                0.8888664583333332,
+                1.1236249999999999
+              ],
+              "seeds": [
+                0.9871666666666665,
+                1.0013333333333332,
+                0.8100833333333333,
+                1.209875,
+                1.0130416666666666
+              ]
+            },
+            "escalation_precision": {
+              "mean": 0.6108435060591371,
+              "ci": [
+                0.5997329625628037,
+                0.6199091634926245
+              ],
+              "seeds": [
+                0.617948717948718,
+                0.6034883720930233,
+                0.6232771822358346,
+                0.6170940170940171,
+                0.5924092409240924
+              ]
+            },
+            "escalation_recall": {
+              "mean": 0.4755307262569833,
+              "ci": [
+                0.4127374301675978,
+                0.5383240223463688
+              ],
+              "seeds": [
+                0.5385474860335195,
+                0.5798882681564246,
+                0.4547486033519553,
+                0.4033519553072626,
+                0.4011173184357542
+              ]
+            },
+            "escalation_f1": {
+              "mean": 0.5318001557573496,
+              "ci": [
+                0.49164220105329137,
+                0.571958110461408
+              ],
+              "seeds": [
+                0.5755223880597015,
+                0.5914529914529915,
+                0.5258397932816538,
+                0.48783783783783785,
+                0.4783477681545637
+              ]
+            },
+            "escalation_mcc": {
+              "mean": 0.24083126690810105,
+              "ci": [
+                0.21364532406468753,
+                0.26785417243541315
+              ],
+              "seeds": [
+                0.2740933279624914,
+                0.2724748139511569,
+                0.24613457834976898,
+                0.21930451822949149,
+                0.19214909604759642
+              ]
+            },
+            "proposed_violation_rate": {
+              "mean": 0.01732320061525152,
+              "ci": [
+                0.013063928834254035,
+                0.021582472396249004
+              ],
+              "seeds": [
+                0.011091611091611091,
+                0.01608396374292919,
+                0.022710068130204392,
+                0.013526229122559397,
+                0.023204130988953527
+              ]
+            },
+            "forced_escalation_rate": {
+              "mean": 0.0,
+              "ci": [
+                0.0,
+                0.0
+              ],
+              "seeds": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "executed_violation_rate": {
+              "mean": 0.12789999999999999,
+              "ci": [
+                0.1006,
+                0.15784249999999977
+              ],
+              "seeds": [
+                0.079,
+                0.118,
+                0.15,
+                0.115,
+                0.1775
+              ]
+            },
+            "compliant_success_rate": {
+              "mean": 0.38570000000000004,
+              "ci": [
+                0.356,
+                0.41150000000000003
+              ],
+              "seeds": [
+                0.4005,
+                0.3305,
+                0.388,
+                0.43,
+                0.3795
+              ]
+            },
+            "ceiling": {
+              "mean": 0.5525,
+              "ci": [
+                0.5525,
+                0.5525
+              ],
+              "seeds": [
+                0.5525,
+                0.5525,
+                0.5525,
+                0.5525,
+                0.5525
+              ]
+            }
+          }
+        },
+        "penalty": {
+          "per_seed": {
+            "0": {
+              "mean_return": -1.15175,
+              "resolution_accuracy": 0.474,
+              "wrong_rate": 0.173,
+              "escalation_rate": 0.353,
+              "coverage": 0.647,
+              "selective_accuracy": 0.732612055641422,
+              "mean_checks": 7.0115,
+              "mean_check_cost": 1.08575,
+              "escalation_precision": 0.6430594900849859,
+              "escalation_recall": 0.5072625698324023,
+              "escalation_f1": 0.5671455340412243,
+              "escalation_mcc": 0.29050355242981935,
+              "proposed_violation_rate": 0.00836297821881046,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.067,
+              "compliant_success_rate": 0.423,
+              "ceiling": 0.5525,
+              "return_ci": [
+                -1.3992760416666667,
+                -0.9129104166666667
+              ]
+            },
+            "1": {
+              "mean_return": -1.3920833333333336,
+              "resolution_accuracy": 0.442,
+              "wrong_rate": 0.159,
+              "escalation_rate": 0.399,
+              "coverage": 0.601,
+              "selective_accuracy": 0.7354409317803661,
+              "mean_checks": 7.635,
+              "mean_check_cost": 1.2140833333333332,
+              "escalation_precision": 0.6240601503759399,
+              "escalation_recall": 0.5564245810055866,
+              "escalation_f1": 0.5883047844063792,
+              "escalation_mcc": 0.28932052259105595,
+              "proposed_violation_rate": 0.0070063694267515925,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0605,
+              "compliant_success_rate": 0.397,
+              "ceiling": 0.5525,
+              "return_ci": [
+                -1.6319656249999999,
+                -1.1542739583333335
+              ]
+            },
+            "2": {
+              "mean_return": -0.9928333333333333,
+              "resolution_accuracy": 0.4525,
+              "wrong_rate": 0.1465,
+              "escalation_rate": 0.401,
+              "coverage": 0.599,
+              "selective_accuracy": 0.7554257095158597,
+              "mean_checks": 6.3655,
+              "mean_check_cost": 0.9883333333333333,
+              "escalation_precision": 0.6359102244389028,
+              "escalation_recall": 0.5698324022346368,
+              "escalation_f1": 0.6010606953447261,
+              "escalation_mcc": 0.3100277589714769,
+              "proposed_violation_rate": 0.00909646324078474,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.067,
+              "compliant_success_rate": 0.4015,
+              "ceiling": 0.5525,
+              "return_ci": [
+                -1.2278927083333333,
+                -0.7637041666666666
+              ]
+            },
+            "3": {
+              "mean_return": -1.2132916666666664,
+              "resolution_accuracy": 0.5,
+              "wrong_rate": 0.209,
+              "escalation_rate": 0.291,
+              "coverage": 0.709,
+              "selective_accuracy": 0.7052186177715092,
+              "mean_checks": 6.7505,
+              "mean_check_cost": 1.0412916666666665,
+              "escalation_precision": 0.6701030927835051,
+              "escalation_recall": 0.43575418994413406,
+              "escalation_f1": 0.5280974949221394,
+              "escalation_mcc": 0.2868084285087506,
+              "proposed_violation_rate": 0.009225211276691826,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0715,
+              "compliant_success_rate": 0.444,
+              "ceiling": 0.5525,
+              "return_ci": [
+                -1.4758197916666667,
+                -0.9520666666666668
+              ]
+            },
+            "4": {
+              "mean_return": -1.2705416666666665,
+              "resolution_accuracy": 0.4935,
+              "wrong_rate": 0.204,
+              "escalation_rate": 0.3025,
+              "coverage": 0.6975,
+              "selective_accuracy": 0.7075268817204301,
+              "mean_checks": 6.9155,
+              "mean_check_cost": 1.0930416666666665,
+              "escalation_precision": 0.6198347107438017,
+              "escalation_recall": 0.41899441340782123,
+              "escalation_f1": 0.5,
+              "escalation_mcc": 0.22824468967952727,
+              "proposed_violation_rate": 0.012507106310403639,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.099,
+              "compliant_success_rate": 0.43,
+              "ceiling": 0.5525,
+              "return_ci": [
+                -1.5320427083333334,
+                -1.012571875
+              ]
+            }
+          },
+          "summary": {
+            "mean_return": {
+              "mean": -1.2041,
+              "ci": [
+                -1.3122333333333336,
+                -1.0810166666666665
+              ],
+              "seeds": [
+                -1.15175,
+                -1.3920833333333336,
+                -0.9928333333333333,
+                -1.2132916666666664,
+                -1.2705416666666665
+              ]
+            },
+            "resolution_accuracy": {
+              "mean": 0.47240000000000004,
+              "ci": [
+                0.4526,
+                0.49219999999999997
+              ],
+              "seeds": [
+                0.474,
+                0.442,
+                0.4525,
+                0.5,
+                0.4935
+              ]
+            },
+            "wrong_rate": {
+              "mean": 0.17829999999999996,
+              "ci": [
+                0.1568,
+                0.19979999999999998
+              ],
+              "seeds": [
+                0.173,
+                0.159,
+                0.1465,
+                0.209,
+                0.204
+              ]
+            },
+            "escalation_rate": {
+              "mean": 0.3493,
+              "ci": [
+                0.30799999999999994,
+                0.3906
+              ],
+              "seeds": [
+                0.353,
+                0.399,
+                0.401,
+                0.291,
+                0.3025
+              ]
+            },
+            "coverage": {
+              "mean": 0.6507,
+              "ci": [
+                0.6093999999999999,
+                0.692
+              ],
+              "seeds": [
+                0.647,
+                0.601,
+                0.599,
+                0.709,
+                0.6975
+              ]
+            },
+            "selective_accuracy": {
+              "mean": 0.7272448392859174,
+              "ci": [
+                0.71162061092506,
+                0.7428690676467747
+              ],
+              "seeds": [
+                0.732612055641422,
+                0.7354409317803661,
+                0.7554257095158597,
+                0.7052186177715092,
+                0.7075268817204301
+              ]
+            },
+            "mean_checks": {
+              "mean": 6.935599999999999,
+              "ci": [
+                6.585500000000001,
+                7.3142
+              ],
+              "seeds": [
+                7.0115,
+                7.635,
+                6.3655,
+                6.7505,
+                6.9155
+              ]
+            },
+            "mean_check_cost": {
+              "mean": 1.0844999999999998,
+              "ci": [
+                1.0201083333333334,
+                1.1538583333333332
+              ],
+              "seeds": [
+                1.08575,
+                1.2140833333333332,
+                0.9883333333333333,
+                1.0412916666666665,
+                1.0930416666666665
+              ]
+            },
+            "escalation_precision": {
+              "mean": 0.638593533685427,
+              "ci": [
+                0.6247399893356771,
+                0.6540559306330717
+              ],
+              "seeds": [
+                0.6430594900849859,
+                0.6240601503759399,
+                0.6359102244389028,
+                0.6701030927835051,
+                0.6198347107438017
+              ]
+            },
+            "escalation_recall": {
+              "mean": 0.4976536312849162,
+              "ci": [
+                0.4433519553072626,
+                0.5519553072625698
+              ],
+              "seeds": [
+                0.5072625698324023,
+                0.5564245810055866,
+                0.5698324022346368,
+                0.43575418994413406,
+                0.41899441340782123
+              ]
+            },
+            "escalation_f1": {
+              "mean": 0.5569217017428938,
+              "ci": [
+                0.5232804558657038,
+                0.5891752987086869
+              ],
+              "seeds": [
+                0.5671455340412243,
+                0.5883047844063792,
+                0.6010606953447261,
+                0.5280974949221394,
+                0.5
+              ]
+            },
+            "escalation_mcc": {
+              "mean": 0.280980990436126,
+              "ci": [
+                0.2529116288118914,
+                0.3014790515706001
+              ],
+              "seeds": [
+                0.29050355242981935,
+                0.28932052259105595,
+                0.3100277589714769,
+                0.2868084285087506,
+                0.22824468967952727
+              ]
+            },
+            "proposed_violation_rate": {
+              "mean": 0.00923962569468845,
+              "ci": [
+                0.007868156559546268,
+                0.010996795818340755
+              ],
+              "seeds": [
+                0.00836297821881046,
+                0.0070063694267515925,
+                0.00909646324078474,
+                0.009225211276691826,
+                0.012507106310403639
+              ]
+            },
+            "forced_escalation_rate": {
+              "mean": 0.0,
+              "ci": [
+                0.0,
+                0.0
+              ],
+              "seeds": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "executed_violation_rate": {
+              "mean": 0.073,
+              "ci": [
+                0.064,
+                0.08620000000000001
+              ],
+              "seeds": [
+                0.067,
+                0.0605,
+                0.067,
+                0.0715,
+                0.099
+              ]
+            },
+            "compliant_success_rate": {
+              "mean": 0.4191,
+              "ci": [
+                0.404,
+                0.4342
+              ],
+              "seeds": [
+                0.423,
+                0.397,
+                0.4015,
+                0.444,
+                0.43
+              ]
+            },
+            "ceiling": {
+              "mean": 0.5525,
+              "ci": [
+                0.5525,
+                0.5525
+              ],
+              "seeds": [
+                0.5525,
+                0.5525,
+                0.5525,
+                0.5525,
+                0.5525
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

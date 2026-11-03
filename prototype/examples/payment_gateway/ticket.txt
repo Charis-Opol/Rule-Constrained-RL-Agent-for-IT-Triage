@@ -1,0 +1,3 @@
+Subject: Tuition payments timing out
+
+The online payment page is very slow and often times out when students try to pay tuition through the bank. Production.
