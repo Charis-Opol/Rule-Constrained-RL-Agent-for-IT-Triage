@@ -4,23 +4,19 @@ Everything below is either a placeholder in the manuscript (printed **[in bold b
 
 ## A. Title page and declarations
 
-**Q1. Affiliation: city and state.** The affiliation reads "Department of Computing and Technology, Faculty of Engineering, Design and Technology, Uganda Christian University, **[city]**, **[state or region, if used]**, Uganda". Which city? Do you want a region or district, or none? The guidelines mark state as optional.
+**Q1. Affiliation: city and state. ANSWERED (2026-11-04).** City **Kampala**, state/region **Mukono District** (where the university is physically located). Applied.
 
-**Q2. ORCID.** Is **0009-0003-7417-7984** correct? It came from the original `\orcid` macro, which the repo README flags "to verify".
+**Q2. ORCID. ANSWERED (2026-11-04).** **0009-0003-7417-7984** confirmed correct.
 
-**Q3. Funding.** Which applies?
-- (a) "No funding was received for conducting this study." (wording from the guidelines)
-- (b) Funding from [funder, written in full] under grant [number]. The same text must also go in the submission interface.
+**Q3. Funding. ANSWERED (2026-11-04).** (a) "No funding was received for conducting this study." Applied.
 
-**Q4. Competing interests.** The current draft is: "The author has no relevant financial or non-financial interests to disclose. The review was carried out to inform the author's own undergraduate research project on a reinforcement learning agent for IT incident triage." Keep both sentences? I recommend keeping the second as a **non-financial** interest: it matches the bias statement in Sect. 1 and in the Limitations. Do you have any other interests, such as employment, consultancy or a board role?
+**Q4. Competing interests. ANSWERED (2026-11-04).** No competing interests. The draft's first sentence is kept; the second sentence (tying the review to the author's own undergraduate project) is **removed** at the author's request. Statement now reads: "The author has no relevant financial or non-financial interests to disclose." Applied.
 
-**Q5. Acknowledgements.** Who should be acknowledged, if anyone? The report's title page names a primary advisor (shown as a red placeholder in the thesis source). If you name your supervisor, check that they agree. Or delete the section.
+**Q5. Acknowledgements. ANSWERED (2026-11-04).** Thanks Dr Innocent Ndibatya (guidance), the colleagues who peer-reviewed the work, and Solomon Sekamatte (help). Applied.
 
-**Q6. AI-use details (Methods Sect. 2.11).**
-- (a) Which Claude model or version, and over what period (for example, October–November 2026)?
-- (b) Confirm the bracketed sentence: "the assistant was also used to reformat the manuscript for this journal, condense the abstract and draft the statements and declarations, and the author reviewed and approved these changes". It describes this preparation work, which is more than "AI-assisted copy editing" as the guidelines define it (it includes generative editorial work), so I think it should stay once you have reviewed the changes.
+**Q6. AI-use details (Methods Sect. 2.11). STILL OPEN — leave as is.** The author asked to leave this section unchanged for now. The two `\tbc{}` placeholders (model version/period of use; confirmation of the reformatting sentence) remain in the manuscript and still need an answer before submission.
 
-**Q7. Report status (re-use statement).** Confirm that the project report is unpublished and has not been submitted to a journal. Has it been, or will it be, deposited in a university repository?
+**Q7. Report status (re-use statement). ANSWERED (2026-11-04).** The project report is not submitted anywhere else.
 
 ## B. Data repository
 

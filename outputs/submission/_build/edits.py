@@ -43,7 +43,7 @@ FRONT = r"""\begin{document}
 
 \author*{\fnm{Charis} \sur{Opol}}\email{B29654@students.ucu.ac.ug}\email{charisopol@gmail.com}
 
-\affil*{\orgdiv{Department of Computing and Technology, Faculty of Engineering, Design and Technology}, \orgname{Uganda Christian University}, \orgaddress{\city{\tbc{city}}, \state{\tbc{state or region, if used}}, \country{Uganda}}}
+\affil*{\orgdiv{Department of Computing and Technology, Faculty of Engineering, Design and Technology}, \orgname{Uganda Christian University}, \orgaddress{\city{Kampala}, \state{Mukono District}, \country{Uganda}}}
 
 \abstract{""" + ABSTRACT + r"""}
 
@@ -54,7 +54,7 @@ FRONT = r"""\begin{document}
 \noindent ORCID: Charis Opol \url{https://orcid.org/0009-0003-7417-7984}
 
 \bmhead{Acknowledgements}
-\tbc{Acknowledgements to be supplied by the author, or this section deleted. The names of any funding organisations must be written in full.}
+The author thanks Dr Innocent Ndibatya for his guidance, the colleagues who peer-reviewed this work, and Solomon Sekamatte for his help.
 
 """
 
@@ -355,10 +355,10 @@ The online version contains supplementary material.
 \section*{Statements and Declarations}
 
 \bmhead{Funding}
-\tbc{Choose one: ``No funding was received for conducting this study.'' or ``This work was supported by [funder, written in full] (Grant number [...]).''}
+No funding was received for conducting this study.
 
 \bmhead{Competing interests}
-\tbc{To confirm: The author has no relevant financial or non-financial interests to disclose. The review was carried out to inform the author's own undergraduate research project on a reinforcement learning agent for IT incident triage (Section~\ref{sec:intro}).}
+The author has no relevant financial or non-financial interests to disclose.
 
 \bmhead{Ethics approval and consent to participate}
 Not applicable. This review synthesises published studies; it involved no human participants, personal data or animals.

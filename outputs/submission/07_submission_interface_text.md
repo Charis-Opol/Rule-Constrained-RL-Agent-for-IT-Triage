@@ -10,25 +10,15 @@ The guidelines say: "Author Contribution information and Competing Interest info
 
 ## Competing interests
 
-Choose after answering Q4 in `05_open_questions.md`.
-
-**Recommended:**
-
-> Financial interests: The author has no financial interests to declare. Non-financial interests: The review was carried out to inform the author's own undergraduate research project on a reinforcement learning agent for IT incident triage.
-
-**Alternative, if you decide the project is not a competing interest:**
+Answered (Q4, 2026-11-04): no competing interests.
 
 > The author has no relevant financial or non-financial interests to disclose.
 
 ## Funding
 
-Choose after answering Q3. The interface sends this to CrossMark.
+Answered (Q3, 2026-11-04). The interface sends this to CrossMark.
 
 > No funding was received for conducting this study.
-
-*or*
-
-> This work was supported by [funder, written in full] (Grant number [...]).
 
 ## Data availability (if the interface asks)
 

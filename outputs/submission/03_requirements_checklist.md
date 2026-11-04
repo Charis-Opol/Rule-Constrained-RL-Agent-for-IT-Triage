@@ -8,19 +8,19 @@ Status key: **PASS** = met and checked. **PENDING** = done, but waiting on somet
 
 | # | Requirement (source) | Status | Evidence / note |
 |---|---|---|---|
-| A1 | Not published before and not under consideration elsewhere (Manuscript Submission) | PENDING | Stated in the draft cover letter. You confirm it at submission. |
+| A1 | Not published before and not under consideration elsewhere (Manuscript Submission) | PASS | Author confirmed 2026-11-04: the report is not submitted anywhere else. |
 | A2 | Editable source files and a compiled PDF (Source Files; Text Formatting) | PASS | `Opol_AIR_source.zip` and `Opol_AIR_manuscript.pdf` |
 | A3 | Author contributions and competing interests entered in the submission interface; only that version is published (Submitting Declarations) | PENDING | Draft wording in `07_submission_interface_text.md` |
 | A4 | No authorship changes after submission (Please note) | PASS | Sole author: Charis Opol |
 | A5 | Title concise and informative (Title Page) | PASS | Unchanged from the original |
 | A6 | Author name(s) | PASS | `\author*{Charis Opol}` |
-| A7 | Affiliation as institution, (department), city, (state), country | PENDING | Department, faculty, university and country are filled in. **City** and the optional **state/region** are placeholders. |
+| A7 | Affiliation as institution, (department), city, (state), country | PASS | City Kampala, state/region Mukono District (author-confirmed 2026-11-04). |
 | A8 | Corresponding author clearly indicated, with an active e-mail | PASS | Marked with `*`. Two addresses, as you asked: B29654@students.ucu.ac.ug and charisopol@gmail.com |
-| A9 | 16-digit ORCID, if available | PENDING | 0009-0003-7417-7984 (16 digits) is printed below the title block. The repo README flags it "to verify". Please confirm. |
-| A10 | LLMs are not authors; LLM use documented in the Methods; human accountability (Title Page) | PENDING | New Methods Sect. 2.11 "Use of an AI Assistant" is the single account. It keeps the "not independently duplicated" limitation and adds an accountability sentence. Model version and period of use still to supply. |
+| A9 | 16-digit ORCID, if available | PASS | 0009-0003-7417-7984 (16 digits) confirmed correct by the author 2026-11-04. |
+| A10 | LLMs are not authors; LLM use documented in the Methods; human accountability (Title Page) | PENDING | New Methods Sect. 2.11 "Use of an AI Assistant" is the single account. It keeps the "not independently duplicated" limitation and adds an accountability sentence. Model version and period of use still to supply; author asked to leave this section as is for now (2026-11-04). |
 | A11 | Abstract 150–250 words, no undefined abbreviations, no unspecified references | PASS | 246 words, no citations. IT and PRISMA are defined; RL, POMDP and SOC are not used. See `08_abstract_old_vs_new.md`. |
 | A12 | 4–6 keywords | PENDING | Six proposed and set provisionally; awaiting your confirmation |
-| A13 | "Statements and Declarations" section; submissions without it are returned (Title Page; Competing Interests) | PENDING | Present before the reference list. Funding and competing-interest wording await your answers. |
+| A13 | "Statements and Declarations" section; submissions without it are returned (Title Page; Competing Interests) | PASS | Present before the reference list. Funding and competing-interest wording confirmed 2026-11-04. |
 
 ## B. Text
 
@@ -30,7 +30,7 @@ Status key: **PASS** = met and checked. **PENDING** = done, but waiting on somet
 | B2 | Decimal headings, at most three levels (Headings) | PASS | Roman numerals replaced with 1, 1.1 and 1.1.1. The run-in themes "1) 2) 3)" are now level-3 headings (for example, 3.5.1). Nothing goes below level 3. |
 | B3 | Abbreviations defined at first mention and used consistently (Abbreviations) | PASS (one FLAG) | Checked by script (`_build/check_order.py`). Definitions were added for IT, MDP, SRQ, PRISMA, AIOps, IC/EC, SOC, CAGE, IoT, DQN, PPO, MCC, ROC-AUC and OT. **FLAG:** RQ1–RQ5 in Table 2 belong to the project framing and await your framing decision. |
 | B4 | Footnotes: not citation-only, no bibliographic details, no figures or tables; table footnotes use lower-case letters; never endnotes (Footnotes) | PASS | No text footnotes. One table footnote (Table 12), marked "a" and placed beneath the table body. No endnotes. |
-| B5 | Acknowledgements in a separate section on the title page; funders named in full (Acknowledgments) | PENDING | Placed straight after the title block, before the Introduction. Because the abstract fills page 1, it prints at the top of page 2; production re-sets the layout anyway. Content is a placeholder. |
+| B5 | Acknowledgements in a separate section on the title page; funders named in full (Acknowledgments) | PASS | Placed straight after the title block, before the Introduction. Because the abstract fills page 1, it prints at the top of page 2; production re-sets the layout anyway. Names Dr Innocent Ndibatya, peer-reviewing colleagues and Solomon Sekamatte (author-confirmed 2026-11-04); no funding organisations to name. |
 | B6 | No subfolders in the LaTeX submission (LaTeX and Online Submission) | PASS | The ZIP is flat. |
 | B7 | SI units (Scientific style) | PASS | "15 to 19 seconds" became 15 s to 19 s, and "30 minutes" became 30 min. Thin spaces were added before s in three places. |
 | B8 | Italic single-letter variables, upright operators (Scientific style) | PASS | $\mathrm{O}(N^{2})$ and $\mathrm{O}(1)$ use an upright O with an italic N. *n* is italic in Table 8. |
@@ -87,9 +87,9 @@ Status key: **PASS** = met and checked. **PENDING** = done, but waiting on somet
 
 | # | Requirement | Status | Evidence / note |
 |---|---|---|---|
-| G1 | Transparency about re-use of material (text recycling) | PENDING | "Prior dissemination and re-use of material" statement in the declarations and in the cover letter; you confirm the report's status |
-| G2 | Competing-interest disclosure required for review articles | PENDING | Draft statement plus a suggested non-financial-interest disclosure |
-| G3 | Funding in the declarations and in the interface | PENDING | Placeholder |
+| G1 | Transparency about re-use of material (text recycling) | PASS | "Prior dissemination and re-use of material" statement in the declarations and in the cover letter; author confirmed 2026-11-04 the report is unpublished and not submitted elsewhere |
+| G2 | Competing-interest disclosure required for review articles | PASS | "The author has no relevant financial or non-financial interests to disclose." (author-confirmed 2026-11-04; the undergraduate-project sentence removed at the author's request) |
+| G3 | Funding in the declarations and in the interface | PASS | "No funding was received for conducting this study." (author-confirmed 2026-11-04); still needs entering in the submission interface at upload (see `07_submission_interface_text.md`) |
 | G4 | Ethics approval and consent | PASS | "Not applicable", with the reason (published studies only; no participants, personal data or animals) |
 | G5 | Data, material and code availability; author contributions | PASS / PENDING | Written; the repository is a placeholder |
 | G6 | Suggested reviewers must be independent and have institutional e-mails | PENDING | Optional. Placeholders only in the cover letter, because I won't invent e-mail addresses. |
