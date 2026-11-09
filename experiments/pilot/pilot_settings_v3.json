@@ -1,0 +1,47 @@
+{
+  "label": "pilot v3 (fix with verification)",
+  "note": "Every value here is set by the researcher, not elicited. Same as pilot_settings_v2.json except max_steps and the fix_with_verification block. See documentation/pilot_experiment_plan.md, Phase 9, and documentation/phase9_log.md.",
+  "reward_unit_minutes": 60,
+  "correct_reward": 5.0,
+  "check_minutes": {
+    "Low": 5,
+    "Medium": 15,
+    "High": 30
+  },
+  "frequency_weights": {
+    "Rare": 1,
+    "Occasional": 2,
+    "Common": 4
+  },
+  "context_probabilities": {
+    "X01": {
+      "Yes": 0.8,
+      "No": 0.2
+    },
+    "X02": {
+      "Low": 0.3,
+      "Medium": 0.5,
+      "High": 0.2
+    }
+  },
+  "p_noise": 0.1,
+  "p_miss": 0.0,
+  "max_steps": 15,
+  "overlap": 0.0,
+  "fix_with_verification": {
+    "enabled": true,
+    "note": "RESEARCHER-PROVISIONAL until a Part 3 workbook is filled in. A fix is applied, then verified: if the symptoms clear the incident is resolved; if not, the agent pays the remedy's harm, sees that the fix failed, and goes on (check, another fix, or escalate). Harm is anchored to the elicited figure: on average a wrong fix followed by escalation costs wrong_fix_multiple x escalation, as one wrong fix did in v1/v2. The spread across remedies follows the elicited rule reasons (R01-R05): remedies the rules call hard to undo weigh more.",
+    "max_failed_fixes": 2,
+    "harm_basis": "mean harm = (wrong_fix_multiple - 1) x escalation_minutes",
+    "remedies": {
+      "C01": {"apply_minutes": 30, "harm_weight": 0.75, "why": "code change by draft PR, revertible; R05: a wrong timeout can hide failures"},
+      "C02": {"apply_minutes": 5,  "harm_weight": 1.5,  "why": "R01: killing the wrong transaction rolls back valid work (cannot be undone)"},
+      "C03": {"apply_minutes": 20, "harm_weight": 1.0,  "why": "R04: index builds can block live traffic; the index can be dropped"},
+      "C04": {"apply_minutes": 60, "harm_weight": 0.5,  "why": "code change by draft PR, revertible"},
+      "C05": {"apply_minutes": 45, "harm_weight": 0.5,  "why": "code change by draft PR, revertible"},
+      "C06": {"apply_minutes": 30, "harm_weight": 1.5,  "why": "R02: a rollback restarts every node, and migrations may not reverse"},
+      "C07": {"apply_minutes": 15, "harm_weight": 2.0,  "why": "R03: other records may depend on the rows, and deletes are hard to undo"},
+      "C08": {"apply_minutes": 45, "harm_weight": 0.5,  "why": "code change by draft PR, revertible"}
+    }
+  }
+}

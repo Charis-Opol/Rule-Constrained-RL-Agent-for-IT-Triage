@@ -1,0 +1,3 @@
+Subject: Class results page takes forever
+
+Lecturers say the class results page takes forever to load for large classes, and sometimes times out. Small classes are fine. It is the live system, priority: high.

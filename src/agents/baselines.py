@@ -22,7 +22,7 @@ class Policy:
 
     def belief(self, obs):
         status, symptoms, *_ = self.layout.decode(obs)
-        return posterior(self.scenario, self.reported_theta, status, symptoms)
+        return posterior(self.scenario, self.reported_theta, status, symptoms, self.layout.failed_fixes(obs))
 
     def best_fix(self, belief, mask):
         """The most probable cause whose fix is not masked, and its probability."""
@@ -39,7 +39,7 @@ class AlwaysEscalate(Policy):
 
 
 class SymptomsOnly(Policy):
-    """Recommends the most probable cause from the initial symptoms, with no checks."""
+    """Fixes the most probable cause from the initial symptoms, with no checks."""
     name = "Initial-symptom"
 
     def __call__(self, obs, mask):
@@ -47,7 +47,7 @@ class SymptomsOnly(Policy):
 
 
 class Scripted(Policy):
-    """Runs a fixed sequence of checks, then recommends the most probable cause. No check
+    """Runs a fixed sequence of checks, then fixes the most probable cause. No check
     order by category was elicited for the pilot, so the order is by expected information at
     the start of an incident, averaged over symptoms (Chapter 3 fallback)."""
     name = "Scripted"
@@ -66,7 +66,7 @@ class Scripted(Policy):
 
 class Threshold(Policy):
     """Requests the most informative check while no permitted cause reaches the threshold,
-    recommends when one does, and escalates when the checks run out."""
+    fixes when one does, and escalates when the checks run out."""
     name = "Threshold"
 
     def __init__(self, env, tau):

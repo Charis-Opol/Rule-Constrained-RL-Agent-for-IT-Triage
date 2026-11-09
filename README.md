@@ -1,4 +1,4 @@
-# Investigate, Recommend or Escalate: A Rule-Constrained Reinforcement Learning Agent for IT Incident Triage under Ambiguous Evidence
+# Investigate, Fix or Escalate: A Rule-Constrained Reinforcement Learning Agent for IT Incident Triage under Ambiguous Evidence
 
 Final-year research project, BSc Computer Science, Uganda Christian University.
 **Author:** Opol Charis · **Supervision:** Department of Computing and Technology · **Partner:** Directorate of University ICT Services, Uganda Christian University
@@ -8,18 +8,18 @@ Final-year research project, BSc Computer Science, Uganda Christian University.
 When an IT incident is reported, its cause is often unclear: evidence is missing, unreliable, or consistent with more than one cause. This project designs and evaluates a reinforcement learning agent that, for each incident, learns when to:
 
 1. **gather more evidence** (request a diagnostic check),
-2. **recommend a fix** that the organisation's operational rules permit, or
+2. **fix** the incident by applying a remedy that the organisation's operational rules permit, or
 3. **escalate** the incident to a human expert.
 
 An independent rule-based safety mechanism checks every proposal. A blocked proposal goes back to the agent once; if the second proposal is also blocked, the incident is escalated. The agent (a deep Q-network, with PPO as a secondary check) is trained and evaluated **entirely in simulation**, in an environment built from scenarios elicited from the Directorate: about 15 causes, 20 diagnostic checks and 10 operational rules, with controllable levels of missing, unreliable and overlapping evidence. It is compared with six baseline policies on decision quality, investigation efficiency, escalation behaviour and constraint compliance.
 
-**General objective:** to design and evaluate a rule-constrained reinforcement learning agent for ambiguity-aware IT incident triage that learns when to gather additional diagnostic information, recommend permitted actions, or escalate incidents to a human expert.
+**General objective:** to design and evaluate a rule-constrained reinforcement learning agent for ambiguity-aware IT incident triage that learns when to gather additional diagnostic information, apply permitted fixes, or escalate incidents to a human expert.
 
 <details>
 <summary>Research questions</summary>
 
 1. How can ambiguous IT incident triage scenarios involving incomplete or conflicting diagnostic evidence be represented in a controlled environment?
-2. How can reinforcement learning support decisions about gathering diagnostic information, recommending permitted actions, and escalating incidents to a human expert?
+2. How can reinforcement learning support decisions about gathering diagnostic information, applying permitted fixes, and escalating incidents to a human expert?
 3. How effectively can a rule-based safety mechanism prevent actions that violate predefined operational constraints?
 4. How does the proposed approach compare with selected baseline decision policies in decision quality, investigation efficiency, escalation behaviour, and constraint compliance?
 5. How robust is the proposed approach when incident evidence is incomplete, conflicting, or increasingly ambiguous?
@@ -98,6 +98,12 @@ Triage a ticket and its logs with the trained agent (also in the dashboard's Pro
 .venv\Scripts\python -m experiments.pilot.evaluate_prototype     :: all examples; results/pilot/prototype.md
 ```
 
+Since 9 Nov 2026 the prototype can also act on the decision (pilot plan, Phase 8). It uses pilot model v2, which adds D11, a full log analysis that the agent can delegate to a language model. `--act` opens a **draft** pull request on a fictional toy repository for a code fault, sends a notice to the owner for other fixes, or writes a routed escalation report. Messages are simulated (`results/pilot/outbox/`); a person reviews and merges every pull request:
+
+```bat
+.venv\Scripts\python -m src.prototype.cli --ticket prototype\examples\class_results_slow\ticket.txt --logs prototype\examples\class_results_slow\logs.txt --act
+```
+
 The keyword reader is the default and works offline. `--reader claude` needs Anthropic credentials and sends the ticket and logs, with personal details removed, to the Claude API. `--ask` asks you for any check the logs do not show.
 
 ## Building the documents
@@ -131,7 +137,7 @@ These rules are in [`.gitignore`](.gitignore). If this repository is private and
 
 ## Data and ethics
 
-The agent is trained and evaluated only in simulation. It is not connected to any university system and takes no action on university infrastructure. The simulator is built from elicited descriptions of incident types, checks, fixes and rules, not from logs, tickets or personal data. The prototype reads a ticket and logs that a person gives it and only recommends; the examples in `prototype/examples/` are fictional. Real Directorate tickets are not sent to an external language-model service without the Directorate's approval. No member of staff is identified. Material derived from the Directorate's information is published only where the non-disclosure agreement allows it.
+The agent is trained and evaluated only in simulation. It is not connected to any university system and takes no action on university infrastructure. The simulator is built from elicited descriptions of incident types, checks, fixes and rules, not from logs, tickets or personal data. The prototype reads a ticket and logs that a person gives it. It carries a fix out only on a fictional toy repository, as a draft pull request that a person reviews and merges, or as a simulated fix order to the owner; it is not connected to any university system. The examples in `prototype/examples/` are fictional. Real Directorate tickets are not sent to an external language-model service without the Directorate's approval. No member of staff is identified. Material derived from the Directorate's information is published only where the non-disclosure agreement allows it.
 
 ## Use of AI assistance
 

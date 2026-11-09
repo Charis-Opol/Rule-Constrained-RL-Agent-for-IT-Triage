@@ -236,6 +236,93 @@ Questions it answers:
 
 **Limits:** six cases written by the researcher show that the pipeline works, not how accurate it is. The agent and the rules are the pilot ones (one rater). Choosing seed 0 because it scored best on the evaluation incidents is a selection on test data; that is acceptable for a demonstration, but not for reported results.
 
+### Phase 8: Agent as a decision layer: delegate, draft pull requests, routed escalation (added 9 Nov 2026)
+
+**Goal:** the user's extension of the lecturer's request. Ticket -> language-model reader (topic, symptoms, context) -> RL agent -> action, where the action can be to investigate (a check), to **delegate** a heavy analysis to a language model, to **fix** a code fault through a draft pull request that a person reviews, or to **escalate** with a full report to the person in charge.
+
+**Where the line is.** The evaluated core is everything that produces the discrete decision: `src/sim`, `src/rules`, `src/agents`, the model and settings files, and the experiments. Everything before the decision (reading) and after it (carrying it out) is the demo layer in `src/prototype/`. The demo layer imports the core; the core never imports the demo layer.
+
+| Part | Where | Core or demo |
+|---|---|---|
+| Overlap control omega, Chapter 3 formula | `src/sim/scenario.py` (`apply_overlap`, settings key `overlap`, default 0) | Core. With omega = 0 every Phase 5 result is unchanged (tested) |
+| Pilot model v2: D11 "Full log analysis (delegated)", High effort; per cause `code_fault` and `owner` (a role) | `experiments/pilot/build_model_v2.py` -> `pilot_model_v2.json`, `pilot_settings_v2.json` (step limit 13) | Core input. `pilot_model.json` is untouched, so Phase 5 reproduces |
+| Delegated check | `src/prototype/delegate.py` | Demo. The agent picks D11 like any check and pays its cost; a fixed template asks one question; the answer is reduced to positive / negative / not shown with a verified quote. The written report goes to the person, never into the observation |
+| Draft pull request, notice, routed escalation | `src/prototype/actions.py` | Demo. Acts only after the decision |
+| Toy repository with four planted bugs (C01, C04, C05, C08) and pre-written fixes | `prototype/toy_repo/`, `prototype/toy_repo_fixes/` | Demo. Fictional |
+| Part 2 workbook for the pilot developer | `research/elicitation/Pilot_Elicitation_Workbook_Part2.xlsx` (`make_part2_workbook.py`) | Input |
+
+**Delegation is option (a): a check in the model.** Being expensive is its High effort. Being noisy is its likelihood ratings, which are less extreme than a direct check's. So the agent learns from training when delegating is worth the cost, and the result is part of what is evaluated. No environment code changed. The action space grows from 19 to 20 + 1 (11 checks, 8 fixes, escalate) for v2.
+
+**Why "fix" does not weaken the guarantee.** A draft pull request is not a new action. It is how a permitted "recommend the fix for cause j" is carried out when cause j is marked as a code fault. The safety mechanism decides at the cause level exactly as before. On top of that, `actions.py` enforces, with tests in `tests/test_extension.py`:
+
+1. **Re-confirmation.** It acts only on a recommendation that `triage()` has checked against the rules a second time, on the final evidence (`permitted`).
+2. **Code faults and drafts only.** A pull request is opened only for a cause marked `code_fault`, and only as a draft.
+3. **Existing source files only.** A patch may change only an existing source file, not the tests, a new file or a path outside the repository.
+4. **Fixed command list.** Only these commands can run: git init, add, commit, checkout, clone, push of a new branch, and `gh pr create --draft`. There is no merge, and no push to main.
+5. **Tests gate.** The repository's tests run before and after the patch. The patch must make at least one failing test pass and break none, or no pull request is opened and the owner gets a notice instead.
+
+State the limit plainly in the thesis: **the rules cover the decision to fix a cause, not the content of the patch.** Whether a patch is correct is for the human reviewer. Also, a language-model patch is code that runs on this machine during the test step. That is acceptable for the toy repository only; a real deployment would run it in CI.
+
+**Routing.** A recommendation goes to the owner of its cause. An escalation goes to the owner of the most probable cause if that cause reaches 50%, and otherwise to the fallback owner (the senior developer, as in the interview: "assigned to the senior developer if unknown"). Messages are written to `results/pilot/outbox/` and are not sent anywhere.
+
+**Error rates for p_noise and p_miss.** `evaluate_prototype.py` now reports, over every check result: reversed (compare p_noise), missed (compare p_miss) and invented (not modelled in the simulator), for the reader and for the delegate separately. Reader error informs p_noise and p_miss only. **Omega is not a reader error:** it is the overlap between causes in the world, and it stays a simulator setting that Experiment 4 sweeps. Only the developer's sample tickets (Part 2) measure accuracy; the researcher's cases do not.
+
+**Provisional values.** Until Part 2 comes back, D11's ratings, `code_fault` and `owner` are the researcher's (`pilot_additions_provisional.json`, labelled `researcher-provisional` in the model). To replace them: `python -m experiments.pilot.build_model_v2 --workbook "<returned Part 2>"`, then retrain the v2 agents (about 25 minutes for three seeds in parallel) and re-run `evaluate_prototype --cases prototype/examples/developer --out prototype_developer`.
+
+**First results (9 Nov 2026), provisional D11 ratings.** Three shielded agents trained on v2 with the Phase 5 settings (Double DQN, 500k steps, exploration to 150k), seeds 0-2: `results/pilot/runs/v2_shielded_seed*`. Figures are on the 1,000 training-monitor incidents.
+
+| | Return | Correct | Wrong | Escalated | Checks | Delegates (D11) |
+|---|---|---|---|---|---|---|
+| Exact optimal, v2 | 0.405 | 62% | 18% | 20% | 3.95 | |
+| Exact optimal, v1 (no D11) | 0.39 | | | | | |
+| v2 seeds 0 / 1 / 2 | -0.54 / -0.54 / -0.37 | 52-54% | 15-18% | 28-33% | 5.1-6.1 | 28% / 24% / 12% of incidents |
+| v1 (Phase 5) shielded seeds 0-4, same monitoring incidents | -0.25 to -0.32 | | | | 4.2-5.3 | |
+
+1. **D11 adds almost nothing under the provisional ratings.** The best possible return rises from 0.39 to 0.405, because a High-effort check whose ratings are mostly Often or Sometimes tells the agent little. The developer's ratings will settle whether delegation is worth its cost. That is a finding, not a defect.
+2. **The v2 agents score lower than the Phase 5 agents** (-0.37 to -0.54 against -0.25 to -0.32). One more action and a longer step limit make learning harder at 500k steps. Seed 2 is the demo agent, chosen on the monitoring incidents, not the evaluation ones.
+3. **End to end on eight cases** (`results/pilot/prototype_v2.md`). `class_results_slow`: the agent recommended C04, the rule checker re-confirmed it, the pre-written patch fixed its test and broke none, and a draft branch was committed in `results/pilot/demo_repo`, with a notice to the Application team lead. `profile_cache`: escalated to the Infrastructure and containers lead (C05 at 62%). Compared with Phase 7, `results_approval` is now resolved and `payment_gateway` is now escalated. `fees_release` (wrong cause) and `vague_slow` (a fix where it should escalate) are unchanged.
+4. **The demo agent never chose D11 on the eight cases.** The delegate path is tested with a scripted agent (`tests/test_extension.py`), not shown by the trained one.
+5. **It still proposes before it checks,** up to 6 blocked proposals in one incident. This is Phase 7 finding 4 again, and it argues for the "block that costs something" ablation (Phase 7, still to do, item 3).
+6. **Reader error rates are 0% on these cases,** which means nothing: the researcher wrote the cases and the keywords. Only the developer's Part 2 tickets measure them.
+
+**Run it:**
+
+```bat
+.venv\Scripts\python -m src.prototype.cli --ticket prototype\examples\class_results_slow\ticket.txt --logs prototype\examples\class_results_slow\logs.txt --act
+.venv\Scripts\python -m src.prototype.cli --ticket ... --logs ... --act --pr github                  :: after the one-off GitHub setup
+.venv\Scripts\python -m src.prototype.cli --ticket ... --logs ... --reader claude --delegate claude --act --patcher claude   :: needs ANTHROPIC_API_KEY
+.venv\Scripts\python -m experiments.pilot.evaluate_prototype                                          :: results/pilot/prototype_v2.md
+```
+
+One-off GitHub setup (creates a **private** throwaway repository with the toy app): `python -m src.prototype.actions Charis-Opol/triage-demo-portal`.
+
+### Phase 9: From "recommend" to "fix", and fix with verification (added 9 Nov 2026)
+
+**Decision (user, 9 Nov 2026).** The project's wording changes from "recommend" to "fix" in the thesis, the prototype and the training, and the agent is to learn to fix incidents, not only name a remedy. Step-by-step record: `documentation/phase9_log.md`. Earlier phases above keep their original wording because they record what was done at the time.
+
+**Part A: wording (done 9 Nov 2026).** The terminal action "recommend the fix for cause j" is now "fix cause j" (apply its remedy). In the simulation nothing changes: a fix ends the episode with $r_\text{correct}$ or $-\lambda_\text{wrong}$, exactly as a recommendation did, so the Phase 5 results stand as they are. Renamed: the thesis title (*Investigate, Fix or Escalate*), objectives, RQ2, H2 ("rule-compliant correct fixes"), scope, key terms and the Chapter 3 metrics ("wrong-fix rate"); Figure 1.1; the README; the prototype output (`FIX:`), its decision outcome (`"fix"`), and the non-code action (`fix_order` to the owner, previously `notice`). Citations that describe other work as recommending were left as they are. The scope statement now says what is true: fixes are applied in simulation, and in the prototype only to the fictional toy repository as draft pull requests a person merges.
+
+**Part 2 workbook returned (9 Nov 2026).** The pilot developer's answers replace the provisional values in `pilot_model_v2.json` (`additions_source: pilot developer (Part 2)`). Code-fix flags agree with the provisional ones; owners and D11 ratings changed (D11 is now rated Often or Almost always for C02, C05-C08 and Rarely for C01, C03). The 20 sample tickets are in `prototype/examples/developer/` (git-ignored: some name what look like real endpoints and classes). The v2 agents trained on the provisional values are out of date and are retrained (see the log).
+
+**Part B: fix with verification (code done 9 Nov 2026; training pending).** Opt-in through `experiments/pilot/pilot_settings_v3.json` (`fix_with_verification`); v1/v2 settings are unchanged and the Phase 5 results still reproduce. A fix of cause j costs its apply time $a_j$; if j is the true cause the episode ends with $r_\text{correct} - a_j$, otherwise the agent pays $a_j + h_j$, sees a "fix failed" flag for j (one flag per cause, appended to the observation), j is masked, and the episode goes on. After 2 failed fixes a person takes over (outcome `fix_limit`, counted as an escalation, plus $\lambda_\text{esc}$). Mean harm $= (5 - 1) \times 120$ min, so a wrong fix then escalation costs the elicited 5x on average; the spread follows the rule reasons R01-R05 (C07 deletes 2.0, C02/C06 1.5, C03 1.0, C01 0.75, code fixes C04/C05/C08 0.5). New metrics: `wrong_fix_rate` (incidents with any wrong fix applied) and `mean_wrong_fixes`. The exact solver does not model verification and is skipped. The prototype refuses v3 settings until it has a verification step (for code faults, the toy repository's tests could serve). Chapter 3 has a new subsection, "Fix with Verification". Tests: `tests/test_verify.py`.
+
+**Researcher-provisional:** apply minutes, harm weights, max_failed_fixes 2, max_steps 15, and reliable verification. To be put to the developer in a Part 3 workbook.
+
+**Baselines, 1,000 evaluation incidents, shielded, model v2 with Part 2 values:**
+
+| Settings | Policy | Return | Resolved | Wrong-fix rate | Escalated | Checks |
+|---|---|---|---|---|---|---|
+| v2 (fix ends episode) | Always escalate | -2.00 | 0% | 0% | 100% | 0.0 |
+| v2 | Initial-symptom | -1.99 | 32% | 28% | 40% | 0.0 |
+| v2 | Threshold (0.65) | -0.29 | 62% | 24% | 14% | 3.9 |
+| v3 (fix + verify) | Always escalate | -2.00 | 0% | 0% | 100% | 0.0 |
+| v3 | Initial-symptom | -2.30 | 41% | 28% | 59% | 0.0 |
+| v3 | Threshold (0.65) | -0.61 | 75% | 24% | 25% | 4.7 |
+
+A second try lets Threshold resolve more incidents (75% against 62%), but each wrong remedy now does harm, so its return is lower. Threshold was tuned for v2; it is not re-tuned here.
+
+**Train v3:** `train_dqn --agent shielded --model experiments/pilot/pilot_model_v2.json --settings experiments/pilot/pilot_settings_v3.json --steps 500000 --every 25000 --double-q --exploration-steps 150000 --seed N --name v3_shielded_seedN`, seeds 0-2. The monitor has no exact reference line in this mode.
+
 **Total: about 13.5 hours for Phases 0 to 6; Phase 7 so far about 4 hours, with about 1.5 days of remaining work.**
 
 **If time runs short, cut in this order:** the sweep, the penalty-only agent, then seeds from 5 to 3. Never cut the gates in Phases 1 to 3, because they are what make any result believable.

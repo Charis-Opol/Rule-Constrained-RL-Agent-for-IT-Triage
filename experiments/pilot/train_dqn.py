@@ -48,6 +48,8 @@ def main():
     parser.add_argument("--exploration-steps", type=int, default=None,
                         help="steps over which exploration falls to its final rate (default: half the run)")
     parser.add_argument("--threads", type=int, default=None, help="CPU threads for PyTorch (for parallel runs)")
+    parser.add_argument("--model", type=Path, default=MODEL, help="scenario model (default: pilot_model.json)")
+    parser.add_argument("--settings", type=Path, default=SETTINGS, help="settings (default: pilot_settings.json)")
     args = parser.parse_args()
     if args.threads:
         torch.set_num_threads(args.threads)
@@ -55,14 +57,14 @@ def main():
     if args.exploration_steps:
         hyperparameters["exploration_fraction"] = args.exploration_steps / args.steps
 
-    scenario = load_scenario(MODEL, SETTINGS)
+    scenario = load_scenario(args.model, args.settings)
     name = args.name or f"{time.strftime('%Y%m%d-%H%M')}_{args.agent}_seed{args.seed}"
     run_dir = RUNS / name
     run_dir.mkdir(parents=True, exist_ok=False)
     make_eval_env = lambda: make_env(scenario, args.agent, train=False)
 
     print("Solving the exact policy for reference...")
-    solution = solve(make_eval_env()) if scenario.p_miss == 0 else None
+    solution = solve(make_eval_env()) if scenario.p_miss == 0 and not scenario.verify else None
     # Reference policies on the same monitoring incidents, so the lines are like for like.
     references = {}
     for label, policy in (("Always escalate", AlwaysEscalate(make_eval_env())),
@@ -75,7 +77,8 @@ def main():
 
     config = {"agent": args.agent, "seed": args.seed, "steps": args.steps, "every": args.every,
               "incidents": args.incidents, "hyperparameters": hyperparameters,
-              "model": str(MODEL.relative_to(ROOT)), "settings": str(SETTINGS.relative_to(ROOT)),
+              "model": str(args.model.resolve().relative_to(ROOT)),
+              "settings": str(args.settings.resolve().relative_to(ROOT)),
               "p_noise": scenario.p_noise, "p_miss": scenario.p_miss, "git_commit": git_commit(),
               "exact_value": solution.value if solution else None, "references": references,
               "started": time.strftime("%Y-%m-%d %H:%M:%S")}

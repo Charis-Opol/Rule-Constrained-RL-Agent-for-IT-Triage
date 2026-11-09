@@ -1,0 +1,1 @@
+The bank gateway call had no timeout, so a slow gateway held each worker until the proxy gave up (504 after 60 s). The call now times out after 10 s and reports the payment as unavailable, so workers are freed and the user sees a clear message.

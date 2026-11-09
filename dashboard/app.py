@@ -264,7 +264,7 @@ def prototype_page():
     model, config, scenario = load_inputs()
     st.subheader("Prototype: triage a ticket and its logs")
     st.caption("The reader turns the ticket and logs into symptoms, context and check results. The agent "
-               "decides; the safety mechanism checks every proposal. The prototype only recommends. Pilot model: "
+               "decides; the safety mechanism checks every proposal. Fixes are carried out as draft pull requests or fix orders that a person approves. Pilot model: "
                "use fictional or approved tickets only.")
     examples = sorted(p.name for p in EXAMPLES.iterdir() if p.is_dir()) if EXAMPLES.exists() else []
     c1, c2 = st.columns([1, 1])
@@ -308,9 +308,9 @@ def prototype_page():
                      column_config={"Agent value": st.column_config.NumberColumn(format="%.2f")})
 
     d = report["decision"]
-    if d["outcome"] == "recommended":
-        st.success(f"**Recommend:** {d['remedy']} (likely cause {d['cause']}: {d['cause_name']}). "
-                   "A person applies the fix.")
+    if d["outcome"] == "fix":
+        st.success(f"**Fix:** {d['remedy']} (likely cause {d['cause']}: {d['cause_name']}). "
+                   "Carried out as a draft pull request or a fix order; a person approves it.")
     else:
         st.warning(f"**Escalate to a human expert.** {d['reason']}")
     st.caption(f"Checks run: {d['checks_run']} (about {d['check_minutes']} min) · blocked proposals: "
@@ -319,7 +319,7 @@ def prototype_page():
 
 
 # ----- Layout ----------------------------------------------------------------
-st.title("Investigate, Recommend or Escalate: Training Dashboard")
+st.title("Investigate, Fix or Escalate: Training Dashboard")
 runs = list_runs()
 if not runs:
     st.info("No runs yet. Start one with: python -m experiments.pilot.train_dqn")

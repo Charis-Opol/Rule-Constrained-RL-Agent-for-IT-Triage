@@ -1,0 +1,35 @@
+{
+  "source": "researcher-provisional",
+  "note": "Set by the researcher on 9 Nov 2026 so the extended prototype can run before the pilot developer returns Part 2 of the workbook. Replace with the developer's answers (python -m experiments.pilot.build_model_v2 --workbook ...) and retrain. Never report these as elicited.",
+  "checks": [
+    {
+      "id": "D11",
+      "name": "Full log analysis (delegated)",
+      "tests": "Whether a full analysis of the logs and stack traces traces the failure to a specific place in the application's own code",
+      "positive_means": "The analysis names a file or function in the application's code where the failure starts",
+      "effort": "High",
+      "delegated": true,
+      "ratings": {
+        "C01": "Often",
+        "C02": "Rarely",
+        "C03": "Rarely",
+        "C04": "Often",
+        "C05": "Often",
+        "C06": "Often",
+        "C07": "Sometimes",
+        "C08": "Sometimes"
+      }
+    }
+  ],
+  "causes": {
+    "C01": {"code_fault": true,  "owner": "Infrastructure and containers lead"},
+    "C02": {"code_fault": false, "owner": "Database administrator"},
+    "C03": {"code_fault": false, "owner": "Database administrator"},
+    "C04": {"code_fault": true,  "owner": "Application team lead"},
+    "C05": {"code_fault": true,  "owner": "Infrastructure and containers lead"},
+    "C06": {"code_fault": false, "owner": "Application team lead"},
+    "C07": {"code_fault": false, "owner": "Database administrator"},
+    "C08": {"code_fault": true,  "owner": "Identity and access lead"}
+  },
+  "fallback_owner": "Senior developer"
+}

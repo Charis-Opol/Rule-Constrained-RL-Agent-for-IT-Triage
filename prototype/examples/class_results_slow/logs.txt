@@ -1,0 +1,10 @@
+2026-10-20T08:00:00Z INFO  deploy release v3.7.2 deployed to production
+2026-11-09T09:14:02Z INFO  span   trace GET /api/classes/7/results duration=24.6s queries=412
+2026-11-09T09:14:02Z WARN  api    slow request GET /api/classes/7/results at portal.results.class_results (portal/results.py:7)
+2026-11-09T09:14:30Z ERROR api    GET /api/classes/9/results 504 duration=60.0s
+2026-11-09T09:15:00Z INFO  node   api-1 cpu=91%
+2026-11-09T09:15:00Z INFO  node   api-2 cpu=87%
+2026-11-09T09:15:00Z INFO  pool   db_pool in_use=11/20 (55%)
+2026-11-09T09:15:00Z INFO  db     active_transactions=6 oldest_tx_age=2s
+2026-11-09T09:15:00Z INFO  cache  hit_rate=0.91
+2026-11-09T09:15:10Z INFO  span   outbound GET registry/courses duration=0.3s

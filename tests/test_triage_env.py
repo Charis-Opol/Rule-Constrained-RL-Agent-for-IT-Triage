@@ -39,7 +39,7 @@ def most_probable_from_obs(env, obs):
     return int(belief.argmax())
 
 
-def run_all_checks_then_recommend(env, n=N):
+def run_all_checks_then_fix(env, n=N):
     outcomes, labelled, agree = [], [], 0
     for k in range(n):
         obs, _ = env.reset(seed=k)
@@ -90,7 +90,7 @@ def test_incident_does_not_depend_on_what_the_policy_does():
 @pytest.mark.parametrize("noise,expected", [(0.0, 0.818), (0.1, 0.717)])
 def test_most_probable_cause_after_all_checks_reaches_the_ceiling(noise, expected):
     assert exact_ceiling(noise) == pytest.approx(expected, abs=0.001)
-    accuracy, labelled, agree = run_all_checks_then_recommend(make(p_noise=noise))
+    accuracy, labelled, agree = run_all_checks_then_fix(make(p_noise=noise))
     assert accuracy == pytest.approx(expected, abs=0.012)
     assert labelled == pytest.approx(1 - expected, abs=0.012)
     assert agree > 0.995             # with no missing checks the label is exactly this mistake
@@ -135,7 +135,7 @@ def test_missing_checks_at_the_set_rate():
 
 
 def test_labels_with_missing_checks_match_the_earlier_estimate():
-    accuracy, labelled, _ = run_all_checks_then_recommend(make(p_noise=0.1, p_miss=0.2))
+    accuracy, labelled, _ = run_all_checks_then_fix(make(p_noise=0.1, p_miss=0.2))
     assert accuracy == pytest.approx(0.684, abs=0.015)
     assert labelled == pytest.approx(0.371, abs=0.015)
 

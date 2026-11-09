@@ -66,7 +66,7 @@ def evid(mat):
 
 
 SYM_L = evid(sym)
-print("\n--- Bayes ceilings (exact, recommend most probable cause, no rules) ---")
+print("\n--- Bayes ceilings (exact, fix most probable cause, no rules) ---")
 for pname in WEIGHTS:
     pr = prior_of(pname)
     for n in (0, .1, .2, .3):
@@ -185,8 +185,8 @@ print("\n--- simple reference returns at r=5, le=2, lw=10 ---")
 print("always escalate:", -2.0)
 c = int(prior.argmax()); print("always most common fix (ignoring rules):", round(prior[c] * 5 - (1 - prior[c]) * 10, 3))
 js = prior * SYM_L
-print("symptoms-only MAP, always recommend (ignoring rules):", round(sum(js[s].max() * 5 - (js[s].sum() - js[s].max()) * 10 for s in range(16)), 3))
-print("symptoms-only, recommend or escalate (ignoring rules):", round(sum(max(js[s].max() * 5 - (js[s].sum() - js[s].max()) * 10, -2 * js[s].sum()) for s in range(16)), 3))
+print("symptoms-only MAP, always fix (ignoring rules):", round(sum(js[s].max() * 5 - (js[s].sum() - js[s].max()) * 10 for s in range(16)), 3))
+print("symptoms-only, fix or escalate (ignoring rules):", round(sum(max(js[s].max() * 5 - (js[s].sum() - js[s].max()) * 10, -2 * js[s].sum()) for s in range(16)), 3))
 
 
 def threshold_mc(n_ep, r, le, lw, noise, miss, tau, seed=0):

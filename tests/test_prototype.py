@@ -85,7 +85,9 @@ def test_keyword_reader_matches_the_written_cases(name):
     expected = CASES[name]["expected"]
     assert {k for k, f in got.symptoms.items() if f.value == PRESENT} == set(expected["symptoms_present"])
     assert {k: f.value for k, f in got.context.items()} == expected["context"]
-    assert {k: f.value for k, f in got.checks.items() if f.value != NOT_SHOWN} == expected["checks"]
+    read_up_front = {c["id"] for c in MODEL["checks"] if not c.get("delegated")}   # D11 is asked for later
+    assert ({k: f.value for k, f in got.checks.items() if f.value != NOT_SHOWN}
+            == {k: v for k, v in expected["checks"].items() if k in read_up_front})
 
 
 def test_unstated_context_takes_the_stricter_default():
@@ -139,7 +141,7 @@ def test_two_prohibited_proposals_escalate_and_no_fix_executes():
 
 def test_observing_the_named_check_lifts_the_rule():
     report = triage(reading({"D05": POSITIVE}), SCENARIO, MODEL, Scripted([D05, FIX_C02]))
-    assert report["decision"]["outcome"] == "recommended" and report["decision"]["cause"] == "C02"
+    assert report["decision"]["outcome"] == "fix" and report["decision"]["cause"] == "C02"
     assert report["steps"][0]["result"] == POSITIVE
 
 
@@ -151,7 +153,7 @@ def test_an_unavailable_named_check_does_not_lift_the_rule():
 
 def test_rules_do_not_apply_outside_their_context():
     report = triage(reading(production="No"), SCENARIO, MODEL, Scripted([FIX_C02]))
-    assert report["decision"]["outcome"] == "recommended" and report["decision"]["cause"] == "C02"
+    assert report["decision"]["outcome"] == "fix" and report["decision"]["cause"] == "C02"
 
 
 def test_the_operator_can_supply_a_check_the_logs_do_not_show():
@@ -234,7 +236,7 @@ def test_claude_reader_raises_on_refusal():
 
 
 # ----- The trained agent ---------------------------------------------------------
-AGENT_RUN = ROOT / CONFIG["agent_run"]
+AGENT_RUN = ROOT / "results" / "pilot" / "runs" / "phase5_shielded_seed0"   # the Phase 7 agent, for pilot_model.json
 
 
 @pytest.mark.skipif(not (AGENT_RUN / "final.zip").exists(), reason="trained agent not saved locally")
@@ -245,8 +247,8 @@ def test_trained_agent_never_gets_a_prohibited_fix_through(name):
     got = KeywordReader(MODEL, CONFIG).read(*case_text(name))
     report = triage(got, SCENARIO, MODEL, model_agent)
     decision = report["decision"]
-    assert decision["outcome"] in ("recommended", "escalated", "forced_escalation", "step_limit")
-    if decision["outcome"] == "recommended":
+    assert decision["outcome"] in ("fix", "escalated", "forced_escalation", "step_limit")
+    if decision["outcome"] == "fix":
         observed = {s["action"].split()[1] for s in report["steps"] if s.get("result") in (POSITIVE, NEGATIVE)}
         for rule in MODEL["rules"]:
             if rule["cause"] == decision["cause"] and got.context[rule["when"]["attribute"]].value == rule["when"]["value"]:

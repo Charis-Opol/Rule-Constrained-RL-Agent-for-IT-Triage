@@ -1,0 +1,12 @@
+2026-10-15T08:00:00Z INFO  deploy release v3.7.0 deployed to production
+2026-11-09T10:02:11Z WARN  cache  cache write failed for profile:2231
+2026-11-09T10:02:11Z WARN  cache  Traceback (most recent call last):
+2026-11-09T10:02:11Z WARN  cache    File "portal/cache.py", line 11, in put
+2026-11-09T10:02:11Z WARN  cache  TypeError: Object of type date is not JSON serializable
+2026-11-09T10:02:12Z INFO  span   trace GET /api/profile/2231 duration=21.8s queries=38
+2026-11-09T10:03:40Z WARN  cache  cache write failed for profile:2231
+2026-11-09T10:03:41Z INFO  span   trace GET /api/profile/2231 duration=22.4s queries=38
+2026-11-09T10:04:00Z INFO  node   api-1 cpu=64%
+2026-11-09T10:04:00Z INFO  pool   db_pool in_use=8/20 (40%)
+2026-11-09T10:04:00Z INFO  db     active_transactions=4 oldest_tx_age=1s
+2026-11-09T10:04:05Z INFO  span   outbound GET registry/photos duration=0.4s

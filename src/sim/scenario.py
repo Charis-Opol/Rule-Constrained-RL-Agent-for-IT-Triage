@@ -33,6 +33,14 @@ class Scenario:
     p_noise: float
     p_miss: float
     max_steps: int
+    overlap: float = 0.0        # omega in Chapter 3; theta above already includes it
+    # Fix with verification (Phase 9, part B). Off by default: a fix then ends the episode, as
+    # in v1/v2. On: a fix is applied and verified; a wrong one costs apply + harm and the
+    # episode goes on, with that fix ruled out.
+    verify: bool = False
+    fix_costs: np.ndarray | None = None       # cost of applying each cause's remedy
+    wrong_fix_harm: np.ndarray | None = None  # extra cost when that remedy was the wrong one
+    max_failed_fixes: int = 0                  # after this many failed fixes, a person takes over
 
     @property
     def n_checks(self):
@@ -45,6 +53,21 @@ class Scenario:
     @property
     def n_symptoms(self):
         return self.symptom_theta.shape[0]
+
+
+def apply_overlap(theta, categories, omega):
+    """Chapter 3: theta'_ij = (1 - omega) theta_ij + omega * mean of theta_i. over the causes in
+    the same category as cause j. A category with one cause is unchanged."""
+    if not 0.0 <= omega <= 1.0:
+        raise ValueError("overlap must be between 0 and 1")
+    theta = np.asarray(theta, dtype=float)
+    out = theta.copy()
+    categories = np.asarray(categories)
+    for category in np.unique(categories):
+        cols = np.flatnonzero(categories == category)
+        mean = theta[:, cols].mean(axis=1, keepdims=True)
+        out[:, cols] = (1 - omega) * theta[:, cols] + omega * mean
+    return out
 
 
 def build_scenario(model, settings):
@@ -90,12 +113,43 @@ def build_scenario(model, settings):
                           values[attribute].index(rule["when"]["value"]),
                           check_ids.index(unless) if unless else None))
 
-    return Scenario(theta=np.array(model["check_likelihoods"]),
+    verify, fix_costs, wrong_fix_harm, max_failed = _verification(settings, model, cause_ids, unit, cost_esc, r_correct)
+
+    overlap = float(settings.get("overlap", 0.0))
+    theta = apply_overlap(model["check_likelihoods"], [c["category"] for c in model["causes"]], overlap)
+    return Scenario(theta=theta,
                     symptom_theta=np.array(model["symptom_likelihoods"]),
                     prior=prior, check_costs=check_costs,
                     context_values=tuple(values), context_probs=tuple(probs), rules=tuple(rules),
                     r_correct=r_correct, cost_wrong=cost_wrong, cost_esc=cost_esc,
-                    p_noise=settings["p_noise"], p_miss=settings["p_miss"], max_steps=settings["max_steps"])
+                    p_noise=settings["p_noise"], p_miss=settings["p_miss"], max_steps=settings["max_steps"],
+                    overlap=overlap, verify=verify, fix_costs=fix_costs, wrong_fix_harm=wrong_fix_harm,
+                    max_failed_fixes=max_failed)
+
+
+def _verification(settings, model, cause_ids, unit, cost_esc, r_correct):
+    """Reads the fix_with_verification block. Mean harm of a wrong fix = (wrong_fix_multiple - 1)
+    x escalation, so a wrong fix followed by escalation costs, on average, what one wrong fix cost
+    in v1/v2; each remedy's harm_weight (normalised to mean 1) spreads it across remedies."""
+    block = settings.get("fix_with_verification") or {}
+    if not block.get("enabled"):
+        return False, None, None, 0
+    remedies = block["remedies"]
+    missing = set(cause_ids) - set(remedies)
+    if missing:
+        raise ValueError(f"fix_with_verification: no remedy settings for {sorted(missing)}")
+    weights = np.array([remedies[c]["harm_weight"] for c in cause_ids], dtype=float)
+    if (weights <= 0).any():
+        raise ValueError("fix_with_verification: harm weights must be positive")
+    fix_costs = np.array([remedies[c]["apply_minutes"] / unit for c in cause_ids])
+    mean_harm = (model["costs"]["wrong_fix_multiple"] - 1) * cost_esc
+    harm = mean_harm * weights / weights.mean()
+    if not (r_correct - fix_costs > -cost_esc).all():
+        raise ValueError("fix_with_verification: a correct fix must beat escalation for every remedy")
+    max_failed = int(block.get("max_failed_fixes", 2))
+    if max_failed < 1:
+        raise ValueError("fix_with_verification: max_failed_fixes must be at least 1")
+    return True, fix_costs, harm, max_failed
 
 
 def load_scenario(model_path, settings_path):

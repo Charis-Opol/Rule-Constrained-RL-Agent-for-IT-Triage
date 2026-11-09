@@ -5,11 +5,14 @@ import numpy as np
 from src.sim.triage_env import TriageEnv
 
 
-def posterior(scenario, reported_theta, status, symptoms):
+def posterior(scenario, reported_theta, status, symptoms, failed=None):
+    """`failed`: causes whose fix was applied and did not clear the symptoms (verification)."""
     belief = scenario.prior * np.prod(
         np.where(symptoms[:, None], scenario.symptom_theta, 1 - scenario.symptom_theta), axis=0)
     belief = belief * np.prod(reported_theta[status == TriageEnv.POSITIVE], axis=0)
     belief = belief * np.prod(1 - reported_theta[status == TriageEnv.NEGATIVE], axis=0)
+    if failed is not None and len(failed):
+        belief = np.where(failed, 0.0, belief)
     return belief / belief.sum()
 
 

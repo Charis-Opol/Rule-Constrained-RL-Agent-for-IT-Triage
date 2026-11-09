@@ -1,0 +1,1 @@
+Sign-in wrote the user row twice in one transaction (last login, then the refresh token), so concurrent sign-ins collided on row locks. The refresh token now goes to the tokens table in its own short transaction, and the user row is written once.

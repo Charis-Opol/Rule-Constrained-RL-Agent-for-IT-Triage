@@ -20,6 +20,8 @@ def exact_for(model_path, settings_path, agent, p_noise, p_miss):
     if p_miss > 0:
         return None
     scenario = load_scenario(model_path, settings_path)
+    if scenario.verify:                 # the exact solver does not model verification
+        return None
     return solve(make_env(scenario, agent, train=False, p_noise=p_noise, p_miss=p_miss))
 
 

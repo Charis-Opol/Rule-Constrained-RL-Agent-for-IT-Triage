@@ -7,7 +7,7 @@ import numpy as np
 
 EVAL_SEED = 1_000_000
 TUNE_SEED = 2_000_000
-ESCALATED = ("escalated", "forced_escalation", "step_limit")
+ESCALATED = ("escalated", "forced_escalation", "step_limit", "fix_limit")
 
 
 def run_episodes(policy, env, n, first_seed=EVAL_SEED):
@@ -23,7 +23,8 @@ def run_episodes(policy, env, n, first_seed=EVAL_SEED):
         rows.append({"return": total, "outcome": info["outcome"], "should_escalate": info["should_escalate"],
                      "n_checks": info["n_checks"], "check_cost": info["check_cost"],
                      "proposals": info["proposals"], "blocked": info["blocked"],
-                     "executed_violations": info["executed_violations"]})
+                     "executed_violations": info["executed_violations"],
+                     "wrong_fixes": info.get("wrong_fixes", int(info["outcome"] == "wrong"))})
     return rows
 
 
@@ -64,6 +65,10 @@ def summarise(rows):
         "coverage": float((correct | wrong).mean()),
         "selective_accuracy": _ratio(correct.sum(), (correct | wrong).sum()),
         "wrong_rate": float(wrong.mean()),
+        # Share of incidents where at least one wrong fix was applied, and wrong fixes per incident.
+        # Without verification these equal wrong_rate; with it, a wrong fix need not end the episode.
+        "wrong_fix_rate": float(np.mean([r.get("wrong_fixes", 0) > 0 for r in rows])),
+        "mean_wrong_fixes": float(np.mean([r.get("wrong_fixes", 0) for r in rows])),
         # Investigation efficiency
         "mean_checks": float(np.mean([r["n_checks"] for r in rows])),
         "mean_check_cost": float(np.mean([r["check_cost"] for r in rows])),

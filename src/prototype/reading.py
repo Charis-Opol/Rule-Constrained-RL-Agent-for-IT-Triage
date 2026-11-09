@@ -155,6 +155,8 @@ class KeywordReader:
 
         checks = {}
         for check in self.model["checks"]:
+            if check.get("delegated"):              # answered only when the agent asks (delegate.py)
+                continue
             spec = config["checks"][check["id"]]
             checks[check["id"]] = read_ticket_check(spec, said) if "ticket_positive" in spec else read_check(spec, lines)
 

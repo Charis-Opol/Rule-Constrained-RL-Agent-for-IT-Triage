@@ -13,6 +13,13 @@ class Layout:
     n_symptoms: int
     context_sizes: tuple
     max_steps: int
+    n_fix_flags: int = 0        # with verification: one "fix tried and failed" flag per cause
+
+    def failed_fixes(self, obs):
+        """Which fixes have been tried and failed (all False without verification)."""
+        if not self.n_fix_flags:
+            return np.zeros(0, dtype=bool)
+        return np.asarray(obs[-self.n_fix_flags:]) > 0.5
 
     def decode(self, obs):
         status = obs[:4 * self.n_checks].reshape(-1, 4).argmax(1)
@@ -28,7 +35,7 @@ class Layout:
 
 class TriageEnv(gym.Env):
     """One episode is one incident. The cause is hidden; the agent runs checks, then
-    recommends a fix or escalates. Everything about the incident is drawn at reset, so
+    fixes (applies the remedy for a cause) or escalates. Everything about the incident is drawn at reset, so
     the same seed gives every policy the same incident.
 
     The safety mechanism is separate (src/rules). It uses `block` to consume a step and
@@ -50,19 +57,21 @@ class TriageEnv(gym.Env):
         # P(reported positive | cause) once results can be reversed
         self.reported_theta = scenario.theta * (1 - self.p_noise) + (1 - scenario.theta) * self.p_noise
 
-        # Actions: [0, n_checks) run a check; [n_checks, n_checks + n_causes) recommend
-        # the fix for a cause; the last action escalates.
+        # Actions: [0, n_checks) run a check; [n_checks, n_checks + n_causes) fix: apply
+        # the remedy for a cause; the last action escalates.
         self.n_actions = self.n_checks + self.n_causes + 1
         self.ESCALATE = self.n_actions - 1
         self.action_space = spaces.Discrete(self.n_actions)
 
         # Observation: one-hot check status (4 values) and symptom (present, absent, not
         # reported), context (one number if two-valued, otherwise one-hot), scaled step
-        # count and blocked flag.
+        # count and blocked flag; with verification, one flag per cause whose fix has failed.
+        self.verify = scenario.verify
         self.context_sizes = [1 if len(v) == 2 else len(v) for v in scenario.context_values]
-        size = 4 * self.n_checks + 3 * self.n_symptoms + sum(self.context_sizes) + 2
+        n_flags = self.n_causes if self.verify else 0
+        size = 4 * self.n_checks + 3 * self.n_symptoms + sum(self.context_sizes) + 2 + n_flags
         self.observation_space = spaces.Box(0.0, 1.0, shape=(size,), dtype=np.float32)
-        self.layout = Layout(self.n_checks, self.n_symptoms, tuple(self.context_sizes), self.max_steps)
+        self.layout = Layout(self.n_checks, self.n_symptoms, tuple(self.context_sizes), self.max_steps, n_flags)
 
     # ----- helpers -----------------------------------------------------------
     def _obs(self):
@@ -80,6 +89,8 @@ class TriageEnv(gym.Env):
             at += size
         obs[at] = self.t / self.max_steps
         obs[at + 1] = float(self.blocked_action is not None)
+        if self.verify:
+            obs[at + 2:] = self.failed
         return obs
 
     def _reference_label(self):
@@ -95,8 +106,10 @@ class TriageEnv(gym.Env):
         return "ambiguous" if belief.argmax() != self.cause else None
 
     def _info(self, outcome):
+        wrong_fixes = int(self.failed.sum()) + (outcome == "wrong")
         return {"outcome": outcome, "cause": self.cause, "should_escalate": self.escalate_reason is not None,
-                "escalate_reason": self.escalate_reason, "n_checks": self.n_requested, "check_cost": self.cost_spent}
+                "escalate_reason": self.escalate_reason, "n_checks": self.n_requested, "check_cost": self.cost_spent,
+                "wrong_fixes": wrong_fixes}
 
     def observed(self, check):
         """A check is observed once it has returned a result. Unavailable does not count."""
@@ -105,6 +118,7 @@ class TriageEnv(gym.Env):
     def action_masks(self):
         mask = np.ones(self.n_actions, dtype=bool)
         mask[:self.n_checks] = self.status == self.NOT_REQUESTED   # no repeated checks
+        mask[self.n_checks:self.ESCALATE] &= ~self.failed            # a failed fix is not repeated
         if self.blocked_action is not None:
             mask[self.blocked_action] = False
         return mask
@@ -144,6 +158,7 @@ class TriageEnv(gym.Env):
         self.t = self.n_requested = 0
         self.cost_spent = 0.0
         self.blocked_action = None
+        self.failed = np.zeros(self.n_causes, dtype=bool)
         return self._obs(), {}
 
     def step(self, action):
@@ -161,7 +176,18 @@ class TriageEnv(gym.Env):
             self.n_requested += 1
             self.cost_spent += float(s.check_costs[action])
             reward = -float(s.check_costs[action])
-        elif action < self.ESCALATE:                       # recommend a fix
+        elif action < self.ESCALATE and self.verify:       # fix, then verify
+            cause = action - self.n_checks
+            if cause == self.cause:                        # symptoms clear: resolved
+                reward = s.r_correct - s.fix_costs[cause]
+                terminated, info = True, self._info("correct")
+            else:                                          # symptoms persist: pay the harm, go on
+                reward = -(s.fix_costs[cause] + s.wrong_fix_harm[cause])
+                self.failed[cause] = True
+                if self.failed.sum() >= s.max_failed_fixes:
+                    reward -= s.cost_esc                   # a person takes over
+                    terminated, info = True, self._info("fix_limit")
+        elif action < self.ESCALATE:                       # fix: apply a remedy
             correct = (action - self.n_checks) == self.cause
             reward = s.r_correct if correct else -s.cost_wrong
             terminated, info = True, self._info("correct" if correct else "wrong")

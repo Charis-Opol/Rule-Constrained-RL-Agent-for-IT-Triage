@@ -1,0 +1,1 @@
+Profiles with dates could not be serialised, and the failure was only logged as a warning, so every request fell back to the slow path. Dates are now stored in ISO format, and any other serialisation failure is logged as an error and raised instead of being hidden.

@@ -1,64 +1,181 @@
 {
-  "note": "Fictional incidents written by the researcher for the pilot model; no real tickets, logs or people. 'expected' is the researcher's own reading of each ticket and its logs, used to score the readers. 'intended_cause' is the cause each case was written to show; it is not ground truth, and vague_slow was written to have none. Symptoms not listed are absent; checks not listed are not shown; context not stated takes the defaults in prototype_config.json.",
-  "cases": {
-    "results_approval": {
-      "intended_cause": "C02",
-      "expected": {
-        "category": "Database",
-        "symptoms_present": ["S01", "S02", "S04"],
-        "context": {"X01": "Yes", "X02": "High"},
-        "checks": {"D02": "positive", "D03": "negative", "D04": "negative", "D05": "positive",
-                   "D08": "negative", "D09": "negative", "D10": "negative"}
-      }
+ "note": "Fictional incidents written by the researcher for the pilot model; no real tickets, logs or people. 'expected' is the researcher's own reading of each ticket and its logs, used to score the readers. 'intended_cause' is the cause each case was written to show; it is not ground truth, and vague_slow was written to have none. Symptoms not listed are absent; checks not listed are not shown; context not stated takes the defaults in prototype_config.json. class_results_slow and profile_cache (added 9 Nov 2026) also show the delegated check D11 and a code-fault cause with a draft pull request.",
+ "cases": {
+  "results_approval": {
+   "intended_cause": "C02",
+   "expected": {
+    "category": "Database",
+    "symptoms_present": [
+     "S01",
+     "S02",
+     "S04"
+    ],
+    "context": {
+     "X01": "Yes",
+     "X02": "High"
     },
-    "sign_in": {
-      "intended_cause": "C08",
-      "expected": {
-        "category": "Authentication and access",
-        "symptoms_present": ["S01", "S03"],
-        "context": {"X01": "Yes", "X02": "High"},
-        "checks": {"D02": "positive", "D03": "negative", "D04": "negative", "D05": "negative",
-                   "D08": "negative", "D09": "negative"}
-      }
-    },
-    "fees_release": {
-      "intended_cause": "C06",
-      "expected": {
-        "category": "Application and interface",
-        "symptoms_present": ["S01"],
-        "context": {"X01": "Yes", "X02": "High"},
-        "checks": {"D02": "negative", "D03": "negative", "D04": "negative", "D05": "negative",
-                   "D08": "negative", "D09": "positive", "D10": "negative"}
-      }
-    },
-    "transcript_duplicates": {
-      "intended_cause": "C07",
-      "expected": {
-        "category": "Database",
-        "symptoms_present": ["S01"],
-        "context": {"X01": "Yes", "X02": "Medium"},
-        "checks": {"D02": "negative", "D04": "negative", "D05": "negative", "D08": "negative",
-                   "D09": "negative", "D10": "positive"}
-      }
-    },
-    "payment_gateway": {
-      "intended_cause": "C01",
-      "expected": {
-        "category": "Infrastructure and external services",
-        "symptoms_present": ["S01", "S02", "S04"],
-        "context": {"X01": "Yes", "X02": "High"},
-        "checks": {"D01": "positive", "D02": "negative", "D03": "positive", "D04": "negative",
-                   "D05": "negative", "D08": "negative", "D09": "negative"}
-      }
-    },
-    "vague_slow": {
-      "intended_cause": null,
-      "expected": {
-        "category": "unclear",
-        "symptoms_present": ["S02"],
-        "context": {"X01": "Yes", "X02": "High"},
-        "checks": {}
-      }
+    "checks": {
+     "D02": "positive",
+     "D03": "negative",
+     "D04": "negative",
+     "D05": "positive",
+     "D08": "negative",
+     "D09": "negative",
+     "D10": "negative"
     }
+   }
+  },
+  "sign_in": {
+   "intended_cause": "C08",
+   "expected": {
+    "category": "Authentication and access",
+    "symptoms_present": [
+     "S01",
+     "S03"
+    ],
+    "context": {
+     "X01": "Yes",
+     "X02": "High"
+    },
+    "checks": {
+     "D02": "positive",
+     "D03": "negative",
+     "D04": "negative",
+     "D05": "negative",
+     "D08": "negative",
+     "D09": "negative"
+    }
+   }
+  },
+  "fees_release": {
+   "intended_cause": "C06",
+   "expected": {
+    "category": "Application and interface",
+    "symptoms_present": [
+     "S01"
+    ],
+    "context": {
+     "X01": "Yes",
+     "X02": "High"
+    },
+    "checks": {
+     "D02": "negative",
+     "D03": "negative",
+     "D04": "negative",
+     "D05": "negative",
+     "D08": "negative",
+     "D09": "positive",
+     "D10": "negative"
+    }
+   }
+  },
+  "transcript_duplicates": {
+   "intended_cause": "C07",
+   "expected": {
+    "category": "Database",
+    "symptoms_present": [
+     "S01"
+    ],
+    "context": {
+     "X01": "Yes",
+     "X02": "Medium"
+    },
+    "checks": {
+     "D02": "negative",
+     "D04": "negative",
+     "D05": "negative",
+     "D08": "negative",
+     "D09": "negative",
+     "D10": "positive"
+    }
+   }
+  },
+  "payment_gateway": {
+   "intended_cause": "C01",
+   "expected": {
+    "category": "Infrastructure and external services",
+    "symptoms_present": [
+     "S01",
+     "S02",
+     "S04"
+    ],
+    "context": {
+     "X01": "Yes",
+     "X02": "High"
+    },
+    "checks": {
+     "D01": "positive",
+     "D02": "negative",
+     "D03": "positive",
+     "D04": "negative",
+     "D05": "negative",
+     "D08": "negative",
+     "D09": "negative"
+    }
+   }
+  },
+  "vague_slow": {
+   "intended_cause": null,
+   "expected": {
+    "category": "unclear",
+    "symptoms_present": [
+     "S02"
+    ],
+    "context": {
+     "X01": "Yes",
+     "X02": "High"
+    },
+    "checks": {}
+   }
+  },
+  "class_results_slow": {
+   "intended_cause": "C04",
+   "expected": {
+    "category": "Application and interface",
+    "symptoms_present": [
+     "S01",
+     "S02"
+    ],
+    "context": {
+     "X01": "Yes",
+     "X02": "High"
+    },
+    "checks": {
+     "D01": "negative",
+     "D02": "negative",
+     "D03": "negative",
+     "D04": "positive",
+     "D05": "negative",
+     "D07": "positive",
+     "D08": "negative",
+     "D09": "negative",
+     "D11": "positive"
+    }
+   }
+  },
+  "profile_cache": {
+   "intended_cause": "C05",
+   "expected": {
+    "category": "Infrastructure and external services",
+    "symptoms_present": [
+     "S02"
+    ],
+    "context": {
+     "X01": "Yes",
+     "X02": "High"
+    },
+    "checks": {
+     "D01": "negative",
+     "D02": "negative",
+     "D03": "negative",
+     "D04": "negative",
+     "D05": "negative",
+     "D07": "negative",
+     "D08": "positive",
+     "D09": "negative",
+     "D11": "positive"
+    }
+   }
   }
+ }
 }

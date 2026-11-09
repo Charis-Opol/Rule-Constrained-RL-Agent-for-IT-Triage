@@ -1,0 +1,1830 @@
+{
+  "agent_run": "results/pilot/runs/v2_shielded_seed2",
+  "model": "experiments/pilot/pilot_model_v2.json",
+  "cases": {
+    "results_approval": {
+      "intended_cause": "C02",
+      "readers": {
+        "keyword": {
+          "agreement": {
+            "category": false,
+            "symptoms": [
+              4,
+              4
+            ],
+            "context": [
+              2,
+              2
+            ],
+            "checks": [
+              10,
+              10
+            ]
+          },
+          "decision": {
+            "outcome": "recommended",
+            "checks_run": 4,
+            "check_minutes": 30,
+            "blocked_proposals": 4,
+            "cause": "C02",
+            "cause_name": "Long-running transaction holds row locks",
+            "remedy": "Kill the blocking transaction",
+            "permitted": true
+          },
+          "steps": [
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 0.043746307492256165,
+              "margin": 0.03788878209888935,
+              "escalate_value": -1.9949652254581451,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D04 API node CPU",
+              "value": -0.02062002196907997,
+              "margin": 0.00733913853764534,
+              "escalate_value": -1.9943612813949585,
+              "result": "negative",
+              "evidence": "2026-11-02T08:59:02Z INFO  node   api-2 cpu=41%",
+              "source": "logs"
+            },
+            {
+              "action": "Recommend C06: Roll back the release",
+              "value": 0.23657944053411484,
+              "margin": 0.16320817172527313,
+              "escalate_value": -1.9945640861988068,
+              "blocked_by": [
+                {
+                  "rule": "R02",
+                  "needs": "D09",
+                  "reason": "A rollback restarts every node, and migrations may not reverse"
+                }
+              ]
+            },
+            {
+              "action": "Run D02 Lock-wait errors in logs",
+              "value": 0.06408108398318291,
+              "margin": 0.050001051276922226,
+              "escalate_value": -1.9935224950313568,
+              "result": "positive",
+              "evidence": "2026-11-02T09:00:15Z WARN  db     lock wait timeout exceeded; try restarting transaction table=results_approval",
+              "source": "logs"
+            },
+            {
+              "action": "Recommend C06: Roll back the release",
+              "value": 0.5418388172984123,
+              "margin": 0.12419439852237701,
+              "escalate_value": -1.9912631809711456,
+              "blocked_by": [
+                {
+                  "rule": "R02",
+                  "needs": "D09",
+                  "reason": "A rollback restarts every node, and migrations may not reverse"
+                }
+              ]
+            },
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": 0.3339727595448494,
+              "margin": 0.14546502381563187,
+              "escalate_value": -1.990797519683838,
+              "result": "negative",
+              "evidence": "2026-11-02T08:59:02Z INFO  pool   db_pool in_use=11/20 (55%)",
+              "source": "logs"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 0.019790977239608765,
+              "margin": 0.273404773324728,
+              "escalate_value": -1.9923627376556396,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D05 Long transaction in the DB",
+              "value": -0.37795290350914,
+              "margin": 0.06675310432910919,
+              "escalate_value": -1.9928458333015442,
+              "result": "positive",
+              "evidence": "2026-11-02T08:58:10Z INFO  db     active_transactions=14 oldest_tx_age=412s job=nightly_gpa_recalc",
+              "source": "logs"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 1.0386691242456436,
+              "margin": 0.11186160147190094,
+              "escalate_value": -1.9920909404754639
+            }
+          ],
+          "warnings": []
+        },
+        "expected": {
+          "decision": {
+            "outcome": "recommended",
+            "checks_run": 4,
+            "check_minutes": 30,
+            "blocked_proposals": 4,
+            "cause": "C02",
+            "cause_name": "Long-running transaction holds row locks",
+            "remedy": "Kill the blocking transaction",
+            "permitted": true
+          },
+          "steps": [
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 0.043746307492256165,
+              "margin": 0.03788878209888935,
+              "escalate_value": -1.9949652254581451,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D04 API node CPU",
+              "value": -0.02062002196907997,
+              "margin": 0.00733913853764534,
+              "escalate_value": -1.9943612813949585,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C06: Roll back the release",
+              "value": 0.23657944053411484,
+              "margin": 0.16320817172527313,
+              "escalate_value": -1.9945640861988068,
+              "blocked_by": [
+                {
+                  "rule": "R02",
+                  "needs": "D09",
+                  "reason": "A rollback restarts every node, and migrations may not reverse"
+                }
+              ]
+            },
+            {
+              "action": "Run D02 Lock-wait errors in logs",
+              "value": 0.06408108398318291,
+              "margin": 0.050001051276922226,
+              "escalate_value": -1.9935224950313568,
+              "result": "positive",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C06: Roll back the release",
+              "value": 0.5418388172984123,
+              "margin": 0.12419439852237701,
+              "escalate_value": -1.9912631809711456,
+              "blocked_by": [
+                {
+                  "rule": "R02",
+                  "needs": "D09",
+                  "reason": "A rollback restarts every node, and migrations may not reverse"
+                }
+              ]
+            },
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": 0.3339727595448494,
+              "margin": 0.14546502381563187,
+              "escalate_value": -1.990797519683838,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 0.019790977239608765,
+              "margin": 0.273404773324728,
+              "escalate_value": -1.9923627376556396,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D05 Long transaction in the DB",
+              "value": -0.37795290350914,
+              "margin": 0.06675310432910919,
+              "escalate_value": -1.9928458333015442,
+              "result": "positive",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 1.0386691242456436,
+              "margin": 0.11186160147190094,
+              "escalate_value": -1.9920909404754639
+            }
+          ]
+        }
+      }
+    },
+    "sign_in": {
+      "intended_cause": "C08",
+      "readers": {
+        "keyword": {
+          "agreement": {
+            "category": true,
+            "symptoms": [
+              4,
+              4
+            ],
+            "context": [
+              2,
+              2
+            ],
+            "checks": [
+              10,
+              10
+            ]
+          },
+          "decision": {
+            "outcome": "recommended",
+            "checks_run": 3,
+            "check_minutes": 15,
+            "blocked_proposals": 3,
+            "cause": "C08",
+            "cause_name": "Sign-in writes collide on the user row",
+            "remedy": "Move the token write off the sign-in path",
+            "permitted": true
+          },
+          "steps": [
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 3.2534000277519226,
+              "margin": 0.35544872283935547,
+              "escalate_value": -2.007131278514862,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D04 API node CPU",
+              "value": 2.7432265877723694,
+              "margin": 0.058471858501434326,
+              "escalate_value": -2.0023998618125916,
+              "result": "negative",
+              "evidence": "2026-11-03T07:40:00Z INFO  node   api-1 cpu=38%",
+              "source": "logs"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 3.1405439972877502,
+              "margin": 0.3041750192642212,
+              "escalate_value": -2.0040467381477356,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D02 Lock-wait errors in logs",
+              "value": 2.786209285259247,
+              "margin": 0.0070416927337646484,
+              "escalate_value": -2.0001868903636932,
+              "result": "positive",
+              "evidence": "2026-11-03T07:41:02Z WARN  db     could not obtain lock on row in relation \"users\" (token update)",
+              "source": "logs"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 3.907650411128998,
+              "margin": 0.26213765144348145,
+              "escalate_value": -2.005246579647064,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": 3.605329394340515,
+              "margin": 0.15858083963394165,
+              "escalate_value": -2.000834196805954,
+              "result": "negative",
+              "evidence": "2026-11-03T07:40:00Z INFO  pool   db_pool in_use=9/20 (45%)",
+              "source": "logs"
+            },
+            {
+              "action": "Recommend C08: Move the token write off the sign-in path",
+              "value": 4.539770781993866,
+              "margin": 0.5204185843467712,
+              "escalate_value": -2.0055076479911804
+            }
+          ],
+          "warnings": []
+        },
+        "expected": {
+          "decision": {
+            "outcome": "recommended",
+            "checks_run": 3,
+            "check_minutes": 15,
+            "blocked_proposals": 3,
+            "cause": "C08",
+            "cause_name": "Sign-in writes collide on the user row",
+            "remedy": "Move the token write off the sign-in path",
+            "permitted": true
+          },
+          "steps": [
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 3.2534000277519226,
+              "margin": 0.35544872283935547,
+              "escalate_value": -2.007131278514862,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D04 API node CPU",
+              "value": 2.7432265877723694,
+              "margin": 0.058471858501434326,
+              "escalate_value": -2.0023998618125916,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 3.1405439972877502,
+              "margin": 0.3041750192642212,
+              "escalate_value": -2.0040467381477356,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D02 Lock-wait errors in logs",
+              "value": 2.786209285259247,
+              "margin": 0.0070416927337646484,
+              "escalate_value": -2.0001868903636932,
+              "result": "positive",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 3.907650411128998,
+              "margin": 0.26213765144348145,
+              "escalate_value": -2.005246579647064,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": 3.605329394340515,
+              "margin": 0.15858083963394165,
+              "escalate_value": -2.000834196805954,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C08: Move the token write off the sign-in path",
+              "value": 4.539770781993866,
+              "margin": 0.5204185843467712,
+              "escalate_value": -2.0055076479911804
+            }
+          ]
+        }
+      }
+    },
+    "fees_release": {
+      "intended_cause": "C06",
+      "readers": {
+        "keyword": {
+          "agreement": {
+            "category": true,
+            "symptoms": [
+              4,
+              4
+            ],
+            "context": [
+              2,
+              2
+            ],
+            "checks": [
+              10,
+              10
+            ]
+          },
+          "decision": {
+            "outcome": "recommended",
+            "checks_run": 7,
+            "check_minutes": 55,
+            "blocked_proposals": 1,
+            "cause": "C07",
+            "cause_name": "Duplicate rows where one was expected",
+            "remedy": "Remove the duplicate rows",
+            "permitted": true
+          },
+          "steps": [
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 2.3166242241859436,
+              "margin": 0.06773233413696289,
+              "escalate_value": -2.0063425600528717,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D08 Cache errors in logs",
+              "value": 1.9913795590400696,
+              "margin": 0.004217773675918579,
+              "escalate_value": -2.001700848340988,
+              "result": "negative",
+              "evidence": "2026-11-03T08:13:00Z INFO  cache  hit_rate=0.91",
+              "source": "logs"
+            },
+            {
+              "action": "Run D05 Long transaction in the DB",
+              "value": 2.566114664077759,
+              "margin": 0.08421048521995544,
+              "escalate_value": -2.005566507577896,
+              "result": "negative",
+              "evidence": "2026-11-03T08:13:00Z INFO  db     active_transactions=3 oldest_tx_age=1s",
+              "source": "logs"
+            },
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": 3.2640239596366882,
+              "margin": 0.04254758358001709,
+              "escalate_value": -2.0049406588077545,
+              "result": "negative",
+              "evidence": "2026-11-03T08:13:00Z INFO  pool   db_pool in_use=4/20 (20%)",
+              "source": "logs"
+            },
+            {
+              "action": "Run D02 Lock-wait errors in logs",
+              "value": 3.8322094082832336,
+              "margin": 0.0651007890701294,
+              "escalate_value": -2.007756382226944,
+              "result": "negative",
+              "evidence": "2026-11-03T08:13:00Z INFO  db     active_transactions=3 oldest_tx_age=1s",
+              "source": "logs"
+            },
+            {
+              "action": "Run D10 Failure scope",
+              "value": 4.515357315540314,
+              "margin": 0.0985059142112732,
+              "escalate_value": -2.008179873228073,
+              "result": "negative",
+              "evidence": "Since this morning the fees statement page shows an error for every student who opens it.",
+              "source": "ticket"
+            },
+            {
+              "action": "Run D09 Recent release or migration",
+              "value": 2.663257122039795,
+              "margin": 0.0548475980758667,
+              "escalate_value": -2.0030976831912994,
+              "result": "positive",
+              "evidence": "2026-11-03T06:10:00Z INFO  deploy release v3.9.0 deployed to production (migration 0057_fee_items applied)",
+              "source": "logs"
+            },
+            {
+              "action": "Run D04 API node CPU",
+              "value": 0.7137395441532135,
+              "margin": 0.21901383996009827,
+              "escalate_value": -1.998930424451828,
+              "result": "negative",
+              "evidence": "2026-11-03T08:13:00Z INFO  node   api-1 cpu=22%",
+              "source": "logs"
+            },
+            {
+              "action": "Recommend C07: Remove the duplicate rows",
+              "value": 1.5479297935962677,
+              "margin": 0.4915699362754822,
+              "escalate_value": -2.0009154081344604
+            }
+          ],
+          "warnings": []
+        },
+        "expected": {
+          "decision": {
+            "outcome": "recommended",
+            "checks_run": 7,
+            "check_minutes": 55,
+            "blocked_proposals": 1,
+            "cause": "C07",
+            "cause_name": "Duplicate rows where one was expected",
+            "remedy": "Remove the duplicate rows",
+            "permitted": true
+          },
+          "steps": [
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 2.3166242241859436,
+              "margin": 0.06773233413696289,
+              "escalate_value": -2.0063425600528717,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D08 Cache errors in logs",
+              "value": 1.9913795590400696,
+              "margin": 0.004217773675918579,
+              "escalate_value": -2.001700848340988,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D05 Long transaction in the DB",
+              "value": 2.566114664077759,
+              "margin": 0.08421048521995544,
+              "escalate_value": -2.005566507577896,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": 3.2640239596366882,
+              "margin": 0.04254758358001709,
+              "escalate_value": -2.0049406588077545,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D02 Lock-wait errors in logs",
+              "value": 3.8322094082832336,
+              "margin": 0.0651007890701294,
+              "escalate_value": -2.007756382226944,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D10 Failure scope",
+              "value": 4.515357315540314,
+              "margin": 0.0985059142112732,
+              "escalate_value": -2.008179873228073,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D09 Recent release or migration",
+              "value": 2.663257122039795,
+              "margin": 0.0548475980758667,
+              "escalate_value": -2.0030976831912994,
+              "result": "positive",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D04 API node CPU",
+              "value": 0.7137395441532135,
+              "margin": 0.21901383996009827,
+              "escalate_value": -1.998930424451828,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C07: Remove the duplicate rows",
+              "value": 1.5479297935962677,
+              "margin": 0.4915699362754822,
+              "escalate_value": -2.0009154081344604
+            }
+          ]
+        }
+      }
+    },
+    "transcript_duplicates": {
+      "intended_cause": "C07",
+      "readers": {
+        "keyword": {
+          "agreement": {
+            "category": false,
+            "symptoms": [
+              4,
+              4
+            ],
+            "context": [
+              2,
+              2
+            ],
+            "checks": [
+              10,
+              10
+            ]
+          },
+          "decision": {
+            "outcome": "recommended",
+            "checks_run": 5,
+            "check_minutes": 45,
+            "blocked_proposals": 2,
+            "cause": "C07",
+            "cause_name": "Duplicate rows where one was expected",
+            "remedy": "Remove the duplicate rows",
+            "permitted": true
+          },
+          "steps": [
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 2.6436200737953186,
+              "margin": 0.2236601710319519,
+              "escalate_value": -2.0032183825969696,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D08 Cache errors in logs",
+              "value": 2.111501395702362,
+              "margin": 0.11920079588890076,
+              "escalate_value": -1.9993169605731964,
+              "result": "negative",
+              "evidence": "2026-11-02T10:06:00Z INFO  cache  hit_rate=0.95",
+              "source": "logs"
+            },
+            {
+              "action": "Run D09 Recent release or migration",
+              "value": 2.3829251527786255,
+              "margin": 0.009344518184661865,
+              "escalate_value": -2.002578377723694,
+              "result": "negative",
+              "evidence": "2026-10-25T12:00:00Z INFO  deploy release v3.7.4 deployed to production",
+              "source": "logs"
+            },
+            {
+              "action": "Run D10 Failure scope",
+              "value": 3.0995264649391174,
+              "margin": 0.07692933082580566,
+              "escalate_value": -2.0005542039871216,
+              "result": "positive",
+              "evidence": "Subject: Transcript error for a few students",
+              "source": "ticket"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 4.1574543714523315,
+              "margin": 0.14598846435546875,
+              "escalate_value": -2.0025111734867096,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D02 Lock-wait errors in logs",
+              "value": 3.8125982880592346,
+              "margin": 0.06019085645675659,
+              "escalate_value": -1.9996857643127441,
+              "result": "negative",
+              "evidence": "2026-11-02T10:06:00Z INFO  db     active_transactions=2 oldest_tx_age=0s",
+              "source": "logs"
+            },
+            {
+              "action": "Run D05 Long transaction in the DB",
+              "value": 4.570826292037964,
+              "margin": 0.08847653865814209,
+              "escalate_value": -2.002572864294052,
+              "result": "negative",
+              "evidence": "2026-11-02T10:06:00Z INFO  db     active_transactions=2 oldest_tx_age=0s",
+              "source": "logs"
+            },
+            {
+              "action": "Recommend C07: Remove the duplicate rows",
+              "value": 4.691668748855591,
+              "margin": 0.21041691303253174,
+              "escalate_value": -2.003837078809738
+            }
+          ],
+          "warnings": []
+        },
+        "expected": {
+          "decision": {
+            "outcome": "recommended",
+            "checks_run": 5,
+            "check_minutes": 45,
+            "blocked_proposals": 2,
+            "cause": "C07",
+            "cause_name": "Duplicate rows where one was expected",
+            "remedy": "Remove the duplicate rows",
+            "permitted": true
+          },
+          "steps": [
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 2.6436200737953186,
+              "margin": 0.2236601710319519,
+              "escalate_value": -2.0032183825969696,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D08 Cache errors in logs",
+              "value": 2.111501395702362,
+              "margin": 0.11920079588890076,
+              "escalate_value": -1.9993169605731964,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D09 Recent release or migration",
+              "value": 2.3829251527786255,
+              "margin": 0.009344518184661865,
+              "escalate_value": -2.002578377723694,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D10 Failure scope",
+              "value": 3.0995264649391174,
+              "margin": 0.07692933082580566,
+              "escalate_value": -2.0005542039871216,
+              "result": "positive",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 4.1574543714523315,
+              "margin": 0.14598846435546875,
+              "escalate_value": -2.0025111734867096,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D02 Lock-wait errors in logs",
+              "value": 3.8125982880592346,
+              "margin": 0.06019085645675659,
+              "escalate_value": -1.9996857643127441,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D05 Long transaction in the DB",
+              "value": 4.570826292037964,
+              "margin": 0.08847653865814209,
+              "escalate_value": -2.002572864294052,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C07: Remove the duplicate rows",
+              "value": 4.691668748855591,
+              "margin": 0.21041691303253174,
+              "escalate_value": -2.003837078809738
+            }
+          ]
+        }
+      }
+    },
+    "payment_gateway": {
+      "intended_cause": "C01",
+      "readers": {
+        "keyword": {
+          "agreement": {
+            "category": true,
+            "symptoms": [
+              4,
+              4
+            ],
+            "context": [
+              2,
+              2
+            ],
+            "checks": [
+              10,
+              10
+            ]
+          },
+          "decision": {
+            "outcome": "escalated",
+            "checks_run": 3,
+            "check_minutes": 15,
+            "blocked_proposals": 2,
+            "reason": "The agent judged the evidence too weak or too risky to act on."
+          },
+          "steps": [
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 0.043746307492256165,
+              "margin": 0.03788878209888935,
+              "escalate_value": -1.9949652254581451,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D04 API node CPU",
+              "value": -0.02062002196907997,
+              "margin": 0.00733913853764534,
+              "escalate_value": -1.9943612813949585,
+              "result": "negative",
+              "evidence": "2026-11-03T11:21:00Z INFO  node   api-1 cpu=52%",
+              "source": "logs"
+            },
+            {
+              "action": "Recommend C06: Roll back the release",
+              "value": 0.23657944053411484,
+              "margin": 0.16320817172527313,
+              "escalate_value": -1.9945640861988068,
+              "blocked_by": [
+                {
+                  "rule": "R02",
+                  "needs": "D09",
+                  "reason": "A rollback restarts every node, and migrations may not reverse"
+                }
+              ]
+            },
+            {
+              "action": "Run D02 Lock-wait errors in logs",
+              "value": 0.06408108398318291,
+              "margin": 0.050001051276922226,
+              "escalate_value": -1.9935224950313568,
+              "result": "negative",
+              "evidence": "2026-11-03T11:21:00Z INFO  db     active_transactions=19 oldest_tx_age=58s",
+              "source": "logs"
+            },
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": -0.35891663283109665,
+              "margin": 0.01639295369386673,
+              "escalate_value": -1.9985713064670563,
+              "result": "positive",
+              "evidence": "2026-11-03T11:21:00Z INFO  pool   db_pool in_use=19/20 (95%)",
+              "source": "logs"
+            },
+            {
+              "action": "Escalate to a human expert",
+              "value": -1.9961269199848175,
+              "margin": 0.01680806279182434,
+              "escalate_value": -1.9961269199848175
+            }
+          ],
+          "warnings": []
+        },
+        "expected": {
+          "decision": {
+            "outcome": "escalated",
+            "checks_run": 3,
+            "check_minutes": 15,
+            "blocked_proposals": 2,
+            "reason": "The agent judged the evidence too weak or too risky to act on."
+          },
+          "steps": [
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 0.043746307492256165,
+              "margin": 0.03788878209888935,
+              "escalate_value": -1.9949652254581451,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D04 API node CPU",
+              "value": -0.02062002196907997,
+              "margin": 0.00733913853764534,
+              "escalate_value": -1.9943612813949585,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C06: Roll back the release",
+              "value": 0.23657944053411484,
+              "margin": 0.16320817172527313,
+              "escalate_value": -1.9945640861988068,
+              "blocked_by": [
+                {
+                  "rule": "R02",
+                  "needs": "D09",
+                  "reason": "A rollback restarts every node, and migrations may not reverse"
+                }
+              ]
+            },
+            {
+              "action": "Run D02 Lock-wait errors in logs",
+              "value": 0.06408108398318291,
+              "margin": 0.050001051276922226,
+              "escalate_value": -1.9935224950313568,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": -0.35891663283109665,
+              "margin": 0.01639295369386673,
+              "escalate_value": -1.9985713064670563,
+              "result": "positive",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Escalate to a human expert",
+              "value": -1.9961269199848175,
+              "margin": 0.01680806279182434,
+              "escalate_value": -1.9961269199848175
+            }
+          ]
+        }
+      }
+    },
+    "vague_slow": {
+      "intended_cause": null,
+      "readers": {
+        "keyword": {
+          "agreement": {
+            "category": true,
+            "symptoms": [
+              4,
+              4
+            ],
+            "context": [
+              2,
+              2
+            ],
+            "checks": [
+              10,
+              10
+            ]
+          },
+          "decision": {
+            "outcome": "recommended",
+            "checks_run": 5,
+            "check_minutes": 60,
+            "blocked_proposals": 6,
+            "cause": "C04",
+            "cause_name": "Repeated queries per request (N+1) on a heavy endpoint",
+            "remedy": "Batch the repeated queries",
+            "permitted": true
+          },
+          "steps": [
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 1.2254736572504044,
+              "margin": 0.09313277900218964,
+              "escalate_value": -1.9997462630271912,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D08 Cache errors in logs",
+              "value": 0.850188210606575,
+              "margin": 0.10323047637939453,
+              "escalate_value": -1.9994071125984192,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "logs"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 0.849044993519783,
+              "margin": 0.3390023112297058,
+              "escalate_value": -1.9983726739883423,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D02 Lock-wait errors in logs",
+              "value": 0.382559671998024,
+              "margin": 0.012201443314552307,
+              "escalate_value": -1.9983398914337158,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "logs"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 0.32970577478408813,
+              "margin": 0.37656648084521294,
+              "escalate_value": -1.9979371130466461,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D07 Query count in a slow trace",
+              "value": 0.05236553028225899,
+              "margin": 0.26588650420308113,
+              "escalate_value": -1.9983747601509094,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "logs"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 0.5100572109222412,
+              "margin": 0.7887217402458191,
+              "escalate_value": -1.9974224269390106,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D04 API node CPU",
+              "value": -0.5780747160315514,
+              "margin": 0.2011140063405037,
+              "escalate_value": -1.9976341724395752,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "logs"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 1.243407055735588,
+              "margin": 0.7821322232484818,
+              "escalate_value": -1.9980821013450623,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D11 Full log analysis (delegated)",
+              "value": -0.3011542558670044,
+              "margin": 0.06534263491630554,
+              "escalate_value": -1.9983446598052979,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "delegate",
+              "delegation": {
+                "delegate": "pattern",
+                "check": "D11",
+                "prompt": "Analysis requested: D11 Full log analysis (delegated).\nQuestion: Whether a full analysis of the logs and stack traces traces the failure to a specific place in the application's own code.\nCounts as positive: The analysis names a file or function in the application's code where the failure starts.\n\n<ticket>\nSubject: System slow\n\nThe system is slow today.\n\n</ticket>\n\n<logs>\n\n</logs>",
+                "finding": {
+                  "value": "not_shown",
+                  "evidence": "",
+                  "source": "delegate"
+                },
+                "report": "No stack traces or code locations in the logs, so the question cannot be answered.",
+                "warning": ""
+              }
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 1.753993034362793,
+              "margin": 0.43377771973609924,
+              "escalate_value": -1.9986887276172638,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Recommend C04: Batch the repeated queries",
+              "value": 0.5651551485061646,
+              "margin": 0.5675645172595978,
+              "escalate_value": -1.9986611604690552
+            }
+          ],
+          "warnings": []
+        },
+        "expected": {
+          "decision": {
+            "outcome": "recommended",
+            "checks_run": 5,
+            "check_minutes": 60,
+            "blocked_proposals": 6,
+            "cause": "C04",
+            "cause_name": "Repeated queries per request (N+1) on a heavy endpoint",
+            "remedy": "Batch the repeated queries",
+            "permitted": true
+          },
+          "steps": [
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 1.2254736572504044,
+              "margin": 0.09313277900218964,
+              "escalate_value": -1.9997462630271912,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D08 Cache errors in logs",
+              "value": 0.850188210606575,
+              "margin": 0.10323047637939453,
+              "escalate_value": -1.9994071125984192,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 0.849044993519783,
+              "margin": 0.3390023112297058,
+              "escalate_value": -1.9983726739883423,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D02 Lock-wait errors in logs",
+              "value": 0.382559671998024,
+              "margin": 0.012201443314552307,
+              "escalate_value": -1.9983398914337158,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 0.32970577478408813,
+              "margin": 0.37656648084521294,
+              "escalate_value": -1.9979371130466461,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D07 Query count in a slow trace",
+              "value": 0.05236553028225899,
+              "margin": 0.26588650420308113,
+              "escalate_value": -1.9983747601509094,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 0.5100572109222412,
+              "margin": 0.7887217402458191,
+              "escalate_value": -1.9974224269390106,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D04 API node CPU",
+              "value": -0.5780747160315514,
+              "margin": 0.2011140063405037,
+              "escalate_value": -1.9976341724395752,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 1.243407055735588,
+              "margin": 0.7821322232484818,
+              "escalate_value": -1.9980821013450623,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D11 Full log analysis (delegated)",
+              "value": -0.3011542558670044,
+              "margin": 0.06534263491630554,
+              "escalate_value": -1.9983446598052979,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "expected",
+              "delegation": {
+                "delegate": "expected",
+                "check": "D11",
+                "prompt": "",
+                "finding": {
+                  "value": "not_shown",
+                  "evidence": "",
+                  "source": "expected"
+                },
+                "report": "expected result",
+                "warning": ""
+              }
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 1.753993034362793,
+              "margin": 0.43377771973609924,
+              "escalate_value": -1.9986887276172638,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Recommend C04: Batch the repeated queries",
+              "value": 0.5651551485061646,
+              "margin": 0.5675645172595978,
+              "escalate_value": -1.9986611604690552
+            }
+          ]
+        }
+      }
+    },
+    "class_results_slow": {
+      "intended_cause": "C04",
+      "readers": {
+        "keyword": {
+          "agreement": {
+            "category": true,
+            "symptoms": [
+              4,
+              4
+            ],
+            "context": [
+              2,
+              2
+            ],
+            "checks": [
+              10,
+              10
+            ]
+          },
+          "decision": {
+            "outcome": "recommended",
+            "checks_run": 4,
+            "check_minutes": 30,
+            "blocked_proposals": 3,
+            "cause": "C04",
+            "cause_name": "Repeated queries per request (N+1) on a heavy endpoint",
+            "remedy": "Batch the repeated queries",
+            "permitted": true
+          },
+          "steps": [
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": -0.5035444349050522,
+              "margin": 0.09934429079294205,
+              "escalate_value": -1.998484581708908,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": -0.7139816135168076,
+              "margin": 0.02898193895816803,
+              "escalate_value": -1.997809112071991,
+              "result": "negative",
+              "evidence": "2026-11-09T09:15:00Z INFO  pool   db_pool in_use=11/20 (55%)",
+              "source": "logs"
+            },
+            {
+              "action": "Run D04 API node CPU",
+              "value": -0.13226283714175224,
+              "margin": 0.08415056392550468,
+              "escalate_value": -1.9994111359119415,
+              "result": "positive",
+              "evidence": "2026-11-09T09:15:00Z INFO  node   api-1 cpu=91%",
+              "source": "logs"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": -0.28132960200309753,
+              "margin": 0.3385426849126816,
+              "escalate_value": -1.998567134141922,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D08 Cache errors in logs",
+              "value": -0.948534682393074,
+              "margin": 0.05443274974822998,
+              "escalate_value": -1.9983288645744324,
+              "result": "negative",
+              "evidence": "2026-11-09T09:15:00Z INFO  cache  hit_rate=0.91",
+              "source": "logs"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": -0.2747810631990433,
+              "margin": 0.4872715473175049,
+              "escalate_value": -1.997581422328949,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D07 Query count in a slow trace",
+              "value": -0.7762179523706436,
+              "margin": 0.07010675966739655,
+              "escalate_value": -1.9974249601364136,
+              "result": "positive",
+              "evidence": "2026-11-09T09:14:02Z INFO  span   trace GET /api/classes/7/results duration=24.6s queries=412",
+              "source": "logs"
+            },
+            {
+              "action": "Recommend C04: Batch the repeated queries",
+              "value": 0.33437371253967285,
+              "margin": 0.11970743536949158,
+              "escalate_value": -1.9989940524101257
+            }
+          ],
+          "warnings": []
+        },
+        "expected": {
+          "decision": {
+            "outcome": "recommended",
+            "checks_run": 4,
+            "check_minutes": 30,
+            "blocked_proposals": 3,
+            "cause": "C04",
+            "cause_name": "Repeated queries per request (N+1) on a heavy endpoint",
+            "remedy": "Batch the repeated queries",
+            "permitted": true
+          },
+          "steps": [
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": -0.5035444349050522,
+              "margin": 0.09934429079294205,
+              "escalate_value": -1.998484581708908,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": -0.7139816135168076,
+              "margin": 0.02898193895816803,
+              "escalate_value": -1.997809112071991,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D04 API node CPU",
+              "value": -0.13226283714175224,
+              "margin": 0.08415056392550468,
+              "escalate_value": -1.9994111359119415,
+              "result": "positive",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": -0.28132960200309753,
+              "margin": 0.3385426849126816,
+              "escalate_value": -1.998567134141922,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D08 Cache errors in logs",
+              "value": -0.948534682393074,
+              "margin": 0.05443274974822998,
+              "escalate_value": -1.9983288645744324,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": -0.2747810631990433,
+              "margin": 0.4872715473175049,
+              "escalate_value": -1.997581422328949,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D07 Query count in a slow trace",
+              "value": -0.7762179523706436,
+              "margin": 0.07010675966739655,
+              "escalate_value": -1.9974249601364136,
+              "result": "positive",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C04: Batch the repeated queries",
+              "value": 0.33437371253967285,
+              "margin": 0.11970743536949158,
+              "escalate_value": -1.9989940524101257
+            }
+          ]
+        }
+      }
+    },
+    "profile_cache": {
+      "intended_cause": "C05",
+      "readers": {
+        "keyword": {
+          "agreement": {
+            "category": false,
+            "symptoms": [
+              4,
+              4
+            ],
+            "context": [
+              2,
+              2
+            ],
+            "checks": [
+              10,
+              10
+            ]
+          },
+          "decision": {
+            "outcome": "escalated",
+            "checks_run": 4,
+            "check_minutes": 30,
+            "blocked_proposals": 5,
+            "reason": "The agent judged the evidence too weak or too risky to act on."
+          },
+          "steps": [
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 1.2254736572504044,
+              "margin": 0.09313277900218964,
+              "escalate_value": -1.9997462630271912,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D08 Cache errors in logs",
+              "value": 0.850188210606575,
+              "margin": 0.10323047637939453,
+              "escalate_value": -1.9994071125984192,
+              "result": "positive",
+              "evidence": "2026-11-09T10:02:11Z WARN  cache  cache write failed for profile:2231",
+              "source": "logs"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": -0.7525718212127686,
+              "margin": 0.32675549387931824,
+              "escalate_value": -1.9983062148094177,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D02 Lock-wait errors in logs",
+              "value": -1.0442420840263367,
+              "margin": 0.09851530194282532,
+              "escalate_value": -1.9983285665512085,
+              "result": "negative",
+              "evidence": "2026-11-09T10:04:00Z INFO  db     active_transactions=4 oldest_tx_age=1s",
+              "source": "logs"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": -0.6608136743307114,
+              "margin": 0.5744380503892899,
+              "escalate_value": -1.9977883994579315,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D07 Query count in a slow trace",
+              "value": -1.5170654654502869,
+              "margin": 0.06093069911003113,
+              "escalate_value": -1.9977115094661713,
+              "result": "negative",
+              "evidence": "2026-11-09T10:03:41Z INFO  span   trace GET /api/profile/2231 duration=22.4s queries=38",
+              "source": "logs"
+            },
+            {
+              "action": "Recommend C06: Roll back the release",
+              "value": -1.7166461050510406,
+              "margin": 0.06690189242362976,
+              "escalate_value": -1.9981172680854797,
+              "blocked_by": [
+                {
+                  "rule": "R02",
+                  "needs": "D09",
+                  "reason": "A rollback restarts every node, and migrations may not reverse"
+                }
+              ]
+            },
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": -1.843980997800827,
+              "margin": 0.15409931540489197,
+              "escalate_value": -1.998080313205719,
+              "result": "negative",
+              "evidence": "2026-11-09T10:04:00Z INFO  pool   db_pool in_use=8/20 (40%)",
+              "source": "logs"
+            },
+            {
+              "action": "Recommend C06: Roll back the release",
+              "value": -1.9780726730823517,
+              "margin": 0.009266585111618042,
+              "escalate_value": -1.998591125011444,
+              "blocked_by": [
+                {
+                  "rule": "R02",
+                  "needs": "D09",
+                  "reason": "A rollback restarts every node, and migrations may not reverse"
+                }
+              ]
+            },
+            {
+              "action": "Escalate to a human expert",
+              "value": -1.9983884692192078,
+              "margin": 0.2387566864490509,
+              "escalate_value": -1.9983884692192078
+            }
+          ],
+          "warnings": []
+        },
+        "expected": {
+          "decision": {
+            "outcome": "escalated",
+            "checks_run": 4,
+            "check_minutes": 30,
+            "blocked_proposals": 5,
+            "reason": "The agent judged the evidence too weak or too risky to act on."
+          },
+          "steps": [
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": 1.2254736572504044,
+              "margin": 0.09313277900218964,
+              "escalate_value": -1.9997462630271912,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D08 Cache errors in logs",
+              "value": 0.850188210606575,
+              "margin": 0.10323047637939453,
+              "escalate_value": -1.9994071125984192,
+              "result": "positive",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": -0.7525718212127686,
+              "margin": 0.32675549387931824,
+              "escalate_value": -1.9983062148094177,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D02 Lock-wait errors in logs",
+              "value": -1.0442420840263367,
+              "margin": 0.09851530194282532,
+              "escalate_value": -1.9983285665512085,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C02: Kill the blocking transaction",
+              "value": -0.6608136743307114,
+              "margin": 0.5744380503892899,
+              "escalate_value": -1.9977883994579315,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D07 Query count in a slow trace",
+              "value": -1.5170654654502869,
+              "margin": 0.06093069911003113,
+              "escalate_value": -1.9977115094661713,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C06: Roll back the release",
+              "value": -1.7166461050510406,
+              "margin": 0.06690189242362976,
+              "escalate_value": -1.9981172680854797,
+              "blocked_by": [
+                {
+                  "rule": "R02",
+                  "needs": "D09",
+                  "reason": "A rollback restarts every node, and migrations may not reverse"
+                }
+              ]
+            },
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": -1.843980997800827,
+              "margin": 0.15409931540489197,
+              "escalate_value": -1.998080313205719,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Recommend C06: Roll back the release",
+              "value": -1.9780726730823517,
+              "margin": 0.009266585111618042,
+              "escalate_value": -1.998591125011444,
+              "blocked_by": [
+                {
+                  "rule": "R02",
+                  "needs": "D09",
+                  "reason": "A rollback restarts every node, and migrations may not reverse"
+                }
+              ]
+            },
+            {
+              "action": "Escalate to a human expert",
+              "value": -1.9983884692192078,
+              "margin": 0.2387566864490509,
+              "escalate_value": -1.9983884692192078
+            }
+          ]
+        }
+      }
+    }
+  },
+  "errors": {
+    "keyword": {
+      "reader": {
+        "shown": 49,
+        "reversed": 0,
+        "missed": 0,
+        "not_shown": 31,
+        "invented": 0
+      },
+      "delegate": {
+        "shown": 2,
+        "reversed": 0,
+        "missed": 0,
+        "not_shown": 6,
+        "invented": 0
+      }
+    }
+  }
+}

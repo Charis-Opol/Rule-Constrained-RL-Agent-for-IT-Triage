@@ -58,6 +58,11 @@ def _group(entries, states_for):
             "properties": {e["id"]: _item(states_for(e)) for e in entries}}
 
 
+def read_checks(model):
+    """The checks the reader fills in up front. Delegated checks are left to delegate.py."""
+    return [c for c in model["checks"] if not c.get("delegated")]
+
+
 def form_schema(model):
     """The JSON schema of the form, built from the scenario model, so the Directorate model
     replaces the pilot one without code changes."""
@@ -69,7 +74,7 @@ def form_schema(model):
                 "summary": {"type": "string"},
                 "symptoms": _group(model["symptoms"], lambda e: [PRESENT, ABSENT, NOT_MENTIONED]),
                 "context": _group(model["context"], lambda e: list(e["values"]) + [NOT_STATED]),
-                "checks": _group(model["checks"], lambda e: [POSITIVE, NEGATIVE, NOT_SHOWN]),
+                "checks": _group(read_checks(model), lambda e: [POSITIVE, NEGATIVE, NOT_SHOWN]),
             }}
 
 
@@ -80,7 +85,7 @@ def form_description(model):
     lines += [f"- {a['id']} {a['name']}: one of {', '.join(a['values'])}" for a in model["context"]]
     lines += ["", "Checks (what each tests, and what counts as positive):"]
     lines += [f"- {c['id']} {c['name']}: {c['tests']}. Positive means: {c['positive_means']}."
-              for c in model["checks"]]
+              for c in read_checks(model)]
     lines += ["", "Categories: " + "; ".join(sorted({c["category"] for c in model["causes"]}))]
     return "\n".join(lines)
 

@@ -48,3 +48,11 @@ results/raw/
 Thumbs.db
 desktop.ini
 .DS_Store
+
+# Prototype demo outputs (local toy repository and simulated messages)
+results/pilot/demo_repo/
+results/pilot/outbox/
+
+# Part 2 elicitation answers and the developer's sample tickets (may name internal endpoints and classes)
+research/elicitation/Pilot_Elicitation_Workbook_Part2_filled.xlsx
+prototype/examples/developer/

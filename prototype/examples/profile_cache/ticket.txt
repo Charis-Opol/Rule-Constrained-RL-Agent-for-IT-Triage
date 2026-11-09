@@ -1,0 +1,3 @@
+Subject: Student profile very slow
+
+Opening a student profile is slow every single time, even for the same student straight after. Nothing errors, it is just slow. Production.

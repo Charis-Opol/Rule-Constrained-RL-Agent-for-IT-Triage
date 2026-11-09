@@ -6,7 +6,9 @@ for it (from the logs, or from the operator). The cause is unknown, so there is 
 no right or wrong outcome. The agent, its observation and the safety mechanism are exactly the
 ones used in training and evaluation.
 
-The prototype only recommends. It never applies a fix.
+triage() itself only decides. What happens after a permitted decision (a draft pull request,
+a fix order to the owner, an escalation report) is in src/prototype/actions.py, which acts only on
+a decision that the rule checker has confirmed a second time here ("permitted").
 """
 import numpy as np
 
@@ -20,6 +22,9 @@ from src.sim.triage_env import TriageEnv
 class LiveTriageEnv(TriageEnv):
     def __init__(self, scenario, lookup):
         """`lookup(check)` returns True (positive), False (negative) or None (unavailable)."""
+        if scenario.verify:
+            raise ValueError("The prototype has no verification step yet: use settings without "
+                             "fix_with_verification (pilot_settings_v2.json)")
         super().__init__(scenario, p_miss=0.0)
         self.lookup = lookup
 
@@ -35,6 +40,7 @@ class LiveTriageEnv(TriageEnv):
         self.t = self.n_requested = 0
         self.cost_spent = 0.0
         self.blocked_action = None
+        self.failed = np.zeros(self.n_causes, dtype=bool)
         return self._obs(), {}
 
     def step(self, action):
@@ -45,7 +51,7 @@ class LiveTriageEnv(TriageEnv):
             self.reported[action] = bool(result)
         obs, reward, terminated, truncated, info = super().step(action)
         if info.get("outcome") in ("correct", "wrong"):      # the cause is unknown here
-            info = {**info, "outcome": "recommended", "recommended": action - self.n_checks}
+            info = {**info, "outcome": "fix", "fix": action - self.n_checks}
         return obs, 0.0, terminated, truncated, info
 
     def _reference_label(self):
@@ -62,20 +68,29 @@ def action_label(model, env, action):
         return f"Run {check['id']} {check['name']}"
     if action < env.ESCALATE:
         cause = model["causes"][action - env.n_checks]
-        return f"Recommend {cause['id']}: {cause['remedy']}"
+        return f"Fix {cause['id']}: {cause['remedy']}"
     return "Escalate to a human expert"
 
 
-def triage(reading, scenario, model, agent, ask=None):
+def triage(reading, scenario, model, agent, ask=None, delegate=None, ticket="", logs=""):
     """Plays the incident with the agent's greedy policy. `ask(check)` is called for a check the
-    logs do not show and returns a Finding, or None to mark it unavailable."""
+    logs do not show and returns a Finding, or None to mark it unavailable. `delegate` answers
+    the checks marked "delegated" from the ticket and logs (src/prototype/delegate.py); without
+    one, a delegated check is unavailable."""
     check_ids = [c["id"] for c in model["checks"]]
+    delegations = {}
     symptoms = [reading.symptoms[s["id"]].value == PRESENT for s in model["symptoms"]]
     context = [a["values"].index(reading.context[a["id"]].value) for a in model["context"]]
     used = {}                                          # check id -> the finding the agent received
 
     def lookup(i):
         finding = reading.checks[check_ids[i]]
+        if model["checks"][i].get("delegated"):
+            if delegate is not None:
+                delegations[check_ids[i]] = delegate.analyse(model["checks"][i], ticket, logs)
+                finding = delegations[check_ids[i]].finding
+            used[check_ids[i]] = finding
+            return {POSITIVE: True, NEGATIVE: False}.get(finding.value)
         if finding.value not in (POSITIVE, NEGATIVE) and ask is not None:
             finding = ask(model["checks"][i]) or finding
         used[check_ids[i]] = finding
@@ -101,6 +116,8 @@ def triage(reading, scenario, model, agent, ask=None):
             finding = used[check_ids[action]]
             step["result"] = finding.value if base.observed(action) else "unavailable"
             step["evidence"], step["source"] = finding.evidence, finding.source
+            if check_ids[action] in delegations:
+                step["delegation"] = delegations[check_ids[action]].to_dict()
         elif rules:
             step["blocked_by"] = [{"rule": r.id, "needs": check_ids[r.unless_observed]
                                    if r.unless_observed is not None else None,
@@ -112,14 +129,18 @@ def triage(reading, scenario, model, agent, ask=None):
     top = np.argsort(belief)[::-1][:3]
     decision = {"outcome": info["outcome"], "checks_run": int(base.n_requested), "check_minutes":
                 round(base.cost_spent * 60), "blocked_proposals": int(env.blocked)}
-    if info["outcome"] == "recommended":
-        cause = model["causes"][info["recommended"]]
-        decision.update(cause=cause["id"], cause_name=cause["name"], remedy=cause["remedy"])
+    if info["outcome"] == "fix":
+        cause = model["causes"][info["fix"]]
+        # Second, independent check of the final decision against the rules, on the final
+        # evidence. actions.py refuses to act unless this is True.
+        permitted = not checker.forbidding(base.n_checks + info["fix"], base.context, base.observed)
+        decision.update(cause=cause["id"], cause_name=cause["name"], remedy=cause["remedy"], permitted=permitted)
     else:
         decision["reason"] = {"escalated": "The agent judged the evidence too weak or too risky to act on.",
                               "forced_escalation": "The safety mechanism refused two proposals in a row.",
                               "step_limit": "The step limit was reached."}[info["outcome"]]
     return {"reading": reading.to_dict(), "steps": steps, "decision": decision,
+            "warnings": [d.warning for d in delegations.values() if d.warning],
             "reference": [{"cause": model["causes"][j]["id"], "name": model["causes"][j]["name"],
                            "probability": float(belief[j])} for j in top]}
 

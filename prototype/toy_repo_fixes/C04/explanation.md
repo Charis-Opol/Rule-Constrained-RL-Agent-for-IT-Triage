@@ -1,0 +1,1 @@
+Class results ran one marks query per student (N+1), so a large class meant hundreds of queries per page. The marks for the whole class are now read in one joined query and grouped in memory: two queries per page whatever the class size.

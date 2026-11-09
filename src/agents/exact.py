@@ -60,6 +60,8 @@ class ExactSolution:
 
 def solve(env):
     env = env.unwrapped
+    if env.scenario.verify:
+        raise ValueError("The exact solver does not model fix with verification")
     if env.p_miss > 0:
         raise ValueError("The exact solver does not model missing checks (p_miss must be 0)")
     s, theta = env.scenario, env.reported_theta
@@ -93,13 +95,13 @@ def solve(env):
         d = digits[idx]
         joint = base * likelihood[idx]                      # P(evidence, cause) in joint units
         total = joint.sum(1)
-        recommend = joint * s.r_correct - (total[:, None] - joint) * s.cost_wrong
+        fix = joint * s.r_correct - (total[:, None] - joint) * s.cost_wrong
 
         forbidden = np.zeros((n_ctx, n_causes), bool)
         for r, rule in enumerate(s.rules):
             if rule.unless_observed is None or d[rule.unless_observed] == 0:
                 forbidden[active[r], rule.cause] = True
-        q = np.where(forbidden[:, None, :], -np.inf, recommend[None])
+        q = np.where(forbidden[:, None, :], -np.inf, fix[None])
         cause = q.argmax(2)
         q_fix = np.take_along_axis(q, cause[..., None], 2)[..., 0]
         q_esc = np.broadcast_to(-s.cost_esc * total, (n_ctx, n_pat))
