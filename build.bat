@@ -26,6 +26,10 @@ pushd documentation\concept-note
 "%TT%" implementation_concept_note.tex
 popd
 
+pushd documentation\pilot-report
+"%TT%" pilot_report.tex
+popd
+
 pushd documentation\manual
 "%TT%" rl_environments_manual.tex
 popd
