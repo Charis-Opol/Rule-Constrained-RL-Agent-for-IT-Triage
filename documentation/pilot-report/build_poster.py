@@ -1,9 +1,9 @@
 """Build the pilot-results poster (A0 landscape) from the proposal poster's header and style.
 
-Layout follows the sample template (Uganda_MFI_Credit_Risk_Poster.pptx): Introduction,
-Problem Statement & Objectives, Conclusions & Next Steps | System Architecture,
-Implementation, stat callouts, Alignment | Results, Challenges | Areas of Improvement,
-Other information (contacts and references). Content is from pilot_report.tex.
+Layout, adapted from the sample template (Uganda_MFI_Credit_Risk_Poster.pptx): Introduction,
+Problem Statement & Objectives, System Architecture | Implementation, stat callouts, Results |
+Challenges, Areas of Improvement, Prototype | Hypotheses, Conclusions & Next Steps,
+National & Global Alignment, Other information (contacts and references). Content is from pilot_report.tex.
 
 Run from the repository root:  python documentation/pilot-report/build_poster.py
 """
@@ -310,24 +310,13 @@ c1.section("Problem Statement and Objectives", RED, T([
       " (6 of 8 example cases end as intended).", bullet=True),
 ]))
 
-c1.section("Conclusions & Next Steps", BLUE, T([
-    B("A qualified yes.", "The method works end to end: the agent learns a sensible three-way "
-      "policy, reaches the strongest baseline on return, responds to the cost of escalation in "
-      "the expected direction, and never executes a forbidden action behind the mechanism."),
-    B("Two design choices decide the hypotheses:", "judging on resolution alone "
-      "rewards repeated fixes (H1); a free block lets the agent lean on the mechanism (H2)."),
-    B("Next:", "take the results to UIS and request a Part 3 workbook (remedy times and harms); "
-      "charge a block as an ablation; revisit the H1 criterion; run Experiment 4 (missing "
-      "checks, noise); score the reader on 20 sample tickets."),
-]), fill_to_bottom=True)
-
 
 # ================================================================ column 2
 def architecture(x, y):
     """Native pipeline diagram: ticket to decision, with the rule mechanism in the loop."""
     LB, PK, YL, GR = ("C9DAF8", "6D8FC7"), ("EBC6F3", "A35DB5"), ("FFE699", "BF9000"), ("C6E0B4", "548235")
-    xl, wl, xr, wr, bh = x + 0.1, 3.9, x + 5.55, 4.95, 1.25
-    rows = [y + 0.15 + i * 2.0 for i in range(4)]
+    xl, wl, xr, wr, bh = x + 0.1, 3.9, x + 5.55, 4.95, 1.15
+    rows = [y + 0.15 + i * 1.62 for i in range(4)]
 
     def box(bx, by, bw, colours, title, sub):
         s = rect(bx, by, bw, bh, colours[0], colours[1], MSO_SHAPE.ROUNDED_RECTANGLE, 2)
@@ -398,7 +387,7 @@ def architecture(x, y):
 
 
 c2 = Column(1)
-c2.section("System Architecture", BLUE, architecture)
+c1.section("System Architecture", BLUE, architecture, fill_to_bottom=True)
 
 c2.section("Implementation", BLUE, T([
     B("Scenario model:", "8 causes, 11 checks (one, D11, delegated to a language model), "
@@ -435,17 +424,6 @@ c2.y -= GAP - 0.05
 stat_h = stats(c2.x + PAD, c2.y)
 c2.y += stat_h + GAP
 
-c2.section("National & Global Alignment", RED, T([
-    B("AI & Robotics Specialisation:", "deep reinforcement learning, decision-making under "
-      "uncertainty and safe RL."),
-    B("SDG 9 \u2013 Industry, Innovation & Infrastructure:", "reliable, rule-governed automation "
-      "of the digital services that infrastructure depends on (Target 9.5)."),
-    B("NDP IV:", "supports the Digital Transformation Programme through reliable digital "
-      "services and local AI skills."),
-    B("Uganda Vision 2040:", "locally developed AI expertise, with ICT as a foundation of "
-      "national transformation."),
-]), fill_to_bottom=True)
-
 
 # ================================================================ column 3
 c3 = Column(2)
@@ -459,7 +437,7 @@ res_rows = [
     ["DQN unconstrained", "\u22120.28", "74.7%", "24.9%", "25.3%", "6.0", "7.6%"],
     ["DQN penalty-only", "\u22120.24", "74.7%", "25.4%", "25.3%", "5.0", "0%"],
 ]
-c3.section("Results", BLUE, stack(
+c2.section("Results", BLUE, stack(
     T([P("Experiments 1 and 2: every policy on the same 5,000 incidents, escalation 120 min "
          "(agents: mean of 3 seeds):", size=26)]),
     table(res_rows, [3.0, 1.35, 1.25, 1.3, 1.1, 1.05, 1.63], size=19,
@@ -475,7 +453,7 @@ c3.section("Results", BLUE, stack(
         B("Behaviour follows cost:", "at 60, 120 and 240 min escalation rises 22% \u2192 32% "
           "\u2192 48% and wrong fixes fall 31% \u2192 23% \u2192 15%.", size=26),
     ]),
-))
+), fill_to_bottom=True)
 
 c3.section("Challenges", RED, stack(
     T([P("The safety mechanism guarantees compliance but does not teach it. In the pilot a "
@@ -491,7 +469,38 @@ c3.section("Challenges", RED, stack(
           "the most (88%) by retrying fixes, at 9 checks and a wrong fix in 30% of incidents.",
           size=26),
     ]),
+))
+
+c3.section("Areas of Improvement", RED, stack(
+    T([
+        B("Charge a block", "(its cost is zero in the pilot) so that the agent learns to check "
+          "before proposing; report it as an ablation of the mechanism.", size=26),
+        B("Judge H1 on return and wrong-fix rate,", "not resolution alone: a checklist that "
+          "retries fix after fix resolves a lot at a high cost.", size=26),
+        B("The penalty only teaches where it was trained:", "in Phase 5 it broke rules in "
+          "4–7% of incidents once checks went missing; the mechanism stayed at zero.",
+          size=26),
+    ]),
+    FIGURE("comparison_sensitivity.png", "Sensitivity to the cost of escalation (60, 120, 240 min)",
+           w=0.8 * INNER_W),
+))
+
+
+c3.section("Prototype", BLUE, stack(
+    T([P("Six of eight example cases end as intended (four with the "
+         "earlier agent). In the ambiguous vague_slow case the agent's wrong guess failed on "
+         "staging and was escalated, not shipped. The language model only reads the ticket; the "
+         "trained agent decides; the rule checker stays independent.", size=26)]),
+    table([["Example case", "Agent decision", "Example case", "Agent decision"],
+           ["results_approval", "Fix, verified", "fees_release", "Escalate ✗"],
+           ["sign_in", "Fix, verified", "payment_gateway", "Escalate ✗"],
+           ["transcript_dup.", "Fix, verified", "vague_slow", "Fix failed, escalate"],
+           ["class_results_slow", "Fix, verified", "profile_cache", "Fix, verified"]],
+          [2.75, 2.15, 2.65, 3.13], size=18, row_h=0.46),
+    T([P(("✗ = not the intended decision (fix C06 / fix C01). Cases written by the researcher: "
+          "they show the pipeline works, not its accuracy.", False, GREY), size=20)]),
 ), fill_to_bottom=True)
+
 
 
 # ================================================================ column 4
@@ -504,32 +513,32 @@ hyp_rows = [
     ["Blocked proposals fall", "35% \u2192 20\u201325%", "Partly"],
     ["H3: ambiguity (Exp. 4)", "Not run in pilot", "\u2013"],
 ]
-c4.section("Areas of Improvement: Hypotheses", RED, stack(
+c4.section("Hypotheses: Pilot Readings", RED, stack(
     table(hyp_rows, [4.0, 3.9, 2.78], size=19, bold_cells={(1, 2), (2, 2), (3, 2), (4, 2)},
           row_h=0.52),
-    T([
-        B("Charge a block", "(its cost is zero in the pilot) so that the agent learns to check "
-          "before proposing; report it as an ablation of the mechanism.", size=26),
-        B("Judge H1 on return and wrong-fix rate,", "not resolution alone: a checklist that "
-          "retries fix after fix resolves a lot at a high cost.", size=26),
-        B("The penalty only teaches where it was trained:", "in Phase 5 it broke rules in "
-          "4\u20137% of incidents once checks went missing; the mechanism stayed at zero.",
-          size=26),
-    ]),
-    FIGURE("comparison_sensitivity.png", "Sensitivity to the cost of escalation (60, 120, 240 min)"),
-    T([P(("Prototype:", True), " six of eight example cases end as intended (four with the "
-         "earlier agent). In the ambiguous vague_slow case the agent's wrong guess failed on "
-         "staging and was escalated, not shipped. The language model only reads the ticket; the "
-         "trained agent decides; the rule checker stays independent.", size=26)]),
-    table([["Example case", "Agent decision", "Example case", "Agent decision"],
-           ["results_approval", "Fix, verified", "fees_release", "Escalate ✗"],
-           ["sign_in", "Fix, verified", "payment_gateway", "Escalate ✗"],
-           ["transcript_dup.", "Fix, verified", "vague_slow", "Fix failed, escalate"],
-           ["class_results_slow", "Fix, verified", "profile_cache", "Fix, verified"]],
-          [2.75, 2.15, 2.65, 3.13], size=18, row_h=0.46),
-    T([P(("✗ = not the intended decision (fix C06 / fix C01). Cases written by the researcher: "
-          "they show the pipeline works, not its accuracy.", False, GREY), size=20)]),
 ))
+
+c4.section("Conclusions & Next Steps", BLUE, T([
+    B("A qualified yes.", "The method works end to end: the agent learns a sensible three-way "
+      "policy, reaches the strongest baseline on return, responds to the cost of escalation in "
+      "the expected direction, and never executes a forbidden action behind the mechanism."),
+    B("Two design choices decide the hypotheses:", "judging on resolution alone "
+      "rewards repeated fixes (H1); a free block lets the agent lean on the mechanism (H2)."),
+    B("Next:", "take the results to UIS and request a Part 3 workbook (remedy times and harms); "
+      "charge a block as an ablation; revisit the H1 criterion; run Experiment 4 (missing "
+      "checks, noise); score the reader on 20 sample tickets."),
+]))
+
+c4.section("National & Global Alignment", RED, T([
+    B("AI & Robotics Specialisation:", "deep reinforcement learning, decision-making under "
+      "uncertainty and safe RL."),
+    B("SDG 9 \u2013 Industry, Innovation & Infrastructure:", "reliable, rule-governed automation "
+      "of the digital services that infrastructure depends on (Target 9.5)."),
+    B("NDP IV:", "supports the Digital Transformation Programme through reliable digital "
+      "services and local AI skills."),
+    B("Uganda Vision 2040:", "locally developed AI expertise, with ICT as a foundation of "
+      "national transformation."),
+]))
 
 
 def other(x, y):

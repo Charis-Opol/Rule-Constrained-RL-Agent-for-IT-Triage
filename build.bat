@@ -30,6 +30,10 @@ pushd documentation\pilot-report
 "%TT%" pilot_report.tex
 popd
 
+pushd documentation\prototype-guide
+"%TT%" prototype_guide.tex
+popd
+
 pushd documentation\manual
 "%TT%" rl_environments_manual.tex
 popd
