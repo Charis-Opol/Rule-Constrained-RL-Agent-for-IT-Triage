@@ -135,8 +135,13 @@ def triage(reading, scenario, model, agent, ask=None, delegate=None, ticket="", 
         step = {"action": action_label(model, base, action), "value": float(q[action]),
                 "margin": float(finite[-1] - finite[-2]) if len(finite) > 1 else None,
                 "escalate_value": float(q[base.ESCALATE])}
+        ranked = [a for a in np.argsort(q)[::-1] if np.isfinite(q[a])][:3]
+        step["alternatives"] = [{"action": action_label(model, base, int(a)), "value": float(q[a])} for a in ranked]
         obs, _, terminated, truncated, info = env.step(action)
         done = terminated or truncated
+        # Reference only, for the person watching: the agent never sees this belief.
+        step["belief"] = posterior(scenario, base.reported_theta, base.status, base.symptoms,
+                                   base.failed if scenario.verify else None).tolist()
         if action < base.n_checks:
             finding = used[check_ids[action]]
             step["result"] = finding.value if base.observed(action) else "unavailable"
@@ -154,6 +159,7 @@ def triage(reading, scenario, model, agent, ask=None, delegate=None, ticket="", 
 
     belief = posterior(scenario, base.reported_theta, base.status, base.symptoms)
     top = np.argsort(belief)[::-1][:3]
+    start = posterior(scenario, base.reported_theta, np.full(base.n_checks, TriageEnv.NOT_REQUESTED), base.symptoms)
     decision = {"outcome": info["outcome"], "checks_run": int(base.n_requested), "check_minutes":
                 round(base.cost_spent * 60), "blocked_proposals": int(env.blocked)}
     if scenario.verify:
@@ -179,6 +185,7 @@ def triage(reading, scenario, model, agent, ask=None, delegate=None, ticket="", 
                                            "a person takes over."}[info["outcome"]]
     return {"reading": reading.to_dict(), "steps": steps, "decision": decision,
             "warnings": [d.warning for d in delegations.values() if d.warning],
+            "start_belief": start.tolist(),
             "reference": [{"cause": model["causes"][j]["id"], "name": model["causes"][j]["name"],
                            "probability": float(belief[j])} for j in top]}
 

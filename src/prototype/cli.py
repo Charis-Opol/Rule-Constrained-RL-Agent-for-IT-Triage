@@ -2,7 +2,7 @@
 
     python -m src.prototype.cli --ticket prototype/examples/results_approval/ticket.txt
                                 --logs prototype/examples/results_approval/logs.txt
-                                [--reader keyword|claude] [--ask] [--json report.json]
+                                [--reader keyword|local|claude] [--ask] [--json report.json]
                                 [--delegate pattern|claude|off] [--act --pr local|github|off --patcher pre-written|claude]
 
 --reader keyword (the default) reads offline. --reader claude sends the redacted ticket and
@@ -47,6 +47,12 @@ def load_inputs(model_path=None, settings_path=None, config_path=PILOT / "protot
 def make_reader(name, model, config, **kwargs):
     if name == "keyword":
         return KeywordReader(model, config)
+    if name == "local":                      # local model on the ticket, patterns on the log
+        from src.prototype.local_llm import HybridReader
+        return HybridReader(model, config, **kwargs)
+    if name == "local-full":                 # local model on the ticket and the log (slow)
+        from src.prototype.local_llm import LocalReader
+        return LocalReader(model, config, **kwargs)
     from src.prototype.llm import ClaudeReader
     return ClaudeReader(model, config, **kwargs)
 
@@ -116,11 +122,11 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--ticket", required=True, type=Path)
     parser.add_argument("--logs", type=Path, help="log file; omit if there are none")
-    parser.add_argument("--reader", choices=["keyword", "claude"], default="keyword")
+    parser.add_argument("--reader", choices=["keyword", "local", "local-full", "claude"], default="keyword")
     parser.add_argument("--ask", action="store_true", help="ask for checks the logs do not show")
     parser.add_argument("--run", type=Path, help="trained agent run (default: agent_run in prototype_config.json)")
     parser.add_argument("--json", type=Path, help="also save the full report as JSON")
-    parser.add_argument("--delegate", choices=["pattern", "claude", "off"], default="pattern",
+    parser.add_argument("--delegate", choices=["pattern", "local", "claude", "off"], default="pattern",
                         help="who answers delegated checks (default: offline patterns)")
     parser.add_argument("--act", action="store_true", help="carry the decision out (draft PR, fix order, escalation)")
     parser.add_argument("--pr", choices=["local", "github", "off"], default="local")

@@ -78,6 +78,14 @@ class ClaudeDelegate:
     def analyse(self, check, ticket, logs):
         ticket, logs = redact(ticket), redact(logs)
         prompt = prompt_for(check, ticket, logs)
+        answer = self._ask(prompt)
+        finding = _verified(answer["result"], answer["evidence"].strip(), ticket, logs)
+        if finding is None:
+            return Delegation(self.name, check["id"], prompt, Finding(NOT_SHOWN, source="delegate"), answer["report"],
+                              f"{check['id']}: '{answer['result']}' discarded, its evidence is not in the ticket or logs")
+        return Delegation(self.name, check["id"], prompt, finding, answer["report"])
+
+    def _ask(self, prompt):
         response = self.client.beta.messages.create(
             model=self.model_id, max_tokens=16000, system=SYSTEM,
             messages=[{"role": "user", "content": prompt}],
@@ -89,12 +97,7 @@ class ClaudeDelegate:
         text = next((b.text for b in response.content if b.type == "text"), None)
         if text is None:
             raise ReaderError("The delegated analysis returned no answer.")
-        answer = json.loads(text)
-        finding = _verified(answer["result"], answer["evidence"].strip(), ticket, logs)
-        if finding is None:
-            return Delegation(self.name, check["id"], prompt, Finding(NOT_SHOWN, source="delegate"), answer["report"],
-                              f"{check['id']}: '{answer['result']}' discarded, its evidence is not in the ticket or logs")
-        return Delegation(self.name, check["id"], prompt, finding, answer["report"])
+        return json.loads(text)
 
 
 class PatternDelegate:
@@ -122,4 +125,7 @@ class PatternDelegate:
 
 
 def make_delegate(name, config, **kwargs):
+    if name == "local":
+        from src.prototype.local_llm import LocalDelegate
+        return LocalDelegate(**kwargs)
     return ClaudeDelegate(**kwargs) if name == "claude" else PatternDelegate(config)
