@@ -6,6 +6,12 @@ for it (from the logs, or from the operator). The cause is unknown, so there is 
 no right or wrong outcome. The agent, its observation and the safety mechanism are exactly the
 ones used in training and evaluation.
 
+With fix-with-verification settings (pilot_settings_v3.json) a fix is followed by
+verification, as in training: `verify(cause, report)` (src/prototype/verify.py) says whether
+the symptoms cleared. If they did, the incident is resolved; if not, the agent sees that fix
+flagged as failed and goes on, and after max_failed_fixes a person takes over. If nobody can
+say yet, the incident stops with the fix awaiting verification. Verifying acts on nothing real.
+
 triage() itself only decides. What happens after a permitted decision (a draft pull request,
 a fix order to the owner, an escalation report) is in src/prototype/actions.py, which acts only on
 a decision that the rule checker has confirmed a second time here ("permitted").
@@ -20,13 +26,14 @@ from src.sim.triage_env import TriageEnv
 
 
 class LiveTriageEnv(TriageEnv):
-    def __init__(self, scenario, lookup):
-        """`lookup(check)` returns True (positive), False (negative) or None (unavailable)."""
-        if scenario.verify:
-            raise ValueError("The prototype has no verification step yet: use settings without "
-                             "fix_with_verification (pilot_settings_v2.json)")
+    def __init__(self, scenario, lookup, verify=None):
+        """`lookup(check)` returns True (positive), False (negative) or None (unavailable).
+        `verify(cause_index)` returns a Verification; required with verification settings."""
+        if scenario.verify and verify is None:
+            raise ValueError("These settings verify every fix (fix_with_verification): pass a verifier")
         super().__init__(scenario, p_miss=0.0)
-        self.lookup = lookup
+        self.lookup, self.verify_fix = lookup, verify
+        self.attempts = []
 
     def reset(self, *, seed=None, options=None):
         super(TriageEnv, self).reset(seed=seed)
@@ -41,17 +48,29 @@ class LiveTriageEnv(TriageEnv):
         self.cost_spent = 0.0
         self.blocked_action = None
         self.failed = np.zeros(self.n_causes, dtype=bool)
+        self.attempts = []
         return self._obs(), {}
 
     def step(self, action):
         action = int(action)
+        fix = action - self.n_checks if self.n_checks <= action < self.ESCALATE else None
         if action < self.n_checks:
             result = self.lookup(action)
             self.available[action] = result is not None
             self.reported[action] = bool(result)
+        elif fix is not None and self.verify:
+            verification = self.verify_fix(fix)
+            self.attempts.append((fix, verification))
+            if verification.cleared is None:               # nobody can say yet: stop here
+                self.t += 1
+                return self._obs(), 0.0, True, False, {**self._info("unverified"), "fix": fix}
+            # The training environment resolves a fix when it is for self.cause, so the
+            # verifier's answer stands in for the unknown cause.
+            self.cause = fix if verification.cleared else -1
         obs, reward, terminated, truncated, info = super().step(action)
+        self.cause = None
         if info.get("outcome") in ("correct", "wrong"):      # the cause is unknown here
-            info = {**info, "outcome": "fix", "fix": action - self.n_checks}
+            info = {**info, "outcome": "fix", "fix": fix}
         return obs, 0.0, terminated, truncated, info
 
     def _reference_label(self):
@@ -72,11 +91,12 @@ def action_label(model, env, action):
     return "Escalate to a human expert"
 
 
-def triage(reading, scenario, model, agent, ask=None, delegate=None, ticket="", logs=""):
+def triage(reading, scenario, model, agent, ask=None, delegate=None, ticket="", logs="", verify=None):
     """Plays the incident with the agent's greedy policy. `ask(check)` is called for a check the
     logs do not show and returns a Finding, or None to mark it unavailable. `delegate` answers
     the checks marked "delegated" from the ticket and logs (src/prototype/delegate.py); without
-    one, a delegated check is unavailable."""
+    one, a delegated check is unavailable. `verify(cause, report)` (src/prototype/verify.py) is
+    needed with verification settings; it receives the cause and the steps so far."""
     check_ids = [c["id"] for c in model["checks"]]
     delegations = {}
     symptoms = [reading.symptoms[s["id"]].value == PRESENT for s in model["symptoms"]]
@@ -96,11 +116,16 @@ def triage(reading, scenario, model, agent, ask=None, delegate=None, ticket="", 
         used[check_ids[i]] = finding
         return {POSITIVE: True, NEGATIVE: False}.get(finding.value)
 
-    env = SafetyMechanism(LiveTriageEnv(scenario, lookup))
+    steps = []
+
+    def verify_fix(j):
+        return verify(model["causes"][j], {"reading": reading.to_dict(), "steps": steps})
+
+    env = SafetyMechanism(LiveTriageEnv(scenario, lookup, verify_fix if verify is not None else None))
     obs, _ = env.reset(options={"symptoms": symptoms, "context": context})
     base, checker = env.unwrapped, RuleChecker(scenario)
 
-    steps, done, info = [], False, {}
+    done, info = False, {}
     while not done:
         mask = env.action_masks()
         q = agent.q_values(np.concatenate([obs, mask.astype(np.float32)]))
@@ -118,6 +143,8 @@ def triage(reading, scenario, model, agent, ask=None, delegate=None, ticket="", 
             step["evidence"], step["source"] = finding.evidence, finding.source
             if check_ids[action] in delegations:
                 step["delegation"] = delegations[check_ids[action]].to_dict()
+        elif len(base.attempts) > sum("verification" in x for x in steps):
+            step["verification"] = base.attempts[-1][1].to_dict()
         elif rules:
             step["blocked_by"] = [{"rule": r.id, "needs": check_ids[r.unless_observed]
                                    if r.unless_observed is not None else None,
@@ -129,16 +156,27 @@ def triage(reading, scenario, model, agent, ask=None, delegate=None, ticket="", 
     top = np.argsort(belief)[::-1][:3]
     decision = {"outcome": info["outcome"], "checks_run": int(base.n_requested), "check_minutes":
                 round(base.cost_spent * 60), "blocked_proposals": int(env.blocked)}
-    if info["outcome"] == "fix":
+    if scenario.verify:
+        decision["attempts"] = [{"cause": model["causes"][j]["id"], "cause_name": model["causes"][j]["name"],
+                                 "remedy": model["causes"][j]["remedy"], **v.to_dict()} for j, v in base.attempts]
+    if info["outcome"] in ("fix", "unverified"):
         cause = model["causes"][info["fix"]]
         # Second, independent check of the final decision against the rules, on the final
         # evidence. actions.py refuses to act unless this is True.
         permitted = not checker.forbidding(base.n_checks + info["fix"], base.context, base.observed)
         decision.update(cause=cause["id"], cause_name=cause["name"], remedy=cause["remedy"], permitted=permitted)
+        if scenario.verify:
+            decision["verified"] = info["outcome"] == "fix"
+        if info["outcome"] == "unverified":
+            decision.update(outcome="awaiting_verification",
+                            reason="The fix is chosen; it waits for someone to confirm whether the symptoms clear.")
     else:
+        failed = len(decision.get("attempts", []))
         decision["reason"] = {"escalated": "The agent judged the evidence too weak or too risky to act on.",
                               "forced_escalation": "The safety mechanism refused two proposals in a row.",
-                              "step_limit": "The step limit was reached."}[info["outcome"]]
+                              "step_limit": "The step limit was reached.",
+                              "fix_limit": f"{failed} fixes were applied and did not clear the symptoms; "
+                                           "a person takes over."}[info["outcome"]]
     return {"reading": reading.to_dict(), "steps": steps, "decision": decision,
             "warnings": [d.warning for d in delegations.values() if d.warning],
             "reference": [{"cause": model["causes"][j]["id"], "name": model["causes"][j]["name"],
@@ -154,3 +192,15 @@ def operator_prompt(input_fn=input, output_fn=print):
         value = {"p": POSITIVE, "n": NEGATIVE}.get(answer)
         return Finding(value, "reported by the operator", "operator") if value else None
     return ask
+
+
+def run_settings(run_dir, default):
+    """The settings a run was trained with (its config.json), so that the prototype plays the
+    incident in the environment the agent learned; `default` if the run does not record them."""
+    import json
+    from pathlib import Path
+    config = Path(run_dir) / "config.json"
+    if not config.exists():
+        return default
+    root = Path(__file__).resolve().parents[2]
+    return root / json.loads(config.read_text(encoding="utf-8"))["settings"]

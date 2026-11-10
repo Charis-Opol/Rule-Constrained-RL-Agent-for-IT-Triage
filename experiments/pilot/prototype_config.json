@@ -2,9 +2,9 @@
   "label": "pilot",
   "note": "How the prototype reads a ticket and its logs for the pilot model. Every keyword, pattern and threshold here is set by the researcher; thresholds follow each check's 'positive_means' in pilot_model.json. The log format is the one used in prototype/examples, not a Directorate format. See documentation/pilot_experiment_plan.md, Phase 7.",
   "model": "experiments/pilot/pilot_model_v2.json",
-  "settings": "experiments/pilot/pilot_settings_v2.json",
-  "agent_run": "results/pilot/runs/v2_shielded_seed2",
-  "agent_run_note": "Shielded agent trained on pilot model v2 (with the delegated check D11); seed 2 of 0-2, chosen on the training-monitor incidents, not the evaluation ones. The Phase 7 agent was results/pilot/runs/phase5_shielded_seed0 on pilot_model.json.",
+  "settings": "experiments/pilot/pilot_settings_v3.json",
+  "agent_run": "results/pilot/runs/v3_shielded_seed0",
+  "agent_run_note": "Since 9 Nov 2026 (Phase 10): shielded agent trained with fix-with-verification settings (v3) on pilot model v2 with the developer's Part 2 values; seed 0 of 0-2, chosen on its final training-monitor return (-0.47 against -0.89 and -0.76), not on the evaluation incidents. Every fix is verified (src/prototype/verify.py). Before that: Shielded agent trained on pilot model v2 (with the delegated check D11); seed 2 of 0-2, chosen on the training-monitor incidents, not the evaluation ones. The Phase 7 agent was results/pilot/runs/phase5_shielded_seed0 on pilot_model.json.",
   "context_defaults": {
     "X01": "Yes",
     "X02": "High"

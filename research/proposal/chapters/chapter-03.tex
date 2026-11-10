@@ -44,7 +44,7 @@ The symptoms and the check results are assumed to be independent of one another 
 
 \textbf{States ($\mathcal{S}$).} A state $s_t = (c, x, \boldsymbol{\sigma}, \mathbf{z}, \mathbf{q}_t)$ consists of the hidden cause $c \in \mathcal{C}$, the context $x \in \mathcal{X}$, the symptom vector $\boldsymbol{\sigma} \in \{0,1\}^E$, the vector $\mathbf{z}$ of check results, both drawn once at the start of the incident and unchanged afterwards, and the vector $\mathbf{q}_t \in \{0,1\}^J$ recording which checks have been requested by step $t$. The cause $c$ is never observed by the agent.
 
-\textbf{Actions ($\mathcal{A}$).} The agent can request a check, recommend the fix for one cause, or escalate:
+\textbf{Actions ($\mathcal{A}$).} The agent can request a check, apply the fix for one cause, or escalate:
 \begin{equation}
 \mathcal{A} = \mathcal{A}_{\text{check}} \cup \mathcal{A}_{\text{fix}} \cup \{a_{\text{esc}}\}, \qquad
 \mathcal{A}_{\text{check}} = \{a^{\text{chk}}_1, \dots, a^{\text{chk}}_J\}, \quad
@@ -52,7 +52,7 @@ The symptoms and the check results are assumed to be independent of one another 
 \end{equation}
 so that $|\mathcal{A}| = J + K + 1$.
 
-\textbf{Transitions ($\mathcal{T}$).} The cause, context and check results are fixed for the whole episode. Requesting check $d_j$ sets $q_{t+1,j} = 1$ and reveals its result. Recommending a fix or escalating ends the episode, and so does reaching the step limit $H$, which is treated as an escalation.
+\textbf{Transitions ($\mathcal{T}$).} The cause, context and check results are fixed for the whole episode. Requesting check $d_j$ sets $q_{t+1,j} = 1$ and reveals its result. Applying a fix or escalating ends the episode, and so does reaching the step limit $H$, which is treated as an escalation.
 
 \textbf{Observations ($\Omega$, $\mathcal{O}$).} At step $t$ the agent receives
 \begin{equation}
@@ -77,7 +77,7 @@ with
 r_{\text{correct}} > -\lambda_{\text{block}} > -\lambda_{\text{esc}} > -\lambda_{\text{wrong}},
 \label{eq:rewardorder}
 \end{equation}
-so that resolving an incident correctly is better than escalating it, escalating it is better than recommending the wrong fix, and a blocked proposal costs a little but less than an escalation. The block penalty $\lambda_{\text{block}} > 0$ gives the agent a reason to stop proposing prohibited actions; it is a learning signal, not the means of enforcement, which remains the safety mechanism. The simulated human expert is assumed to resolve every escalated incident. Future rewards are discounted by $\gamma \in (0, 1]$.
+so that resolving an incident correctly is better than escalating it, escalating it is better than applying the wrong fix, and a blocked proposal costs a little but less than an escalation. The block penalty $\lambda_{\text{block}} > 0$ gives the agent a reason to stop proposing prohibited actions; it is a learning signal, not the means of enforcement, which remains the safety mechanism. The simulated human expert is assumed to resolve every escalated incident. Future rewards are discounted by $\gamma \in (0, 1]$.
 
 \subsection{Belief over the Hidden Cause:}
 
@@ -163,6 +163,8 @@ y = \begin{cases}
 \label{eq:labels}
 \end{equation}
 where $a^{\text{fix}}_{c}$ is the fix for the true cause, and $\mathbf{u}^{\text{all}}$ and $b^{\text{all}}$ are the evidence and the belief once every available check has been observed. In words, an incident should be escalated if the rules forbid the right fix, or if it stays ambiguous even with all the evidence. The labels are never shown to the agent. Before training, the simulator will be checked for leakage of the hidden cause into the observations, a defect that Sahin and Mert found in an earlier version of their own simulator~\cite{sahin2026}: no policy that sees only the observations can, on average, resolve more incidents correctly than the share labelled $y = 0$, so a policy that exceeds that ceiling by more than sampling error indicates leakage.
+
+\textbf{Fix with verification.} In the formulation above a fix ends the episode, so a wrong fix is a final error. In practice a remedy is applied and then verified: the symptoms either clear or persist, and a person who has applied the wrong remedy goes on investigating. The study therefore also uses a variant of the environment in which a fix is followed by verification. Applying the remedy for cause $c_m$ costs $k^{\text{fix}}_m$, the time it takes. If $c_m$ is the true cause, the symptoms clear and the episode ends with $r_{\text{correct}} - k^{\text{fix}}_m$. Otherwise the agent pays $k^{\text{fix}}_m + h_m$, where $h_m$ is the harm of the wrong remedy, observes that the fix failed, and continues; $c_m$ is then ruled out and its fix is removed from the agent's choices. After $n_{\text{fail}}$ failed fixes the incident passes to the human expert at the further cost $\lambda_{\text{esc}}$. The observation gains one indicator per cause that records a failed fix. The harms are anchored to the basic formulation: their mean is $\lambda_{\text{wrong}} - \lambda_{\text{esc}}$, so that on average a wrong fix followed by escalation costs what one wrong fix costs there, and they are spread across remedies according to how hard each is to undo, as stated in the reasons given for the operational rules. Verification is assumed to be reliable. In this variant the agent learns not only whether to fix but which remedy to try first, and the wrong-fix rate counts every wrong remedy applied, not only those that end an episode. The remedy times, the harm weights and $n_{\text{fail}}$ are to be confirmed with the Directorate before the experiments.
 
 \section{The Rule-Based Safety Mechanism}
 \label{sec:mechanism}
@@ -283,7 +285,7 @@ $\theta_{jm}$ & Probability that check $d_j$ is positive when the cause is $c_m$
 $\sigma_e$, $E$, $\varphi_{em}$ & The $e$-th symptom (1 if present); number of symptoms; probability that symptom $e$ is present when the cause is $c_m$ \\ \hline
 $s_t$, $\mathbf{z}$, $\mathbf{q}_t$ & State at step $t$; vector of check results; vector of checks requested by step $t$ \\ \hline
 $\mathcal{A}$, $a_t$ & Set of actions; action proposed at step $t$ \\ \hline
-$a^{\text{chk}}_j$, $a^{\text{fix}}_m$, $a_{\text{esc}}$ & Request check $d_j$; recommend the fix for cause $c_m$; escalate \\ \hline
+$a^{\text{chk}}_j$, $a^{\text{fix}}_m$, $a_{\text{esc}}$ & Request check $d_j$; apply the fix for cause $c_m$; escalate \\ \hline
 $o_t$, $\mathbf{u}_t$, $\boldsymbol{\sigma}$, $\beta_t$ & Observation at step $t$; check states; symptoms; blocked flag \\ \hline
 $\phi(o_t)$, $n$ & Encoded observation vector and its length \\ \hline
 $r_t$, $r_{\text{correct}}$, $\lambda_{\text{wrong}}$, $\lambda_{\text{esc}}$, $\lambda_{\text{block}}$ & Reward at step $t$; reward for a correct fix; penalty for a wrong fix; cost of an escalation; penalty for a blocked proposal \\ \hline
@@ -325,8 +327,8 @@ The agent will be compared with six baseline policies that run in the same envir
 \begin{tabular}{|p{3.4cm}|p{7.4cm}|p{4.2cm}|}
 \hline
 \textbf{Policy} & \textbf{Behaviour} & \textbf{Approach represented} \\ \hline
-Initial-symptom & Recommends the fix for the cause that the prior and the symptoms make most likely (Equation~\eqref{eq:belief} at $t = 0$), without checks & Triage as one prediction \\ \hline
-Scripted checklist & Requests a fixed sequence of checks for the category, elicited from Directorate practice, then recommends & Runbook practice \\ \hline
+Initial-symptom & Applies the fix for the cause that the prior and the symptoms make most likely (Equation~\eqref{eq:belief} at $t = 0$), without checks & Triage as one prediction \\ \hline
+Scripted checklist & Requests a fixed sequence of checks for the category, elicited from Directorate practice, then fixes the most probable cause & Runbook practice \\ \hline
 Always-escalate & Escalates every incident & The limit of deferral \\ \hline
 Confidence threshold & Tracks the belief $b_t$ of Equation~\eqref{eq:belief}, requests the most informative check until one cause passes a threshold, else escalates & Uncertainty-driven investigation (knows the model) \\ \hline
 Unconstrained agent & The same DQN without the safety mechanism & Standard shielding comparison \\ \hline
@@ -336,10 +338,15 @@ Penalty-only agent & The same DQN without the mechanism, with a reward penalty p
 
 The confidence-threshold policy is given as Algorithm~\ref{alg:threshold}. Two ablations of the agent, one that cannot request checks and one that cannot escalate, will show what each option contributes.
 
+\section{Prototype: the Agent as a Decision Layer}
+\label{sec:prototype}
+
+To show how the trained agent would sit in a support workflow, a prototype places it between an incident ticket and the action taken on it. A reader turns the ticket and its logs into the symptoms, context and check results that the agent observes. It is either a keyword reader that runs offline or a large language model that returns a fixed structured form, in which every result must be supported by a quotation that is verified to appear in the text, and the text is redacted before it is sent. A check that needs a full analysis of the logs can be delegated by the agent to a second language-model call, which is treated as one more noisy check in the scenario model, so that the agent learns when delegation is worth its cost. The agent then plays the incident under the safety mechanism, and its decision is carried out in one of three ways: a fix for a fault in code becomes a draft pull request on a fictional repository, accepted only if the repository's tests pass; any other fix becomes a fix order to the owner of that cause; and an escalation is routed to the owner of the most probable cause, or to a senior developer when no cause is probable enough, together with the evidence gathered. An agent trained with verification has each fix verified before it goes on, as in the simulation: a fix for a fault in code is applied to a staging copy of the repository and passes only if the test that reproduces the incident now passes and no other test breaks, and any other fix is confirmed by the operator. A fix that fails is reported to the agent, which continues to investigate, tries another fix or escalates. The final decision is checked against the rules a second time before anything is done, and the prototype never merges a change or acts on a live system. The prototype is not part of the hypotheses; the error rates of its reader on sample tickets written by Directorate staff are reported because they indicate realistic values of $p_{\text{noise}}$ and $p_{\text{miss}}$.
+
 \section{Evaluation Strategy}
 \label{sec:evaluation}
 
-The framework will be evaluated across four groups of measures: decision quality, investigation efficiency, escalation behaviour and constraint compliance. At each level of ambiguity, $S = 10$ evaluation sets of $N = 1{,}000$ incidents each are generated from seeds never used in training, and every policy is run on the same sets. Set $s$ is paired with training seed $s$ of each learning agent; a baseline that does not learn is run on all $S$ sets, so that every policy has $S$ values of each measure. With $N = 1{,}000$, the standard error of a rate measured on one set is at most $\sqrt{0.25/1000} \approx 0.016$, small enough to resolve the differences of 0.05 used in the decision criteria (Section~\ref{sec:criteria}). Each episode $i$ ends in one of three outcomes $o_i$: a correct recommendation (c), a wrong recommendation (w) or an escalation (e). Let $N_{\text{c}}$, $N_{\text{w}}$ and $N_{\text{e}}$ be the numbers of episodes with each outcome, so that
+The framework will be evaluated across four groups of measures: decision quality, investigation efficiency, escalation behaviour and constraint compliance. At each level of ambiguity, $S = 10$ evaluation sets of $N = 1{,}000$ incidents each are generated from seeds never used in training, and every policy is run on the same sets. Set $s$ is paired with training seed $s$ of each learning agent; a baseline that does not learn is run on all $S$ sets, so that every policy has $S$ values of each measure. With $N = 1{,}000$, the standard error of a rate measured on one set is at most $\sqrt{0.25/1000} \approx 0.016$, small enough to resolve the differences of 0.05 used in the decision criteria (Section~\ref{sec:criteria}). Each episode $i$ ends in one of three outcomes $o_i$: a correct fix (c), a wrong fix (w) or an escalation (e). Let $N_{\text{c}}$, $N_{\text{w}}$ and $N_{\text{e}}$ be the numbers of episodes with each outcome, so that
 \begin{equation}
 N = N_{\text{c}} + N_{\text{w}} + N_{\text{e}}.
 \end{equation}
@@ -361,8 +368,8 @@ Escalations include those chosen by the agent, those forced by the safety mechan
 \multicolumn{2}{|l|}{\textit{Episodes and outcomes}} \\ \hline
 $N$ & Number of incidents in one evaluation set ($N = 1{,}000$); each episode is the triage of one incident \\ \hline
 $i$ & Index of an evaluation episode, $i = 1, \dots, N$ \\ \hline
-$o_i$ & Outcome of episode $i$: c (correct recommendation), w (wrong recommendation) or e (escalation) \\ \hline
-$N_{\text{c}}, N_{\text{w}}, N_{\text{e}}$ & Numbers of episodes ending in a correct recommendation, a wrong recommendation and an escalation \\ \hline
+$o_i$ & Outcome of episode $i$: c (correct fix), w (wrong fix) or e (escalation) \\ \hline
+$N_{\text{c}}, N_{\text{w}}, N_{\text{e}}$ & Numbers of episodes ending in a correct fix, a wrong fix and an escalation \\ \hline
 $T_i$ & Number of steps taken in episode $i$ \\ \hline
 $r_{i,t}$ & Reward received at step $t$ of episode $i$ \\ \hline
 $\pi$ & A decision policy: the proposed agent or one of the baselines \\ \hline
@@ -389,9 +396,9 @@ $X$, $X_s$, $\bar{X}$ & Any measure; its value on seed $s$; its mean over seeds 
 $B$ & Number of bootstrap resamples used for the confidence interval ($B = 10{,}000$) \\ \hline
 \multicolumn{2}{|l|}{\textit{Measures}} \\ \hline
 Acc & Resolution accuracy \\ \hline
-Cov & Coverage: share of incidents on which the agent makes a recommendation \\ \hline
-SelAcc & Selective accuracy: accuracy of the recommendations made \\ \hline
-WR & Wrong-recommendation rate \\ \hline
+Cov & Coverage: share of incidents on which the agent applies a fix \\ \hline
+SelAcc & Selective accuracy: accuracy of the fixes applied \\ \hline
+WR & Wrong-fix rate \\ \hline
 $\bar{G}$ & Mean episodic return \\ \hline
 $\bar{n}$, $\bar{C}$ & Mean number of checks and mean investigation cost per episode \\ \hline
 ER & Escalation rate \\ \hline
@@ -417,7 +424,7 @@ Because an agent can avoid errors by escalating, accuracy is read together with 
 \text{Cov} = \frac{N_{\text{c}} + N_{\text{w}}}{N}, \qquad
 \text{SelAcc} = \frac{N_{\text{c}}}{N_{\text{c}} + N_{\text{w}}}.
 \end{equation}
-The wrong-recommendation rate isolates the most costly error in triage:
+The wrong-fix rate isolates the most costly error in triage:
 \begin{equation}
 \text{WR} = \frac{N_{\text{w}}}{N}.
 \end{equation}
@@ -485,11 +492,11 @@ Robustness is not a separate metric: every measure above is computed at each amb
 \begin{equation}
 \Delta\text{Acc}(\ell) = \text{Acc}(\ell) - \text{Acc}(\ell_0),
 \end{equation}
-and likewise for the wrong-recommendation rate. The decision mix at each level,
+and likewise for the wrong-fix rate. The decision mix at each level,
 \begin{equation}
 \mathbf{m}(\ell) = \big(\text{Cov}(\ell),\; \text{ER}(\ell),\; \bar{n}(\ell)\big),
 \end{equation}
-shows whether the agent responds to ambiguity by investigating more, by escalating more, or by continuing to recommend on weaker evidence, which is the behaviour tested by hypotheses H3a to H3c.
+shows whether the agent responds to ambiguity by investigating more, by escalating more, or by continuing to fix on weaker evidence, which is the behaviour tested by hypotheses H3a to H3c.
 
 \subsection{Reporting:}
 
@@ -524,5 +531,7 @@ The design has limitations that bound what its results can show.
 \item \textbf{A low cost of escalation.} With $\lambda_{\text{esc}} = 3$ against $\lambda_{\text{wrong}} = 10$, escalation is cheap relative to a wrong fix, which may understate its burden on experts and encourage escalation; the sensitivity analysis over $\lambda_{\text{esc}} \in \{1, 3, 6, 9\}$ shows how far the conclusions depend on this value.
 \item \textbf{Conditional independence.} Symptoms and check results are assumed to be independent given the cause. In practice, checks that read the same logs may be correlated, which would make evidence less informative than the simulator assumes.
 \item \textbf{Researcher-chosen rewards.} The reward values are set by the researcher and tuned in pilot runs, not measured at the Directorate, and the agent's behaviour depends on them.
+\item \textbf{Reliable verification.} In the variant with verification, a fix that clears the symptoms is assumed to have removed the true cause, and the remedy times and harms are set by the researcher until the Directorate confirms them.
+\item \textbf{Actions in the prototype.} The prototype acts only on a fictional repository and through simulated messages; it shows how decisions would be carried out, not that they are safe to carry out on live systems.
 \item \textbf{One institution.} The scenario model comes from a single IT directorate, so its causes, checks, rules and ratings may not represent other organisations.
 \end{itemize}

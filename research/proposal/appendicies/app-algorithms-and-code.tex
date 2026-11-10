@@ -42,7 +42,7 @@ The symptoms and the results of the checks are drawn once, at the start, so aski
 \Procedure{Step}{$a$}
   \If{$a$ requests check $j$}
     \State Reveal the result of check $j$; \quad reward $= -k_j$
-  \ElsIf{$a$ recommends a fix}
+  \ElsIf{$a$ applies a fix}
     \State reward $= +r_{\text{correct}}$ if the fix matches $c$, otherwise $-\lambda_{\text{wrong}}$; \quad end the incident
   \ElsIf{$a$ escalates}
     \State reward $= -\lambda_{\text{esc}}$; \quad end the incident
@@ -125,7 +125,7 @@ A blocked proposal uses up one step and earns the block penalty $-\lambda_{\text
 \Procedure{Decide}{observation}
   \State Update the belief over causes from the results seen so far \Comment{Eq.~\eqref{eq:belief}}
   \If{the most likely cause has probability at least $\xi$}
-    \State \Return recommend the fix for that cause
+    \State \Return apply the fix for that cause
   \ElsIf{some checks have not been requested}
     \State \Return request the check expected to reduce uncertainty the most
   \Else

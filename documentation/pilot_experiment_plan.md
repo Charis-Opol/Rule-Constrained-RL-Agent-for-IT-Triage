@@ -323,6 +323,12 @@ A second try lets Threshold resolve more incidents (75% against 62%), but each w
 
 **Train v3:** `train_dqn --agent shielded --model experiments/pilot/pilot_model_v2.json --settings experiments/pilot/pilot_settings_v3.json --steps 500000 --every 25000 --double-q --exploration-steps 150000 --seed N --name v3_shielded_seedN`, seeds 0-2. The monitor has no exact reference line in this mode.
 
+### Phase 10: Comparison experiments with fix and verify, and verification in the prototype (added 9-10 Nov 2026)
+
+**Done.** Experiments 1 and 2 on model v2 (Part 2 values) with `pilot_settings_v3.json`: the three agents and the escalation-cost sensitivity (60 / 120 / 240 min), seeds 0-2, 15 runs (`run_comparison.py`, `evaluate_comparison.py`, `plot_v3_training.py`). The prototype now verifies every fix (`src/prototype/verify.py`): code faults on a staging copy of the toy repository against the incident's reproduction test, other fixes by the operator. Its default agent is `v3_shielded_seed0`. Full write-up, figures and the reading against H1 and H2: **`documentation/pilot_report.md`**.
+
+**Headline:** at 120 min the learned agents reach the threshold policy (penalty-only -0.24, unconstrained -0.28, with safety mechanism -0.41, threshold -0.38). The mechanism gives zero executed violations (unconstrained 7.6%), but its agent still proposes rule-breaking fixes about 22% of the time because a block costs nothing. H1 is not supported because, with verification, the scripted checklist resolves 88% of incidents (at a return of -1.38). H2 is not supported because the penalty-only agent has the best compliant success (74.7%).
+
 **Total: about 13.5 hours for Phases 0 to 6; Phase 7 so far about 4 hours, with about 1.5 days of remaining work.**
 
 **If time runs short, cut in this order:** the sweep, the penalty-only agent, then seeds from 5 to 3. Never cut the gates in Phases 1 to 3, because they are what make any result believable.

@@ -152,6 +152,10 @@ def _verification(settings, model, cause_ids, unit, cost_esc, r_correct):
     return True, fix_costs, harm, max_failed
 
 
-def load_scenario(model_path, settings_path):
-    return build_scenario(json.loads(Path(model_path).read_text(encoding="utf-8")),
-                          json.loads(Path(settings_path).read_text(encoding="utf-8")))
+def load_scenario(model_path, settings_path, escalation_minutes=None):
+    """escalation_minutes overrides the elicited cost of escalation (sensitivity analysis only).
+    The wrong-fix cost stays wrong_fix_multiple x escalation, so the elicited ratio is kept."""
+    model = json.loads(Path(model_path).read_text(encoding="utf-8"))
+    if escalation_minutes is not None:
+        model["costs"] = {**model["costs"], "escalation_minutes": float(escalation_minutes)}
+    return build_scenario(model, json.loads(Path(settings_path).read_text(encoding="utf-8")))

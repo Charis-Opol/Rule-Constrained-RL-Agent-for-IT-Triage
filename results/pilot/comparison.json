@@ -1,0 +1,1962 @@
+{
+  "note": "Pilot data (model v2, pilot developer), verification settings researcher-provisional; not Directorate data.",
+  "model": "experiments\\pilot\\pilot_model_v2.json",
+  "settings": "experiments\\pilot\\pilot_settings_v3.json",
+  "n_eval": 5000,
+  "n_tune": 2000,
+  "levels": [
+    {
+      "escalation_minutes": 60.0,
+      "tau": 0.55,
+      "k": 9,
+      "tuning": {
+        "threshold": {
+          "0.5": 1.0586666666666664,
+          "0.55": 1.133784090909091,
+          "0.6": 1.1000871212121213,
+          "0.65": 0.9128712121212122,
+          "0.7": 0.7543522727272728,
+          "0.75": 0.2837916666666667,
+          "0.8": -0.013943181818181756,
+          "0.85": -0.6110530303030303,
+          "0.9": -1.3239545454545456,
+          "0.95": -2.219867424242424
+        },
+        "scripted": {
+          "0": -0.4821212121212121,
+          "1": -0.43720075757575755,
+          "2": -0.21122727272727274,
+          "3": -0.13685227272727235,
+          "4": 0.1756515151515152,
+          "5": 0.055083333333333435,
+          "6": -0.24937499999999987,
+          "7": -1.0670265151515146,
+          "8": 0.3202575757575762,
+          "9": 0.32432196969696986,
+          "10": -0.0947007575757574,
+          "11": -0.13067045454545453
+        }
+      },
+      "baselines": {
+        "Always escalate": {
+          "mean_return": -1.0,
+          "resolution_accuracy": 0.0,
+          "wrong_fix_rate": 0.0,
+          "mean_wrong_fixes": 0.0,
+          "escalation_rate": 1.0,
+          "mean_checks": 0.0,
+          "mean_check_cost": 0.0,
+          "escalation_precision": 0.2814,
+          "escalation_recall": 1.0,
+          "escalation_mcc": null,
+          "proposed_violation_rate": 0.0,
+          "forced_escalation_rate": 0.0,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.0,
+          "ceiling": 0.7186,
+          "return_ci": [
+            -1.0,
+            -1.0
+          ],
+          "mix": {
+            "resolved first try": 0.0,
+            "resolved after a failed fix": 0.0,
+            "escalated by the agent": 1.0,
+            "after 2 failed fixes": 0.0,
+            "forced or step limit": 0.0
+          }
+        },
+        "Initial-symptom": {
+          "mean_return": -0.43070151515151517,
+          "resolution_accuracy": 0.4126,
+          "wrong_fix_rate": 0.2864,
+          "mean_wrong_fixes": 0.4208,
+          "escalation_rate": 0.5874,
+          "mean_checks": 0.0,
+          "mean_check_cost": 0.0,
+          "escalation_precision": 0.3592100783112019,
+          "escalation_recall": 0.749822316986496,
+          "escalation_mcc": 0.20645840064278964,
+          "proposed_violation_rate": 0.5468189233278956,
+          "forced_escalation_rate": 0.453,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.4126,
+          "ceiling": 0.7186,
+          "return_ci": [
+            -0.5564186363636363,
+            -0.3075312878787879
+          ],
+          "mix": {
+            "resolved first try": 0.3268,
+            "resolved after a failed fix": 0.0858,
+            "escalated by the agent": 0.0,
+            "after 2 failed fixes": 0.1344,
+            "forced or step limit": 0.453
+          }
+        },
+        "Scripted (k=9)": {
+          "mean_return": 0.3356424242424244,
+          "resolution_accuracy": 0.8834,
+          "wrong_fix_rate": 0.2972,
+          "mean_wrong_fixes": 0.4138,
+          "escalation_rate": 0.1166,
+          "mean_checks": 9.0,
+          "mean_check_cost": 1.6666666666666665,
+          "escalation_precision": 0.9416809605488851,
+          "escalation_recall": 0.39019189765458423,
+          "escalation_mcc": 0.5334499750772198,
+          "proposed_violation_rate": 0.0,
+          "forced_escalation_rate": 0.0,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.8834,
+          "ceiling": 0.7186,
+          "return_ci": [
+            0.20177477272727298,
+            0.4657867045454546
+          ],
+          "mix": {
+            "resolved first try": 0.7028,
+            "resolved after a failed fix": 0.1806,
+            "escalated by the agent": 0.0,
+            "after 2 failed fixes": 0.1166,
+            "forced or step limit": 0.0
+          }
+        },
+        "Threshold (tau=0.55)": {
+          "mean_return": 1.0777757575757576,
+          "resolution_accuracy": 0.8224,
+          "wrong_fix_rate": 0.3156,
+          "mean_wrong_fixes": 0.412,
+          "escalation_rate": 0.1776,
+          "mean_checks": 3.0112,
+          "mean_check_cost": 0.5879666666666666,
+          "escalation_precision": 0.8186936936936937,
+          "escalation_recall": 0.5167022032693674,
+          "escalation_mcc": 0.5552467435194186,
+          "proposed_violation_rate": 0.10721070455108615,
+          "forced_escalation_rate": 0.0,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.8224,
+          "ceiling": 0.7186,
+          "return_ci": [
+            0.942179962121212,
+            1.2065941287878788
+          ],
+          "mix": {
+            "resolved first try": 0.6376,
+            "resolved after a failed fix": 0.1848,
+            "escalated by the agent": 0.078,
+            "after 2 failed fixes": 0.0964,
+            "forced or step limit": 0.0032
+          }
+        }
+      },
+      "agents": {
+        "shielded": {
+          "per_seed": {
+            "0": {
+              "mean_return": 0.8690454545454546,
+              "resolution_accuracy": 0.775,
+              "wrong_fix_rate": 0.2856,
+              "mean_wrong_fixes": 0.3476,
+              "escalation_rate": 0.225,
+              "mean_checks": 6.3468,
+              "mean_check_cost": 0.9631666666666666,
+              "escalation_precision": 0.7306666666666667,
+              "escalation_recall": 0.5842217484008528,
+              "escalation_mcc": 0.5383180624238776,
+              "proposed_violation_rate": 0.2143373917357422,
+              "forced_escalation_rate": 0.0012,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.775,
+              "ceiling": 0.7186,
+              "return_ci": [
+                0.7406555681818182,
+                0.9880879924242424
+              ],
+              "mix": {
+                "resolved first try": 0.6358,
+                "resolved after a failed fix": 0.1392,
+                "escalated by the agent": 0.1322,
+                "after 2 failed fixes": 0.062,
+                "forced or step limit": 0.0308
+              }
+            },
+            "1": {
+              "mean_return": 0.9177378787878788,
+              "resolution_accuracy": 0.7974,
+              "wrong_fix_rate": 0.336,
+              "mean_wrong_fixes": 0.4134,
+              "escalation_rate": 0.2026,
+              "mean_checks": 5.3564,
+              "mean_check_cost": 0.8031833333333332,
+              "escalation_precision": 0.7522211253701876,
+              "escalation_recall": 0.5415778251599147,
+              "escalation_mcc": 0.5277544366052583,
+              "proposed_violation_rate": 0.1719482839913641,
+              "forced_escalation_rate": 0.0004,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.7974,
+              "ceiling": 0.7186,
+              "return_ci": [
+                0.7917586742424242,
+                1.0370769696969697
+              ],
+              "mix": {
+                "resolved first try": 0.6196,
+                "resolved after a failed fix": 0.1778,
+                "escalated by the agent": 0.1064,
+                "after 2 failed fixes": 0.0774,
+                "forced or step limit": 0.0188
+              }
+            },
+            "2": {
+              "mean_return": 0.9599818181818182,
+              "resolution_accuracy": 0.7732,
+              "wrong_fix_rate": 0.297,
+              "mean_wrong_fixes": 0.3588,
+              "escalation_rate": 0.2268,
+              "mean_checks": 5.287,
+              "mean_check_cost": 0.8511833333333334,
+              "escalation_precision": 0.7354497354497355,
+              "escalation_recall": 0.5927505330490405,
+              "escalation_mcc": 0.5468564973115139,
+              "proposed_violation_rate": 0.23986887075399316,
+              "forced_escalation_rate": 0.0028,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.7732,
+              "ceiling": 0.7186,
+              "return_ci": [
+                0.8422773863636364,
+                1.076659393939394
+              ],
+              "mix": {
+                "resolved first try": 0.6356,
+                "resolved after a failed fix": 0.1376,
+                "escalated by the agent": 0.1198,
+                "after 2 failed fixes": 0.0618,
+                "forced or step limit": 0.0452
+              }
+            }
+          },
+          "summary": {
+            "mean_return": {
+              "mean": 0.9155883838383838,
+              "ci": [
+                0.8690454545454546,
+                0.9599818181818182
+              ],
+              "seeds": [
+                0.8690454545454546,
+                0.9177378787878788,
+                0.9599818181818182
+              ]
+            },
+            "resolution_accuracy": {
+              "mean": 0.7818666666666667,
+              "ci": [
+                0.7732,
+                0.7974
+              ],
+              "seeds": [
+                0.775,
+                0.7974,
+                0.7732
+              ]
+            },
+            "wrong_fix_rate": {
+              "mean": 0.3062,
+              "ci": [
+                0.2856,
+                0.336
+              ],
+              "seeds": [
+                0.2856,
+                0.336,
+                0.297
+              ]
+            },
+            "mean_wrong_fixes": {
+              "mean": 0.3732666666666667,
+              "ci": [
+                0.3476000000000001,
+                0.4134
+              ],
+              "seeds": [
+                0.3476,
+                0.4134,
+                0.3588
+              ]
+            },
+            "escalation_rate": {
+              "mean": 0.21813333333333332,
+              "ci": [
+                0.2026,
+                0.2268
+              ],
+              "seeds": [
+                0.225,
+                0.2026,
+                0.2268
+              ]
+            },
+            "mean_checks": {
+              "mean": 5.663399999999999,
+              "ci": [
+                5.287,
+                6.346799999999999
+              ],
+              "seeds": [
+                6.3468,
+                5.3564,
+                5.287
+              ]
+            },
+            "mean_check_cost": {
+              "mean": 0.8725111111111111,
+              "ci": [
+                0.8031833333333332,
+                0.9631666666666666
+              ],
+              "seeds": [
+                0.9631666666666666,
+                0.8031833333333332,
+                0.8511833333333334
+              ]
+            },
+            "escalation_precision": {
+              "mean": 0.7394458424955298,
+              "ci": [
+                0.7306666666666667,
+                0.7522211253701876
+              ],
+              "seeds": [
+                0.7306666666666667,
+                0.7522211253701876,
+                0.7354497354497355
+              ]
+            },
+            "escalation_recall": {
+              "mean": 0.5728500355366027,
+              "ci": [
+                0.5415778251599147,
+                0.5927505330490405
+              ],
+              "seeds": [
+                0.5842217484008528,
+                0.5415778251599147,
+                0.5927505330490405
+              ]
+            },
+            "escalation_mcc": {
+              "mean": 0.5376429987802166,
+              "ci": [
+                0.5277544366052583,
+                0.5468564973115139
+              ],
+              "seeds": [
+                0.5383180624238776,
+                0.5277544366052583,
+                0.5468564973115139
+              ]
+            },
+            "proposed_violation_rate": {
+              "mean": 0.2087181821603665,
+              "ci": [
+                0.1719482839913641,
+                0.23986887075399319
+              ],
+              "seeds": [
+                0.2143373917357422,
+                0.1719482839913641,
+                0.23986887075399316
+              ]
+            },
+            "forced_escalation_rate": {
+              "mean": 0.0014666666666666665,
+              "ci": [
+                0.0004,
+                0.0028
+              ],
+              "seeds": [
+                0.0012,
+                0.0004,
+                0.0028
+              ]
+            },
+            "executed_violation_rate": {
+              "mean": 0.0,
+              "ci": [
+                0.0,
+                0.0
+              ],
+              "seeds": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "compliant_success_rate": {
+              "mean": 0.7818666666666667,
+              "ci": [
+                0.7732,
+                0.7974
+              ],
+              "seeds": [
+                0.775,
+                0.7974,
+                0.7732
+              ]
+            },
+            "ceiling": {
+              "mean": 0.7186,
+              "ci": [
+                0.7186,
+                0.7186
+              ],
+              "seeds": [
+                0.7186,
+                0.7186,
+                0.7186
+              ]
+            },
+            "mix": {
+              "resolved first try": 0.6303333333333333,
+              "resolved after a failed fix": 0.15153333333333333,
+              "escalated by the agent": 0.11946666666666667,
+              "after 2 failed fixes": 0.06706666666666666,
+              "forced or step limit": 0.031599999999999996
+            }
+          }
+        }
+      },
+      "paired_vs_threshold": {
+        "shielded": {
+          "0": {
+            "mean": -0.20873030303030302,
+            "ci": [
+              -0.3136391666666666,
+              -0.10769640151515167
+            ]
+          },
+          "1": {
+            "mean": -0.1600378787878788,
+            "ci": [
+              -0.2551384090909092,
+              -0.05239000000000009
+            ]
+          },
+          "2": {
+            "mean": -0.11779393939393938,
+            "ci": [
+              -0.2262632954545455,
+              -0.012529810606060617
+            ]
+          }
+        }
+      }
+    },
+    {
+      "escalation_minutes": 120.0,
+      "tau": 0.65,
+      "k": 9,
+      "tuning": {
+        "threshold": {
+          "0.5": -0.9276666666666666,
+          "0.55": -0.5938068181818182,
+          "0.6": -0.40686742424242417,
+          "0.65": -0.40134090909090914,
+          "0.7": -0.45742045454545455,
+          "0.75": -0.7042083333333332,
+          "0.8": -0.8862613636363637,
+          "0.85": -1.4211893939393938,
+          "0.9": -2.157909090909091,
+          "0.95": -3.102276515151515
+        },
+        "scripted": {
+          "0": -2.352242424242424,
+          "1": -2.268943181818182,
+          "2": -2.252454545454546,
+          "3": -2.0675795454545454,
+          "4": -1.6363636363636362,
+          "5": -1.8105833333333334,
+          "6": -2.019541666666667,
+          "7": -3.794011363636364,
+          "8": -1.471651515151515,
+          "9": -1.3943143939393938,
+          "10": -1.774776515151515,
+          "11": -1.7763825757575757
+        }
+      },
+      "baselines": {
+        "Always escalate": {
+          "mean_return": -2.0,
+          "resolution_accuracy": 0.0,
+          "wrong_fix_rate": 0.0,
+          "mean_wrong_fixes": 0.0,
+          "escalation_rate": 1.0,
+          "mean_checks": 0.0,
+          "mean_check_cost": 0.0,
+          "escalation_precision": 0.2814,
+          "escalation_recall": 1.0,
+          "escalation_mcc": null,
+          "proposed_violation_rate": 0.0,
+          "forced_escalation_rate": 0.0,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.0,
+          "ceiling": 0.7186,
+          "return_ci": [
+            -2.0,
+            -2.0
+          ],
+          "mix": {
+            "resolved first try": 0.0,
+            "resolved after a failed fix": 0.0,
+            "escalated by the agent": 1.0,
+            "after 2 failed fixes": 0.0,
+            "forced or step limit": 0.0
+          }
+        },
+        "Initial-symptom": {
+          "mean_return": -2.3337863636363636,
+          "resolution_accuracy": 0.4126,
+          "wrong_fix_rate": 0.2864,
+          "mean_wrong_fixes": 0.4208,
+          "escalation_rate": 0.5874,
+          "mean_checks": 0.0,
+          "mean_check_cost": 0.0,
+          "escalation_precision": 0.3592100783112019,
+          "escalation_recall": 0.749822316986496,
+          "escalation_mcc": 0.20645840064278964,
+          "proposed_violation_rate": 0.5468189233278956,
+          "forced_escalation_rate": 0.453,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.4126,
+          "ceiling": 0.7186,
+          "return_ci": [
+            -2.5347131439393937,
+            -2.133112462121212
+          ],
+          "mix": {
+            "resolved first try": 0.3268,
+            "resolved after a failed fix": 0.0858,
+            "escalated by the agent": 0.0,
+            "after 2 failed fixes": 0.1344,
+            "forced or step limit": 0.453
+          }
+        },
+        "Scripted (k=9)": {
+          "mean_return": -1.380181818181818,
+          "resolution_accuracy": 0.8834,
+          "wrong_fix_rate": 0.2972,
+          "mean_wrong_fixes": 0.4138,
+          "escalation_rate": 0.1166,
+          "mean_checks": 9.0,
+          "mean_check_cost": 1.6666666666666665,
+          "escalation_precision": 0.9416809605488851,
+          "escalation_recall": 0.39019189765458423,
+          "escalation_mcc": 0.5334499750772198,
+          "proposed_violation_rate": 0.0,
+          "forced_escalation_rate": 0.0,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.8834,
+          "ceiling": 0.7186,
+          "return_ci": [
+            -1.6041576136363638,
+            -1.1655767045454544
+          ],
+          "mix": {
+            "resolved first try": 0.7028,
+            "resolved after a failed fix": 0.1806,
+            "escalated by the agent": 0.0,
+            "after 2 failed fixes": 0.1166,
+            "forced or step limit": 0.0
+          }
+        },
+        "Threshold (tau=0.65)": {
+          "mean_return": -0.3804121212121212,
+          "resolution_accuracy": 0.7414,
+          "wrong_fix_rate": 0.2138,
+          "mean_wrong_fixes": 0.256,
+          "escalation_rate": 0.2586,
+          "mean_checks": 4.725,
+          "mean_check_cost": 0.9389333333333332,
+          "escalation_precision": 0.7169373549883991,
+          "escalation_recall": 0.6588486140724946,
+          "escalation_mcc": 0.5720154060503791,
+          "proposed_violation_rate": 0.04669685583068375,
+          "forced_escalation_rate": 0.0,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.7414,
+          "ceiling": 0.7186,
+          "return_ci": [
+            -0.5782954166666667,
+            -0.20272488636363642
+          ],
+          "mix": {
+            "resolved first try": 0.6276,
+            "resolved after a failed fix": 0.1138,
+            "escalated by the agent": 0.2142,
+            "after 2 failed fixes": 0.0422,
+            "forced or step limit": 0.0022
+          }
+        }
+      },
+      "agents": {
+        "shielded": {
+          "per_seed": {
+            "0": {
+              "mean_return": -0.2666878787878787,
+              "resolution_accuracy": 0.6588,
+              "wrong_fix_rate": 0.2108,
+              "mean_wrong_fixes": 0.2376,
+              "escalation_rate": 0.3412,
+              "mean_checks": 5.086,
+              "mean_check_cost": 0.7910833333333332,
+              "escalation_precision": 0.6271981242672919,
+              "escalation_recall": 0.7604832977967306,
+              "escalation_mcc": 0.553407061159381,
+              "proposed_violation_rate": 0.22746154987389347,
+              "forced_escalation_rate": 0.0092,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.6588,
+              "ceiling": 0.7186,
+              "return_ci": [
+                -0.4326951893939393,
+                -0.10980397727272723
+              ],
+              "mix": {
+                "resolved first try": 0.592,
+                "resolved after a failed fix": 0.0668,
+                "escalated by the agent": 0.2662,
+                "after 2 failed fixes": 0.0268,
+                "forced or step limit": 0.0482
+              }
+            },
+            "1": {
+              "mean_return": -0.5037348484848484,
+              "resolution_accuracy": 0.6786,
+              "wrong_fix_rate": 0.237,
+              "mean_wrong_fixes": 0.275,
+              "escalation_rate": 0.3214,
+              "mean_checks": 5.8952,
+              "mean_check_cost": 0.93035,
+              "escalation_precision": 0.6154324828873677,
+              "escalation_recall": 0.7029140014214641,
+              "escalation_mcc": 0.511209666432113,
+              "proposed_violation_rate": 0.19093910073989756,
+              "forced_escalation_rate": 0.0004,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.6786,
+              "ceiling": 0.7186,
+              "return_ci": [
+                -0.6760760227272727,
+                -0.3401969318181819
+              ],
+              "mix": {
+                "resolved first try": 0.6,
+                "resolved after a failed fix": 0.0786,
+                "escalated by the agent": 0.2588,
+                "after 2 failed fixes": 0.038,
+                "forced or step limit": 0.0246
+              }
+            },
+            "2": {
+              "mean_return": -0.4720818181818182,
+              "resolution_accuracy": 0.6894,
+              "wrong_fix_rate": 0.2278,
+              "mean_wrong_fixes": 0.2674,
+              "escalation_rate": 0.3106,
+              "mean_checks": 6.205,
+              "mean_check_cost": 0.9635166666666666,
+              "escalation_precision": 0.6439150032195751,
+              "escalation_recall": 0.7107320540156361,
+              "escalation_mcc": 0.5411098235430675,
+              "proposed_violation_rate": 0.2531730126920508,
+              "forced_escalation_rate": 0.0032,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.6894,
+              "ceiling": 0.7186,
+              "return_ci": [
+                -0.6403453787878787,
+                -0.3017305303030304
+              ],
+              "mix": {
+                "resolved first try": 0.6188,
+                "resolved after a failed fix": 0.0706,
+                "escalated by the agent": 0.217,
+                "after 2 failed fixes": 0.0396,
+                "forced or step limit": 0.054
+              }
+            }
+          },
+          "summary": {
+            "mean_return": {
+              "mean": -0.41416818181818177,
+              "ci": [
+                -0.5037348484848484,
+                -0.2666878787878787
+              ],
+              "seeds": [
+                -0.2666878787878787,
+                -0.5037348484848484,
+                -0.4720818181818182
+              ]
+            },
+            "resolution_accuracy": {
+              "mean": 0.6756000000000001,
+              "ci": [
+                0.6588,
+                0.6894
+              ],
+              "seeds": [
+                0.6588,
+                0.6786,
+                0.6894
+              ]
+            },
+            "wrong_fix_rate": {
+              "mean": 0.22519999999999998,
+              "ci": [
+                0.2108,
+                0.237
+              ],
+              "seeds": [
+                0.2108,
+                0.237,
+                0.2278
+              ]
+            },
+            "mean_wrong_fixes": {
+              "mean": 0.26,
+              "ci": [
+                0.2376,
+                0.275
+              ],
+              "seeds": [
+                0.2376,
+                0.275,
+                0.2674
+              ]
+            },
+            "escalation_rate": {
+              "mean": 0.3244,
+              "ci": [
+                0.3106,
+                0.3412
+              ],
+              "seeds": [
+                0.3412,
+                0.3214,
+                0.3106
+              ]
+            },
+            "mean_checks": {
+              "mean": 5.7287333333333335,
+              "ci": [
+                5.086,
+                6.205000000000001
+              ],
+              "seeds": [
+                5.086,
+                5.8952,
+                6.205
+              ]
+            },
+            "mean_check_cost": {
+              "mean": 0.8949833333333332,
+              "ci": [
+                0.7910833333333332,
+                0.9635166666666666
+              ],
+              "seeds": [
+                0.7910833333333332,
+                0.93035,
+                0.9635166666666666
+              ]
+            },
+            "escalation_precision": {
+              "mean": 0.6288485367914115,
+              "ci": [
+                0.6154324828873677,
+                0.6439150032195751
+              ],
+              "seeds": [
+                0.6271981242672919,
+                0.6154324828873677,
+                0.6439150032195751
+              ]
+            },
+            "escalation_recall": {
+              "mean": 0.724709784411277,
+              "ci": [
+                0.7029140014214641,
+                0.7604832977967306
+              ],
+              "seeds": [
+                0.7604832977967306,
+                0.7029140014214641,
+                0.7107320540156361
+              ]
+            },
+            "escalation_mcc": {
+              "mean": 0.5352421837115204,
+              "ci": [
+                0.511209666432113,
+                0.553407061159381
+              ],
+              "seeds": [
+                0.553407061159381,
+                0.511209666432113,
+                0.5411098235430675
+              ]
+            },
+            "proposed_violation_rate": {
+              "mean": 0.22385788776861393,
+              "ci": [
+                0.1909391007398976,
+                0.2531730126920508
+              ],
+              "seeds": [
+                0.22746154987389347,
+                0.19093910073989756,
+                0.2531730126920508
+              ]
+            },
+            "forced_escalation_rate": {
+              "mean": 0.004266666666666666,
+              "ci": [
+                0.0004,
+                0.0092
+              ],
+              "seeds": [
+                0.0092,
+                0.0004,
+                0.0032
+              ]
+            },
+            "executed_violation_rate": {
+              "mean": 0.0,
+              "ci": [
+                0.0,
+                0.0
+              ],
+              "seeds": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "compliant_success_rate": {
+              "mean": 0.6756000000000001,
+              "ci": [
+                0.6588,
+                0.6894
+              ],
+              "seeds": [
+                0.6588,
+                0.6786,
+                0.6894
+              ]
+            },
+            "ceiling": {
+              "mean": 0.7186,
+              "ci": [
+                0.7186,
+                0.7186
+              ],
+              "seeds": [
+                0.7186,
+                0.7186,
+                0.7186
+              ]
+            },
+            "mix": {
+              "resolved first try": 0.6036,
+              "resolved after a failed fix": 0.072,
+              "escalated by the agent": 0.2473333333333333,
+              "after 2 failed fixes": 0.0348,
+              "forced or step limit": 0.04226666666666667
+            }
+          }
+        },
+        "unconstrained": {
+          "per_seed": {
+            "0": {
+              "mean_return": -0.2880015151515151,
+              "resolution_accuracy": 0.76,
+              "wrong_fix_rate": 0.247,
+              "mean_wrong_fixes": 0.2908,
+              "escalation_rate": 0.24,
+              "mean_checks": 6.1838,
+              "mean_check_cost": 1.0785333333333331,
+              "escalation_precision": 0.7258333333333333,
+              "escalation_recall": 0.6190476190476191,
+              "escalation_mcc": 0.5553922255172801,
+              "proposed_violation_rate": 0.007563115680680411,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0562,
+              "compliant_success_rate": 0.7094,
+              "ceiling": 0.7186,
+              "return_ci": [
+                -0.46204875,
+                -0.12755477272727303
+              ],
+              "mix": {
+                "resolved first try": 0.6438,
+                "resolved after a failed fix": 0.1162,
+                "escalated by the agent": 0.1962,
+                "after 2 failed fixes": 0.0438,
+                "forced or step limit": 0.0
+              }
+            },
+            "1": {
+              "mean_return": -0.32336363636363624,
+              "resolution_accuracy": 0.7526,
+              "wrong_fix_rate": 0.2684,
+              "mean_wrong_fixes": 0.3206,
+              "escalation_rate": 0.2474,
+              "mean_checks": 5.4664,
+              "mean_check_cost": 0.8215166666666668,
+              "escalation_precision": 0.7210994341147938,
+              "escalation_recall": 0.6339729921819474,
+              "escalation_mcc": 0.5606192348954099,
+              "proposed_violation_rate": 0.01573914592860961,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.106,
+              "compliant_success_rate": 0.658,
+              "ceiling": 0.7186,
+              "return_ci": [
+                -0.5020911363636363,
+                -0.14485454545454568
+              ],
+              "mix": {
+                "resolved first try": 0.6258,
+                "resolved after a failed fix": 0.1268,
+                "escalated by the agent": 0.1952,
+                "after 2 failed fixes": 0.0522,
+                "forced or step limit": 0.0
+              }
+            },
+            "2": {
+              "mean_return": -0.23067424242424237,
+              "resolution_accuracy": 0.728,
+              "wrong_fix_rate": 0.2302,
+              "mean_wrong_fixes": 0.2764,
+              "escalation_rate": 0.272,
+              "mean_checks": 6.492,
+              "mean_check_cost": 1.0229333333333335,
+              "escalation_precision": 0.6816176470588236,
+              "escalation_recall": 0.6588486140724946,
+              "escalation_mcc": 0.5440130824176564,
+              "proposed_violation_rate": 0.008339592344150631,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0644,
+              "compliant_success_rate": 0.6692,
+              "ceiling": 0.7186,
+              "return_ci": [
+                -0.399676212121212,
+                -0.06713632575757567
+              ],
+              "mix": {
+                "resolved first try": 0.6292,
+                "resolved after a failed fix": 0.0988,
+                "escalated by the agent": 0.2258,
+                "after 2 failed fixes": 0.0462,
+                "forced or step limit": 0.0
+              }
+            }
+          },
+          "summary": {
+            "mean_return": {
+              "mean": -0.2806797979797979,
+              "ci": [
+                -0.32336363636363624,
+                -0.23067424242424237
+              ],
+              "seeds": [
+                -0.2880015151515151,
+                -0.32336363636363624,
+                -0.23067424242424237
+              ]
+            },
+            "resolution_accuracy": {
+              "mean": 0.7468666666666666,
+              "ci": [
+                0.7280000000000001,
+                0.7600000000000001
+              ],
+              "seeds": [
+                0.76,
+                0.7526,
+                0.728
+              ]
+            },
+            "wrong_fix_rate": {
+              "mean": 0.24853333333333336,
+              "ci": [
+                0.2302,
+                0.2684
+              ],
+              "seeds": [
+                0.247,
+                0.2684,
+                0.2302
+              ]
+            },
+            "mean_wrong_fixes": {
+              "mean": 0.2959333333333333,
+              "ci": [
+                0.2764,
+                0.3206
+              ],
+              "seeds": [
+                0.2908,
+                0.3206,
+                0.2764
+              ]
+            },
+            "escalation_rate": {
+              "mean": 0.2531333333333334,
+              "ci": [
+                0.24,
+                0.272
+              ],
+              "seeds": [
+                0.24,
+                0.2474,
+                0.272
+              ]
+            },
+            "mean_checks": {
+              "mean": 6.0474,
+              "ci": [
+                5.4664,
+                6.492
+              ],
+              "seeds": [
+                6.1838,
+                5.4664,
+                6.492
+              ]
+            },
+            "mean_check_cost": {
+              "mean": 0.9743277777777778,
+              "ci": [
+                0.8215166666666668,
+                1.0785333333333331
+              ],
+              "seeds": [
+                1.0785333333333331,
+                0.8215166666666668,
+                1.0229333333333335
+              ]
+            },
+            "escalation_precision": {
+              "mean": 0.7095168048356503,
+              "ci": [
+                0.6816176470588236,
+                0.7258333333333334
+              ],
+              "seeds": [
+                0.7258333333333333,
+                0.7210994341147938,
+                0.6816176470588236
+              ]
+            },
+            "escalation_recall": {
+              "mean": 0.6372897417673536,
+              "ci": [
+                0.6190476190476191,
+                0.6588486140724946
+              ],
+              "seeds": [
+                0.6190476190476191,
+                0.6339729921819474,
+                0.6588486140724946
+              ]
+            },
+            "escalation_mcc": {
+              "mean": 0.5533415142767821,
+              "ci": [
+                0.5440130824176564,
+                0.5606192348954099
+              ],
+              "seeds": [
+                0.5553922255172801,
+                0.5606192348954099,
+                0.5440130824176564
+              ]
+            },
+            "proposed_violation_rate": {
+              "mean": 0.010547284651146883,
+              "ci": [
+                0.007563115680680411,
+                0.01573914592860961
+              ],
+              "seeds": [
+                0.007563115680680411,
+                0.01573914592860961,
+                0.008339592344150631
+              ]
+            },
+            "forced_escalation_rate": {
+              "mean": 0.0,
+              "ci": [
+                0.0,
+                0.0
+              ],
+              "seeds": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "executed_violation_rate": {
+              "mean": 0.07553333333333334,
+              "ci": [
+                0.0562,
+                0.106
+              ],
+              "seeds": [
+                0.0562,
+                0.106,
+                0.0644
+              ]
+            },
+            "compliant_success_rate": {
+              "mean": 0.6788666666666666,
+              "ci": [
+                0.658,
+                0.7094
+              ],
+              "seeds": [
+                0.7094,
+                0.658,
+                0.6692
+              ]
+            },
+            "ceiling": {
+              "mean": 0.7186,
+              "ci": [
+                0.7186,
+                0.7186
+              ],
+              "seeds": [
+                0.7186,
+                0.7186,
+                0.7186
+              ]
+            },
+            "mix": {
+              "resolved first try": 0.6329333333333333,
+              "resolved after a failed fix": 0.11393333333333333,
+              "escalated by the agent": 0.20573333333333332,
+              "after 2 failed fixes": 0.0474,
+              "forced or step limit": 0.0
+            }
+          }
+        },
+        "penalty": {
+          "per_seed": {
+            "0": {
+              "mean_return": -0.23613636363636356,
+              "resolution_accuracy": 0.7356,
+              "wrong_fix_rate": 0.242,
+              "mean_wrong_fixes": 0.293,
+              "escalation_rate": 0.2644,
+              "mean_checks": 5.1396,
+              "mean_check_cost": 0.8044,
+              "escalation_precision": 0.6770045385779122,
+              "escalation_recall": 0.6361051883439943,
+              "escalation_mcc": 0.5274307880494523,
+              "proposed_violation_rate": 0.0,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.7356,
+              "ceiling": 0.7186,
+              "return_ci": [
+                -0.4193337878787879,
+                -0.06024238636363645
+              ],
+              "mix": {
+                "resolved first try": 0.624,
+                "resolved after a failed fix": 0.1116,
+                "escalated by the agent": 0.2134,
+                "after 2 failed fixes": 0.051,
+                "forced or step limit": 0.0
+              }
+            },
+            "1": {
+              "mean_return": -0.1420560606060605,
+              "resolution_accuracy": 0.74,
+              "wrong_fix_rate": 0.2648,
+              "mean_wrong_fixes": 0.3136,
+              "escalation_rate": 0.26,
+              "mean_checks": 4.8868,
+              "mean_check_cost": 0.7977666666666666,
+              "escalation_precision": 0.6907692307692308,
+              "escalation_recall": 0.6382373845060412,
+              "escalation_mcc": 0.5396104580296404,
+              "proposed_violation_rate": 0.0,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.74,
+              "ceiling": 0.7186,
+              "return_ci": [
+                -0.3192401893939393,
+                0.02765999999999992
+              ],
+              "mix": {
+                "resolved first try": 0.615,
+                "resolved after a failed fix": 0.125,
+                "escalated by the agent": 0.2112,
+                "after 2 failed fixes": 0.0488,
+                "forced or step limit": 0.0
+              }
+            },
+            "2": {
+              "mean_return": -0.3333833333333333,
+              "resolution_accuracy": 0.7642,
+              "wrong_fix_rate": 0.2556,
+              "mean_wrong_fixes": 0.3056,
+              "escalation_rate": 0.2358,
+              "mean_checks": 4.9252,
+              "mean_check_cost": 0.7866666666666667,
+              "escalation_precision": 0.729431721798134,
+              "escalation_recall": 0.6112295664534471,
+              "escalation_mcc": 0.553441211012183,
+              "proposed_violation_rate": 0.0,
+              "forced_escalation_rate": 0.0,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.7642,
+              "ceiling": 0.7186,
+              "return_ci": [
+                -0.528333106060606,
+                -0.15665727272727276
+              ],
+              "mix": {
+                "resolved first try": 0.637,
+                "resolved after a failed fix": 0.1272,
+                "escalated by the agent": 0.1858,
+                "after 2 failed fixes": 0.05,
+                "forced or step limit": 0.0
+              }
+            }
+          },
+          "summary": {
+            "mean_return": {
+              "mean": -0.2371919191919191,
+              "ci": [
+                -0.3333833333333333,
+                -0.1420560606060605
+              ],
+              "seeds": [
+                -0.23613636363636356,
+                -0.1420560606060605,
+                -0.3333833333333333
+              ]
+            },
+            "resolution_accuracy": {
+              "mean": 0.7465999999999999,
+              "ci": [
+                0.7356000000000001,
+                0.7642000000000001
+              ],
+              "seeds": [
+                0.7356,
+                0.74,
+                0.7642
+              ]
+            },
+            "wrong_fix_rate": {
+              "mean": 0.2541333333333333,
+              "ci": [
+                0.242,
+                0.2648
+              ],
+              "seeds": [
+                0.242,
+                0.2648,
+                0.2556
+              ]
+            },
+            "mean_wrong_fixes": {
+              "mean": 0.30406666666666665,
+              "ci": [
+                0.293,
+                0.3136
+              ],
+              "seeds": [
+                0.293,
+                0.3136,
+                0.3056
+              ]
+            },
+            "escalation_rate": {
+              "mean": 0.2534,
+              "ci": [
+                0.2358,
+                0.2644
+              ],
+              "seeds": [
+                0.2644,
+                0.26,
+                0.2358
+              ]
+            },
+            "mean_checks": {
+              "mean": 4.983866666666667,
+              "ci": [
+                4.8868,
+                5.1396
+              ],
+              "seeds": [
+                5.1396,
+                4.8868,
+                4.9252
+              ]
+            },
+            "mean_check_cost": {
+              "mean": 0.7962777777777778,
+              "ci": [
+                0.7866666666666667,
+                0.8043999999999999
+              ],
+              "seeds": [
+                0.8044,
+                0.7977666666666666,
+                0.7866666666666667
+              ]
+            },
+            "escalation_precision": {
+              "mean": 0.6990684970484257,
+              "ci": [
+                0.6770045385779122,
+                0.729431721798134
+              ],
+              "seeds": [
+                0.6770045385779122,
+                0.6907692307692308,
+                0.729431721798134
+              ]
+            },
+            "escalation_recall": {
+              "mean": 0.6285240464344942,
+              "ci": [
+                0.6112295664534471,
+                0.6382373845060412
+              ],
+              "seeds": [
+                0.6361051883439943,
+                0.6382373845060412,
+                0.6112295664534471
+              ]
+            },
+            "escalation_mcc": {
+              "mean": 0.5401608190304253,
+              "ci": [
+                0.5274307880494523,
+                0.553441211012183
+              ],
+              "seeds": [
+                0.5274307880494523,
+                0.5396104580296404,
+                0.553441211012183
+              ]
+            },
+            "proposed_violation_rate": {
+              "mean": 0.0,
+              "ci": [
+                0.0,
+                0.0
+              ],
+              "seeds": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "forced_escalation_rate": {
+              "mean": 0.0,
+              "ci": [
+                0.0,
+                0.0
+              ],
+              "seeds": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "executed_violation_rate": {
+              "mean": 0.0,
+              "ci": [
+                0.0,
+                0.0
+              ],
+              "seeds": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "compliant_success_rate": {
+              "mean": 0.7465999999999999,
+              "ci": [
+                0.7356000000000001,
+                0.7642000000000001
+              ],
+              "seeds": [
+                0.7356,
+                0.74,
+                0.7642
+              ]
+            },
+            "ceiling": {
+              "mean": 0.7186,
+              "ci": [
+                0.7186,
+                0.7186
+              ],
+              "seeds": [
+                0.7186,
+                0.7186,
+                0.7186
+              ]
+            },
+            "mix": {
+              "resolved first try": 0.6253333333333333,
+              "resolved after a failed fix": 0.12126666666666668,
+              "escalated by the agent": 0.20346666666666666,
+              "after 2 failed fixes": 0.04993333333333333,
+              "forced or step limit": 0.0
+            }
+          }
+        }
+      },
+      "paired_vs_threshold": {
+        "shielded": {
+          "0": {
+            "mean": 0.11372424242424253,
+            "ci": [
+              -0.022950340909090802,
+              0.24115011363636368
+            ]
+          },
+          "1": {
+            "mean": -0.12332272727272717,
+            "ci": [
+              -0.2796555303030302,
+              0.02008924242424253
+            ]
+          },
+          "2": {
+            "mean": -0.0916696969696969,
+            "ci": [
+              -0.24035924242424236,
+              0.058506363636363676
+            ]
+          }
+        },
+        "unconstrained": {
+          "0": {
+            "mean": 0.09241060606060612,
+            "ci": [
+              -0.049102537878787815,
+              0.22282659090909096
+            ]
+          },
+          "1": {
+            "mean": 0.057048484848485,
+            "ci": [
+              -0.0834288636363635,
+              0.19227212121212137
+            ]
+          },
+          "2": {
+            "mean": 0.14973787878787884,
+            "ci": [
+              0.015014393939394018,
+              0.2828051136363637
+            ]
+          }
+        },
+        "penalty": {
+          "0": {
+            "mean": 0.14427575757575767,
+            "ci": [
+              0.004855795454545536,
+              0.28282003787878784
+            ]
+          },
+          "1": {
+            "mean": 0.2383560606060608,
+            "ci": [
+              0.09125996212121229,
+              0.389541931818182
+            ]
+          },
+          "2": {
+            "mean": 0.04702878787878789,
+            "ci": [
+              -0.0893649242424242,
+              0.17848166666666668
+            ]
+          }
+        }
+      }
+    },
+    {
+      "escalation_minutes": 240.0,
+      "tau": 0.8,
+      "k": 9,
+      "tuning": {
+        "threshold": {
+          "0.5": -4.900333333333334,
+          "0.55": -4.048988636363636,
+          "0.6": -3.420776515151515,
+          "0.65": -3.0297651515151514,
+          "0.7": -2.8809659090909094,
+          "0.75": -2.6802083333333333,
+          "0.8": -2.630897727272727,
+          "0.85": -3.0414621212121213,
+          "0.9": -3.825818181818182,
+          "0.95": -4.867094696969697
+        },
+        "scripted": {
+          "0": -6.092484848484848,
+          "1": -5.932428030303031,
+          "2": -6.334909090909091,
+          "3": -5.929034090909091,
+          "4": -5.26039393939394,
+          "5": -5.541916666666666,
+          "6": -5.559875,
+          "7": -9.24798106060606,
+          "8": -5.055469696969696,
+          "9": -4.831587121212121,
+          "10": -5.13492803030303,
+          "11": -5.067806818181818
+        }
+      },
+      "baselines": {
+        "Always escalate": {
+          "mean_return": -4.0,
+          "resolution_accuracy": 0.0,
+          "wrong_fix_rate": 0.0,
+          "mean_wrong_fixes": 0.0,
+          "escalation_rate": 1.0,
+          "mean_checks": 0.0,
+          "mean_check_cost": 0.0,
+          "escalation_precision": 0.2814,
+          "escalation_recall": 1.0,
+          "escalation_mcc": null,
+          "proposed_violation_rate": 0.0,
+          "forced_escalation_rate": 0.0,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.0,
+          "ceiling": 0.7186,
+          "return_ci": [
+            -4.0,
+            -4.0
+          ],
+          "mix": {
+            "resolved first try": 0.0,
+            "resolved after a failed fix": 0.0,
+            "escalated by the agent": 1.0,
+            "after 2 failed fixes": 0.0,
+            "forced or step limit": 0.0
+          }
+        },
+        "Initial-symptom": {
+          "mean_return": -6.13995606060606,
+          "resolution_accuracy": 0.4126,
+          "wrong_fix_rate": 0.2864,
+          "mean_wrong_fixes": 0.4208,
+          "escalation_rate": 0.5874,
+          "mean_checks": 0.0,
+          "mean_check_cost": 0.0,
+          "escalation_precision": 0.3592100783112019,
+          "escalation_recall": 0.749822316986496,
+          "escalation_mcc": 0.20645840064278964,
+          "proposed_violation_rate": 0.5468189233278956,
+          "forced_escalation_rate": 0.453,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.4126,
+          "ceiling": 0.7186,
+          "return_ci": [
+            -6.503942803030303,
+            -5.786956931818183
+          ],
+          "mix": {
+            "resolved first try": 0.3268,
+            "resolved after a failed fix": 0.0858,
+            "escalated by the agent": 0.0,
+            "after 2 failed fixes": 0.1344,
+            "forced or step limit": 0.453
+          }
+        },
+        "Scripted (k=9)": {
+          "mean_return": -4.811830303030303,
+          "resolution_accuracy": 0.8834,
+          "wrong_fix_rate": 0.2972,
+          "mean_wrong_fixes": 0.4138,
+          "escalation_rate": 0.1166,
+          "mean_checks": 9.0,
+          "mean_check_cost": 1.6666666666666665,
+          "escalation_precision": 0.9416809605488851,
+          "escalation_recall": 0.39019189765458423,
+          "escalation_mcc": 0.5334499750772198,
+          "proposed_violation_rate": 0.0,
+          "forced_escalation_rate": 0.0,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.8834,
+          "ceiling": 0.7186,
+          "return_ci": [
+            -5.21103875,
+            -4.425426590909091
+          ],
+          "mix": {
+            "resolved first try": 0.7028,
+            "resolved after a failed fix": 0.1806,
+            "escalated by the agent": 0.0,
+            "after 2 failed fixes": 0.1166,
+            "forced or step limit": 0.0
+          }
+        },
+        "Threshold (tau=0.8)": {
+          "mean_return": -2.640268181818182,
+          "resolution_accuracy": 0.5304,
+          "wrong_fix_rate": 0.0938,
+          "mean_wrong_fixes": 0.0992,
+          "escalation_rate": 0.4696,
+          "mean_checks": 7.0194,
+          "mean_check_cost": 1.4099166666666667,
+          "escalation_precision": 0.5268313458262351,
+          "escalation_recall": 0.8791755508173419,
+          "escalation_mcc": 0.5135546457146872,
+          "proposed_violation_rate": 0.015316649270577954,
+          "forced_escalation_rate": 0.0,
+          "executed_violation_rate": 0.0,
+          "compliant_success_rate": 0.5304,
+          "ceiling": 0.7186,
+          "return_ci": [
+            -2.868279356060606,
+            -2.4133081818181816
+          ],
+          "mix": {
+            "resolved first try": 0.4952,
+            "resolved after a failed fix": 0.0352,
+            "escalated by the agent": 0.4642,
+            "after 2 failed fixes": 0.0054,
+            "forced or step limit": 0.0
+          }
+        }
+      },
+      "agents": {
+        "shielded": {
+          "per_seed": {
+            "0": {
+              "mean_return": -3.4914757575757576,
+              "resolution_accuracy": 0.448,
+              "wrong_fix_rate": 0.1128,
+              "mean_wrong_fixes": 0.1168,
+              "escalation_rate": 0.552,
+              "mean_checks": 6.7974,
+              "mean_check_cost": 1.0961666666666665,
+              "escalation_precision": 0.46956521739130436,
+              "escalation_recall": 0.9211087420042644,
+              "escalation_mcc": 0.46447701282982873,
+              "proposed_violation_rate": 0.33874176728869376,
+              "forced_escalation_rate": 0.0008,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.448,
+              "ceiling": 0.7186,
+              "return_ci": [
+                -3.74685,
+                -3.260336931818182
+              ],
+              "mix": {
+                "resolved first try": 0.4314,
+                "resolved after a failed fix": 0.0166,
+                "escalated by the agent": 0.3486,
+                "after 2 failed fixes": 0.004,
+                "forced or step limit": 0.1994
+              }
+            },
+            "1": {
+              "mean_return": -3.0988924242424245,
+              "resolution_accuracy": 0.5646,
+              "wrong_fix_rate": 0.1714,
+              "mean_wrong_fixes": 0.1826,
+              "escalation_rate": 0.4354,
+              "mean_checks": 6.4316,
+              "mean_check_cost": 1.0732166666666667,
+              "escalation_precision": 0.5507579237482775,
+              "escalation_recall": 0.8521677327647477,
+              "escalation_mcc": 0.5260146965327367,
+              "proposed_violation_rate": 0.2779866211709367,
+              "forced_escalation_rate": 0.0008,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.5646,
+              "ceiling": 0.7186,
+              "return_ci": [
+                -3.3732387499999996,
+                -2.859818257575758
+              ],
+              "mix": {
+                "resolved first try": 0.5312,
+                "resolved after a failed fix": 0.0334,
+                "escalated by the agent": 0.3118,
+                "after 2 failed fixes": 0.0112,
+                "forced or step limit": 0.1124
+              }
+            },
+            "2": {
+              "mean_return": -2.9772257575757575,
+              "resolution_accuracy": 0.5454,
+              "wrong_fix_rate": 0.1536,
+              "mean_wrong_fixes": 0.161,
+              "escalation_rate": 0.4546,
+              "mean_checks": 5.3344,
+              "mean_check_cost": 0.8634166666666668,
+              "escalation_precision": 0.5433347998240211,
+              "escalation_recall": 0.8777540867093105,
+              "escalation_mcc": 0.5317955478713217,
+              "proposed_violation_rate": 0.29901790370241615,
+              "forced_escalation_rate": 0.0002,
+              "executed_violation_rate": 0.0,
+              "compliant_success_rate": 0.5454,
+              "ceiling": 0.7186,
+              "return_ci": [
+                -3.2568656060606056,
+                -2.7307930303030306
+              ],
+              "mix": {
+                "resolved first try": 0.525,
+                "resolved after a failed fix": 0.0204,
+                "escalated by the agent": 0.4116,
+                "after 2 failed fixes": 0.0074,
+                "forced or step limit": 0.0356
+              }
+            }
+          },
+          "summary": {
+            "mean_return": {
+              "mean": -3.1891979797979797,
+              "ci": [
+                -3.4914757575757576,
+                -2.9772257575757575
+              ],
+              "seeds": [
+                -3.4914757575757576,
+                -3.0988924242424245,
+                -2.9772257575757575
+              ]
+            },
+            "resolution_accuracy": {
+              "mean": 0.5193333333333333,
+              "ci": [
+                0.448,
+                0.5646
+              ],
+              "seeds": [
+                0.448,
+                0.5646,
+                0.5454
+              ]
+            },
+            "wrong_fix_rate": {
+              "mean": 0.14593333333333333,
+              "ci": [
+                0.1128,
+                0.1714
+              ],
+              "seeds": [
+                0.1128,
+                0.1714,
+                0.1536
+              ]
+            },
+            "mean_wrong_fixes": {
+              "mean": 0.15346666666666667,
+              "ci": [
+                0.1168,
+                0.1826
+              ],
+              "seeds": [
+                0.1168,
+                0.1826,
+                0.161
+              ]
+            },
+            "escalation_rate": {
+              "mean": 0.48066666666666674,
+              "ci": [
+                0.4354,
+                0.552
+              ],
+              "seeds": [
+                0.552,
+                0.4354,
+                0.4546
+              ]
+            },
+            "mean_checks": {
+              "mean": 6.187799999999999,
+              "ci": [
+                5.3344,
+                6.7974
+              ],
+              "seeds": [
+                6.7974,
+                6.4316,
+                5.3344
+              ]
+            },
+            "mean_check_cost": {
+              "mean": 1.0109333333333332,
+              "ci": [
+                0.8634166666666668,
+                1.0961666666666665
+              ],
+              "seeds": [
+                1.0961666666666665,
+                1.0732166666666667,
+                0.8634166666666668
+              ]
+            },
+            "escalation_precision": {
+              "mean": 0.5212193136545343,
+              "ci": [
+                0.46956521739130436,
+                0.5507579237482775
+              ],
+              "seeds": [
+                0.46956521739130436,
+                0.5507579237482775,
+                0.5433347998240211
+              ]
+            },
+            "escalation_recall": {
+              "mean": 0.8836768538261076,
+              "ci": [
+                0.8521677327647477,
+                0.9211087420042644
+              ],
+              "seeds": [
+                0.9211087420042644,
+                0.8521677327647477,
+                0.8777540867093105
+              ]
+            },
+            "escalation_mcc": {
+              "mean": 0.507429085744629,
+              "ci": [
+                0.46447701282982873,
+                0.5317955478713217
+              ],
+              "seeds": [
+                0.46447701282982873,
+                0.5260146965327367,
+                0.5317955478713217
+              ]
+            },
+            "proposed_violation_rate": {
+              "mean": 0.3052487640540155,
+              "ci": [
+                0.2779866211709367,
+                0.3387417672886938
+              ],
+              "seeds": [
+                0.33874176728869376,
+                0.2779866211709367,
+                0.29901790370241615
+              ]
+            },
+            "forced_escalation_rate": {
+              "mean": 0.0006000000000000001,
+              "ci": [
+                0.0002,
+                0.0008
+              ],
+              "seeds": [
+                0.0008,
+                0.0008,
+                0.0002
+              ]
+            },
+            "executed_violation_rate": {
+              "mean": 0.0,
+              "ci": [
+                0.0,
+                0.0
+              ],
+              "seeds": [
+                0.0,
+                0.0,
+                0.0
+              ]
+            },
+            "compliant_success_rate": {
+              "mean": 0.5193333333333333,
+              "ci": [
+                0.448,
+                0.5646
+              ],
+              "seeds": [
+                0.448,
+                0.5646,
+                0.5454
+              ]
+            },
+            "ceiling": {
+              "mean": 0.7186,
+              "ci": [
+                0.7186,
+                0.7186
+              ],
+              "seeds": [
+                0.7186,
+                0.7186,
+                0.7186
+              ]
+            },
+            "mix": {
+              "resolved first try": 0.4958666666666667,
+              "resolved after a failed fix": 0.023466666666666667,
+              "escalated by the agent": 0.35733333333333334,
+              "after 2 failed fixes": 0.007533333333333334,
+              "forced or step limit": 0.1158
+            }
+          }
+        }
+      },
+      "paired_vs_threshold": {
+        "shielded": {
+          "0": {
+            "mean": -0.8512075757575757,
+            "ci": [
+              -1.0557470454545455,
+              -0.6566604924242423
+            ]
+          },
+          "1": {
+            "mean": -0.4586242424242424,
+            "ci": [
+              -0.6572389393939394,
+              -0.26658875000000004
+            ]
+          },
+          "2": {
+            "mean": -0.3369575757575755,
+            "ci": [
+              -0.5467162878787876,
+              -0.1337074999999998
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

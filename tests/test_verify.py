@@ -123,3 +123,16 @@ def test_bad_settings_are_rejected():
     del settings["fix_with_verification"]["remedies"]["C01"]
     with pytest.raises(ValueError, match="C01"):
         build_scenario(model, settings)
+
+
+def test_escalation_override_keeps_the_elicited_ratio():
+    """Sensitivity analysis: the override changes escalation, and wrong fix stays 5x escalation."""
+    base = load_scenario(MODEL, V3)
+    for minutes in (60.0, 240.0):
+        s = load_scenario(MODEL, V3, escalation_minutes=minutes)
+        scale = minutes / 120.0
+        assert s.cost_esc == pytest.approx(base.cost_esc * scale)
+        assert s.cost_wrong / s.cost_esc == pytest.approx(base.cost_wrong / base.cost_esc)
+        assert np.allclose(s.wrong_fix_harm, base.wrong_fix_harm * scale)
+        assert np.allclose(s.fix_costs, base.fix_costs)
+    assert json.loads(MODEL.read_text(encoding="utf-8"))["costs"]["escalation_minutes"] == 120.0

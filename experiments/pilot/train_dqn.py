@@ -50,6 +50,8 @@ def main():
     parser.add_argument("--threads", type=int, default=None, help="CPU threads for PyTorch (for parallel runs)")
     parser.add_argument("--model", type=Path, default=MODEL, help="scenario model (default: pilot_model.json)")
     parser.add_argument("--settings", type=Path, default=SETTINGS, help="settings (default: pilot_settings.json)")
+    parser.add_argument("--escalation-minutes", type=float, default=None,
+                        help="override the cost of escalation (sensitivity analysis only)")
     args = parser.parse_args()
     if args.threads:
         torch.set_num_threads(args.threads)
@@ -57,7 +59,7 @@ def main():
     if args.exploration_steps:
         hyperparameters["exploration_fraction"] = args.exploration_steps / args.steps
 
-    scenario = load_scenario(args.model, args.settings)
+    scenario = load_scenario(args.model, args.settings, args.escalation_minutes)
     name = args.name or f"{time.strftime('%Y%m%d-%H%M')}_{args.agent}_seed{args.seed}"
     run_dir = RUNS / name
     run_dir.mkdir(parents=True, exist_ok=False)
@@ -79,7 +81,7 @@ def main():
               "incidents": args.incidents, "hyperparameters": hyperparameters,
               "model": str(args.model.resolve().relative_to(ROOT)),
               "settings": str(args.settings.resolve().relative_to(ROOT)),
-              "p_noise": scenario.p_noise, "p_miss": scenario.p_miss, "git_commit": git_commit(),
+              "escalation_minutes": args.escalation_minutes, "p_noise": scenario.p_noise, "p_miss": scenario.p_miss, "git_commit": git_commit(),
               "exact_value": solution.value if solution else None, "references": references,
               "started": time.strftime("%Y-%m-%d %H:%M:%S")}
     (run_dir / "config.json").write_text(json.dumps(config, indent=2) + "\n", encoding="utf-8")

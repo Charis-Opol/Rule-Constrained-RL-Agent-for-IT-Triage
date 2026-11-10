@@ -60,7 +60,7 @@ def route(report, model, threshold=0.5):
     owners = {c["id"]: c.get("owner") for c in model["causes"]}
     fallback = model.get("fallback_owner", "Senior developer")
     decision = report["decision"]
-    if decision["outcome"] == "fix":
+    if decision["outcome"] in ("fix", "awaiting_verification"):
         return owners.get(decision["cause"]) or fallback, f"owner of {decision['cause']}"
     top = report["reference"][0]
     if top["probability"] >= threshold and owners.get(top["cause"]):
@@ -80,6 +80,10 @@ def evidence_lines(report):
                 line += f" (`{step['evidence'].strip()}`)"
         if "blocked_by" in step:
             line += " - blocked by " + "; ".join(f"{b['rule']} (needs {b['needs']} first)" for b in step["blocked_by"])
+        if "verification" in step:
+            v = step["verification"]
+            state = {True: "symptoms cleared", False: "FIX FAILED, symptoms persist", None: "not verified yet"}
+            line += f": **{state[v['cleared']]}** ({v['how']}: {v['detail']})"
         out.append(line)
         if "delegation" in step:
             out.append(f"   Delegated analysis ({step['delegation']['delegate']}): {step['delegation']['report']}")
@@ -88,14 +92,25 @@ def evidence_lines(report):
 
 def handover(report, owner, why, incident, ticket):
     d = report["decision"]
-    head = (f"Fix: {d['remedy']} (likely cause {d['cause']} {d['cause_name']})"
-            if d["outcome"] == "fix" else f"Escalated: {d['reason']}")
+    if d["outcome"] == "fix":
+        head = f"Fix: {d['remedy']} (likely cause {d['cause']} {d['cause_name']})"
+        if d.get("verified"):
+            head += ", verified"
+    elif d["outcome"] == "awaiting_verification":
+        head = (f"Fix: {d['remedy']} (likely cause {d['cause']} {d['cause_name']}). Please apply it and report "
+                "whether the symptoms clear")
+    else:
+        head = f"Escalated: {d['reason']}"
     lines = [f"# Incident {incident}", "", f"**To:** {owner} ({why})", f"**{head}**", "",
              "## Ticket", "", *[f"> {l}" for l in ticket.strip().splitlines()], "",
              "## What the agent did", "", *evidence_lines(report), "",
              f"Checks run: {d['checks_run']} (about {d['check_minutes']} min); blocked proposals: {d['blocked_proposals']}.",
              "", "## Most probable causes (from the ratings; the agent does not see this)", ""]
     lines += [f"- {r['cause']} {r['name']}: {r['probability']:.0%}" for r in report["reference"]]
+    failed = [a for a in d.get("attempts", []) if a["cleared"] is False]
+    if failed:
+        lines += ["", "## Fixes already tried that did not clear the symptoms", ""]
+        lines += [f"- {a['cause']} {a['remedy']} ({a['how']}: {a['detail']})" for a in failed]
     for w in report["reading"].get("warnings", []) + report.get("warnings", []):
         lines.append(f"- Warning: {w}")
     return "\n".join(lines) + "\n"
@@ -257,7 +272,7 @@ class GitHubRepo:
 
 def draft_pull_request(report, model, cause, repo, patcher, incident, owner):
     d = report["decision"]
-    if d.get("outcome") != "fix" or d.get("permitted") is not True:
+    if d.get("outcome") not in ("fix", "awaiting_verification") or d.get("permitted") is not True:
         raise ActionRefused("a pull request needs a fix decision that the rule checker confirmed")
     if not cause.get("code_fault"):
         raise ActionRefused(f"{cause['id']} is not fixed by a code change")
@@ -277,6 +292,7 @@ def draft_pull_request(report, model, cause, repo, patcher, incident, owner):
             f"Opened as a **draft** by the triage prototype for **{owner}**. Review before merging; the prototype never merges.",
             "", f"**Diagnosed cause:** {cause['id']} {cause['name']}", f"**Remedy:** {cause['remedy']}",
             f"**Patch written by:** {patch.source}",
+            *([f"**Verified:** {verification_line(d)}"] if "verified" in d else []),
             f"**Tests:** {tests}" + (f" (now passing: {', '.join(t.split('::')[-1] for t in fixed)})" if fixed else ""),
             "", "## Change", "", patch.explanation, "", "## Why the agent chose this", "", *evidence_lines(report), "",
             f"The rule checker confirmed the fix decision (blocked proposals on the way: {d['blocked_proposals']}). "
@@ -295,6 +311,13 @@ def draft_pull_request(report, model, cause, repo, patcher, incident, owner):
         repo.done(workdir)
 
 
+def verification_line(decision):
+    if not decision.get("verified"):
+        return "not yet; the symptoms must be checked after this change is deployed"
+    last = decision["attempts"][-1]
+    return f"{last['how']}: {last['detail']}"
+
+
 def act(report, model, settings, incident, ticket, pr="local", patcher="pre-written"):
     """Carries out the decision. `pr` is "local", "github" or "off"; `settings` is the "actions"
     section of prototype_config.json. Returns what was done."""
@@ -302,7 +325,7 @@ def act(report, model, settings, incident, ticket, pr="local", patcher="pre-writ
     owner, why = route(report, model, settings.get("route_threshold", 0.5))
     d = report["decision"]
     result = {"owner": owner, "routed_because": why}
-    if d["outcome"] != "fix":
+    if d["outcome"] not in ("fix", "awaiting_verification"):
         result["kind"] = "escalation"
         result["message"] = str(send(outbox, incident, "escalation", owner, handover(report, owner, why, incident, ticket)))
         return result
@@ -313,7 +336,12 @@ def act(report, model, settings, incident, ticket, pr="local", patcher="pre-writ
     if cause.get("code_fault") and pr != "off":
         repo = (GitHubRepo(settings["github_repo"]) if pr == "github"
                 else LocalRepo(ROOT / settings["local_repo"], ROOT / settings["toy_repo"]))
-        maker = ClaudePatcher() if patcher == "claude" else PrewrittenPatcher(ROOT / settings["fixes"])
+        verified_patch = d.get("verified") and d["attempts"][-1].get("patch")
+        if verified_patch:                         # open exactly the patch that was verified
+            from src.prototype.verify import StoredPatcher
+            maker = StoredPatcher(verified_patch)
+        else:
+            maker = ClaudePatcher() if patcher == "claude" else PrewrittenPatcher(ROOT / settings["fixes"])
         try:
             result["pull_request"] = draft_pull_request(report, model, cause, repo, maker, incident, owner)
             result["kind"] = "draft_pull_request"

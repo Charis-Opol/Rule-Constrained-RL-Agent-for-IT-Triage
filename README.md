@@ -58,7 +58,7 @@ The plan and progress are tracked in [`WBS.md`](WBS.md) (Trello-ready, with prom
 ├── experiments/pilot/             Pilot model, settings, pre-training checks, baseline run
 ├── prototype/examples/            Fictional tickets and logs, with the expected reading of each
 ├── results/pilot/                 Pilot results; runs/ holds each training run (checkpoints not tracked)
-├── dashboard/                     Live training view and step-by-step "thinking" view (Streamlit)
+├── dashboard/                     app.py: training and "thinking" views; prototype_app.py: the prototype (Streamlit)
 ├── tests/                         Run with: python -m pytest
 ├── research/
 │   ├── thesis/                    The thesis: compile Opol_Charis_Thesis.tex
@@ -90,7 +90,20 @@ python -m venv --system-site-packages .venv
 .venv\Scripts\python -m streamlit run dashboard/app.py            :: watch it at http://localhost:8501
 ```
 
-Triage a ticket and its logs with the trained agent (also in the dashboard's Prototype view):
+Comparison experiments (Chapter 3, Experiments 1 and 2) on fix-with-verification settings (v3): three agents and the escalation-cost sensitivity runs, three seeds each, then every policy on the same incidents (`results/pilot/comparison.md`, `results/pilot/figures/comparison_*`):
+
+```bat
+.venv\Scripts\python -m experiments.pilot.run_comparison train --parallel 5
+.venv\Scripts\python -m experiments.pilot.run_comparison evaluate
+```
+
+The prototype has its own dashboard: triage a ticket end to end (reading, the agent's steps, the decision and the action, with the draft pull request's diff), run every example case, browse the outbox and draft branches, and see the readers' error rates:
+
+```bat
+.venv\Scripts\python -m streamlit run dashboard/prototype_app.py
+```
+
+Triage a ticket and its logs with the trained agent from the command line:
 
 ```bat
 .venv\Scripts\python -m src.prototype.cli --ticket prototype\examples\payment_gateway\ticket.txt --logs prototype\examples\payment_gateway\logs.txt
@@ -103,6 +116,8 @@ Since 9 Nov 2026 the prototype can also act on the decision (pilot plan, Phase 8
 ```bat
 .venv\Scripts\python -m src.prototype.cli --ticket prototype\examples\class_results_slow\ticket.txt --logs prototype\examples\class_results_slow\logs.txt --act
 ```
+
+An agent trained with fix-with-verification settings (v3, e.g. `--run results\pilotuns3_shielded_seed0`) has every fix verified before it goes on (`src/prototype/verify.py`). A code fix is applied to a staging copy of the toy repository and must make the incident's reproduction test pass (`prototype/examples/<case>/verification.json`) without breaking another. Any other fix is confirmed by you (`--ask`), or, for the example cases only, by the cause the case was written to show (`--demo-verify`). A failed fix is flagged to the agent, which goes on; after two, a person takes over.
 
 The keyword reader is the default and works offline. `--reader claude` needs Anthropic credentials and sends the ticket and logs, with personal details removed, to the Claude API. `--ask` asks you for any check the logs do not show.
 

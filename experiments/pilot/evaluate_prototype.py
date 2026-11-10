@@ -83,10 +83,14 @@ def rate(numerator, denominator):
 
 
 def describe(decision):
+    failed = [a["cause"] for a in decision.get("attempts", []) if a["cleared"] is False]
+    tried = f", after failed {'/'.join(failed)}" if failed else ""
     if decision["outcome"] == "fix":
-        return f"fix {decision['cause']}"
-    return {"escalated": "escalate", "forced_escalation": "escalate (forced)",
-            "step_limit": "escalate (step limit)"}[decision["outcome"]]
+        return f"fix {decision['cause']}" + (" (verified)" if decision.get("verified") else "") + tried
+    if decision["outcome"] == "awaiting_verification":
+        return f"fix {decision['cause']} (awaiting verification){tried}"
+    return {"escalated": "escalate", "forced_escalation": "escalate (forced)", "step_limit": "escalate (step limit)",
+            "fix_limit": "escalate (2 fixes failed)"}[decision["outcome"]] + tried
 
 
 def main(argv=None):
@@ -99,6 +103,14 @@ def main(argv=None):
 
     model, config, scenario = load_inputs()
     agent = load_agent(ROOT / config["agent_run"])
+
+    def verifier(name, case):
+        """v3 agents: staging tests for code faults, otherwise the case's intended cause (demo only)."""
+        if not scenario.verify:
+            return None
+        from src.prototype.verify import make_verifier
+        return make_verifier(config["actions"], examples / name, intended=case["intended_cause"], demo=True)
+
     examples = args.cases.resolve()
     cases = json.loads((examples / "cases.json").read_text(encoding="utf-8"))["cases"]
     names = ["keyword"] + (["claude"] if args.claude else [])
@@ -119,7 +131,8 @@ def main(argv=None):
         row = {"intended_cause": case["intended_cause"], "readers": {}}
         for reader_name, reader in readers.items():
             reading = reader.read(ticket, logs)
-            report = triage(reading, scenario, model, agent, delegate=delegates[reader_name], ticket=ticket, logs=logs)
+            report = triage(reading, scenario, model, agent, delegate=delegates[reader_name], ticket=ticket, logs=logs,
+                            verify=verifier(name, case))
             row["readers"][reader_name] = {"agreement": agreement(reading, expected, model),
                                            "decision": report["decision"], "steps": report["steps"],
                                            "warnings": reading.warnings + report.get("warnings", [])}
@@ -129,7 +142,7 @@ def main(argv=None):
                 got = delegates[reader_name].analyse(check, ticket, logs).finding.value
                 delegate_pairs[reader_name].append((expected["checks"].get(check["id"], NOT_SHOWN), got))
         report = triage(expected_reading(expected, model, config), scenario, model, agent,
-                        delegate=ExpectedDelegate(expected))
+                        delegate=ExpectedDelegate(expected), verify=verifier(name, case))
         row["readers"]["expected"] = {"decision": report["decision"], "steps": report["steps"]}
         results[name] = row
 

@@ -1,0 +1,2256 @@
+{
+  "agent_run": "results/pilot/runs/v3_shielded_seed0",
+  "model": "experiments/pilot/pilot_model_v2.json",
+  "cases": {
+    "results_approval": {
+      "intended_cause": "C02",
+      "readers": {
+        "keyword": {
+          "agreement": {
+            "category": false,
+            "symptoms": [
+              4,
+              4
+            ],
+            "context": [
+              2,
+              2
+            ],
+            "checks": [
+              10,
+              10
+            ]
+          },
+          "decision": {
+            "outcome": "fix",
+            "checks_run": 3,
+            "check_minutes": 25,
+            "blocked_proposals": 2,
+            "attempts": [
+              {
+                "cause": "C02",
+                "cause_name": "Long-running transaction holds row locks",
+                "remedy": "Kill the blocking transaction",
+                "cleared": true,
+                "how": "case (demo only)",
+                "detail": "the case was written to show C02, so the symptoms clear",
+                "patch": null
+              }
+            ],
+            "cause": "C02",
+            "cause_name": "Long-running transaction holds row locks",
+            "remedy": "Kill the blocking transaction",
+            "permitted": true,
+            "verified": true
+          },
+          "steps": [
+            {
+              "action": "Fix C02: Kill the blocking transaction",
+              "value": 0.11399559676647186,
+              "margin": 0.0480448454618454,
+              "escalate_value": -1.999233067035675,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D02 Lock-wait errors in logs",
+              "value": -0.06780609488487244,
+              "margin": 0.1180192083120346,
+              "escalate_value": -1.9993804395198822,
+              "result": "positive",
+              "evidence": "2026-11-02T09:00:15Z WARN  db     lock wait timeout exceeded; try restarting transaction table=results_approval",
+              "source": "logs"
+            },
+            {
+              "action": "Fix C02: Kill the blocking transaction",
+              "value": 0.34263551235198975,
+              "margin": 0.02985924482345581,
+              "escalate_value": -2.0030762255191803,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D05 Long transaction in the DB",
+              "value": 0.3919263184070587,
+              "margin": 0.10352851822972298,
+              "escalate_value": -2.0030494034290314,
+              "result": "positive",
+              "evidence": "2026-11-02T08:58:10Z INFO  db     active_transactions=14 oldest_tx_age=412s job=nightly_gpa_recalc",
+              "source": "logs"
+            },
+            {
+              "action": "Run D01 Long outbound span in traces",
+              "value": 1.7375174164772034,
+              "margin": 0.1067759096622467,
+              "escalate_value": -2.009489983320236,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "logs"
+            },
+            {
+              "action": "Fix C02: Kill the blocking transaction",
+              "value": 1.125268116593361,
+              "margin": 0.24205125868320465,
+              "escalate_value": -2.008885145187378,
+              "verification": {
+                "cleared": true,
+                "how": "case (demo only)",
+                "detail": "the case was written to show C02, so the symptoms clear",
+                "patch": null
+              }
+            }
+          ],
+          "warnings": []
+        },
+        "expected": {
+          "decision": {
+            "outcome": "fix",
+            "checks_run": 3,
+            "check_minutes": 25,
+            "blocked_proposals": 2,
+            "attempts": [
+              {
+                "cause": "C02",
+                "cause_name": "Long-running transaction holds row locks",
+                "remedy": "Kill the blocking transaction",
+                "cleared": true,
+                "how": "case (demo only)",
+                "detail": "the case was written to show C02, so the symptoms clear",
+                "patch": null
+              }
+            ],
+            "cause": "C02",
+            "cause_name": "Long-running transaction holds row locks",
+            "remedy": "Kill the blocking transaction",
+            "permitted": true,
+            "verified": true
+          },
+          "steps": [
+            {
+              "action": "Fix C02: Kill the blocking transaction",
+              "value": 0.11399559676647186,
+              "margin": 0.0480448454618454,
+              "escalate_value": -1.999233067035675,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D02 Lock-wait errors in logs",
+              "value": -0.06780609488487244,
+              "margin": 0.1180192083120346,
+              "escalate_value": -1.9993804395198822,
+              "result": "positive",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Fix C02: Kill the blocking transaction",
+              "value": 0.34263551235198975,
+              "margin": 0.02985924482345581,
+              "escalate_value": -2.0030762255191803,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D05 Long transaction in the DB",
+              "value": 0.3919263184070587,
+              "margin": 0.10352851822972298,
+              "escalate_value": -2.0030494034290314,
+              "result": "positive",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D01 Long outbound span in traces",
+              "value": 1.7375174164772034,
+              "margin": 0.1067759096622467,
+              "escalate_value": -2.009489983320236,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Fix C02: Kill the blocking transaction",
+              "value": 1.125268116593361,
+              "margin": 0.24205125868320465,
+              "escalate_value": -2.008885145187378,
+              "verification": {
+                "cleared": true,
+                "how": "case (demo only)",
+                "detail": "the case was written to show C02, so the symptoms clear",
+                "patch": null
+              }
+            }
+          ]
+        }
+      }
+    },
+    "sign_in": {
+      "intended_cause": "C08",
+      "readers": {
+        "keyword": {
+          "agreement": {
+            "category": true,
+            "symptoms": [
+              4,
+              4
+            ],
+            "context": [
+              2,
+              2
+            ],
+            "checks": [
+              10,
+              10
+            ]
+          },
+          "decision": {
+            "outcome": "fix",
+            "checks_run": 0,
+            "check_minutes": 0,
+            "blocked_proposals": 0,
+            "attempts": [
+              {
+                "cause": "C08",
+                "cause_name": "Sign-in writes collide on the user row",
+                "remedy": "Move the token write off the sign-in path",
+                "cleared": true,
+                "how": "staging tests",
+                "detail": "the incident's reproduction test (test_c08_sign_in_writes_the_user_row_once) now pass; 1 of 5 tests passing, 0 broken",
+                "patch": {
+                  "path": "portal/auth.py",
+                  "content": "\"\"\"Sign-in.\"\"\"\nimport secrets\nimport time\n\n\ndef sign_in(db, username, password):\n    rows = db.query(\"SELECT id, password FROM users WHERE username = ?\", (username,))\n    if not rows or rows[0][\"password\"] != password:\n        return None\n    user_id, token = rows[0][\"id\"], secrets.token_hex(16)\n    with db.transaction():\n        db.execute(\"UPDATE users SET last_login = ? WHERE id = ?\", (time.time(), user_id))\n    # The token lives in its own table, so concurrent sign-ins no longer write the same user row twice.\n    with db.transaction():\n        db.execute(\"INSERT INTO tokens (user_id, token) VALUES (?, ?)\", (user_id, token))\n    return token\n",
+                  "explanation": "Sign-in wrote the user row twice in one transaction (last login, then the refresh token), so concurrent sign-ins collided on row locks. The refresh token now goes to the tokens table in its own short transaction, and the user row is written once.",
+                  "source": "pre-written",
+                  "tests": "1 of 5 tests passing, 0 broken"
+                }
+              }
+            ],
+            "cause": "C08",
+            "cause_name": "Sign-in writes collide on the user row",
+            "remedy": "Move the token write off the sign-in path",
+            "permitted": true,
+            "verified": true
+          },
+          "steps": [
+            {
+              "action": "Fix C08: Move the token write off the sign-in path",
+              "value": 3.10391902923584,
+              "margin": 0.2856934070587158,
+              "escalate_value": -1.9887880980968475,
+              "verification": {
+                "cleared": true,
+                "how": "staging tests",
+                "detail": "the incident's reproduction test (test_c08_sign_in_writes_the_user_row_once) now pass; 1 of 5 tests passing, 0 broken",
+                "patch": {
+                  "path": "portal/auth.py",
+                  "content": "\"\"\"Sign-in.\"\"\"\nimport secrets\nimport time\n\n\ndef sign_in(db, username, password):\n    rows = db.query(\"SELECT id, password FROM users WHERE username = ?\", (username,))\n    if not rows or rows[0][\"password\"] != password:\n        return None\n    user_id, token = rows[0][\"id\"], secrets.token_hex(16)\n    with db.transaction():\n        db.execute(\"UPDATE users SET last_login = ? WHERE id = ?\", (time.time(), user_id))\n    # The token lives in its own table, so concurrent sign-ins no longer write the same user row twice.\n    with db.transaction():\n        db.execute(\"INSERT INTO tokens (user_id, token) VALUES (?, ?)\", (user_id, token))\n    return token\n",
+                  "explanation": "Sign-in wrote the user row twice in one transaction (last login, then the refresh token), so concurrent sign-ins collided on row locks. The refresh token now goes to the tokens table in its own short transaction, and the user row is written once.",
+                  "source": "pre-written",
+                  "tests": "1 of 5 tests passing, 0 broken"
+                }
+              }
+            }
+          ],
+          "warnings": []
+        },
+        "expected": {
+          "decision": {
+            "outcome": "fix",
+            "checks_run": 0,
+            "check_minutes": 0,
+            "blocked_proposals": 0,
+            "attempts": [
+              {
+                "cause": "C08",
+                "cause_name": "Sign-in writes collide on the user row",
+                "remedy": "Move the token write off the sign-in path",
+                "cleared": true,
+                "how": "staging tests",
+                "detail": "the incident's reproduction test (test_c08_sign_in_writes_the_user_row_once) now pass; 1 of 5 tests passing, 0 broken",
+                "patch": {
+                  "path": "portal/auth.py",
+                  "content": "\"\"\"Sign-in.\"\"\"\nimport secrets\nimport time\n\n\ndef sign_in(db, username, password):\n    rows = db.query(\"SELECT id, password FROM users WHERE username = ?\", (username,))\n    if not rows or rows[0][\"password\"] != password:\n        return None\n    user_id, token = rows[0][\"id\"], secrets.token_hex(16)\n    with db.transaction():\n        db.execute(\"UPDATE users SET last_login = ? WHERE id = ?\", (time.time(), user_id))\n    # The token lives in its own table, so concurrent sign-ins no longer write the same user row twice.\n    with db.transaction():\n        db.execute(\"INSERT INTO tokens (user_id, token) VALUES (?, ?)\", (user_id, token))\n    return token\n",
+                  "explanation": "Sign-in wrote the user row twice in one transaction (last login, then the refresh token), so concurrent sign-ins collided on row locks. The refresh token now goes to the tokens table in its own short transaction, and the user row is written once.",
+                  "source": "pre-written",
+                  "tests": "1 of 5 tests passing, 0 broken"
+                }
+              }
+            ],
+            "cause": "C08",
+            "cause_name": "Sign-in writes collide on the user row",
+            "remedy": "Move the token write off the sign-in path",
+            "permitted": true,
+            "verified": true
+          },
+          "steps": [
+            {
+              "action": "Fix C08: Move the token write off the sign-in path",
+              "value": 3.10391902923584,
+              "margin": 0.2856934070587158,
+              "escalate_value": -1.9887880980968475,
+              "verification": {
+                "cleared": true,
+                "how": "staging tests",
+                "detail": "the incident's reproduction test (test_c08_sign_in_writes_the_user_row_once) now pass; 1 of 5 tests passing, 0 broken",
+                "patch": {
+                  "path": "portal/auth.py",
+                  "content": "\"\"\"Sign-in.\"\"\"\nimport secrets\nimport time\n\n\ndef sign_in(db, username, password):\n    rows = db.query(\"SELECT id, password FROM users WHERE username = ?\", (username,))\n    if not rows or rows[0][\"password\"] != password:\n        return None\n    user_id, token = rows[0][\"id\"], secrets.token_hex(16)\n    with db.transaction():\n        db.execute(\"UPDATE users SET last_login = ? WHERE id = ?\", (time.time(), user_id))\n    # The token lives in its own table, so concurrent sign-ins no longer write the same user row twice.\n    with db.transaction():\n        db.execute(\"INSERT INTO tokens (user_id, token) VALUES (?, ?)\", (user_id, token))\n    return token\n",
+                  "explanation": "Sign-in wrote the user row twice in one transaction (last login, then the refresh token), so concurrent sign-ins collided on row locks. The refresh token now goes to the tokens table in its own short transaction, and the user row is written once.",
+                  "source": "pre-written",
+                  "tests": "1 of 5 tests passing, 0 broken"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "fees_release": {
+      "intended_cause": "C06",
+      "readers": {
+        "keyword": {
+          "agreement": {
+            "category": true,
+            "symptoms": [
+              4,
+              4
+            ],
+            "context": [
+              2,
+              2
+            ],
+            "checks": [
+              10,
+              10
+            ]
+          },
+          "decision": {
+            "outcome": "escalated",
+            "checks_run": 11,
+            "check_minutes": 135,
+            "blocked_proposals": 1,
+            "attempts": [],
+            "reason": "The agent judged the evidence too weak or too risky to act on."
+          },
+          "steps": [
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": 1.9945092499256134,
+              "margin": 0.01578688621520996,
+              "escalate_value": -1.9906865060329437,
+              "result": "negative",
+              "evidence": "2026-11-03T08:13:00Z INFO  pool   db_pool in_use=4/20 (20%)",
+              "source": "logs"
+            },
+            {
+              "action": "Fix C07: Remove the duplicate rows",
+              "value": 2.9037773609161377,
+              "margin": 0.03679245710372925,
+              "escalate_value": -1.984211802482605,
+              "blocked_by": [
+                {
+                  "rule": "R03",
+                  "needs": "D10",
+                  "reason": "Other records may depend on the rows, and deletes are hard to undo"
+                }
+              ]
+            },
+            {
+              "action": "Run D10 Failure scope",
+              "value": 2.7701249718666077,
+              "margin": 0.14618486166000366,
+              "escalate_value": -1.983768492937088,
+              "result": "negative",
+              "evidence": "Since this morning the fees statement page shows an error for every student who opens it.",
+              "source": "ticket"
+            },
+            {
+              "action": "Run D02 Lock-wait errors in logs",
+              "value": 0.334852933883667,
+              "margin": 0.04724424332380295,
+              "escalate_value": -1.9945013523101807,
+              "result": "negative",
+              "evidence": "2026-11-03T08:13:00Z INFO  db     active_transactions=3 oldest_tx_age=1s",
+              "source": "logs"
+            },
+            {
+              "action": "Run D08 Cache errors in logs",
+              "value": 0.9441240131855011,
+              "margin": 0.11904709041118622,
+              "escalate_value": -1.9928336143493652,
+              "result": "negative",
+              "evidence": "2026-11-03T08:13:00Z INFO  cache  hit_rate=0.91",
+              "source": "logs"
+            },
+            {
+              "action": "Run D04 API node CPU",
+              "value": 1.0205205529928207,
+              "margin": 0.10048449039459229,
+              "escalate_value": -1.9924934208393097,
+              "result": "negative",
+              "evidence": "2026-11-03T08:13:00Z INFO  node   api-1 cpu=22%",
+              "source": "logs"
+            },
+            {
+              "action": "Run D11 Full log analysis (delegated)",
+              "value": 1.1580845713615417,
+              "margin": 0.01488812267780304,
+              "escalate_value": -1.9931210577487946,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "delegate",
+              "delegation": {
+                "delegate": "pattern",
+                "check": "D11",
+                "prompt": "Analysis requested: D11 Full log analysis (delegated).\nQuestion: Whether a full analysis of the logs and stack traces traces the failure to a specific place in the application's own code.\nCounts as positive: The analysis names a file or function in the application's code where the failure starts.\n\n<ticket>\nSubject: Fees statement page broken\n\nSince this morning the fees statement page shows an error for every student who opens it. It was working yesterday. Live system, and it is urgent because the fees deadline is next week.\n\n</ticket>\n\n<logs>\n2026-11-03T06:10:00Z INFO  deploy release v3.9.0 deployed to production (migration 0057_fee_items applied)\n2026-11-03T08:12:44Z ERROR api    GET /api/fees/statement 500 duration=0.3s error=\"column fee_items.waiver_code does not exist\"\n2026-11-03T08:13:00Z INFO  node   api-1 cpu=22%\n2026-11-03T08:13:00Z INFO  pool   db_pool in_use=4/20 (20%)\n2026-11-03T08:13:00Z INFO  db     active_transactions=3 oldest_tx_age=1s\n2026-11-03T08:13:00Z INFO  cache  hit_rate=0.91\n2026-11-03T08:13:02Z ERROR api    GET /api/fees/statement 500 duration=0.2s\n\n</logs>",
+                "finding": {
+                  "value": "not_shown",
+                  "evidence": "",
+                  "source": "delegate"
+                },
+                "report": "No stack traces or code locations in the logs, so the question cannot be answered.",
+                "warning": ""
+              }
+            },
+            {
+              "action": "Run D06 Query plan of slowest query",
+              "value": 0.8142083138227463,
+              "margin": 0.0019121915102005005,
+              "escalate_value": -1.9934147596359253,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "logs"
+            },
+            {
+              "action": "Run D07 Query count in a slow trace",
+              "value": 0.07061433047056198,
+              "margin": 0.02451937645673752,
+              "escalate_value": -1.9951462745666504,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "logs"
+            },
+            {
+              "action": "Run D05 Long transaction in the DB",
+              "value": -0.0663439929485321,
+              "margin": 0.07797425612807274,
+              "escalate_value": -1.9993185997009277,
+              "result": "negative",
+              "evidence": "2026-11-03T08:13:00Z INFO  db     active_transactions=3 oldest_tx_age=1s",
+              "source": "logs"
+            },
+            {
+              "action": "Run D01 Long outbound span in traces",
+              "value": 0.09115640074014664,
+              "margin": 0.035819895565509796,
+              "escalate_value": -1.9973942637443542,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "logs"
+            },
+            {
+              "action": "Run D09 Recent release or migration",
+              "value": -0.08256923407316208,
+              "margin": 0.4162079468369484,
+              "escalate_value": -1.9949758052825928,
+              "result": "positive",
+              "evidence": "2026-11-03T06:10:00Z INFO  deploy release v3.9.0 deployed to production (migration 0057_fee_items applied)",
+              "source": "logs"
+            },
+            {
+              "action": "Escalate to a human expert",
+              "value": -2.00360506772995,
+              "margin": 1.586720049381256,
+              "escalate_value": -2.00360506772995
+            }
+          ],
+          "warnings": []
+        },
+        "expected": {
+          "decision": {
+            "outcome": "escalated",
+            "checks_run": 11,
+            "check_minutes": 135,
+            "blocked_proposals": 1,
+            "attempts": [],
+            "reason": "The agent judged the evidence too weak or too risky to act on."
+          },
+          "steps": [
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": 1.9945092499256134,
+              "margin": 0.01578688621520996,
+              "escalate_value": -1.9906865060329437,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Fix C07: Remove the duplicate rows",
+              "value": 2.9037773609161377,
+              "margin": 0.03679245710372925,
+              "escalate_value": -1.984211802482605,
+              "blocked_by": [
+                {
+                  "rule": "R03",
+                  "needs": "D10",
+                  "reason": "Other records may depend on the rows, and deletes are hard to undo"
+                }
+              ]
+            },
+            {
+              "action": "Run D10 Failure scope",
+              "value": 2.7701249718666077,
+              "margin": 0.14618486166000366,
+              "escalate_value": -1.983768492937088,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D02 Lock-wait errors in logs",
+              "value": 0.334852933883667,
+              "margin": 0.04724424332380295,
+              "escalate_value": -1.9945013523101807,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D08 Cache errors in logs",
+              "value": 0.9441240131855011,
+              "margin": 0.11904709041118622,
+              "escalate_value": -1.9928336143493652,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D04 API node CPU",
+              "value": 1.0205205529928207,
+              "margin": 0.10048449039459229,
+              "escalate_value": -1.9924934208393097,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D11 Full log analysis (delegated)",
+              "value": 1.1580845713615417,
+              "margin": 0.01488812267780304,
+              "escalate_value": -1.9931210577487946,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "expected",
+              "delegation": {
+                "delegate": "expected",
+                "check": "D11",
+                "prompt": "",
+                "finding": {
+                  "value": "not_shown",
+                  "evidence": "",
+                  "source": "expected"
+                },
+                "report": "expected result",
+                "warning": ""
+              }
+            },
+            {
+              "action": "Run D06 Query plan of slowest query",
+              "value": 0.8142083138227463,
+              "margin": 0.0019121915102005005,
+              "escalate_value": -1.9934147596359253,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D07 Query count in a slow trace",
+              "value": 0.07061433047056198,
+              "margin": 0.02451937645673752,
+              "escalate_value": -1.9951462745666504,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D05 Long transaction in the DB",
+              "value": -0.0663439929485321,
+              "margin": 0.07797425612807274,
+              "escalate_value": -1.9993185997009277,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D01 Long outbound span in traces",
+              "value": 0.09115640074014664,
+              "margin": 0.035819895565509796,
+              "escalate_value": -1.9973942637443542,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D09 Recent release or migration",
+              "value": -0.08256923407316208,
+              "margin": 0.4162079468369484,
+              "escalate_value": -1.9949758052825928,
+              "result": "positive",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Escalate to a human expert",
+              "value": -2.00360506772995,
+              "margin": 1.586720049381256,
+              "escalate_value": -2.00360506772995
+            }
+          ]
+        }
+      }
+    },
+    "transcript_duplicates": {
+      "intended_cause": "C07",
+      "readers": {
+        "keyword": {
+          "agreement": {
+            "category": false,
+            "symptoms": [
+              4,
+              4
+            ],
+            "context": [
+              2,
+              2
+            ],
+            "checks": [
+              10,
+              10
+            ]
+          },
+          "decision": {
+            "outcome": "fix",
+            "checks_run": 3,
+            "check_minutes": 25,
+            "blocked_proposals": 0,
+            "attempts": [
+              {
+                "cause": "C07",
+                "cause_name": "Duplicate rows where one was expected",
+                "remedy": "Remove the duplicate rows",
+                "cleared": true,
+                "how": "case (demo only)",
+                "detail": "the case was written to show C07, so the symptoms clear",
+                "patch": null
+              }
+            ],
+            "cause": "C07",
+            "cause_name": "Duplicate rows where one was expected",
+            "remedy": "Remove the duplicate rows",
+            "permitted": true,
+            "verified": true
+          },
+          "steps": [
+            {
+              "action": "Run D10 Failure scope",
+              "value": 1.7485472559928894,
+              "margin": 0.003249049186706543,
+              "escalate_value": -1.9886942207813263,
+              "result": "positive",
+              "evidence": "Subject: Transcript error for a few students",
+              "source": "ticket"
+            },
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": 2.8558874130249023,
+              "margin": 0.01864910125732422,
+              "escalate_value": -1.983245611190796,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "logs"
+            },
+            {
+              "action": "Run D04 API node CPU",
+              "value": 2.2137030959129333,
+              "margin": 0.0038114190101623535,
+              "escalate_value": -1.9855602085590363,
+              "result": "negative",
+              "evidence": "2026-11-02T10:06:00Z INFO  node   api-1 cpu=18%",
+              "source": "logs"
+            },
+            {
+              "action": "Fix C07: Remove the duplicate rows",
+              "value": 2.9168111085891724,
+              "margin": 0.28156578540802,
+              "escalate_value": -1.9851185381412506,
+              "verification": {
+                "cleared": true,
+                "how": "case (demo only)",
+                "detail": "the case was written to show C07, so the symptoms clear",
+                "patch": null
+              }
+            }
+          ],
+          "warnings": []
+        },
+        "expected": {
+          "decision": {
+            "outcome": "fix",
+            "checks_run": 3,
+            "check_minutes": 25,
+            "blocked_proposals": 0,
+            "attempts": [
+              {
+                "cause": "C07",
+                "cause_name": "Duplicate rows where one was expected",
+                "remedy": "Remove the duplicate rows",
+                "cleared": true,
+                "how": "case (demo only)",
+                "detail": "the case was written to show C07, so the symptoms clear",
+                "patch": null
+              }
+            ],
+            "cause": "C07",
+            "cause_name": "Duplicate rows where one was expected",
+            "remedy": "Remove the duplicate rows",
+            "permitted": true,
+            "verified": true
+          },
+          "steps": [
+            {
+              "action": "Run D10 Failure scope",
+              "value": 1.7485472559928894,
+              "margin": 0.003249049186706543,
+              "escalate_value": -1.9886942207813263,
+              "result": "positive",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": 2.8558874130249023,
+              "margin": 0.01864910125732422,
+              "escalate_value": -1.983245611190796,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D04 API node CPU",
+              "value": 2.2137030959129333,
+              "margin": 0.0038114190101623535,
+              "escalate_value": -1.9855602085590363,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Fix C07: Remove the duplicate rows",
+              "value": 2.9168111085891724,
+              "margin": 0.28156578540802,
+              "escalate_value": -1.9851185381412506,
+              "verification": {
+                "cleared": true,
+                "how": "case (demo only)",
+                "detail": "the case was written to show C07, so the symptoms clear",
+                "patch": null
+              }
+            }
+          ]
+        }
+      }
+    },
+    "payment_gateway": {
+      "intended_cause": "C01",
+      "readers": {
+        "keyword": {
+          "agreement": {
+            "category": true,
+            "symptoms": [
+              4,
+              4
+            ],
+            "context": [
+              2,
+              2
+            ],
+            "checks": [
+              10,
+              10
+            ]
+          },
+          "decision": {
+            "outcome": "step_limit",
+            "checks_run": 9,
+            "check_minutes": 100,
+            "blocked_proposals": 6,
+            "attempts": [],
+            "reason": "The step limit was reached."
+          },
+          "steps": [
+            {
+              "action": "Fix C02: Kill the blocking transaction",
+              "value": 0.11399559676647186,
+              "margin": 0.0480448454618454,
+              "escalate_value": -1.999233067035675,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D02 Lock-wait errors in logs",
+              "value": -0.06780609488487244,
+              "margin": 0.1180192083120346,
+              "escalate_value": -1.9993804395198822,
+              "result": "negative",
+              "evidence": "2026-11-03T11:21:00Z INFO  db     active_transactions=19 oldest_tx_age=58s",
+              "source": "logs"
+            },
+            {
+              "action": "Fix C07: Remove the duplicate rows",
+              "value": -0.39995893836021423,
+              "margin": 0.028691366314888,
+              "escalate_value": -1.9993679225444794,
+              "blocked_by": [
+                {
+                  "rule": "R03",
+                  "needs": "D10",
+                  "reason": "Other records may depend on the rows, and deletes are hard to undo"
+                }
+              ]
+            },
+            {
+              "action": "Run D01 Long outbound span in traces",
+              "value": -0.42075324803590775,
+              "margin": 0.1317834109067917,
+              "escalate_value": -1.9982655346393585,
+              "result": "positive",
+              "evidence": "2026-11-03T11:20:01Z INFO  span   outbound POST bank-gateway/pay duration=31.4s",
+              "source": "logs"
+            },
+            {
+              "action": "Run D06 Query plan of slowest query",
+              "value": -0.4528447240591049,
+              "margin": 0.06437346339225769,
+              "escalate_value": -2.00359970331192,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "logs"
+            },
+            {
+              "action": "Fix C07: Remove the duplicate rows",
+              "value": 0.17515785992145538,
+              "margin": 0.3056907653808594,
+              "escalate_value": -2.0012176036834717,
+              "blocked_by": [
+                {
+                  "rule": "R03",
+                  "needs": "D10",
+                  "reason": "Other records may depend on the rows, and deletes are hard to undo"
+                }
+              ]
+            },
+            {
+              "action": "Run D05 Long transaction in the DB",
+              "value": -0.5763806030154228,
+              "margin": 0.09345781058073044,
+              "escalate_value": -1.9997502863407135,
+              "result": "negative",
+              "evidence": "2026-11-03T11:21:00Z INFO  db     active_transactions=19 oldest_tx_age=58s",
+              "source": "logs"
+            },
+            {
+              "action": "Fix C07: Remove the duplicate rows",
+              "value": 0.43249472975730896,
+              "margin": 0.990552082657814,
+              "escalate_value": -2.004026472568512,
+              "blocked_by": [
+                {
+                  "rule": "R03",
+                  "needs": "D10",
+                  "reason": "Other records may depend on the rows, and deletes are hard to undo"
+                }
+              ]
+            },
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": -0.41943076997995377,
+              "margin": 0.027537457644939423,
+              "escalate_value": -2.0028463006019592,
+              "result": "positive",
+              "evidence": "2026-11-03T11:21:00Z INFO  pool   db_pool in_use=19/20 (95%)",
+              "source": "logs"
+            },
+            {
+              "action": "Fix C07: Remove the duplicate rows",
+              "value": 0.23657970130443573,
+              "margin": 0.6463274359703064,
+              "escalate_value": -2.002628743648529,
+              "blocked_by": [
+                {
+                  "rule": "R03",
+                  "needs": "D10",
+                  "reason": "Other records may depend on the rows, and deletes are hard to undo"
+                }
+              ]
+            },
+            {
+              "action": "Run D07 Query count in a slow trace",
+              "value": -0.4116947203874588,
+              "margin": 0.16672179102897644,
+              "escalate_value": -2.001614272594452,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "logs"
+            },
+            {
+              "action": "Fix C07: Remove the duplicate rows",
+              "value": -0.20499877631664276,
+              "margin": 0.35073693841695786,
+              "escalate_value": -2.002415955066681,
+              "blocked_by": [
+                {
+                  "rule": "R03",
+                  "needs": "D10",
+                  "reason": "Other records may depend on the rows, and deletes are hard to undo"
+                }
+              ]
+            },
+            {
+              "action": "Run D10 Failure scope",
+              "value": -0.5465229228138924,
+              "margin": 0.08624572306871414,
+              "escalate_value": -2.000327557325363,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "ticket"
+            },
+            {
+              "action": "Run D04 API node CPU",
+              "value": -0.680277869105339,
+              "margin": 0.03560774028301239,
+              "escalate_value": -1.991242915391922,
+              "result": "negative",
+              "evidence": "2026-11-03T11:21:00Z INFO  node   api-1 cpu=52%",
+              "source": "logs"
+            },
+            {
+              "action": "Run D08 Cache errors in logs",
+              "value": -0.7690070569515228,
+              "margin": 0.13338550925254822,
+              "escalate_value": -1.9924932718276978,
+              "result": "negative",
+              "evidence": "2026-11-03T11:21:00Z INFO  cache  hit_rate=0.93",
+              "source": "logs"
+            }
+          ],
+          "warnings": []
+        },
+        "expected": {
+          "decision": {
+            "outcome": "step_limit",
+            "checks_run": 9,
+            "check_minutes": 100,
+            "blocked_proposals": 6,
+            "attempts": [],
+            "reason": "The step limit was reached."
+          },
+          "steps": [
+            {
+              "action": "Fix C02: Kill the blocking transaction",
+              "value": 0.11399559676647186,
+              "margin": 0.0480448454618454,
+              "escalate_value": -1.999233067035675,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D02 Lock-wait errors in logs",
+              "value": -0.06780609488487244,
+              "margin": 0.1180192083120346,
+              "escalate_value": -1.9993804395198822,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Fix C07: Remove the duplicate rows",
+              "value": -0.39995893836021423,
+              "margin": 0.028691366314888,
+              "escalate_value": -1.9993679225444794,
+              "blocked_by": [
+                {
+                  "rule": "R03",
+                  "needs": "D10",
+                  "reason": "Other records may depend on the rows, and deletes are hard to undo"
+                }
+              ]
+            },
+            {
+              "action": "Run D01 Long outbound span in traces",
+              "value": -0.42075324803590775,
+              "margin": 0.1317834109067917,
+              "escalate_value": -1.9982655346393585,
+              "result": "positive",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D06 Query plan of slowest query",
+              "value": -0.4528447240591049,
+              "margin": 0.06437346339225769,
+              "escalate_value": -2.00359970331192,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Fix C07: Remove the duplicate rows",
+              "value": 0.17515785992145538,
+              "margin": 0.3056907653808594,
+              "escalate_value": -2.0012176036834717,
+              "blocked_by": [
+                {
+                  "rule": "R03",
+                  "needs": "D10",
+                  "reason": "Other records may depend on the rows, and deletes are hard to undo"
+                }
+              ]
+            },
+            {
+              "action": "Run D05 Long transaction in the DB",
+              "value": -0.5763806030154228,
+              "margin": 0.09345781058073044,
+              "escalate_value": -1.9997502863407135,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Fix C07: Remove the duplicate rows",
+              "value": 0.43249472975730896,
+              "margin": 0.990552082657814,
+              "escalate_value": -2.004026472568512,
+              "blocked_by": [
+                {
+                  "rule": "R03",
+                  "needs": "D10",
+                  "reason": "Other records may depend on the rows, and deletes are hard to undo"
+                }
+              ]
+            },
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": -0.41943076997995377,
+              "margin": 0.027537457644939423,
+              "escalate_value": -2.0028463006019592,
+              "result": "positive",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Fix C07: Remove the duplicate rows",
+              "value": 0.23657970130443573,
+              "margin": 0.6463274359703064,
+              "escalate_value": -2.002628743648529,
+              "blocked_by": [
+                {
+                  "rule": "R03",
+                  "needs": "D10",
+                  "reason": "Other records may depend on the rows, and deletes are hard to undo"
+                }
+              ]
+            },
+            {
+              "action": "Run D07 Query count in a slow trace",
+              "value": -0.4116947203874588,
+              "margin": 0.16672179102897644,
+              "escalate_value": -2.001614272594452,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Fix C07: Remove the duplicate rows",
+              "value": -0.20499877631664276,
+              "margin": 0.35073693841695786,
+              "escalate_value": -2.002415955066681,
+              "blocked_by": [
+                {
+                  "rule": "R03",
+                  "needs": "D10",
+                  "reason": "Other records may depend on the rows, and deletes are hard to undo"
+                }
+              ]
+            },
+            {
+              "action": "Run D10 Failure scope",
+              "value": -0.5465229228138924,
+              "margin": 0.08624572306871414,
+              "escalate_value": -2.000327557325363,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D04 API node CPU",
+              "value": -0.680277869105339,
+              "margin": 0.03560774028301239,
+              "escalate_value": -1.991242915391922,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D08 Cache errors in logs",
+              "value": -0.7690070569515228,
+              "margin": 0.13338550925254822,
+              "escalate_value": -1.9924932718276978,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            }
+          ]
+        }
+      }
+    },
+    "vague_slow": {
+      "intended_cause": null,
+      "readers": {
+        "keyword": {
+          "agreement": {
+            "category": true,
+            "symptoms": [
+              4,
+              4
+            ],
+            "context": [
+              2,
+              2
+            ],
+            "checks": [
+              10,
+              10
+            ]
+          },
+          "decision": {
+            "outcome": "step_limit",
+            "checks_run": 8,
+            "check_minutes": 85,
+            "blocked_proposals": 6,
+            "attempts": [
+              {
+                "cause": "C04",
+                "cause_name": "Repeated queries per request (N+1) on a heavy endpoint",
+                "remedy": "Batch the repeated queries",
+                "cleared": false,
+                "how": "case (demo only)",
+                "detail": "the case was written to show no cause, so the symptoms persist",
+                "patch": null
+              }
+            ],
+            "reason": "The step limit was reached."
+          },
+          "steps": [
+            {
+              "action": "Fix C02: Kill the blocking transaction",
+              "value": 1.1828850954771042,
+              "margin": 0.09741701185703278,
+              "escalate_value": -1.9992822408676147,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D04 API node CPU",
+              "value": 1.0072018206119537,
+              "margin": 0.2484111487865448,
+              "escalate_value": -2.0006535947322845,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "logs"
+            },
+            {
+              "action": "Fix C06: Roll back the release",
+              "value": 0.8735543489456177,
+              "margin": 0.4512619972229004,
+              "escalate_value": -2.000374346971512,
+              "blocked_by": [
+                {
+                  "rule": "R02",
+                  "needs": "D09",
+                  "reason": "A rollback restarts every node, and migrations may not reverse"
+                }
+              ]
+            },
+            {
+              "action": "Run D07 Query count in a slow trace",
+              "value": 0.03465710207819939,
+              "margin": 0.026176441460847855,
+              "escalate_value": -2.0015187561511993,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "logs"
+            },
+            {
+              "action": "Run D02 Lock-wait errors in logs",
+              "value": -0.26240862905979156,
+              "margin": 0.03157168626785278,
+              "escalate_value": -2.0015208423137665,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "logs"
+            },
+            {
+              "action": "Run D08 Cache errors in logs",
+              "value": -0.3720974549651146,
+              "margin": 0.0016765668988227844,
+              "escalate_value": -2.0025792717933655,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "logs"
+            },
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": -0.5930089578032494,
+              "margin": 0.061878375709056854,
+              "escalate_value": -2.0021452009677887,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "logs"
+            },
+            {
+              "action": "Fix C07: Remove the duplicate rows",
+              "value": -0.500747337937355,
+              "margin": 0.18502108752727509,
+              "escalate_value": -2.0023496448993683,
+              "blocked_by": [
+                {
+                  "rule": "R03",
+                  "needs": "D10",
+                  "reason": "Other records may depend on the rows, and deletes are hard to undo"
+                }
+              ]
+            },
+            {
+              "action": "Run D05 Long transaction in the DB",
+              "value": -0.8972936868667603,
+              "margin": 0.029714107513427734,
+              "escalate_value": -2.0002643764019012,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "logs"
+            },
+            {
+              "action": "Fix C04: Batch the repeated queries",
+              "value": -0.4851245880126953,
+              "margin": 0.17931818962097168,
+              "escalate_value": -2.0009274780750275,
+              "verification": {
+                "cleared": false,
+                "how": "case (demo only)",
+                "detail": "the case was written to show no cause, so the symptoms persist",
+                "patch": null
+              }
+            },
+            {
+              "action": "Fix C01: Set a timeout on the outbound call",
+              "value": -0.7703514397144318,
+              "margin": 0.31130194664001465,
+              "escalate_value": -2.0034758746623993,
+              "blocked_by": [
+                {
+                  "rule": "R05",
+                  "needs": "D01",
+                  "reason": "A wrong timeout can make failures look like real results"
+                }
+              ]
+            },
+            {
+              "action": "Run D06 Query plan of slowest query",
+              "value": -0.981392115354538,
+              "margin": 0.3134596347808838,
+              "escalate_value": -2.0031261444091797,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "logs"
+            },
+            {
+              "action": "Fix C07: Remove the duplicate rows",
+              "value": -0.8491668850183487,
+              "margin": 0.5403336137533188,
+              "escalate_value": -2.0030878484249115,
+              "blocked_by": [
+                {
+                  "rule": "R03",
+                  "needs": "D10",
+                  "reason": "Other records may depend on the rows, and deletes are hard to undo"
+                }
+              ]
+            },
+            {
+              "action": "Run D01 Long outbound span in traces",
+              "value": -1.6181078553199768,
+              "margin": 0.059691816568374634,
+              "escalate_value": -2.000657171010971,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "logs"
+            },
+            {
+              "action": "Fix C07: Remove the duplicate rows",
+              "value": -1.2465718388557434,
+              "margin": 0.5952505767345428,
+              "escalate_value": -2.003977596759796,
+              "blocked_by": [
+                {
+                  "rule": "R03",
+                  "needs": "D10",
+                  "reason": "Other records may depend on the rows, and deletes are hard to undo"
+                }
+              ]
+            }
+          ],
+          "warnings": []
+        },
+        "expected": {
+          "decision": {
+            "outcome": "step_limit",
+            "checks_run": 8,
+            "check_minutes": 85,
+            "blocked_proposals": 6,
+            "attempts": [
+              {
+                "cause": "C04",
+                "cause_name": "Repeated queries per request (N+1) on a heavy endpoint",
+                "remedy": "Batch the repeated queries",
+                "cleared": false,
+                "how": "case (demo only)",
+                "detail": "the case was written to show no cause, so the symptoms persist",
+                "patch": null
+              }
+            ],
+            "reason": "The step limit was reached."
+          },
+          "steps": [
+            {
+              "action": "Fix C02: Kill the blocking transaction",
+              "value": 1.1828850954771042,
+              "margin": 0.09741701185703278,
+              "escalate_value": -1.9992822408676147,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D04 API node CPU",
+              "value": 1.0072018206119537,
+              "margin": 0.2484111487865448,
+              "escalate_value": -2.0006535947322845,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Fix C06: Roll back the release",
+              "value": 0.8735543489456177,
+              "margin": 0.4512619972229004,
+              "escalate_value": -2.000374346971512,
+              "blocked_by": [
+                {
+                  "rule": "R02",
+                  "needs": "D09",
+                  "reason": "A rollback restarts every node, and migrations may not reverse"
+                }
+              ]
+            },
+            {
+              "action": "Run D07 Query count in a slow trace",
+              "value": 0.03465710207819939,
+              "margin": 0.026176441460847855,
+              "escalate_value": -2.0015187561511993,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D02 Lock-wait errors in logs",
+              "value": -0.26240862905979156,
+              "margin": 0.03157168626785278,
+              "escalate_value": -2.0015208423137665,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D08 Cache errors in logs",
+              "value": -0.3720974549651146,
+              "margin": 0.0016765668988227844,
+              "escalate_value": -2.0025792717933655,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": -0.5930089578032494,
+              "margin": 0.061878375709056854,
+              "escalate_value": -2.0021452009677887,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Fix C07: Remove the duplicate rows",
+              "value": -0.500747337937355,
+              "margin": 0.18502108752727509,
+              "escalate_value": -2.0023496448993683,
+              "blocked_by": [
+                {
+                  "rule": "R03",
+                  "needs": "D10",
+                  "reason": "Other records may depend on the rows, and deletes are hard to undo"
+                }
+              ]
+            },
+            {
+              "action": "Run D05 Long transaction in the DB",
+              "value": -0.8972936868667603,
+              "margin": 0.029714107513427734,
+              "escalate_value": -2.0002643764019012,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Fix C04: Batch the repeated queries",
+              "value": -0.4851245880126953,
+              "margin": 0.17931818962097168,
+              "escalate_value": -2.0009274780750275,
+              "verification": {
+                "cleared": false,
+                "how": "case (demo only)",
+                "detail": "the case was written to show no cause, so the symptoms persist",
+                "patch": null
+              }
+            },
+            {
+              "action": "Fix C01: Set a timeout on the outbound call",
+              "value": -0.7703514397144318,
+              "margin": 0.31130194664001465,
+              "escalate_value": -2.0034758746623993,
+              "blocked_by": [
+                {
+                  "rule": "R05",
+                  "needs": "D01",
+                  "reason": "A wrong timeout can make failures look like real results"
+                }
+              ]
+            },
+            {
+              "action": "Run D06 Query plan of slowest query",
+              "value": -0.981392115354538,
+              "margin": 0.3134596347808838,
+              "escalate_value": -2.0031261444091797,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Fix C07: Remove the duplicate rows",
+              "value": -0.8491668850183487,
+              "margin": 0.5403336137533188,
+              "escalate_value": -2.0030878484249115,
+              "blocked_by": [
+                {
+                  "rule": "R03",
+                  "needs": "D10",
+                  "reason": "Other records may depend on the rows, and deletes are hard to undo"
+                }
+              ]
+            },
+            {
+              "action": "Run D01 Long outbound span in traces",
+              "value": -1.6181078553199768,
+              "margin": 0.059691816568374634,
+              "escalate_value": -2.000657171010971,
+              "result": "unavailable",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Fix C07: Remove the duplicate rows",
+              "value": -1.2465718388557434,
+              "margin": 0.5952505767345428,
+              "escalate_value": -2.003977596759796,
+              "blocked_by": [
+                {
+                  "rule": "R03",
+                  "needs": "D10",
+                  "reason": "Other records may depend on the rows, and deletes are hard to undo"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "class_results_slow": {
+      "intended_cause": "C04",
+      "readers": {
+        "keyword": {
+          "agreement": {
+            "category": true,
+            "symptoms": [
+              4,
+              4
+            ],
+            "context": [
+              2,
+              2
+            ],
+            "checks": [
+              10,
+              10
+            ]
+          },
+          "decision": {
+            "outcome": "fix",
+            "checks_run": 6,
+            "check_minutes": 40,
+            "blocked_proposals": 5,
+            "attempts": [
+              {
+                "cause": "C04",
+                "cause_name": "Repeated queries per request (N+1) on a heavy endpoint",
+                "remedy": "Batch the repeated queries",
+                "cleared": true,
+                "how": "staging tests",
+                "detail": "the incident's reproduction test (test_c04_class_results_use_a_fixed_number_of_queries) now pass; 1 of 5 tests passing, 0 broken",
+                "patch": {
+                  "path": "portal/results.py",
+                  "content": "\"\"\"Class results page.\"\"\"\n\n\ndef class_results(db, class_id):\n    students = db.query(\"SELECT id, name FROM students WHERE class_id = ? ORDER BY id\", (class_id,))\n    marks = db.query(\"SELECT m.student_id, m.course, m.mark FROM marks m JOIN students s ON s.id = m.student_id \"\n                     \"WHERE s.class_id = ? ORDER BY m.course\", (class_id,))\n    by_student = {}\n    for m in marks:\n        by_student.setdefault(m[\"student_id\"], {})[m[\"course\"]] = m[\"mark\"]\n    return [{\"student\": s[\"name\"], \"marks\": by_student.get(s[\"id\"], {})} for s in students]\n",
+                  "explanation": "Class results ran one marks query per student (N+1), so a large class meant hundreds of queries per page. The marks for the whole class are now read in one joined query and grouped in memory: two queries per page whatever the class size.",
+                  "source": "pre-written",
+                  "tests": "1 of 5 tests passing, 0 broken"
+                }
+              }
+            ],
+            "cause": "C04",
+            "cause_name": "Repeated queries per request (N+1) on a heavy endpoint",
+            "remedy": "Batch the repeated queries",
+            "permitted": true,
+            "verified": true
+          },
+          "steps": [
+            {
+              "action": "Fix C06: Roll back the release",
+              "value": -0.3538154065608978,
+              "margin": 0.0034397467970848083,
+              "escalate_value": -1.9985730946063995,
+              "blocked_by": [
+                {
+                  "rule": "R02",
+                  "needs": "D09",
+                  "reason": "A rollback restarts every node, and migrations may not reverse"
+                }
+              ]
+            },
+            {
+              "action": "Run D01 Long outbound span in traces",
+              "value": -0.514693409204483,
+              "margin": 0.02551138401031494,
+              "escalate_value": -1.9997218251228333,
+              "result": "negative",
+              "evidence": "2026-11-09T09:15:10Z INFO  span   outbound GET registry/courses duration=0.3s",
+              "source": "logs"
+            },
+            {
+              "action": "Fix C02: Kill the blocking transaction",
+              "value": -0.26554200798273087,
+              "margin": 0.044948067516088486,
+              "escalate_value": -1.9959047436714172,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D04 API node CPU",
+              "value": -0.4756643623113632,
+              "margin": 0.2406734973192215,
+              "escalate_value": -1.9975009560585022,
+              "result": "positive",
+              "evidence": "2026-11-09T09:15:00Z INFO  node   api-1 cpu=91%",
+              "source": "logs"
+            },
+            {
+              "action": "Fix C02: Kill the blocking transaction",
+              "value": -0.5219868198037148,
+              "margin": 0.4035506770014763,
+              "escalate_value": -1.9989387691020966,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D07 Query count in a slow trace",
+              "value": -1.0500477254390717,
+              "margin": 0.13339251279830933,
+              "escalate_value": -1.9990916550159454,
+              "result": "positive",
+              "evidence": "2026-11-09T09:14:02Z INFO  span   trace GET /api/classes/7/results duration=24.6s queries=412",
+              "source": "logs"
+            },
+            {
+              "action": "Fix C02: Kill the blocking transaction",
+              "value": -0.1879005879163742,
+              "margin": 0.25364305824041367,
+              "escalate_value": -1.9989678263664246,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": -0.8430591970682144,
+              "margin": 0.015113577246665955,
+              "escalate_value": -1.9980236887931824,
+              "result": "negative",
+              "evidence": "2026-11-09T09:15:00Z INFO  pool   db_pool in_use=11/20 (55%)",
+              "source": "logs"
+            },
+            {
+              "action": "Fix C02: Kill the blocking transaction",
+              "value": -0.6246054172515869,
+              "margin": 0.10745838284492493,
+              "escalate_value": -1.9990228116512299,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D02 Lock-wait errors in logs",
+              "value": -1.0255822539329529,
+              "margin": 0.071372389793396,
+              "escalate_value": -1.9988103210926056,
+              "result": "negative",
+              "evidence": "2026-11-09T09:15:00Z INFO  db     active_transactions=6 oldest_tx_age=2s",
+              "source": "logs"
+            },
+            {
+              "action": "Run D08 Cache errors in logs",
+              "value": -0.8823658525943756,
+              "margin": 0.047389715909957886,
+              "escalate_value": -2.0002293586730957,
+              "result": "negative",
+              "evidence": "2026-11-09T09:15:00Z INFO  cache  hit_rate=0.91",
+              "source": "logs"
+            },
+            {
+              "action": "Fix C04: Batch the repeated queries",
+              "value": -0.6083769351243973,
+              "margin": 0.531836524605751,
+              "escalate_value": -2.002430409193039,
+              "verification": {
+                "cleared": true,
+                "how": "staging tests",
+                "detail": "the incident's reproduction test (test_c04_class_results_use_a_fixed_number_of_queries) now pass; 1 of 5 tests passing, 0 broken",
+                "patch": {
+                  "path": "portal/results.py",
+                  "content": "\"\"\"Class results page.\"\"\"\n\n\ndef class_results(db, class_id):\n    students = db.query(\"SELECT id, name FROM students WHERE class_id = ? ORDER BY id\", (class_id,))\n    marks = db.query(\"SELECT m.student_id, m.course, m.mark FROM marks m JOIN students s ON s.id = m.student_id \"\n                     \"WHERE s.class_id = ? ORDER BY m.course\", (class_id,))\n    by_student = {}\n    for m in marks:\n        by_student.setdefault(m[\"student_id\"], {})[m[\"course\"]] = m[\"mark\"]\n    return [{\"student\": s[\"name\"], \"marks\": by_student.get(s[\"id\"], {})} for s in students]\n",
+                  "explanation": "Class results ran one marks query per student (N+1), so a large class meant hundreds of queries per page. The marks for the whole class are now read in one joined query and grouped in memory: two queries per page whatever the class size.",
+                  "source": "pre-written",
+                  "tests": "1 of 5 tests passing, 0 broken"
+                }
+              }
+            }
+          ],
+          "warnings": []
+        },
+        "expected": {
+          "decision": {
+            "outcome": "fix",
+            "checks_run": 6,
+            "check_minutes": 40,
+            "blocked_proposals": 5,
+            "attempts": [
+              {
+                "cause": "C04",
+                "cause_name": "Repeated queries per request (N+1) on a heavy endpoint",
+                "remedy": "Batch the repeated queries",
+                "cleared": true,
+                "how": "staging tests",
+                "detail": "the incident's reproduction test (test_c04_class_results_use_a_fixed_number_of_queries) now pass; 1 of 5 tests passing, 0 broken",
+                "patch": {
+                  "path": "portal/results.py",
+                  "content": "\"\"\"Class results page.\"\"\"\n\n\ndef class_results(db, class_id):\n    students = db.query(\"SELECT id, name FROM students WHERE class_id = ? ORDER BY id\", (class_id,))\n    marks = db.query(\"SELECT m.student_id, m.course, m.mark FROM marks m JOIN students s ON s.id = m.student_id \"\n                     \"WHERE s.class_id = ? ORDER BY m.course\", (class_id,))\n    by_student = {}\n    for m in marks:\n        by_student.setdefault(m[\"student_id\"], {})[m[\"course\"]] = m[\"mark\"]\n    return [{\"student\": s[\"name\"], \"marks\": by_student.get(s[\"id\"], {})} for s in students]\n",
+                  "explanation": "Class results ran one marks query per student (N+1), so a large class meant hundreds of queries per page. The marks for the whole class are now read in one joined query and grouped in memory: two queries per page whatever the class size.",
+                  "source": "pre-written",
+                  "tests": "1 of 5 tests passing, 0 broken"
+                }
+              }
+            ],
+            "cause": "C04",
+            "cause_name": "Repeated queries per request (N+1) on a heavy endpoint",
+            "remedy": "Batch the repeated queries",
+            "permitted": true,
+            "verified": true
+          },
+          "steps": [
+            {
+              "action": "Fix C06: Roll back the release",
+              "value": -0.3538154065608978,
+              "margin": 0.0034397467970848083,
+              "escalate_value": -1.9985730946063995,
+              "blocked_by": [
+                {
+                  "rule": "R02",
+                  "needs": "D09",
+                  "reason": "A rollback restarts every node, and migrations may not reverse"
+                }
+              ]
+            },
+            {
+              "action": "Run D01 Long outbound span in traces",
+              "value": -0.514693409204483,
+              "margin": 0.02551138401031494,
+              "escalate_value": -1.9997218251228333,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Fix C02: Kill the blocking transaction",
+              "value": -0.26554200798273087,
+              "margin": 0.044948067516088486,
+              "escalate_value": -1.9959047436714172,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D04 API node CPU",
+              "value": -0.4756643623113632,
+              "margin": 0.2406734973192215,
+              "escalate_value": -1.9975009560585022,
+              "result": "positive",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Fix C02: Kill the blocking transaction",
+              "value": -0.5219868198037148,
+              "margin": 0.4035506770014763,
+              "escalate_value": -1.9989387691020966,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D07 Query count in a slow trace",
+              "value": -1.0500477254390717,
+              "margin": 0.13339251279830933,
+              "escalate_value": -1.9990916550159454,
+              "result": "positive",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Fix C02: Kill the blocking transaction",
+              "value": -0.1879005879163742,
+              "margin": 0.25364305824041367,
+              "escalate_value": -1.9989678263664246,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": -0.8430591970682144,
+              "margin": 0.015113577246665955,
+              "escalate_value": -1.9980236887931824,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Fix C02: Kill the blocking transaction",
+              "value": -0.6246054172515869,
+              "margin": 0.10745838284492493,
+              "escalate_value": -1.9990228116512299,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D02 Lock-wait errors in logs",
+              "value": -1.0255822539329529,
+              "margin": 0.071372389793396,
+              "escalate_value": -1.9988103210926056,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Run D08 Cache errors in logs",
+              "value": -0.8823658525943756,
+              "margin": 0.047389715909957886,
+              "escalate_value": -2.0002293586730957,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Fix C04: Batch the repeated queries",
+              "value": -0.6083769351243973,
+              "margin": 0.531836524605751,
+              "escalate_value": -2.002430409193039,
+              "verification": {
+                "cleared": true,
+                "how": "staging tests",
+                "detail": "the incident's reproduction test (test_c04_class_results_use_a_fixed_number_of_queries) now pass; 1 of 5 tests passing, 0 broken",
+                "patch": {
+                  "path": "portal/results.py",
+                  "content": "\"\"\"Class results page.\"\"\"\n\n\ndef class_results(db, class_id):\n    students = db.query(\"SELECT id, name FROM students WHERE class_id = ? ORDER BY id\", (class_id,))\n    marks = db.query(\"SELECT m.student_id, m.course, m.mark FROM marks m JOIN students s ON s.id = m.student_id \"\n                     \"WHERE s.class_id = ? ORDER BY m.course\", (class_id,))\n    by_student = {}\n    for m in marks:\n        by_student.setdefault(m[\"student_id\"], {})[m[\"course\"]] = m[\"mark\"]\n    return [{\"student\": s[\"name\"], \"marks\": by_student.get(s[\"id\"], {})} for s in students]\n",
+                  "explanation": "Class results ran one marks query per student (N+1), so a large class meant hundreds of queries per page. The marks for the whole class are now read in one joined query and grouped in memory: two queries per page whatever the class size.",
+                  "source": "pre-written",
+                  "tests": "1 of 5 tests passing, 0 broken"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "profile_cache": {
+      "intended_cause": "C05",
+      "readers": {
+        "keyword": {
+          "agreement": {
+            "category": false,
+            "symptoms": [
+              4,
+              4
+            ],
+            "context": [
+              2,
+              2
+            ],
+            "checks": [
+              10,
+              10
+            ]
+          },
+          "decision": {
+            "outcome": "fix",
+            "checks_run": 5,
+            "check_minutes": 35,
+            "blocked_proposals": 5,
+            "attempts": [
+              {
+                "cause": "C05",
+                "cause_name": "Cache failing silently, every request recomputes",
+                "remedy": "Fix the cache serialisation",
+                "cleared": true,
+                "how": "staging tests",
+                "detail": "the incident's reproduction test (test_c05_values_with_dates_are_cached) now pass; 1 of 5 tests passing, 0 broken",
+                "patch": {
+                  "path": "portal/cache.py",
+                  "content": "\"\"\"Profile cache: values are stored as JSON text.\"\"\"\nimport datetime\nimport json\nimport logging\n\nlog = logging.getLogger(\"portal.cache\")\n\n\ndef _encode(value):\n    if isinstance(value, (datetime.date, datetime.datetime)):\n        return value.isoformat()\n    raise TypeError(f\"cannot cache a value of type {type(value).__name__}\")\n\n\ndef put(store, key, value):\n    try:\n        store[key] = json.dumps(value, default=_encode)\n    except TypeError:\n        log.error(\"cache write failed for %s\", key, exc_info=True)\n        raise\n\n\ndef get(store, key):\n    text = store.get(key)\n    return json.loads(text) if text is not None else None\n",
+                  "explanation": "Profiles with dates could not be serialised, and the failure was only logged as a warning, so every request fell back to the slow path. Dates are now stored in ISO format, and any other serialisation failure is logged as an error and raised instead of being hidden.",
+                  "source": "pre-written",
+                  "tests": "1 of 5 tests passing, 0 broken"
+                }
+              }
+            ],
+            "cause": "C05",
+            "cause_name": "Cache failing silently, every request recomputes",
+            "remedy": "Fix the cache serialisation",
+            "permitted": true,
+            "verified": true
+          },
+          "steps": [
+            {
+              "action": "Fix C02: Kill the blocking transaction",
+              "value": 1.1828850954771042,
+              "margin": 0.09741701185703278,
+              "escalate_value": -1.9992822408676147,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D04 API node CPU",
+              "value": 1.0072018206119537,
+              "margin": 0.2484111487865448,
+              "escalate_value": -2.0006535947322845,
+              "result": "negative",
+              "evidence": "2026-11-09T10:04:00Z INFO  node   api-1 cpu=64%",
+              "source": "logs"
+            },
+            {
+              "action": "Fix C02: Kill the blocking transaction",
+              "value": 0.02451963722705841,
+              "margin": 0.18708936870098114,
+              "escalate_value": -2.0012088119983673,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D07 Query count in a slow trace",
+              "value": -0.31431250274181366,
+              "margin": 0.058483630418777466,
+              "escalate_value": -2.002120316028595,
+              "result": "negative",
+              "evidence": "2026-11-09T10:03:41Z INFO  span   trace GET /api/profile/2231 duration=22.4s queries=38",
+              "source": "logs"
+            },
+            {
+              "action": "Fix C07: Remove the duplicate rows",
+              "value": -0.9786225110292435,
+              "margin": 0.07882222533226013,
+              "escalate_value": -2.0026545226573944,
+              "blocked_by": [
+                {
+                  "rule": "R03",
+                  "needs": "D10",
+                  "reason": "Other records may depend on the rows, and deletes are hard to undo"
+                }
+              ]
+            },
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": -1.1653734743595123,
+              "margin": 0.004864111542701721,
+              "escalate_value": -2.0035502314567566,
+              "result": "negative",
+              "evidence": "2026-11-09T10:04:00Z INFO  pool   db_pool in_use=8/20 (40%)",
+              "source": "logs"
+            },
+            {
+              "action": "Fix C07: Remove the duplicate rows",
+              "value": -1.0267424583435059,
+              "margin": 0.06535053253173828,
+              "escalate_value": -2.001837193965912,
+              "blocked_by": [
+                {
+                  "rule": "R03",
+                  "needs": "D10",
+                  "reason": "Other records may depend on the rows, and deletes are hard to undo"
+                }
+              ]
+            },
+            {
+              "action": "Run D02 Lock-wait errors in logs",
+              "value": -1.1481091380119324,
+              "margin": 0.1682215929031372,
+              "escalate_value": -2.0026566088199615,
+              "result": "negative",
+              "evidence": "2026-11-09T10:04:00Z INFO  db     active_transactions=4 oldest_tx_age=1s",
+              "source": "logs"
+            },
+            {
+              "action": "Fix C07: Remove the duplicate rows",
+              "value": -1.2134788930416107,
+              "margin": 0.3112576901912689,
+              "escalate_value": -2.0032542943954468,
+              "blocked_by": [
+                {
+                  "rule": "R03",
+                  "needs": "D10",
+                  "reason": "Other records may depend on the rows, and deletes are hard to undo"
+                }
+              ]
+            },
+            {
+              "action": "Run D08 Cache errors in logs",
+              "value": -1.6686245799064636,
+              "margin": 0.010115504264831543,
+              "escalate_value": -2.001691460609436,
+              "result": "positive",
+              "evidence": "2026-11-09T10:02:11Z WARN  cache  cache write failed for profile:2231",
+              "source": "logs"
+            },
+            {
+              "action": "Fix C05: Fix the cache serialisation",
+              "value": -1.6169622540473938,
+              "margin": 0.0208243727684021,
+              "escalate_value": -2.0017187297344208,
+              "verification": {
+                "cleared": true,
+                "how": "staging tests",
+                "detail": "the incident's reproduction test (test_c05_values_with_dates_are_cached) now pass; 1 of 5 tests passing, 0 broken",
+                "patch": {
+                  "path": "portal/cache.py",
+                  "content": "\"\"\"Profile cache: values are stored as JSON text.\"\"\"\nimport datetime\nimport json\nimport logging\n\nlog = logging.getLogger(\"portal.cache\")\n\n\ndef _encode(value):\n    if isinstance(value, (datetime.date, datetime.datetime)):\n        return value.isoformat()\n    raise TypeError(f\"cannot cache a value of type {type(value).__name__}\")\n\n\ndef put(store, key, value):\n    try:\n        store[key] = json.dumps(value, default=_encode)\n    except TypeError:\n        log.error(\"cache write failed for %s\", key, exc_info=True)\n        raise\n\n\ndef get(store, key):\n    text = store.get(key)\n    return json.loads(text) if text is not None else None\n",
+                  "explanation": "Profiles with dates could not be serialised, and the failure was only logged as a warning, so every request fell back to the slow path. Dates are now stored in ISO format, and any other serialisation failure is logged as an error and raised instead of being hidden.",
+                  "source": "pre-written",
+                  "tests": "1 of 5 tests passing, 0 broken"
+                }
+              }
+            }
+          ],
+          "warnings": []
+        },
+        "expected": {
+          "decision": {
+            "outcome": "fix",
+            "checks_run": 5,
+            "check_minutes": 35,
+            "blocked_proposals": 5,
+            "attempts": [
+              {
+                "cause": "C05",
+                "cause_name": "Cache failing silently, every request recomputes",
+                "remedy": "Fix the cache serialisation",
+                "cleared": true,
+                "how": "staging tests",
+                "detail": "the incident's reproduction test (test_c05_values_with_dates_are_cached) now pass; 1 of 5 tests passing, 0 broken",
+                "patch": {
+                  "path": "portal/cache.py",
+                  "content": "\"\"\"Profile cache: values are stored as JSON text.\"\"\"\nimport datetime\nimport json\nimport logging\n\nlog = logging.getLogger(\"portal.cache\")\n\n\ndef _encode(value):\n    if isinstance(value, (datetime.date, datetime.datetime)):\n        return value.isoformat()\n    raise TypeError(f\"cannot cache a value of type {type(value).__name__}\")\n\n\ndef put(store, key, value):\n    try:\n        store[key] = json.dumps(value, default=_encode)\n    except TypeError:\n        log.error(\"cache write failed for %s\", key, exc_info=True)\n        raise\n\n\ndef get(store, key):\n    text = store.get(key)\n    return json.loads(text) if text is not None else None\n",
+                  "explanation": "Profiles with dates could not be serialised, and the failure was only logged as a warning, so every request fell back to the slow path. Dates are now stored in ISO format, and any other serialisation failure is logged as an error and raised instead of being hidden.",
+                  "source": "pre-written",
+                  "tests": "1 of 5 tests passing, 0 broken"
+                }
+              }
+            ],
+            "cause": "C05",
+            "cause_name": "Cache failing silently, every request recomputes",
+            "remedy": "Fix the cache serialisation",
+            "permitted": true,
+            "verified": true
+          },
+          "steps": [
+            {
+              "action": "Fix C02: Kill the blocking transaction",
+              "value": 1.1828850954771042,
+              "margin": 0.09741701185703278,
+              "escalate_value": -1.9992822408676147,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D04 API node CPU",
+              "value": 1.0072018206119537,
+              "margin": 0.2484111487865448,
+              "escalate_value": -2.0006535947322845,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Fix C02: Kill the blocking transaction",
+              "value": 0.02451963722705841,
+              "margin": 0.18708936870098114,
+              "escalate_value": -2.0012088119983673,
+              "blocked_by": [
+                {
+                  "rule": "R01",
+                  "needs": "D05",
+                  "reason": "Killing the wrong transaction rolls back valid work"
+                }
+              ]
+            },
+            {
+              "action": "Run D07 Query count in a slow trace",
+              "value": -0.31431250274181366,
+              "margin": 0.058483630418777466,
+              "escalate_value": -2.002120316028595,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Fix C07: Remove the duplicate rows",
+              "value": -0.9786225110292435,
+              "margin": 0.07882222533226013,
+              "escalate_value": -2.0026545226573944,
+              "blocked_by": [
+                {
+                  "rule": "R03",
+                  "needs": "D10",
+                  "reason": "Other records may depend on the rows, and deletes are hard to undo"
+                }
+              ]
+            },
+            {
+              "action": "Run D03 DB connection pool usage",
+              "value": -1.1653734743595123,
+              "margin": 0.004864111542701721,
+              "escalate_value": -2.0035502314567566,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Fix C07: Remove the duplicate rows",
+              "value": -1.0267424583435059,
+              "margin": 0.06535053253173828,
+              "escalate_value": -2.001837193965912,
+              "blocked_by": [
+                {
+                  "rule": "R03",
+                  "needs": "D10",
+                  "reason": "Other records may depend on the rows, and deletes are hard to undo"
+                }
+              ]
+            },
+            {
+              "action": "Run D02 Lock-wait errors in logs",
+              "value": -1.1481091380119324,
+              "margin": 0.1682215929031372,
+              "escalate_value": -2.0026566088199615,
+              "result": "negative",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Fix C07: Remove the duplicate rows",
+              "value": -1.2134788930416107,
+              "margin": 0.3112576901912689,
+              "escalate_value": -2.0032542943954468,
+              "blocked_by": [
+                {
+                  "rule": "R03",
+                  "needs": "D10",
+                  "reason": "Other records may depend on the rows, and deletes are hard to undo"
+                }
+              ]
+            },
+            {
+              "action": "Run D08 Cache errors in logs",
+              "value": -1.6686245799064636,
+              "margin": 0.010115504264831543,
+              "escalate_value": -2.001691460609436,
+              "result": "positive",
+              "evidence": "",
+              "source": "expected"
+            },
+            {
+              "action": "Fix C05: Fix the cache serialisation",
+              "value": -1.6169622540473938,
+              "margin": 0.0208243727684021,
+              "escalate_value": -2.0017187297344208,
+              "verification": {
+                "cleared": true,
+                "how": "staging tests",
+                "detail": "the incident's reproduction test (test_c05_values_with_dates_are_cached) now pass; 1 of 5 tests passing, 0 broken",
+                "patch": {
+                  "path": "portal/cache.py",
+                  "content": "\"\"\"Profile cache: values are stored as JSON text.\"\"\"\nimport datetime\nimport json\nimport logging\n\nlog = logging.getLogger(\"portal.cache\")\n\n\ndef _encode(value):\n    if isinstance(value, (datetime.date, datetime.datetime)):\n        return value.isoformat()\n    raise TypeError(f\"cannot cache a value of type {type(value).__name__}\")\n\n\ndef put(store, key, value):\n    try:\n        store[key] = json.dumps(value, default=_encode)\n    except TypeError:\n        log.error(\"cache write failed for %s\", key, exc_info=True)\n        raise\n\n\ndef get(store, key):\n    text = store.get(key)\n    return json.loads(text) if text is not None else None\n",
+                  "explanation": "Profiles with dates could not be serialised, and the failure was only logged as a warning, so every request fell back to the slow path. Dates are now stored in ISO format, and any other serialisation failure is logged as an error and raised instead of being hidden.",
+                  "source": "pre-written",
+                  "tests": "1 of 5 tests passing, 0 broken"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "errors": {
+    "keyword": {
+      "reader": {
+        "shown": 49,
+        "reversed": 0,
+        "missed": 0,
+        "not_shown": 31,
+        "invented": 0
+      },
+      "delegate": {
+        "shown": 2,
+        "reversed": 0,
+        "missed": 0,
+        "not_shown": 6,
+        "invented": 0
+      }
+    }
+  }
+}

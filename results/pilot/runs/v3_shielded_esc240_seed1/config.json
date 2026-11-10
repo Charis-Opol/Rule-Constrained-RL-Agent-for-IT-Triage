@@ -1,0 +1,50 @@
+{
+  "agent": "shielded",
+  "seed": 1,
+  "steps": 500000,
+  "every": 25000,
+  "incidents": 1000,
+  "hyperparameters": {
+    "learning_rate": 0.0001,
+    "buffer_size": 200000,
+    "learning_starts": 1000,
+    "batch_size": 64,
+    "gamma": 1.0,
+    "train_freq": 4,
+    "gradient_steps": 1,
+    "target_update_interval": 1000,
+    "exploration_fraction": 0.3,
+    "exploration_initial_eps": 1.0,
+    "exploration_final_eps": 0.05,
+    "check_bias": 0.8,
+    "double_q": true,
+    "net_arch": [
+      128,
+      128
+    ]
+  },
+  "model": "experiments\\pilot\\pilot_model_v2.json",
+  "settings": "experiments\\pilot\\pilot_settings_v3.json",
+  "escalation_minutes": 240.0,
+  "p_noise": 0.1,
+  "p_miss": 0.0,
+  "git_commit": "668e945",
+  "exact_value": null,
+  "references": {
+    "Always escalate": {
+      "mean_return": -4.0,
+      "resolution_accuracy": 0.0,
+      "wrong_rate": 0.0,
+      "escalation_rate": 1.0,
+      "mean_checks": 0.0
+    },
+    "Threshold (0.65)": {
+      "mean_return": -3.230174242424243,
+      "resolution_accuracy": 0.724,
+      "wrong_rate": 0.0,
+      "escalation_rate": 0.276,
+      "mean_checks": 4.762
+    }
+  },
+  "started": "2026-11-09 23:13:54"
+}

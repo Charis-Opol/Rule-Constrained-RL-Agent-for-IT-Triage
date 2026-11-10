@@ -1,0 +1,4 @@
+{
+  "note": "Reproduction tests for this fictional incident in the toy repository (prototype/toy_repo). A code fix is verified when these pass on a staging copy with the patch applied and no other test breaks. Written by the researcher.",
+  "reproduce": ["test_c08_sign_in_writes_the_user_row_once"]
+}

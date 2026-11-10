@@ -12,6 +12,12 @@ logs to the Claude API; do not use it on real Directorate tickets without approv
 "pattern" offline, "claude" with the Claude API. --act carries the decision out (actions.py):
 a draft pull request for a code fault (--pr local: a branch in results/pilot/demo_repo; github:
 the throwaway repository), otherwise a simulated fix order to the owner in results/pilot/outbox.
+
+An agent trained with fix-with-verification settings (v3) has each fix verified before it goes
+on (src/prototype/verify.py): a code fault on a staging copy of the toy repository against the
+case's reproduction tests (verification.json), otherwise by asking you (--ask), or, for the
+example cases only, from the cause the case was written to show (--demo-verify). Without an
+answer the fix waits for verification.
 """
 import argparse
 import json
@@ -22,7 +28,7 @@ os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "3")      # silence TensorFlow's s
 
 from src.prototype.delegate import make_delegate                # noqa: E402
 from src.prototype.reading import KeywordReader                 # noqa: E402
-from src.prototype.triage import load_agent, operator_prompt, triage  # noqa: E402
+from src.prototype.triage import load_agent, operator_prompt, run_settings, triage  # noqa: E402
 from src.sim.scenario import load_scenario                      # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -70,12 +76,18 @@ def render(report, model):
         if "blocked_by" in step:
             line += " -> BLOCKED by " + "; ".join(
                 f"{b['rule']} (needs {b['needs']} first: {b['reason']})" for b in step["blocked_by"])
+        if "verification" in step:
+            v = step["verification"]
+            line += {True: " -> symptoms CLEARED", False: " -> FIX FAILED, symptoms persist",
+                     None: " -> not verified yet"}[v["cleared"]] + f"  ({v['how']}: {v['detail']})"
         out.append(line)
     out.append("")
-    if decision["outcome"] == "fix":
+    if decision["outcome"] in ("fix", "awaiting_verification"):
         out.append(f"FIX: {decision['remedy']}")
         out.append(f"  Likely cause: {decision['cause']} {decision['cause_name']}")
         out.append("  Rule checker re-confirmed: " + ("yes" if decision.get("permitted") else "NO"))
+        if "verified" in decision:
+            out.append("  Verified: " + ("yes" if decision["verified"] else "NOT YET: " + decision["reason"]))
     else:
         out.append("ESCALATE to a human expert")
         out.append(f"  Why: {decision['reason']}")
@@ -114,16 +126,29 @@ def main(argv=None):
     parser.add_argument("--pr", choices=["local", "github", "off"], default="local")
     parser.add_argument("--patcher", choices=["pre-written", "claude"], default="pre-written")
     parser.add_argument("--incident", help="incident id for branches and messages (default: the ticket's folder)")
+    parser.add_argument("--demo-verify", action="store_true",
+                        help="example cases only: verify fixes against the cause the case was written to show")
     args = parser.parse_args(argv)
 
-    model, config, scenario = load_inputs()
+    run_dir = args.run or ROOT / json.loads((PILOT / "prototype_config.json").read_text(encoding="utf-8"))["agent_run"]
+    model, config, scenario = load_inputs(settings_path=run_settings(run_dir, None))
     ticket = args.ticket.read_text(encoding="utf-8")
     logs = args.logs.read_text(encoding="utf-8") if args.logs else ""
     reading = make_reader(args.reader, model, config).read(ticket, logs)
-    agent = load_agent(args.run or ROOT / config["agent_run"])
+    agent = load_agent(run_dir)
     delegate = None if args.delegate == "off" else make_delegate(args.delegate, config)
+    verify = None
+    if scenario.verify:
+        from src.prototype.verify import make_verifier, operator_verify_prompt
+        case_dir = args.ticket.resolve().parent
+        cases = case_dir.parent / "cases.json"
+        intended = (json.loads(cases.read_text(encoding="utf-8"))["cases"].get(case_dir.name, {}).get("intended_cause")
+                    if cases.exists() else None)
+        verify = make_verifier(config["actions"], case_dir, args.patcher,
+                               ask=operator_verify_prompt() if args.ask else None, intended=intended,
+                               demo=args.demo_verify)
     report = triage(reading, scenario, model, agent, ask=operator_prompt() if args.ask else None,
-                    delegate=delegate, ticket=ticket, logs=logs)
+                    delegate=delegate, ticket=ticket, logs=logs, verify=verify)
     print(render(report, model))
     if args.act:
         from src.prototype.actions import act
