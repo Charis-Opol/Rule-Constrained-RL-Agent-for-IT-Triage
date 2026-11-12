@@ -12,19 +12,15 @@ Everything below is either a placeholder in the manuscript (printed **[in bold b
 
 **Q4. Competing interests. ANSWERED (2026-11-04).** No competing interests. The draft's first sentence is kept; the second sentence (tying the review to the author's own undergraduate project) is **removed** at the author's request. Statement now reads: "The author has no relevant financial or non-financial interests to disclose." Applied.
 
-**Q5. Acknowledgements. ANSWERED (2026-11-04).** Thanks Dr Innocent Ndibatya (guidance), the colleagues who peer-reviewed the work, and Solomon Sekamatte (help). Applied.
+**Q5. Acknowledgements. ANSWERED (2026-11-04; revised 2026-11-12).** Thanks Dr Innocent Ndibatya (guidance) and the colleagues who peer-reviewed the work. Solomon Sekamatte removed at the author's request (2026-11-12). Wrapped in `\samepage` so the section can't split across a page break.
 
-**Q6. AI-use details (Methods Sect. 2.11). STILL OPEN — leave as is.** The author asked to leave this section unchanged for now. The two `\tbc{}` placeholders (model version/period of use; confirmation of the reformatting sentence) remain in the manuscript and still need an answer before submission.
+**Q6. AI-use details (Methods Sect. 2.11). ANSWERED (2026-11-12).** Model: "Claude Opus 5.5 (Anthropic)"; no period of use stated (author's choice). The second `\tbc{}` (confirming the assistant reformatted the manuscript, condensed the abstract and drafted the statements and declarations) was removed at the author's request, not confirmed.
 
-**Q7. Report status (re-use statement). ANSWERED (2026-11-04).** The project report is not submitted anywhere else.
+**Q7. Report status (re-use statement). ANSWERED (2026-11-04; applied to the manuscript 2026-11-12).** The project report is not submitted anywhere else. The "Prior dissemination and re-use of material" statement's `\tbc{}` placeholder is now resolved to a plain confirmed sentence.
 
 ## B. Data repository
 
-**Q8. Repository and DOI.** I recommend **Zenodo**: free, DOI on deposit, and a GitHub release can be archived automatically. Alternatives are OSF and Figshare. Deposit these files:
-- `research/slr/audit/`: the seven CSVs, `generate.py` and `review_data.py`.
-- `research/slr/README.md`.
-
-Don't deposit the raw database exports or the PDFs, which are already git-ignored for licence reasons. Send me the repository name and DOI, and I'll fill in the Data availability statement and the `opol2026data` reference (title, year and DOI).
+**Q8. Repository and DOI. RESOLVED (2026-11-12): dropped.** The placeholder `opol2026data` Zenodo citation (with its fake `10.5281/zenodo.XXXXXXX` DOI) is removed from `references.bib` and from both the Data availability and Materials and code availability statements, per the author. Those statements now point only to Online Resource 2 (already true and already deposited with the submission), with no external-repository claim. If the audit files are deposited externally later (e.g. Zenodo) with a real DOI, re-add the citation and the repository name then.
 
 ## C. Keywords
 
@@ -76,7 +72,7 @@ Nothing was added or invented. Each item below needs your answer, or a confirmat
 | [1] Chen et al. 2020; [14] Wang et al. 2023; [22] Ding et al. 2023 | chen2020, wang2023hrlhf, ding2023 | Author list abbreviated to "et al." in your source | Full lists are preferred but not required. Supply them? |
 | [25], [26], [38], [40], [42], [48] | bompally2026, reddyavula2026, ravi2025, noorulhassan2026, bhosale2026, jaber2025 | Page numbers missing (IEEE conference papers) | Supply from IEEE Xplore, or leave as is (the DOI identifies them) |
 | [54] Khozam et al. 2025 | khozam2025 | The conference is given only as "ACM International Conference Proceeding Series" | Name of the conference? |
-| new | opol2026data | Dataset placeholder | Repository and DOI (Q8) |
+| ~~new~~ | ~~opol2026data~~ | Dataset placeholder | **Removed** (2026-11-12, see Q8) |
 
 ## F. Cover letter
 

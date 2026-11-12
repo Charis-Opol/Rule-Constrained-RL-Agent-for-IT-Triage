@@ -17,7 +17,7 @@ Status key: **PASS** = met and checked. **PENDING** = done, but waiting on somet
 | A7 | Affiliation as institution, (department), city, (state), country | PASS | City Kampala, state/region Mukono District (author-confirmed 2026-11-04). |
 | A8 | Corresponding author clearly indicated, with an active e-mail | PASS | Marked with `*`. Two addresses, as you asked: B29654@students.ucu.ac.ug and charisopol@gmail.com |
 | A9 | 16-digit ORCID, if available | PASS | 0009-0003-7417-7984 (16 digits) confirmed correct by the author 2026-11-04. |
-| A10 | LLMs are not authors; LLM use documented in the Methods; human accountability (Title Page) | PENDING | New Methods Sect. 2.11 "Use of an AI Assistant" is the single account. It keeps the "not independently duplicated" limitation and adds an accountability sentence. Model version and period of use still to supply; author asked to leave this section as is for now (2026-11-04). |
+| A10 | LLMs are not authors; LLM use documented in the Methods; human accountability (Title Page) | PASS | New Methods Sect. 2.11 "Use of an AI Assistant" is the single account. It keeps the "not independently duplicated" limitation and the accountability sentence. Model named as Claude Opus 5.5 (Anthropic), no period of use stated (author-confirmed 2026-11-12). The second placeholder, about the assistant's role in reformatting/condensing/drafting declarations, was removed rather than confirmed. |
 | A11 | Abstract 150–250 words, no undefined abbreviations, no unspecified references | PASS | 246 words, no citations. IT and PRISMA are defined; RL, POMDP and SOC are not used. See `08_abstract_old_vs_new.md`. |
 | A12 | 4–6 keywords | PENDING | Six proposed and set provisionally; awaiting your confirmation |
 | A13 | "Statements and Declarations" section; submissions without it are returned (Title Page; Competing Interests) | PASS | Present before the reference list. Funding and competing-interest wording confirmed 2026-11-04. |
@@ -44,7 +44,7 @@ Status key: **PASS** = met and checked. **PENDING** = done, but waiting on somet
 | C3 | Alphabetical by first author, by the stated rules (Reference list) | PASS | Sorted by `sn-basic.bst`. Şahin is encoded as `{\c{S}}ahin` so it sorts under S. |
 | C4 | DOIs as full links where available | PASS | 44 entries print `https://doi.org/...`. The 11 without a DOI are listed in `05_open_questions.md`. |
 | C5 | Journal names abbreviated per the ISSN LTWA, otherwise in full | PASS | Abbreviated only where certain (for example, IEEE Trans Inf Forensics Secur, Commun ACM, Future Gener Comput Syst, Sci Rep). Others are given in full. |
-| C6 | Data citations carry the DataCite minimum (Data citation) | PENDING | `opol2026data` has creator, title, repository, year and DOI, but the repository and DOI are placeholders. |
+| C6 | Data citations carry the DataCite minimum (Data citation) | N/A | No data citation. The placeholder `opol2026data` entry (fake DOI) was removed 2026-11-12, per the author; the review's audit files are documented as Online Resource 2 instead. |
 
 ## D. Tables
 
@@ -77,11 +77,11 @@ Status key: **PASS** = met and checked. **PENDING** = done, but waiting on somet
 | # | Requirement | Status | Evidence / note |
 |---|---|---|---|
 | F1 | Standard formats: PDF for text and tables; .csv or .xlsx for spreadsheets | PASS | ESM_1.pdf; ESM_2.xlsx (7 audit sheets plus a README sheet) |
-| F2 | Each file carries the article title, journal, author, and the corresponding author's affiliation and e-mail | PENDING | Present in both files; the city is a placeholder |
+| F2 | Each file carries the article title, journal, author, and the corresponding author's affiliation and e-mail | PASS | Present in both files; affiliation now reads Kampala, Mukono District, Uganda (fixed 2026-11-12; `make_esm.py` had its own hardcoded `[city]` separate from the manuscript's, missed in the 2026-11-04 pass) |
 | F3 | Cited in the text as "Online Resource N" | PASS | Online Resource 1 first in the Introduction, Online Resource 2 first in Sect. 2.9 |
 | F4 | Files named consecutively (ESM_1, ESM_2, …) | PASS | |
 | F5 | Concise caption for each file | PASS | Back-matter "Supplementary information" section |
-| F6 | Data Availability statement (Research Data Policy) | PENDING | Written. The repository name, link and DOI are placeholders. |
+| F6 | Data Availability statement (Research Data Policy) | PASS | Written; points to Online Resource 2 (no external repository claimed, per the author's 2026-11-12 decision). |
 
 ## G. Ethics, competing interests, declarations
 
@@ -91,7 +91,7 @@ Status key: **PASS** = met and checked. **PENDING** = done, but waiting on somet
 | G2 | Competing-interest disclosure required for review articles | PASS | "The author has no relevant financial or non-financial interests to disclose." (author-confirmed 2026-11-04; the undergraduate-project sentence removed at the author's request) |
 | G3 | Funding in the declarations and in the interface | PASS | "No funding was received for conducting this study." (author-confirmed 2026-11-04); still needs entering in the submission interface at upload (see `07_submission_interface_text.md`) |
 | G4 | Ethics approval and consent | PASS | "Not applicable", with the reason (published studies only; no participants, personal data or animals) |
-| G5 | Data, material and code availability; author contributions | PASS / PENDING | Written; the repository is a placeholder |
+| G5 | Data, material and code availability; author contributions | PASS | Written; both statements point to Online Resource 2, no external repository (2026-11-12). Re-use statement's `\tbc{}` resolved 2026-11-12 (author confirmed, Q7). |
 | G6 | Suggested reviewers must be independent and have institutional e-mails | PENDING | Optional. Placeholders only in the cover letter, because I won't invent e-mail addresses. |
 
 ## H. Build checks

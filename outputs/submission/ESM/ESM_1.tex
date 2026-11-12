@@ -1,0 +1,239 @@
+%% Online Resource 1 (ESM_1.pdf) for the article below. Compile: pdflatex, bibtex, pdflatex x2.
+\documentclass[10pt]{article}
+\usepackage[a4paper,landscape,margin=18mm]{geometry}
+\usepackage{booktabs,longtable,array,caption}
+\usepackage[authoryear]{natbib}
+\setcitestyle{aysep={}}
+\usepackage[hidelinks]{hyperref}
+\providecommand{\doi}[1]{\url{https://doi.org/#1}}
+\providecommand{\bibcommenthead}{}% defined by sn-jnl.cls; sn-basic.bst calls it
+\captionsetup{justification=raggedright,singlelinecheck=false}
+\setlength{\parindent}{0pt}
+\begin{document}
+{\large\textbf{Online Resource 1}}\par\medskip
+\textbf{Article:} Reinforcement Learning for Investigating, Acting and Escalating in IT Incident Triage and Response: A Systematic Literature Review\par
+\textbf{Journal:} Artificial Intelligence Review\par
+\textbf{Author:} Charis Opol\par
+\textbf{Corresponding author:} Charis Opol, Department of Computing and Technology, Faculty of Engineering, Design and Technology, Uganda Christian University, Kampala, Mukono District, Uganda\par
+\textbf{E-mail:} B29654@students.ucu.ac.ug; charisopol@gmail.com\par\medskip
+\textbf{Contents.} Table S1: outcome of every report sought for retrieval. Table S2: task, formulation, environment and main result of each included study. Table S3: coding of the review-question elements for each included study. Table S4: quality rating of each included study. These tables were Appendices A to D of the manuscript; their rows are unchanged. The decisions for all 131 screened records are in Online Resource 2.
+\bigskip
+
+\footnotesize
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{1.2cm}>{\raggedright\arraybackslash}p{13.6cm}>{\raggedright\arraybackslash}p{1.0cm}>{\raggedright\arraybackslash}p{0.9cm}>{\raggedright\arraybackslash}p{7.0cm}@{}}
+\caption*{\textbf{Table S1} Outcome of every report sought for retrieval, with its identifier in the screening record (ID), title, publication year, priority group from title and abstract screening (Prio., 1 or 2) and outcome}\\
+\toprule
+ID & Report & Year & Prio. & Outcome \\
+\midrule
+\endfirsthead
+\caption*{\textbf{Table S1} (continued)}\\
+\toprule
+ID & Report & Year & Prio. & Outcome \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+S006 & A Hybrid Mathematical Framework for Dynamic Incident Prioritization Using Fuzzy Q-Learning and Text Analytics \citep{peralta2025} & 2025 & 1 & Included \\
+S007 & A leakage-free benchmark of offline policy learning for SOC alert triage \citep{okafor2026} & 2026 & 1 & Included \\
+S015 & Adaptive Network Security Policies via Belief Aggregation and Rollout \citep{hammar2026belief} & 2026 & 1 & Included \\
+S016 & Adaptive NeuroDefense: Graph Neural Network and Reinforcement Learning-based Self-Healing Cybersecurity Architecture \citep{manojkumar2026} & 2026 & 2 & Excluded. EC3: evaluated only as a detector (accuracy on NSL-KDD, CICIDS-2017, UNSW-NB15); the DQN mitigation choices are not evaluated \\
+S027 & AI-Powered Incident Response Framework for Secure DevOps Environments \citep{bompally2026} & 2026 & 2 & Excluded. EC3: the MDP action set is not specified and the agent is evaluated only with classification metrics (accuracy, AUC) \\
+S031 & An AI-Driven Cybersecurity Framework for IoT: Integrating LSTM-Based Anomaly Detection, Reinforcement Learning, and Post-Quantum Encryption \citep{saeed2025} & 2025 & 2 & Included \\
+S033 & An Intelligent Proactive Cyber Threat Prediction Model Leveraging Self-Supervised Deep Learning and Reinforcement-Based Control Strategies \citep{noorulhassan2026} & 2026 & 2 & Included \\
+S038 & Autonomous AI Decision Control Tower: A Deterministic Multi-Agent Decision Intelligence Framework for Enterprise NoOps \citep{singh2026} & 2026 & 1 & Included \\
+S039 & Autonomous and Adaptive Cyber Incident Detection and Response in Industrial Cyber-Physical Systems Using Hierarchical Reinforcement Learning \citep{babar2026} & 2026 & 2 & Included \\
+S043 & CauseRL: Reinforcement Learning-based Random Walks for Root Cause Analysis in Microservices \citep{rojasrodriguez2026} & 2026 & 1 & Included \\
+S046 & Combating alert fatigue with AlertPro: Context-aware alert prioritization using reinforcement learning for multi-step attack detection & 2024 & 1 & Not retrieved. Closed access: only the publisher landing page (abstract and section snippets) was obtained \\
+S053 & DAMS: Double Deep Q-Network Approach for DDoS Attack Mitigation in SDN \citep{khozam2025} & 2025 & 2 & Included \\
+S056 & Designing a Scalable and Adaptive Cyber Incident Response (DACIR) Framework for SMEs \citep{koupaei2026} & 2026 & 1 & Included \\
+S058 & Digital Sovereignty by Design: Reinforcement Learning--Based Self-Healing for Cyber Resilience & 2026 & 2 & Not retrieved. Closed access (recorded at retrieval) \\
+S059 & Dispatching advanced and adaptive intrusion responses for IIoT-based systems \citep{elicha2026} & 2026 & 1 & Included \\
+S060 & Dual-Threshold Conformal Deferral for Trustworthy Security Alert Triage \citep{sahin2026} & 2026 & 1 & Included \\
+S065 & Explainable Reinforcement Learning for Automated Incident Response in Critical Infrastructure \citep{alauthman2026} & 2026 & 1 & Excluded. IC4: no quantitative evaluation. The paper specifies an evaluation plan and reports ``indicative findings'' as arrows, with no measured values \\
+S066 & Finding needles in a moving haystack: Prioritizing alerts with adversarial reinforcement learning \citep{tong2020} & 2020 & 1 & Included \\
+S068 & From Rules to Autonomy: Leveraging Reinforcement Learning for Real-Time Cyber Threat Mitigation & 2026 & 2 & Not retrieved. Closed access (recorded at retrieval) \\
+S072 & Hybrid LSTM-QEQ Framework for Enhanced Cyber Threat Detection and Response in Critical Power Grid Infrastructure & 2026 & 2 & Excluded. Out of scope (manual full-text judgement) \\
+S073 & Hybrid Reinforcement Learning and Agentic Artificial Intelligence Framework for Predictive Platform Operations and DevOps Orchestration \citep{nimmathi2026} & 2026 & 2 & Included \\
+S080 & Large Language Models are Autonomous Cyber Defenders \citep{castro2025} & 2025 & 2 & Included \\
+S081 & Learning to Communicate in Multi-Agent Reinforcement Learning for Autonomous Cyber Defence \citep{contractor2025} & 2025 & 2 & Included \\
+S084 & Leveraging reinforcement learning for an efficient windows registry analysis during cyber incident response \citep{ghanem2026} & 2026 & 1 & Included \\
+S085 & LLM-Powered Deep Reinforcement Learning for Predictive Cyber Threat Mitigation \citep{varsha2025} & 2025 & 2 & Included \\
+S087 & Mission-Aware Cyber Incident Response Generation Using Reinforcement Learning \citep{jaber2025} & 2025 & 2 & Included \\
+S088 & MRCA: Metric-level Root Cause Analysis for Microservices via Multi-Modal Data \citep{wang2024mrca} & 2024 & 1 & Included \\
+S089 & Multi-Agent Proximal Policy Optimization Framework for Autonomous Reliability Engineering in Kubernetes-Based Cloud-Native Distributed Systems \citep{aenugu2026} & 2026 & 2 & Included \\
+S093 & Off-policy actor-critic deep reinforcement learning methods for alert prioritization in intrusion detection systems & 2024 & 1 & Not retrieved. Closed access (recorded at retrieval) \\
+S094 & Online Incident Response Planning under Model Misspecification through Bayesian Learning and Belief Quantization \citep{hammar2025} & 2025 & 1 & Included \\
+S097 & Optimizing cybersecurity incident response decisions using deep reinforcement learning \citep{alturkistani2022} & 2022 & 2 & Included \\
+S102 & PhishRL: An End-to-End Reinforcement Learning Pipeline for Automated Email Threat Triage \citep{bhosale2026} & 2026 & 1 & Included \\
+S103 & Policy-Based Profiles for Network Intrusion Response Systems \citep{hughes2022} & 2022 & 1 & Included \\
+S104 & Reinforced Autonomous Agents with Attack-Defense Exercises in Realistic Environments & 2021 & 2 & Excluded. IC5: full text is not in English (French) \\
+S106 & Reinforcement learning for an efficient and effective malware investigation during cyber incident response \citep{dunsin2025} & 2025 & 1 & Included \\
+S108 & Reinforcement Learning with AI for Autonomous Incident Response in DevSecOps: Using RL Agents to Detect, Classify, and Mitigate Security Threats in Cloud-Native DevOps Environments & 2026 & 2 & Not retrieved. No full text on file and no reason recorded \\
+S109 & Reinforcement Learning-Based Alert Prioritisation in Security Operation Centre: A Framework for Enhancing Cybersecurity in the Digital Economy & 2023 & 1 & Not retrieved. Closed access (recorded at retrieval) \\
+S110 & Research on Cross-Layer Link Fault Root Cause Localization Algorithm for Microservice Architecture Integrating Deep Reinforcement Learning \citep{wu2026} & 2026 & 1 & Included \\
+S113 & Risk-Aware SOC Alert Handling in Adaptive Cyber Defense with Reinforcement Learning & 2026 & 1 & Not retrieved. Closed access (recorded at retrieval) \\
+S114 & Risk-sensitive decision-making in security operations center alert escalation under resource constraints \citep{kovtun2026} & 2026 & 1 & Included \\
+S116 & Root Cause Analysis for Microservice Systems via Hierarchical Reinforcement Learning from Human Feedback \citep{wang2023hrlhf} & 2023 & 1 & Included \\
+S118 & SAFE-HGX: A Hierarchical and Safety-Aware Reinforcement Learning Framework for Intrusion Response in Industrial Control Systems \citep{ravi2025} & 2025 & 1 & Included \\
+S119 & Self-Healing and Intelligent Root Cause Analysis System for Data Link Faults in Cloud-Native Environments \citep{yuan2026} & 2026 & 2 & Included \\
+S123 & Structural Generalization in Autonomous Cyber Incident Response with Message-Passing Neural Networks and Reinforcement Learning \citep{nyberg2024} & 2024 & 2 & Included \\
+S125 & TraceDiag: Adaptive, Interpretable, and Efficient Root Cause Analysis on Large-Scale Microservice Systems \citep{ding2023} & 2023 & 1 & Included \\
+S130 & XAI for Automated Prediction Model for Cyber Incident Response and Security Support in Cloud \citep{reddyavula2026} & 2026 & 2 & Excluded. EC3: response actions are described, but the model is evaluated only as a classifier of 26 memory dumps (accuracy, AUC) \\
+S131 & XAI-HDRL: An Intelligent Framework for Cyber Threat Prediction and Automated Security Response \citep{raj2026} & 2026 & 2 & Included \\
+\end{longtable}
+\clearpage
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{3.4cm}>{\raggedright\arraybackslash}p{0.9cm}>{\raggedright\arraybackslash}p{4.0cm}>{\raggedright\arraybackslash}p{4.6cm}>{\raggedright\arraybackslash}p{4.2cm}>{\raggedright\arraybackslash}p{6.2cm}@{}}
+\caption*{\textbf{Table S2} Task, formulation and method, environment or data, and main reported result of each included study}\\
+\toprule
+Study & Year & Task & Formulation; method & Environment or data & Main reported result \\
+\midrule
+\endfirsthead
+\caption*{\textbf{Table S2} (continued)}\\
+\toprule
+Study & Year & Task & Formulation; method & Environment or data & Main reported result \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\citet{ding2023} & 2023 & Pruning service dependency graphs before root cause analysis & MDP; RL selecting from an engineer-derived pool of pruning actions & Microsoft Exchange traces over 345 days & Higher RCA accuracy and efficiency than baselines; integrated into Microsoft 365 Exchange \\
+\citet{wang2023hrlhf} & 2023 & Building dependency graphs for RCA with engineer feedback & Hierarchical MDP; Hierarchical RL from human feedback & Pymicro and SynExchange synthetic data; Microsoft Exchange production trace & Human queries reduced from O(N\textasciicircum{}2) to $O(1)$ with higher RCA accuracy than baselines; deployed at Microsoft \\
+\citet{wang2024mrca} & 2024 & Metric-level root cause analysis in microservices & MDP; Q-learning decides when to stop expanding a causal graph & Train Ticket and Online Boutique benchmark data & Higher accuracy than baselines at service and metric level and shorter causal-analysis time \\
+\citet{peralta2025} & 2025 & Prioritising enterprise IT incidents from report text & MDP over fuzzy states; Fuzzy Q-learning on BERT embeddings & 10,000 incident reports from one enterprise (2,000 annotated) and a deployment trial & 82.9\% priority accuracy against 78.6\% for BERT; overrides 15.2\% to 6.2\%, escalation rate 11.8\% to 9.2\% and MTTR down 9.1\% in a before-after deployment comparison \\
+\citet{aenugu2026} & 2026 & Autonomous reliability engineering in Kubernetes & Decentralised POMDP; Multi-agent PPO with a centralised critic & Simulated testbed of 40 microservices on 12 nodes and a staging cluster & MTTR 58.7 s against 148.6 s (static) and 96.3 s (single-agent PPO); MTTR rose from 41.2 s to 79.4 s at peak load \\
+\citet{nimmathi2026} & 2026 & Predictive platform operations and remediation & MDP; DQN for discrete actions with PPO for resource allocation, plus coordinating agents & Simulated 500-node hybrid cloud over 90 days & MTTR 42.6 min to 29.1 min; manual interventions down 47.8\% \\
+\citet{rojasrodriguez2026} & 2026 & Ranking root-cause candidates in microservices & MDP with partial graph observation; PPO random walk over a causal graph & RCAEval benchmark (eight synthetic and microservice datasets) & Outperformed the best baselines on five of eight datasets \\
+\citet{singh2026} & 2026 & Enterprise remediation decisions in cloud operations & Constrained MDP; Multi-agent scoring with PPO-tuned weights; IPO constraint solver & Google Cluster Trace v3 workloads on a prototype & MTTR 142 s against 198 s for AIOpsLab; GCR 99.9\%; removing the deterministic guard left MTTR almost unchanged (144 s) but cut GCR to 72.3\% \\
+\citet{wu2026} & 2026 & Cross-layer root cause localisation in microservices & MDP with a stop action; Attention-DQN & Kubernetes e-commerce system of 20 microservices with Chaos Mesh (10,000 faults) & Accuracy 96.5\% with 3.2 average investigation steps against 6.1 for plain DQN \\
+\citet{yuan2026} & 2026 & Self-healing for data-link faults in cloud-native systems & MDP; DQN & Kubernetes cluster with six injected fault types (2,000 samples) & Self-healing success improved by 31.9-90.8\% over fixed scripts across fault types \\
+\citet{tong2020} & 2020 & Choosing which alerts to investigate under an analyst budget & Stochastic game; Adversarial deep RL in a double-oracle loop & Suricata alerts on CICIDS2017 and a credit-card fraud dataset & Outperformed baseline prioritisation policies, including when the adversary adapts \\
+\citet{alturkistani2022} & 2022 & Post-alert decisions in a SIEM & MDP; DQN & NSL-KDD and a phishing URL dataset replayed as alert streams & Accuracy 98.26\% and 97.86\% after 12 episodes \\
+\citet{bhosale2026} & 2026 & Triage of phishing alerts & Single-step MDP; DQN & 150 simulated emails scored with VirusTotal and AlienVault OTX & Accuracy 89.3\% against 82.0\%; medium-risk F1 0.839 against 0.725; 44\% of emails escalated \\
+\citet{kovtun2026} & 2026 & Risk-sensitive alert escalation under analyst capacity limits & Constrained risk-sensitive POMDP with belief; PPO with an entropic criterion and KL regularisation to a playbook policy & Alert arrival processes from CIC-IDS2017 and UNSW-NB15 with a simulated eight-analyst queue & Deferring cut false escalations from 7.2\% to 5.0\% and 9.4\% to 6.6\%; the miss and budget constraints held in 14 of 15 and 13 of 15 seeds \\
+\citet{okafor2026} & 2026 & SOC alert triage learned offline from reconstructed trajectories & Offline MDP (pseudo-trajectories); BC, recurrent BC, GRU/LSTM, CQL, IQL, Decision Transformer & UNSW-NB15 and CIC-IDS-2017 flows regrouped into decision episodes & Recurrent behavioural cloning best (MCC 0.752 and 0.621); CQL, IQL and Decision Transformer degenerated into trivial detectors that F1 and ROC-AUC concealed and MCC revealed \\
+\citet{sahin2026} & 2026 & Alert investigation with certified deferral to analysts & Episodic MDP per alert; PPO investigation agent with a dual-threshold conformal deferral layer & Simulated SOC with labels drawn from CIC-IDS2017, CSE-CIC-IDS2018 and UNSW-NB15, plus four classifiers on real flows & Automated 73.7\% of decisions at budgets of 0.01 with realised rates 0.0099 and 0.0101, deferring about 26\%; language models failed as a second-stage investigator \\
+\citet{nyberg2024} & 2024 & Incident response that generalises across network structures & MDP over a relational graph; PPO with a message-passing neural network & CAGE-2 with seven network variants & Graph agents generalised to unseen networks without retraining but scored below MLP agents trained on each variant \\
+\citet{castro2025} & 2025 & Multi-agent cyber defence with RL and LLM agents & Multi-agent partially observable game (CAGE-4); KEEP graph PPO agents and LLM agents & CybORG CAGE-4 & All-RL team mean reward -493 (sd 95.9) against -2547.2 (sd 498.8) for all-LLM; LLM agents misread communication vectors \\
+\citet{contractor2025} & 2025 & Cooperative cyber defence with learned communication & Multi-agent partially observable MDP; DIAL against QMIX & CybORG with three network configurations & With 50\% detection, unmasking and blocking, DIAL agents returned -26.4 against -43.4 for QMIX on the large network \\
+\citet{hammar2025} & 2025 & Online incident response planning under model misspecification & POMDP with belief (particle filter); Bayesian model learning with belief quantisation and dynamic programming & CAGE-2 benchmark & Under misspecification cost 35.91 against 91.51 or more for all other methods; slightly worse than the best methods without misspecification \\
+\citet{jaber2025} & 2025 & Mission-aware incident response on a military network & MDP; Q-learning with softmax policy & Cyber Security Learning Environment digital twin & 78.4\% mission success rate \\
+\citet{khozam2025} & 2025 & DDoS mitigation in a software-defined network & MDP; Double DQN & Mininet emulation with generated benign and attack traffic & Attacker bandwidth reduced by 96.7\%; benign share of delivered packets rose from 29.6\% to 85.8\% (ICMP) but only to 39.4\% under SYN floods \\
+\citet{varsha2025} & 2025 & Proactive cyber defence against an adaptive attacker & MDP; Dueling DQN guided by an LLM & Custom red-blue simulator over 15 ATT\&CK techniques & 80\% win rate over five trials against 26.7\% for the heuristic \\
+\citet{hammar2026belief} & 2026 & Adapting intrusion recovery and response policies & POMDP with belief (particle filter); Feature-based belief aggregation and rollout & Physical testbed with emulated attacks (24,386 measurements) and the CAGE-2 benchmark & On par with the state of the art on CAGE-2; adapted to system change in about 15-19 s against more than 30 min for PPO; PPO variance about ten times higher \\
+\citet{koupaei2026} & 2026 & Cyber incident response for small and medium enterprises & POMDP with belief (Dempster-Shafer); One-step lookahead with an uncertainty penalty and post-event parameter learning & Simulated 50-asset network with a four-phase ransomware scenario & MTTR 58.7 min against 95.3 min for the static baseline; expected loss USD 39,500 against 84,000 \\
+\citet{noorulhassan2026} & 2026 & Proactive threat prediction with RL-controlled mitigation & MDP; DQN on self-supervised threat embeddings & CIC-IDS2017 and UNSW-NB15 (RL environment not described) & Reports containment probability 0.954 and 82 ms response latency \\
+\citet{raj2026} & 2026 & Threat prediction and automated security response & MDP; PPO response module in a hybrid pipeline & CICIDS2017 in an NS-3 simulation & Attack mitigation rate 97.52\% and response time 12.47 ms \\
+\citet{hughes2022} & 2022 & Intrusion response aligned with organisational response policies & MDP; PPO with policy-specific reward profiles & Mininet network integrated with a Tennessee Eastman process in Matlab & Aggressive profile converged on blocking all traffic; balanced profile on disabling the web server interface \\
+\citet{ravi2025} & 2025 & Safety-aware intrusion response in ICS & Hierarchical multi-agent MDP with recurrent state; Offline-to-online hierarchical MARL (PPO/SAC) with a policy shield & SafeHGXEnv ICS simulator with Sandworm, Wizard Spider and Turla profiles & 526-623 shield interventions per scenario; 9-11 times more false actions and 74-77\% higher cost than PPO; recall 0.96-0.99 against 0-0.084 for PPO \\
+\citet{saeed2025} & 2025 & Automated threat response in an IoT network & MDP; Tabular Q-learning & Simulated IoT network (RL environment not described) & Learned policy blocks mild attacks and counter-attacks severe ones; reported only as a three-state Q-table \\
+\citet{babar2026} & 2026 & Adapting detection and response thresholds in industrial CPS & Hierarchical MDP; Four hierarchical RL variants (h-DQN, option-critic) & Simulated industrial CPS with a network data generator & All four hierarchical variants outperformed the static threshold method \\
+\citet{elicha2026} & 2026 & Early automated intrusion response for IIoT & MDP; Expert system plus neural fitted Q-iteration & Industrial testbed emulating energy generation & Mean time to response about 4 min (SSH brute force) and 0.8 min (malware download); recovery took about 7 min when the attacker countered the response \\
+\citet{dunsin2025} & 2025 & Malware investigation during incident response & MDP; Tabular Q-learning & Gym environments built from infected Windows virtual machines & 94\% agreement with ideal actions and shorter investigation time than a human expert \\
+\citet{ghanem2026} & 2026 & Prioritising Windows Registry analysis during incident response & MDP with expert-set transitions; Dynamic programming with bounded tabular RL refinement and rule-based AI & Four forensic datasets across Windows versions and scenarios & Investigation time cut by up to 68\% and adjudicated relevant artefacts up by up to 35\% against analyst-assisted baselines (10 seeded runs) \\
+\end{longtable}
+\clearpage
+A dash means the element is absent or not reported.
+
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{3.4cm}>{\raggedright\arraybackslash}p{4.0cm}>{\raggedright\arraybackslash}p{4.0cm}>{\raggedright\arraybackslash}p{3.4cm}>{\raggedright\arraybackslash}p{5.0cm}>{\raggedright\arraybackslash}p{4.0cm}@{}}
+\caption*{\textbf{Table S3} Coding of the review-question elements for each included study: information gathering, response action or disposition, escalation, constraint (with the handling of a blocked action) and robustness test}\\
+\toprule
+Study & Information gathering & Response action or disposition & Escalation & Constraint (and blocked-action handling) & Robustness test \\
+\midrule
+\endfirsthead
+\caption*{\textbf{Table S3} (continued)}\\
+\toprule
+Study & Information gathering & Response action or disposition & Escalation & Constraint (and blocked-action handling) & Robustness test \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\citet{ding2023} & Decide which components to exclude from analysis & -- & -- & Action masking: Interpretable pruning action pool derived from engineers & -- \\
+\citet{wang2023hrlhf} & Choose which dependency to ask engineers about & -- & -- & None & -- \\
+\citet{wang2024mrca} & Expand a node or stop expanding the causal graph & -- & -- & Action masking: Expanded nodes masked & -- \\
+\citet{peralta2025} & -- & Raise, keep or lower priority & -- & None: Fuzzy rule base defines states; no enforcement & Synthetic terminology drift: accuracy 82.9\% to 79.4\% \\
+\citet{aenugu2026} & -- & Scale up or down, restart pod, reroute traffic, no-op & -- & None & Four workload levels \\
+\citet{nimmathi2026} & -- & Restart, reroute, rollback, scale, failover & -- & None: Plans checked against predefined safety constraints (not evaluated) & -- \\
+\citet{rojasrodriguez2026} & Choose which node of the causal graph to visit next & -- & -- & Action masking: Invalid-action masking & Held-out cases on eight datasets \\
+\citet{singh2026} & -- & Scale, throttle, restart, isolate, rollback & Hand-off to a human when the safety check fails (rule-triggered) & Hard filter or shield: Feasible action region plus deterministic execution guard; CMDP cost constraints. Blocked or uncertain cases: Routed to a human & -- \\
+\citet{wu2026} & Move to a neighbouring node or stop and declare the root cause & -- & -- & Action masking: Pruning of low-probability nodes & Dynamic topology (accuracy above 90\%); fault severity levels \\
+\citet{yuan2026} & -- & Scale, degrade service, shift traffic, rebuild pods, restart sidecars & -- & Reward penalty: Penalty of -2 for destructive actions & -- \\
+\citet{tong2020} & Select the subset of alerts for analysts to investigate within a budget & -- & -- & Expected-cost constraint: Hard investigation budget per period & Adversary adapting to the policy \\
+\citet{alturkistani2022} & -- & Fix & Escalate to the next tier of SOC operators & None & -- \\
+\citet{bhosale2026} & -- & Allow or monitor & Escalate (creates a ServiceNow incident) & Reward penalty: Asymmetric reward penalising under-escalation & -- \\
+\citet{kovtun2026} & Defer to gather more context & Shallow triage & Escalate to deep analysis & Expected-cost constraint: Bounds on deep-analysis use and on the attack-miss rate; deep action unavailable when the analysis resource is unavailable & Load near capacity; chronological test split; 15 seeds \\
+\citet{okafor2026} & Investigate action & Contain action; Dismiss & Containment left to analysts in the deployment design (not learned) & Hard filter or shield: Deterministic severity floor in deployment: medium and high alerts cannot be auto-dismissed (design, not evaluated) & Chronological future test fold; five seeds; two datasets \\
+\citet{sahin2026} & Query logs, investigate lateral movement, query threat intelligence & Close as false positive & Escalate to incident response; defer the uncertain band to an analyst & Expected-cost constraint: Statistical error budgets on benign escalation and threat auto-close. Blocked or uncertain cases: Deferred to an analyst & Hardened regime; cross-dataset shift (deferral rose to 79-99\% for the worst classifiers) \\
+\citet{nyberg2024} & Analyse & Remove, restore & -- & Reward penalty: Restore actions are penalised & Unseen network sizes and an unseen attacker policy \\
+\citet{castro2025} & Analyse and monitor & Remove, restore, deploy decoy, block or allow zone traffic & -- & Reward penalty: Penalties when legitimate users lose service & Five attacker strategies \\
+\citet{contractor2025} & Analyse (unmasked on detection or a message) & Remove, restore, block & -- & Action masking: Restore unmasked only for persistent threats; analyse only after a detection or message & Detection rate lowered to 50\%; false alerts from benign users; larger networks \\
+\citet{hammar2025} & Analyse (CAGE-2) & Decoys, malware removal, restore & -- & Reward penalty: Service disruption and compromise costs & Misspecified model of decoy effectiveness \\
+\citet{jaber2025} & Increase logging & Kill process, block outbound, filter traffic, take down network & -- & Reward penalty: Mission value threshold and risk penalty in the reward & -- \\
+\citet{khozam2025} & -- & Raise or lower a host's bandwidth, or do nothing & -- & Reward penalty: Reward on benign packet loss and delay & Three attack types and randomised host positions \\
+\citet{varsha2025} & -- & Deploy defences across ATT\&CK techniques & -- & Expected-cost constraint: Defence budget of 100 units, replenished each round & -- \\
+\citet{hammar2026belief} & Analyse control (CAGE-2) & Recovery, decoy, removal and restore controls & -- & Reward penalty: Recovery and service disruption carry costs & Non-stationary scenarios on the testbed and CAGE-2 \\
+\citet{koupaei2026} & -- & Micro-playbooks (isolate host, revoke credentials, restore, preserve evidence) & Notify a managed security provider (playbook) & Hard filter or shield: Allowable action set restricted by cost and time limits & -- \\
+\citet{noorulhassan2026} & -- & Firewall rules, throttling, isolation, access revocation & -- & Reward penalty: Mitigation cost in the reward & -- \\
+\citet{raj2026} & -- & Mitigation actions (not listed) & -- & None & -- \\
+\citet{hughes2022} & -- & 26 actions including block, shut down, disable interface, adjust plant valves, no action & -- & Reward penalty: Aggressive, balanced and remediation profiles encoded in the reward & -- \\
+\citet{ravi2025} & -- & Deception, containment and isolation actions & -- & Hard filter or shield: Rule-based policy shield (legal, SLA and safety rules). Blocked or uncertain cases: Replaced by a safer alternative or a no-op, with a reward penalty & Trained on Sandworm and tested on unseen Wizard Spider and Turla profiles \\
+\citet{saeed2025} & -- & Block or counter-attack & -- & None & -- \\
+\citet{babar2026} & -- & Select detection and response threshold ranges & -- & Reward penalty: Cost of changing the selected range & -- \\
+\citet{elicha2026} & -- & Void, restrict traffic, restrict credentials, kill processes & -- & Hard filter or shield: Expert rules decide known threats first; action reputation register; void action to ignore false positives & -- \\
+\citet{dunsin2025} & Choose the next forensic analysis step & -- & -- & None & -- \\
+\citet{ghanem2026} & Choose the next registry or timeline analysis step & -- & -- & Action masking: State-dependent action sets; expert policy graphs & -- \\
+\end{longtable}
+\clearpage
+Items Q1--Q8 are defined in Table~7 of the article. ``Items met'' counts only the items rated Yes; items rated Part are not counted.
+
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{5.6cm}>{\centering\arraybackslash}p{1.3cm}>{\centering\arraybackslash}p{1.3cm}>{\centering\arraybackslash}p{1.3cm}>{\centering\arraybackslash}p{1.3cm}>{\centering\arraybackslash}p{1.3cm}>{\centering\arraybackslash}p{1.3cm}>{\centering\arraybackslash}p{1.3cm}>{\centering\arraybackslash}p{1.3cm}>{\centering\arraybackslash}p{1.6cm}@{}}
+\caption*{\textbf{Table S4} Quality rating of each included study on checklist items Q1--Q8 (Yes, met; Part, partly met; No, not met) and the number of items met}\\
+\toprule
+Study & Q1 & Q2 & Q3 & Q4 & Q5 & Q6 & Q7 & Q8 & Items met \\
+\midrule
+\endfirsthead
+\caption*{\textbf{Table S4} (continued)}\\
+\toprule
+Study & Q1 & Q2 & Q3 & Q4 & Q5 & Q6 & Q7 & Q8 & Items met \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\citet{ding2023} & Yes & Yes & Yes & Yes & No & Part & Yes & Part & 5 \\
+\citet{wang2023hrlhf} & Yes & Yes & Yes & Yes & Part & Part & No & Part & 4 \\
+\citet{wang2024mrca} & Yes & Yes & Yes & Yes & No & Part & Yes & Part & 5 \\
+\citet{peralta2025} & Yes & Part & Yes & Yes & Yes & Yes & Yes & Part & 6 \\
+\citet{aenugu2026} & Part & Part & Yes & Part & Part & Part & Part & No & 1 \\
+\citet{nimmathi2026} & Yes & Part & Yes & Part & No & No & No & Part & 2 \\
+\citet{rojasrodriguez2026} & Yes & Yes & Yes & Yes & Part & Yes & Yes & Part & 6 \\
+\citet{singh2026} & Part & Part & Yes & Part & No & No & Part & Part & 1 \\
+\citet{wu2026} & Yes & Yes & Yes & Yes & No & Part & Yes & Part & 5 \\
+\citet{yuan2026} & Yes & Part & Yes & Yes & Part & Part & Yes & Part & 4 \\
+\citet{tong2020} & Yes & Yes & Yes & Yes & No & Part & No & No & 4 \\
+\citet{alturkistani2022} & Part & Yes & No & Part & No & No & No & Part & 1 \\
+\citet{bhosale2026} & Yes & Part & Yes & Yes & No & No & Yes & Part & 4 \\
+\citet{kovtun2026} & Yes & Yes & Part & Yes & Yes & Yes & Yes & Part & 6 \\
+\citet{okafor2026} & Yes & Yes & Part & Yes & Yes & Yes & Yes & Part & 6 \\
+\citet{sahin2026} & Yes & Yes & Yes & Yes & Yes & Yes & Yes & Yes & 8 \\
+\citet{nyberg2024} & Yes & Yes & Part & Yes & Yes & Yes & Yes & Yes & 7 \\
+\citet{castro2025} & Yes & Yes & Yes & Part & Part & Part & Yes & Yes & 5 \\
+\citet{contractor2025} & Yes & Yes & Part & Yes & Yes & No & No & Part & 4 \\
+\citet{hammar2025} & Yes & Yes & Part & Yes & Yes & Yes & Yes & Part & 6 \\
+\citet{jaber2025} & Yes & Part & No & No & No & No & Part & No & 1 \\
+\citet{khozam2025} & Yes & Yes & No & Part & No & Part & Yes & Yes & 4 \\
+\citet{varsha2025} & Part & Yes & Yes & Yes & Yes & No & Yes & Part & 5 \\
+\citet{hammar2026belief} & Yes & Yes & Yes & Yes & Yes & Yes & Yes & Yes & 8 \\
+\citet{koupaei2026} & Part & Part & Yes & Yes & Part & No & Yes & No & 3 \\
+\citet{noorulhassan2026} & Part & No & No & No & No & No & No & No & 0 \\
+\citet{raj2026} & Part & Part & Part & Yes & No & No & No & No & 1 \\
+\citet{hughes2022} & Yes & Yes & No & Part & No & No & Part & No & 2 \\
+\citet{ravi2025} & Part & Part & Part & Yes & Yes & Yes & No & No & 3 \\
+\citet{saeed2025} & Part & Part & No & No & No & No & Yes & No & 1 \\
+\citet{babar2026} & Yes & Part & Yes & Part & No & No & Part & No & 2 \\
+\citet{elicha2026} & Yes & Part & No & Part & Part & No & Part & No & 1 \\
+\citet{dunsin2025} & Yes & Part & Part & Part & No & No & Part & No & 1 \\
+\citet{ghanem2026} & Yes & Yes & Yes & Yes & Yes & Part & Yes & Part & 6 \\
+\end{longtable}
+
+\normalsize
+\bibliographystyle{sn-basic}
+\bibliography{references}
+\end{document}

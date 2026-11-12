@@ -25,7 +25,7 @@ TITLE = ('Reinforcement Learning for Investigating, Acting and Escalating in IT 
 JOURNAL = 'Artificial Intelligence Review'
 AUTHOR = 'Charis Opol'
 AFFIL = ('Department of Computing and Technology, Faculty of Engineering, Design and Technology, '
-         'Uganda Christian University, [city], Uganda')
+         'Uganda Christian University, Kampala, Mukono District, Uganda')
 EMAIL = 'B29654@students.ucu.ac.ug; charisopol@gmail.com'
 
 counts = dict(re.findall(r'\\newcommand\{\\(N[A-Za-z]+)\}\{([^}]*)\}',
@@ -71,7 +71,7 @@ tex = r"""%% Online Resource 1 (ESM_1.pdf) for the article below. Compile: pdfla
 \textbf{Article:} """ + TITLE + r"""\par
 \textbf{Journal:} """ + JOURNAL + r"""\par
 \textbf{Author:} """ + AUTHOR + r"""\par
-\textbf{Corresponding author:} """ + AUTHOR + ', ' + AFFIL.replace('[city]', r'\textbf{[city]}') + r"""\par
+\textbf{Corresponding author:} """ + AUTHOR + ', ' + AFFIL + r"""\par
 \textbf{E-mail:} """ + EMAIL + r"""\par\medskip
 \textbf{Contents.} Table S1: outcome of every report sought for retrieval. Table S2: task, formulation, environment and main result of each included study. Table S3: coding of the review-question elements for each included study. Table S4: quality rating of each included study. These tables were Appendices A to D of the manuscript; their rows are unchanged. The decisions for all """ + counts['NScreened'] + r""" screened records are in Online Resource 2.
 \bigskip
