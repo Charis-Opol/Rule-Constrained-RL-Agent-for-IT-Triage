@@ -1,13 +1,15 @@
 """Build the pilot-results poster (A0 landscape) from the proposal poster's header and style.
 
 Layout, adapted from the sample template (Uganda_MFI_Credit_Risk_Poster.pptx): Introduction,
-Problem Statement & Objectives, System Architecture | Implementation, stat callouts, Results |
+Problem Statement & Objectives, System Architecture, Workflow (the plain-language flow of
+poster/figures/make_simple_flow.py, drawn as native shapes) | Implementation, stat callouts, Results |
 Challenges, Areas of Improvement, Prototype | Hypotheses, Conclusions & Next Steps,
 National & Global Alignment, Other information (contacts and references). Content is from pilot_report.tex.
 
 Run from the repository root:  python documentation/pilot-report/build_poster.py
 """
 import copy
+import os
 from pathlib import Path
 
 from lxml import etree
@@ -15,13 +17,13 @@ from PIL import Image, ImageFont
 from pptx import Presentation
 from pptx.dml.color import RGBColor
 from pptx.enum.shapes import MSO_CONNECTOR, MSO_SHAPE
-from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
+from pptx.enum.text import MSO_ANCHOR, MSO_AUTO_SIZE, PP_ALIGN
 from pptx.oxml.ns import qn
 from pptx.util import Emu, Inches, Pt
 
 ROOT = Path(__file__).resolve().parents[2]
 SRC = ROOT / "research/proposal/Opol_Charis_Research_Poster.pptx"
-OUT = ROOT / "documentation/pilot-report/Opol_Charis_Pilot_Poster.pptx"
+OUT = Path(os.environ.get("POSTER_OUT", ROOT / "documentation/pilot-report/Opol_Charis_Pilot_Poster.pptx"))
 FIG = ROOT / "results/pilot/figures"
 CROP = {  # name: (top, bottom) in pixels; drops the figure title and footnote
     "comparison_outcomes.png": (55, 800),
@@ -278,36 +280,29 @@ c1 = Column(0)
 c1.section("Introduction", RED, T([
     P("When an IT incident is reported, staff must act before they know its cause: "
       "investigate further, apply a fix, or hand the incident to someone better placed. "
-      "The first evidence, an error in the logs or a user's ticket, is often incomplete, "
-      "unreliable or consistent with several causes."),
-    P("Most AI tools for IT operations treat triage as a single prediction from the ticket. "
-      "They cannot ask for more evidence, cannot say that they are unsure, and do not check "
-      "their actions against the organisation's operating rules."),
-    P("This pilot tests the full method end to end, from a practitioner's ratings to a trained "
-      "agent and a working prototype, before the main study with the Directorate of University "
-      "ICT Services (UIS)."),
+      "Most AI tools for IT operations treat triage as a single prediction from the ticket: "
+      "they cannot ask for more evidence, say that they are unsure, or check their actions "
+      "against the organisation's operating rules.", size=26),
+    P("This pilot tests the method end to end before the main study with the Directorate of "
+      "University ICT Services (UIS).", size=26),
 ]))
 
 ACH = ("ACHIEVED", True, GREEN)
 NOT = ("NOT SUPPORTED", True, RED)
 c1.section("Problem Statement and Objectives", RED, T([
     P(("Problem Statement:", True, RED),
-      " in the reviewed literature (34 studies, PRISMA 2020), no evaluated agent for IT "
-      "incidents learns when to investigate, when to apply a fix that the operational rules "
-      "permit, and when to hand the incident to a person. Triage of one incident is a partially "
-      "observable decision problem: the cause is hidden, and every action carried out must be "
-      "permitted by the rules."),
-    P(("Pilot objectives", True, RED)),
+      " in 34 reviewed studies (PRISMA 2020), no evaluated agent for IT incidents learns "
+      "when to investigate, apply a permitted fix, or hand the incident to a person. The cause "
+      "is hidden, and every action carried out must be permitted by the rules.", size=26),
+    P(("Pilot objectives", True, RED), size=26),
     P("Build a scenario model and simulator from a UIS developer's workbooks: ", ACH,
-      ".", bullet=True),
-    P("Train agents that learn to check, fix or escalate under a rule mechanism: ", ACH,
-      " (all three agents learn the three-way decision).", bullet=True),
-    P("Zero executed rule violations with the safety mechanism: ", ACH,
-      " (0 of 15,000 agent incidents).", bullet=True),
-    P("Beat the baselines (H1) and the unconstrained and penalty-only agents on compliant "
-      "success (H2): ", NOT, " in this pilot, each for an identifiable cause.", bullet=True),
+      ".", bullet=True, size=26),
+    P("Train agents that check, fix or escalate, with zero executed rule violations behind "
+      "the mechanism: ", ACH, " (0 of 15,000 incidents).", bullet=True, size=26),
+    P("Beat the baselines (H1) and the other agents on compliant success (H2): ", NOT,
+      " in this pilot, each for an identifiable cause.", bullet=True, size=26),
     P("A prototype that reads a ticket and logs and acts on a repository: ", ACH,
-      " (6 of 8 example cases end as intended).", bullet=True),
+      " (6 of 8 cases).", bullet=True, size=26),
 ]))
 
 
@@ -323,6 +318,7 @@ def architecture(x, y):
         s.adjustments[0] = 0.15
         tf = s.text_frame
         tf.word_wrap = True
+        tf.auto_size = MSO_AUTO_SIZE.NONE  # keep the box size in every viewer
         tf.margin_left = tf.margin_right = Inches(0.08)
         tf.margin_top = tf.margin_bottom = Inches(0.02)
         tf.vertical_anchor = MSO_ANCHOR.MIDDLE
@@ -386,8 +382,55 @@ def architecture(x, y):
     return ky + kh - y
 
 
+FLOW = [  # steps of poster/figures/make_simple_flow.py, labels shortened to fit one column
+    ("Report comes in", BLUE, "Someone reports a fault; the system's log is attached."),
+    ("Facts picked out", BLUE, "Each fact is copied word for word from the report or log, "
+                                       "so a person can check it."),
+    ("Agent chooses a step", BLUE, "Look into it further, try a fix, or hand it to a person."),
+    ("Rulebook check", RED, "Steps the team's rules forbid are blocked; blocked twice, a person "
+                            "takes over."),
+    ("Act and record", BLUE, "Fixes are tested first and wait for a person's "
+                                           "approval; every outcome is written down."),
+]
+
+
+def workflow(x, y):
+    """Plain-language workflow: five boxes left to right, then one sentence per step."""
+    n, gap, bh = len(FLOW), 0.36, 0.9
+    bw = (INNER_W - (n - 1) * gap) / n
+    for i, (label, colour, _) in enumerate(FLOW):
+        bx = x + i * (bw + gap)
+        s = rect(bx, y, bw, bh, colour, None, MSO_SHAPE.ROUNDED_RECTANGLE)
+        s.adjustments[0] = 0.12
+        tf = s.text_frame
+        tf.word_wrap = True
+        tf.auto_size = MSO_AUTO_SIZE.NONE  # keep the box size in every viewer
+        tf.margin_left = tf.margin_right = Inches(0.06)
+        tf.margin_top = tf.margin_bottom = Inches(0.02)
+        tf.vertical_anchor = MSO_ANCHOR.MIDDLE
+        p = tf.paragraphs[0]
+        p.alignment = PP_ALIGN.CENTER
+        r = p.add_run()
+        r.text = f"{i + 1}. {label}"
+        r.font.size, r.font.bold, r.font.name = Pt(19), True, FONT
+        r.font.color.rgb = RGBColor.from_string("FFFFFF")
+        if i < n - 1:
+            c = slide.shapes.add_connector(MSO_CONNECTOR.STRAIGHT, Inches(bx + bw + 0.04),
+                                           Inches(y + bh / 2), Inches(bx + bw + gap - 0.04),
+                                           Inches(y + bh / 2))
+            c.line.color.rgb = RGBColor.from_string("404040")
+            c.line.width = Pt(3)
+            tail = etree.SubElement(c.line._get_or_add_ln(), qn("a:tailEnd"))
+            tail.set("type", "triangle")
+    paras = [P((f"{i + 1}. ", True, RED if col == RED else BLUE), text, size=20)
+             for i, (_, col, text) in enumerate(FLOW)]
+    th = add_text(x, y + bh + 0.15, INNER_W, paras)
+    return bh + 0.15 + th
+
+
 c2 = Column(1)
-c1.section("System Architecture", BLUE, architecture, fill_to_bottom=True)
+c1.section("System Architecture", BLUE, architecture)
+c1.section("Workflow: How the System Works", BLUE, workflow, fill_to_bottom=True)
 
 c2.section("Implementation", BLUE, T([
     B("Scenario model:", "8 causes, 11 checks (one, D11, delegated to a language model), "
@@ -496,9 +539,15 @@ c3.section("Prototype", BLUE, stack(
            ["sign_in", "Fix, verified", "payment_gateway", "Escalate ✗"],
            ["transcript_dup.", "Fix, verified", "vague_slow", "Fix failed, escalate"],
            ["class_results_slow", "Fix, verified", "profile_cache", "Fix, verified"]],
-          [2.75, 2.15, 2.65, 3.13], size=18, row_h=0.46),
+          [2.75, 2.15, 2.65, 3.13], size=20, row_h=0.5),
     T([P(("✗ = not the intended decision (fix C06 / fix C01). Cases written by the researcher: "
           "they show the pipeline works, not its accuracy.", False, GREY), size=20)]),
+    T([  # src/prototype/live.py, dashboard/prototype_app.py
+        B("Live incidents:", "a hidden fault is drawn from the scenario model and a fresh ticket "
+          "and log are written; nobody sees the cause until the reveal.", size=24),
+        B("Checks and fixes:", "a check missing from the log is answered by a live probe; a fix "
+          "is verified against the hidden fault.", size=24),
+    ]),
 ), fill_to_bottom=True)
 
 

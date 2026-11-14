@@ -1,0 +1,735 @@
+% Project documentation for partner teams: LaTeX version of docs/PROJECT_DOCUMENTATION.md.
+% Default LaTeX font (Computer Modern, through its Latin Modern version, lmodern).
+% Build from this folder:   ..\tools\tectonic.exe PROJECT_DOCUMENTATION.tex
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[a4paper,left=2.2cm,right=2.2cm,top=2.2cm,bottom=2.4cm]{geometry}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{xcolor}
+\usepackage{microtype}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,fit,backgrounds}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={Investigate, Fix or Escalate: Project Documentation for Partner Teams},pdfauthor={}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\setlist{leftmargin=1.5em, itemsep=2pt, topsep=2pt}
+\captionsetup{font=small, labelfont=bf}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\renewcommand{\arraystretch}{1.15}
+\usepackage{url}
+\makeatletter\g@addto@macro{\UrlBreaks}{\do\_\do\-\do\|\do\.\do\=\do\/}\makeatother
+\newcommand{\code}[1]{\path{#1}}
+\newcommand{\partner}{\textbf{[PARTNER]}}
+
+\definecolor{boxblue}{HTML}{C9DAF8}\definecolor{lineblue}{HTML}{6D8FC7}
+\definecolor{boxpink}{HTML}{EBC6F3}\definecolor{linepink}{HTML}{A35DB5}
+\definecolor{boxyel}{HTML}{FFE699}\definecolor{lineyel}{HTML}{BF9000}
+\definecolor{boxgreen}{HTML}{C6E0B4}\definecolor{linegreen}{HTML}{548235}
+\definecolor{note}{HTML}{F3F6FA}
+
+% Code blocks: verbatim in a smaller size.
+\newenvironment{codeblock}{\par\footnotesize}{\par}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\small Investigate, Fix or Escalate}
+\rhead{\small Project Documentation}
+\cfoot{\small \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries Investigate, Fix or Escalate\par}
+\vspace{0.3cm}
+{\Large Project Documentation for Partner Teams\par}
+\vspace{0.5cm}
+\end{center}
+
+\emph{Status: November 2026. Pilot stage. This document describes the code in this repository as
+it stands. Questions that only the partner organisation can answer are marked \partner{} and
+listed at the end.}
+
+\textbf{How to read this document.} Sections 1, 2.1, 6 and 7 are written for every reader.
+Sections 2.2 to 5 are for the engineers who will connect to the system.
+
+\tableofcontents
+
+% =====================================================================================
+\section{Summary: the problem and what this project does}
+
+When an IT problem is reported, its cause is often unclear. The first evidence, a user's ticket
+or a few lines of an application log, can be incomplete, misleading, or consistent with several
+causes. Support staff then have three choices:
+
+\begin{enumerate}
+\item \textbf{Investigate}: gather more evidence (run a diagnostic check);
+\item \textbf{Fix}: apply the remedy for the most likely cause;
+\item \textbf{Escalate}: hand the incident to a person who is better placed to resolve it.
+\end{enumerate}
+
+This project builds and evaluates a \textbf{decision assistant} that learns when to make each
+choice. It has three parts:
+
+\begin{itemize}
+\item A \textbf{reinforcement learning agent}: a program that learns by trial and error, in a
+  simulator, which choice leads to the best results over many incidents.
+\item An independent \textbf{rule checker} (the ``safety mechanism''). It holds the team's
+  operating rules and blocks any fix those rules forbid, whatever the agent proposes.
+\item A \textbf{prototype} that runs the trained agent on a real-looking ticket and log, explains
+  each step, and carries the decision out only in a safe, reviewable form: a \emph{draft} code
+  change on a fictional practice repository, a written fix request to the owner, or a written
+  handover to a person.
+\end{itemize}
+
+The agent is trained and evaluated \textbf{only in simulation}. It is not connected to any
+production system. The simulator is built from a \emph{scenario model}: IT staff describe
+incident causes, checks, symptoms and rules in a workbook. No tickets, logs or personal data are
+used for training.
+
+\textbf{Who has the final say.}
+\begin{itemize}
+\item The \textbf{agent} chooses the next step.
+\item The \textbf{rule checker} can veto any fix the rules forbid. It checks every proposal
+  during the incident, and checks the final decision a second time before anything is carried out.
+\item \textbf{A person} has the final say over anything that changes a system. Code changes are
+  opened only as draft pull requests, which a person reviews and merges. Other fixes are sent to
+  the owner as a request, and the owner carries them out. Nothing merges or deploys automatically.
+\item The \textbf{language model} (optional) never decides. It only fills in a fixed evidence
+  form and must quote its source.
+\end{itemize}
+
+% =====================================================================================
+\section{Architecture}
+
+\subsection{Plain-language overview}
+
+\begin{enumerate}
+\item A ticket and its log come in.
+\item A \textbf{reader} picks out the facts: which symptoms are present, the context (production
+  or not, priority), and what the log shows for each diagnostic check. Every fact keeps the
+  sentence or log line it came from.
+\item The \textbf{agent} looks at those facts and chooses one step: run a check, apply a fix, or
+  escalate.
+\item The \textbf{rule checker} blocks a forbidden fix. The agent then gets one more try. If its
+  next proposal is also blocked, the incident goes to a person.
+\item A chosen fix is \textbf{verified}: code fixes are tested on a throwaway copy of the code,
+  and other fixes are confirmed by a person. If a fix fails, the agent sees that and continues.
+  After two failed fixes, a person takes over.
+\item The decision is \textbf{carried out and recorded}: a draft pull request, a fix request to
+  the owner, or an escalation report. Each goes to an outbox folder as a written message.
+  Messages are simulated and are not sent anywhere.
+\end{enumerate}
+
+\subsection{Architecture diagram}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  font=\small,
+  box/.style={draw, rounded corners=3pt, align=center, minimum height=0.95cm, text width=3.5cm, line width=0.8pt},
+  inp/.style={box, fill=boxblue, draw=lineblue},
+  lrn/.style={box, fill=boxpink, draw=linepink},
+  rul/.style={box, fill=boxyel, draw=lineyel},
+  act/.style={box, fill=boxgreen, draw=linegreen},
+  arr/.style={-{Stealth[length=2.4mm]}, line width=0.8pt},
+  lab/.style={font=\scriptsize, text=black!75, align=center},
+  grp/.style={draw=black!45, dashed, rounded corners=4pt, inner sep=7pt},
+  glab/.style={font=\scriptsize, text=black!70, anchor=south west}]
+% inputs and reader
+\node[inp, text width=2.6cm] (T) at (1.6,0.55) {Ticket text};
+\node[inp, text width=2.6cm] (L) at (1.6,-0.75) {Log text};
+\node[inp, text width=4.6cm] (RD) at (7.4,-0.1) {\textbf{Reader}\\ \scriptsize records evidence, never decides\\[3pt]
+  \scriptsize KeywordReader: offline, default\\ \scriptsize HybridReader, LocalReader:\\ \scriptsize local LLM via Ollama\\
+  \scriptsize ClaudeReader: external API,\\ \scriptsize redacts first};
+\node[inp] (R) at (13.3,-0.1) {\textbf{Reading}\\\scriptsize symptoms, context and\\ \scriptsize checks, each with\\ \scriptsize a verbatim quote};
+% decision loop
+\node[inp] (LK) at (1.6,-3.4) {\textbf{Check lookup}\\\scriptsize from logs, operator\\ \scriptsize or delegate};
+\node[lrn] (A) at (7.4,-3.4) {\textbf{Trained agent}\\\scriptsize masked Double DQN};
+\node[rul] (S) at (7.4,-6.0) {\textbf{Rule checker}\\\scriptsize \texttt{SafetyMechanism}};
+\node[rul] (V) at (13.3,-6.0) {\textbf{Verifier}\\\scriptsize staging tests / operator};
+\node[act] (ESC) at (1.6,-8.4) {\textbf{Forced escalation}};
+\node[inp] (D) at (7.4,-8.4) {\textbf{Decision report}\\\scriptsize JSON};
+\node[rul] (RC) at (13.3,-10.3) {\textbf{Rule checker}\\\scriptsize re-confirms the final fix};
+\node[act] (ACT) at (7.4,-12.0) {\textbf{\texttt{actions.act}}};
+% outputs
+\node[act] (PR) at (1.6,-14.0) {\textbf{Draft pull request}\\\scriptsize toy repo only, never merged};
+\node[act] (FO) at (7.4,-14.0) {\textbf{Fix order to owner}};
+\node[act] (ER) at (13.3,-14.0) {\textbf{Escalation report}\\\scriptsize routed to owner or fallback};
+\node[act] (OB) at (7.4,-15.9) {\textbf{Outbox folder}\\\scriptsize \texttt{results/pilot/outbox}};
+% groups
+\begin{scope}[on background layer]
+\node[grp, fit=(T)(L)] (gin) {};
+\node[grp, fit=(LK)(A)(S)(V)] (gloop) {};
+\node[grp, fit=(PR)(FO)(ER)(OB)] (gout) {};
+\end{scope}
+\node[glab] at (gin.north west) {Inputs};
+\node[glab] at (gloop.north west) {Decision loop (\texttt{src/prototype/triage.py})};
+\node[glab] at (gout.north west) {Outputs: a person stays in control};
+% arrows
+\draw[arr] (T.east) -- (RD.west |- T.east);
+\draw[arr] (L.east) -- (RD.west |- L.east);
+\draw[arr] (RD) -- (R);
+\draw[arr] (R.south) |- ([yshift=2mm]A.east);
+\draw[arr] ([xshift=-6mm]A.south) -- node[lab, left]{proposes\\ action} ([xshift=-6mm]S.north);
+\draw[arr] ([xshift=6mm]S.north) -- node[lab, right]{blocked once:\\ masked, retry} ([xshift=6mm]A.south);
+\draw[arr] (S.south west) -- node[lab, sloped, above]{blocked twice} (ESC.north east);
+\draw[arr] (S.west) -| node[lab, pos=0.25, below]{permitted check} (LK.south);
+\draw[arr] (LK) -- node[lab, above]{result} (A);
+\draw[arr] (S) -- node[lab, above]{permitted fix} (V);
+\draw[arr] ([xshift=-8mm]V.north) |- node[lab, pos=0.75, below]{fix failed} ([yshift=-2mm]A.east);
+\draw[arr] (V.south) |- node[lab, pos=0.75, above]{cleared / awaiting} (D.east);
+\draw[arr] (S) -- node[lab, right]{escalate} (D);
+\draw[arr] (ESC) -- (D);
+\draw[arr] ([yshift=-3mm]D.east) -| node[lab, pos=0.75, right]{final fix} (RC.north);
+\draw[arr] (RC.south) |- node[lab, pos=0.75, above]{permitted} (ACT.east);
+\draw[arr] (D) -- node[lab, left]{escalation} (ACT);
+\draw[arr] (ACT) -- (PR);
+\draw[arr] (ACT) -- (FO);
+\draw[arr] (ACT) -- (ER);
+\draw[arr] (PR) |- (OB);
+\draw[arr] (FO) -- (OB);
+\draw[arr] (ER) |- (OB);
+\end{tikzpicture}
+\caption{Architecture of the prototype. Blue: input and evidence; pink: learning; yellow: rules
+and verification; green: what happens afterwards.}
+\label{fig:architecture}
+\end{figure}
+
+\subsection{Components and responsibilities}
+
+{\small
+\begin{longtable}{>{\raggedright\arraybackslash}p{2.1cm}>{\raggedright\arraybackslash}p{4.6cm}>{\raggedright\arraybackslash}p{6.0cm}>{\raggedright\arraybackslash}p{2.1cm}}
+\toprule
+\textbf{Component} & \textbf{Code} & \textbf{Responsibility} & \textbf{Decides?} \\
+\midrule\endhead
+Scenario model & \code{experiments/pilot/pilot_model_v2.json}, built by \code{src/sim/load_model.py} from an elicitation workbook & Causes, remedies, checks, symptoms, context attributes, rules, costs, likelihood ratings & No \\
+Settings & \code{experiments/pilot/pilot_settings_v3.json} & Rewards, check costs, noise, step limit, fix-with-verification settings & No \\
+Simulator & \code{src/sim/scenario.py}, \code{src/sim/triage_env.py} (Gymnasium) & One incident per episode with a hidden cause; used for training and evaluation & No \\
+Reader & \code{src/prototype/reading.py} (keyword), \code{llm.py} (Claude), \code{local_llm.py} (Ollama or an OpenAI-compatible endpoint) & Turns ticket and log text into a \texttt{Reading}; every finding carries a quote; LLM findings whose quote is not in the text are discarded & No \\
+Agent & \code{src/agents/dqn.py} (\texttt{MaskedDQN}); trained run in \code{results/pilot/runs/v3_shielded_seed0/final.zip} & Chooses check, fix or escalate from the evidence & \textbf{Yes}: proposes each step \\
+Rule checker & \code{src/rules/safety.py} (\texttt{RuleChecker}, \texttt{SafetyMechanism}) & Blocks a forbidden fix; first block returns the proposal once, second block in a row forces escalation; re-checks the final decision & \textbf{Veto} over fixes \\
+Delegate & \code{src/prototype/delegate.py} & Answers the ``delegated'' check D11 (full log analysis) with a fixed prompt; offline pattern version by default & No \\
+Verifier & \code{src/prototype/verify.py} & Says whether a fix cleared the symptoms: staging tests for code faults, otherwise the operator & No \\
+Actions & \code{src/prototype/actions.py} & Carries a permitted decision out: draft PR, fix order or escalation report; routes to the owner; only allow-listed git and gh commands & No: refuses to act unless \texttt{permitted} is true \\
+Interfaces & \code{src/prototype/cli.py}, \code{dashboard/prototype_app.py}, \code{dashboard/live_app.py}, \code{dashboard/app.py} (Streamlit) & Command line and dashboards & No \\
+Evaluation & \code{src/evaluation.py}, \code{experiments/pilot/*} & Runs policies on fixed incidents and computes the measures & No \\
+\bottomrule
+\end{longtable}}
+
+\subsection{Data flow, step by step (as coded in \texttt{triage()})}
+
+\begin{enumerate}
+\item \texttt{make\_reader(name, model, config).read(ticket, logs)} returns a \texttt{Reading}.
+  Context the ticket does not state takes the configured default. In the pilot, the default is
+  the \emph{stricter} case: production = Yes, priority = High, so the rules are switched on.
+\item \texttt{LiveTriageEnv} is the training environment, with the random incident replaced by
+  the \texttt{Reading}. It is wrapped in \texttt{SafetyMechanism}.
+\item In a loop, the agent computes action values over the allowed actions
+  (\texttt{action\_masks}) and takes the best one (greedy):
+  \begin{itemize}
+  \item \textbf{Check}: the result comes from the reading. A check the logs do not show is asked
+    of the operator (\texttt{ask}), or answered by the delegate if it is the delegated check.
+    Otherwise it is unavailable.
+  \item \textbf{Fix} (with verification settings): the verifier answers. A failed fix is flagged
+    and cannot be chosen again. After \texttt{max\_failed\_fixes} (2) failed fixes, a person
+    takes over.
+  \item \textbf{Escalate}: the incident ends.
+  \item A \textbf{blocked} proposal is recorded with the rule, the check that would lift it, and
+    the reason.
+  \end{itemize}
+\item The final fix is re-checked against the rules (\texttt{permitted}).
+\item \texttt{act()} (only with \texttt{--act}) routes the incident and writes the message to the
+  outbox. A fix whose \texttt{permitted} is not \texttt{true} raises \texttt{ActionRefused}.
+\end{enumerate}
+
+\textbf{Routing.} A fix goes to the owner of its cause. An escalation goes to the owner of the
+most probable cause if that cause's probability is at least \texttt{route\_threshold} (0.5).
+Otherwise it goes to \texttt{fallback\_owner} (pilot: ``Senior developer'').
+
+% =====================================================================================
+\section{Data requirements and formats}
+
+\subsection{What the system needs}
+
+{\small
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}p{3.6cm}L@{}}
+\toprule
+\textbf{Input} & \textbf{Needed for} & \textbf{Format} \\
+\midrule
+Scenario model & Training, evaluation, prototype & JSON (Section~\ref{sec:schema}), normally built from the elicitation workbook \\
+Settings & Training, evaluation, prototype & JSON (\code{pilot_settings_v3.json}) \\
+Reader configuration & Prototype & JSON (\code{prototype_config.json}): keyword lists, log patterns and thresholds for each symptom, context value and check \\
+Trained agent & Prototype & Stable-Baselines3-style \code{final.zip} and \code{config.json} in a run folder. \textbf{Not in git} (\code{*.zip} is ignored). A partner must retrain it or receive the file separately \\
+Ticket & Prototype & Plain UTF-8 text \\
+Logs & Prototype (optional) & Plain UTF-8 text, one event per line; lines may start with an ISO timestamp \\
+\bottomrule
+\end{tabularx}}
+
+\textbf{No personal data is required.} The scenario model holds descriptions and ratings, not
+records. The workbook loader never reads who filled it in; provenance is passed as a role
+(\texttt{--rater}), never a name.
+
+\subsection{Scenario model schema}\label{sec:schema}
+
+From \code{src/sim/load_model.py} and \code{pilot_model_v2.json}:
+
+\begin{codeblock}
+\begin{verbatim}
+{
+  "label": "pilot v2",
+  "rater": "Software developer, 3 years' experience (one rater, not Directorate data)",
+  "scale": {"Never": 0.05, "Rarely": 0.25, "Sometimes": 0.5, "Often": 0.75,
+            "Almost always": 0.95, "Unrelated": 0.05},
+  "default_probability": 0.05,
+  "causes": [{
+    "id": "C01", "category": "Infrastructure and external services",
+    "name": "...", "description": "...", "remedy": "Set a timeout on the outbound call",
+    "frequency": "Occasional",          // Rare | Occasional | Common (weights in settings)
+    "code_fault": true,                 // v2: fixed by a code change, so a draft PR is possible
+    "owner": "Integrations developer"   // v2: who receives the incident
+  }],
+  "checks": [{
+    "id": "D01", "name": "Long outbound span in traces", "tests": "...",
+    "positive_means": "Outbound call over 10s",
+    "effort": "Low"                     // Low | Medium | High (minutes in settings)
+    // "delegated": true                // optional: answered by the delegate (D11)
+  }],
+  "symptoms": [{"id": "S01", "name": "Users see a server error on a page",
+                "reported_as": "..."}],
+  "context":  [{"id": "X01", "name": "Affected system is production",
+                "values": ["Yes", "No"]}],
+  "rules": [{
+    "id": "R01",
+    "cause": "C02",                               // the fix (remedy of this cause) forbidden
+    "when": {"attribute": "X01", "value": "Yes"}, // only when this context holds
+    "unless_observed": "D05",                     // lifted once this check has a result
+    "reason": "Killing the wrong transaction rolls back valid work"
+  }],
+  "costs": {"escalation_minutes": 120.0, "wrong_fix_multiple": 5.0},
+  "check_likelihoods":   [[/* per check: P(check positive | cause) for each cause */]],
+  "symptom_likelihoods": [[/* per symptom: P(symptom present | cause) for each cause */]],
+  "fallback_owner": "Senior developer"
+}
+\end{verbatim}
+\end{codeblock}
+
+Pilot model v2 sizes: 8 causes, 11 checks (one delegated), 4 symptoms, 2 context attributes,
+5 rules. The planned full model has about 15 causes, 20 checks and 10 rules.
+The full elicitation with the partner has not been held yet; its date is still to be set \partner.
+
+\subsection{Input example}
+
+A fictional example, from \code{prototype/examples/sign_in/}.
+
+\texttt{ticket.txt}
+\begin{codeblock}
+\begin{verbatim}
+Subject: Students cannot log in to the portal
+
+Since about 7am students report that they cannot log in to the student portal, and
+some who do get in are logged out again after a few seconds. This is the production
+portal. The helpdesk has had many calls.
+\end{verbatim}
+\end{codeblock}
+
+\texttt{logs.txt} (first lines)
+\begin{codeblock}
+\begin{verbatim}
+2026-10-28T16:00:00Z INFO  deploy release v3.8.0 deployed to production
+2026-11-03T07:40:00Z INFO  db     active_transactions=6 oldest_tx_age=3s
+2026-11-03T07:40:00Z INFO  node   api-1 cpu=38%
+2026-11-03T07:40:00Z INFO  pool   db_pool in_use=9/20 (45%)
+\end{verbatim}
+\end{codeblock}
+
+The keyword reader's log patterns are written for this example format, not for any real log
+format. A partner's logs need their own patterns in \code{prototype_config.json}.
+The partner's log format is not yet known \partner.
+
+\subsection{Output: the decision report}
+
+\texttt{triage()} returns a dictionary, and \texttt{--json} saves it. The response below is real
+output from the command below, shortened where marked:
+
+\begin{codeblock}
+\begin{verbatim}
+python -m src.prototype.cli --ticket prototype/examples/sign_in/ticket.txt
+                            --logs prototype/examples/sign_in/logs.txt --json report.json
+\end{verbatim}
+\end{codeblock}
+
+\begin{codeblock}
+\begin{verbatim}
+{
+  "reading": {
+    "reader": "keyword",
+    "category": "Authentication and access",
+    "summary": "Subject: Students cannot log in to the portal",
+    "symptoms": {
+      "S01": {"value": "present", "evidence": "2026-11-03T07:41:02Z ERROR api
+               POST /auth/login 500 duration=4.2s", "source": "logs"},
+      "S03": {"value": "present", "evidence": "Subject: Students cannot log in to
+               the portal", "source": "ticket"}
+      // ... S02, S04: "not_mentioned"
+    },
+    "context": {
+      "X01": {"value": "Yes", "evidence": "This is the production portal.",
+              "source": "ticket"},
+      "X02": {"value": "High", "evidence": "When the ticket does not say, assume the
+              stricter case: ...", "source": "default"}
+    },
+    "checks": {
+      "D01": {"value": "not_shown", "evidence": "", "source": "logs"},
+      "D02": {"value": "positive", "evidence": "2026-11-03T07:41:02Z WARN  db  could not
+              obtain lock on row in relation \"users\" (token update)", "source": "logs"}
+      // ... one entry per check
+    },
+    "warnings": []
+  },
+  "steps": [{
+    "action": "Fix C08: Move the token write off the sign-in path",
+    "value": 3.104, "margin": 0.286, "escalate_value": -1.989,
+    "alternatives": [{"action": "Fix C08: ...", "value": 3.104},
+                     {"action": "Run D01 Long outbound span in traces", "value": 2.818}],
+    "belief": [0.014, 0.028, 0.001, 0.005, 0.002, 0.09, 0.054, 0.807],
+    "verification": {"cleared": true, "how": "staging tests",
+                     "detail": "the incident's reproduction test
+                     (test_c08_sign_in_writes_the_user_row_once) now pass;
+                     1 of 5 tests passing, 0 broken"}
+  }],
+  "decision": {
+    "outcome": "fix",   // fix | awaiting_verification | escalated | forced_escalation
+                        // | step_limit | fix_limit
+    "checks_run": 0, "check_minutes": 0, "blocked_proposals": 0,
+    "attempts": [{"cause": "C08", "remedy": "Move the token write off the sign-in path",
+                  "cleared": true, "how": "staging tests"}],
+    "cause": "C08", "cause_name": "Sign-in writes collide on the user row",
+    "remedy": "Move the token write off the sign-in path",
+    "permitted": true,  // rule checker re-confirmed the final fix
+    "verified": true
+  },
+  "warnings": [],
+  "start_belief": [0.014, 0.028, 0.001, 0.005, 0.002, 0.09, 0.054, 0.807],
+  "reference": [
+    {"cause": "C08", "name": "Sign-in writes collide on the user row",
+     "probability": 0.807},
+    {"cause": "C06", "name": "Bad release or migration breaks a code path",
+     "probability": 0.090}
+  ]
+}
+\end{verbatim}
+\end{codeblock}
+
+Field notes:
+\begin{itemize}
+\item \texttt{belief} and \texttt{reference} are calculated from the ratings, for the person
+  reading the report. \textbf{The agent never sees them.}
+\item A blocked step carries a \texttt{blocked\_by} list:
+\begin{codeblock}
+\begin{verbatim}
+"blocked_by": [{"rule": "R01", "needs": "D05", "reason": "..."}]
+\end{verbatim}
+\end{codeblock}
+\item A step that ran a check carries \texttt{result} (\texttt{positive}, \texttt{negative} or
+  \texttt{unavailable}), \texttt{evidence} and \texttt{source}. A delegated check also carries
+  \texttt{delegation}.
+\item For an escalation, \texttt{decision.reason} explains why: the agent's choice, two blocked
+  proposals, the step limit, or two failed fixes.
+\item With \texttt{--act}, the report gains \texttt{action}:
+\begin{codeblock}
+\begin{verbatim}
+{"kind": "draft_pull_request" | "fix_order" | "escalation", "owner", "routed_because",
+ "message": <outbox file path>, "pull_request"?: {...}, "refused"?: "..."}
+\end{verbatim}
+\end{codeblock}
+\end{itemize}
+
+% =====================================================================================
+\section{Integration guide}
+
+\subsection{Interfaces available today}
+
+There is \textbf{no network API} (no HTTP or REST service) in the repository. A partner can
+connect in three ways.
+
+\textbf{1. Python function interface} (recommended for integration):
+
+\begin{codeblock}
+\begin{verbatim}
+from pathlib import Path
+from src.prototype.cli import load_inputs, make_reader, ROOT
+from src.prototype.triage import load_agent, run_settings, triage
+from src.prototype.delegate import make_delegate
+from src.prototype.verify import make_verifier
+
+run_dir = ROOT / "results/pilot/runs/v3_shielded_seed0"
+model, config, scenario = load_inputs(settings_path=run_settings(run_dir, None))
+agent = load_agent(run_dir)
+
+ticket = Path("ticket.txt").read_text(encoding="utf-8")
+logs = Path("logs.txt").read_text(encoding="utf-8")
+
+reading = make_reader("keyword", model, config).read(ticket, logs)
+verify = make_verifier(config["actions"], answers={})  # needed with v3 settings; see note
+report = triage(reading, scenario, model, agent,
+                ask=None,                          # or a callback(check) -> Finding | None
+                delegate=make_delegate("pattern", config),
+                ticket=ticket, logs=logs, verify=verify)
+
+# Optional: carry it out (draft PR on the toy repo / outbox message)
+# from src.prototype.actions import act
+# report["action"] = act(report, model, config["actions"], "INC-001", ticket, pr="local")
+\end{verbatim}
+\end{codeblock}
+
+Note: \texttt{make\_verifier} takes the operator's confirmations as \texttt{answers}, a dict that
+maps a cause id to \texttt{True} (symptoms cleared) or \texttt{False} (they persist), e.g.\
+\texttt{\{"C02": True\}}, or as an \texttt{ask(cause)} callback. A cause with no answer stops the
+incident as \texttt{awaiting\_verification} (this snippet, run on
+\code{prototype/examples/results_approval}, ends that way after two blocked proposals and three
+checks). Code faults are verified by staging tests when \texttt{make\_verifier} is given the
+case folder with a \code{verification.json}.
+
+\textbf{2. Command line} (one incident per call, prints a readable report, optional JSON):
+
+\begin{codeblock}
+\begin{verbatim}
+.venv\Scripts\python -m src.prototype.cli --ticket ticket.txt --logs logs.txt --json report.json
+:: options: --reader keyword|local|local-full|claude   --ask   --delegate pattern|local|claude|off
+::          --act --pr local|github|off --patcher pre-written|claude   --run <run folder>
+::          --demo-verify
+\end{verbatim}
+\end{codeblock}
+
+\textbf{3. Dashboards} (Streamlit), for people rather than systems:
+
+\begin{codeblock}
+\begin{verbatim}
+.venv\Scripts\python -m streamlit run dashboard/prototype_app.py   :: full prototype, port 8501
+run_live_demo.bat                                                  :: live incidents, port 8502
+.venv\Scripts\python -m streamlit run dashboard/app.py             :: training monitor
+\end{verbatim}
+\end{codeblock}
+
+A network service is not needed for now. If one is needed later, a thin wrapper around
+\texttt{triage()} is a small step.
+
+\subsection{Dependencies}
+
+\begin{itemize}
+\item Python 3.13 (\code{requirements.txt}): gymnasium 1.4.0, stable-baselines3 2.9.2,
+  sb3-contrib 2.9.2, torch 2.14.1, numpy, scipy, matplotlib, openpyxl, pytest, anthropic 2.4.0,
+  requests, streamlit, altair, pandas.
+\item Optional: Ollama with \texttt{qwen3:4b} for the free local reader; \texttt{git} and the
+  GitHub CLI \texttt{gh} for \texttt{--pr github}; an Anthropic API key for
+  \texttt{--reader claude}.
+\item Windows is the only supported and tested platform (the scripts are batch files).
+\end{itemize}
+
+\subsection{How to run it}
+
+\begin{codeblock}
+\begin{verbatim}
+python -m venv --system-site-packages .venv
+.venv\Scripts\python -m pip install -r requirements.txt
+.venv\Scripts\python -m pytest                          :: about 5 minutes
+.venv\Scripts\python -m experiments.pilot.run_comparison train --parallel 5
+                                                        :: retrain the agents (about 3.5 h)
+.venv\Scripts\python -m src.prototype.cli --ticket prototype\examples\sign_in\ticket.txt
+                     --logs prototype\examples\sign_in\logs.txt
+\end{verbatim}
+\end{codeblock}
+
+The repository has 166 test functions across 10 files in \code{tests/}.
+
+\subsection{Configuration}
+
+{\small
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{6.2cm}L@{}}
+\toprule
+\textbf{What} & \textbf{Where} \\
+\midrule
+Which model, settings and trained run the prototype uses & \code{experiments/pilot/prototype_config.json} (\texttt{model}, \texttt{settings}, \texttt{agent\_run}) \\
+Reader keywords, log patterns, thresholds, context defaults & \code{prototype_config.json} (\texttt{categories}, \texttt{symptoms}, \texttt{context}, \texttt{checks}, \texttt{context\_defaults}) \\
+Delegated check patterns & \code{prototype_config.json} (\texttt{delegated\_checks}) \\
+Where actions go; routing threshold & \code{prototype_config.json} (\texttt{actions}: \texttt{toy\_repo}, \texttt{local\_repo}, \texttt{github\_repo}, \texttt{outbox}, \texttt{route\_threshold}) \\
+Rewards, check costs, noise, step limit, verification & \code{experiments/pilot/pilot_settings_v3.json} \\
+Local or OpenAI-compatible language model & environment: \texttt{TRIAGE\_LLM\_URL} (default \url{http://localhost:11434}), \texttt{TRIAGE\_LLM\_MODEL} (default \texttt{qwen3:4b}), \texttt{TRIAGE\_LLM\_KEY} \\
+Claude reader & Anthropic credentials in the environment; model id \texttt{claude-opus-5-5} in \code{src/prototype/llm.py} \\
+\bottomrule
+\end{tabularx}}
+
+\subsection{Supplying your own safety rules}
+
+Rules have a deliberately narrow form:
+
+\begin{quote}
+\textbf{Fix X is forbidden when context attribute A has value V, unless check D has been run.}
+\end{quote}
+
+A rule can only forbid a \textbf{fix}. Checks and escalation are always allowed, so the system
+can always fall back to a person.
+
+\textbf{Option A: through the workbook (recommended).} Fill in the \texttt{Rules} sheet of
+\code{research/elicitation/Directorate_Elicitation_Workbook.xlsx}. Column B is the remedy, as
+written on the \texttt{Causes} sheet. Column C is the condition, e.g.\ \texttt{Affected system is
+production}. Column D is the check that lifts the rule, e.g.\ \texttt{D05 ...}. Column F is the
+reason. Then build the model:
+
+\begin{codeblock}
+\begin{verbatim}
+.venv\Scripts\python -m src.sim.load_model MyWorkbook.xlsx my_model.json --label partner
+                     --rater "role and experience, never a name"
+\end{verbatim}
+\end{codeblock}
+
+The loader rejects a remedy that matches no cause, a condition that matches no context
+attribute, and an unknown check.
+
+\textbf{Option B: edit the JSON} \texttt{rules} array directly, using the schema in
+Section~\ref{sec:schema}.
+
+\textbf{What needs retraining:}
+\begin{itemize}
+\item \textbf{Changing only the rules:} the rule checker reads them at run time, so the new rules
+  are enforced at once. The agent, however, learned under the old rules. It may propose newly
+  forbidden fixes more often, which leads to more forced escalations. \textbf{Retrain} before
+  relying on the results.
+\item \textbf{Changing causes, checks, symptoms or context:} the agent's input and action sizes
+  change. You \textbf{must retrain}, and you must add matching reader entries in
+  \code{prototype_config.json} (every non-delegated check needs one).
+\end{itemize}
+
+Point \code{prototype_config.json} at the new model, settings and run folder.
+
+% =====================================================================================
+\section{Suggested rollout}
+
+{\small
+\begin{longtable}{>{\raggedright\arraybackslash}p{2.3cm}>{\raggedright\arraybackslash}p{4.4cm}>{\raggedright\arraybackslash}p{4.2cm}>{\raggedright\arraybackslash}p{4.0cm}}
+\toprule
+\textbf{Stage} & \textbf{What the system does} & \textbf{What people do} & \textbf{Exit criteria} \\
+\midrule\endhead
+\textbf{0. Offline replay} & Runs on past, anonymised tickets and logs & Compare its decisions with what actually happened & Reader accuracy and decision agreement agreed with the partner; thresholds set by the partner \partner \\
+\textbf{1. Shadow mode} & Reads each new ticket and writes its report to a private folder; acts on nothing (no \texttt{--act}) & Work as today; review a sample of reports weekly & No unsafe proposal reaches the final decision; reader errors understood \\
+\textbf{2. Assisted mode} & Report attached to the ticket as a suggestion; \texttt{--act} with \texttt{--pr local} or the outbox only & The assigned person decides; the suggestion is accepted or overridden, and the reason recorded & Agreement rate and override reasons reviewed against thresholds set by the partner \partner \\
+\textbf{3. Limited automation} & For an agreed list of low-harm, reversible fixes only: draft PRs on the real repository and fix requests to owners & People still review and merge every PR and carry out every fix; escalations go straight to the routed owner & Agreed by the partner's change-approval process \partner \\
+\bottomrule
+\end{longtable}}
+
+Throughout: real tickets must not be sent to an external language-model service without the
+partner's approval. Use the keyword reader, or the local model, which keeps data on the machine.
+
+% =====================================================================================
+\section{Safety, logging and governance}
+
+\subsection*{Safety controls in the code}
+
+\begin{itemize}
+\item The rule checker is separate from the agent and from the simulator's incident model. No
+  forbidden fix reaches the environment. The final decision is checked twice.
+\item \code{actions.py} acts only if \texttt{decision.permitted} is \texttt{true}. It opens a
+  pull request only for a cause marked \texttt{code\_fault}, and only as a \textbf{draft}. A
+  patch may change only an existing source file, not tests. Only these commands can run: git
+  init, add, commit, checkout, clone, config, push (no force, never to main or master) and
+  \texttt{gh pr create --draft}. Nothing merges.
+\item A code fix must pass the incident's reproduction test on a staging copy without breaking
+  another test. Otherwise it is not treated as verified.
+\item Language-model readers redact e-mail addresses, IP addresses, phone numbers and long tokens
+  before sending. Any finding whose quote is not in the text is discarded.
+\item The language model fills a fixed form and cannot choose an action.
+\end{itemize}
+
+\subsection*{What is recorded}
+
+{\small
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{5.2cm}>{\raggedright\arraybackslash}p{5.0cm}L@{}}
+\toprule
+\textbf{Record} & \textbf{Where} & \textbf{Notes} \\
+\midrule
+Decision report (reading, every step, blocked proposals, verification, decision) & \texttt{--json <file>}; shown in the dashboard & Not written automatically by \texttt{triage()} \\
+Messages: draft PR text, fix orders, escalation handovers & \code{results/pilot/outbox/*.md} (git-ignored) & One timestamped Markdown file per action; simulated, not sent \\
+Draft branches & \code{results/pilot/demo_repo} (git-ignored) & Local stand-in for a repository \\
+Training metrics & \code{results/pilot/runs/<run>/metrics.jsonl}, \code{config.json} & Per run \\
+Training and evaluation logs & \code{results/pilot/logs/*.log} & \\
+\bottomrule
+\end{tabularx}}
+
+There is no central, append-only audit log of every triage call yet. The partner's audit and
+retention requirements are not yet known \partner.
+
+\subsection*{Governance}
+
+\begin{itemize}
+\item Who may change the rules, and how changes are approved and versioned, is for the partner to
+  decide \partner.
+\item Scenario-model provenance is recorded as a role, never a name.
+\item Data-sharing and non-disclosure terms with the partner organisation are still to be
+  agreed \partner.
+\end{itemize}
+
+% =====================================================================================
+\section{Limitations}
+
+\begin{itemize}
+\item \textbf{Pilot data.} The scenario model comes from one software developer, not a full
+  elicitation. Several settings are the researcher's own and provisional (fix apply times, harm
+  weights, the correct-fix reward, check costs).
+\item \textbf{Simulation only.} The results describe behaviour under the simulator's assumptions:
+  one cause per incident, one remedy per cause, and check results that do not change during an
+  incident.
+\item \textbf{Pilot results} (\code{documentation/pilot_report.md}, 3 seeds): the agents match the
+  strongest baseline but do not beat it. The rule checker brought executed rule violations to
+  zero. Without it, the unconstrained agent broke a rule in 7.6\% of incidents. However, the
+  agent behind the checker kept proposing forbidden fixes (about 20\% of its proposals), because
+  a blocked proposal costs only a step in the pilot.
+\item \textbf{Reader.} The keyword reader's patterns fit the fictional example log format. Reader
+  accuracy on the pilot developer's 20 sample tickets has not been measured yet; it is a next
+  step (Section 8).
+\item \textbf{The trained agent file is not in git.} It must be retrained or shared separately.
+\item \textbf{Verification} assumes that a fix which clears the symptoms removed the true cause.
+  Non-code fixes depend on a person's confirmation.
+\item \textbf{No network API, no central audit log, Windows-tested only.}
+\end{itemize}
+
+% =====================================================================================
+\section{Next steps}
+
+\begin{enumerate}
+\item Full scenario elicitation with the partner team, then review sample incidents and fix the
+  model before training. Date to be set with the partner \partner.
+\item Agree the cost of a blocked proposal, and run it as an ablation.
+\item Experiments 3 (action ablations) and 4 (robustness to missing, unreliable and overlapping
+  evidence), with 10 seeds as Chapter 3 plans.
+\item Score the readers on the 20 sample tickets.
+\item If the partner wants it: a thin HTTP wrapper around \texttt{triage()}, an append-only
+  decision log, and log patterns for the partner's log format.
+\end{enumerate}
+
+% =====================================================================================
+\section*{Open questions for the partner}
+\addcontentsline{toc}{section}{Open questions for the partner}
+
+\begin{enumerate}
+\item Date of the full scenario elicitation (Sections 3.2 and 8)
+\item Format of the partner's application logs (Section 3.3)
+\item Thresholds for the offline-replay and assisted-mode stages (Section 5)
+\item Change-approval process for limited automation (Section 5)
+\item Audit and retention requirements (Section 6)
+\item Who may change the rules, and how changes are approved and versioned (Section 6)
+\item Data-sharing and non-disclosure terms (Section 6)
+\end{enumerate}
+
+\end{document}

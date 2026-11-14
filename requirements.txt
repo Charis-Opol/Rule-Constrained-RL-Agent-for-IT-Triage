@@ -10,6 +10,7 @@ openpyxl==3.1.5
 pytest==9.1.1
 # Prototype: language-model reader
 anthropic==2.4.0
+requests==2.34.2
 # Dashboard
 streamlit==1.59.2
 altair==6.2.2
